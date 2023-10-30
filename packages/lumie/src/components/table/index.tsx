@@ -1,0 +1,1 @@
+export { Table, type TableProps, type TableHead } from './table';

@@ -1,8 +1,6 @@
-.idea/
-.vscode/
 dist/
-mochawesome-report/
-*.sqlite
+build/
+.vscode/
 
 # Logs
 logs
@@ -80,3 +78,5 @@ typings/
 
 # FuseBox cache
 .fusebox/
+dist/index.html
+dist/CNAME
