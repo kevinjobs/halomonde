@@ -8,17 +8,15 @@
  */
 const path = require('path');
 
-const basePath = path.join(__dirname, '../../');
+const basePath = path.resolve(__dirname, '..');
 
 const dbPath = path.join(basePath, 'db.json');
-const srcPath = path.join(basePath, 'src');
 
-const uploadPath = path.join(srcPath, 'front/upload');
+const uploadPath = path.join(basePath, 'upload');
 const uploadTmpPath = path.join(uploadPath, 'tmp');
 
 module.exports = {
   dbPath,
-  srcPath,
   uploadPath,
   uploadTmpPath,
 }
