@@ -3,23 +3,24 @@
   "version": "1.0.0",
   "description": "a website powered by React",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "serve": "cd dist && serve",
     "dev": "cross-env NODE_ENV=development webpack serve --config ./webpack/webpack.config.dev.js",
     "build": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.config.js",
     "predeploy": "pnpm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "node ./scripts/deploy.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iyumin/iyumin.github.io.git"
+    "url": "git+https://github.com/kevinjobs/halomonde.git"
   },
   "keywords": [
     "react"
   ],
   "author": "Kevin Jobs",
   "license": "ISC",
-  "homepage": "https://iyumin.github.io/",
+  "homepage": "https://kevinjobs.com",
   "dependencies": {
     "@icon-park/react": "^1.4.2",
     "axios": "^0.21.4",
