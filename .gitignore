@@ -3,6 +3,7 @@
 dist/
 mochawesome-report/
 *.sqlite
+db.json
 
 # Logs
 logs
