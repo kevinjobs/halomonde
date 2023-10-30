@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "a website powered by React",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "serve": "cd dist && serve",
     "dev": "cross-env NODE_ENV=development webpack serve --config ./webpack/webpack.config.dev.js",
