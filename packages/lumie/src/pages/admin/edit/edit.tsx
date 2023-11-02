@@ -15,6 +15,7 @@ import { BASE_URL } from '@/configs';
 import { MoreInfo } from './info';
 import COLOR_MAP from '@/styles/colors';
 import { EditItem } from './item';
+import { extractExifs } from '@/utils';
 
 const renderer = {
   image(href: string, title: string, text: string): string {
@@ -260,11 +261,9 @@ const PhotoUpload = ({setPostValue, defaultImage}: {setPostValue: any, defaultIm
       <Upload
         allowExtensions={['jpg', 'jpeg']}
         url={BASE_URL + '/upload'}
-        onFinish={(d: any) => {
+        onFinish={(d: any, exif) => {
           setPostValue('url', d.url);
-          const width = d.width;
-          const height = d.height;
-          setPostValue('exif', JSON.stringify({width, height}));
+          setPostValue('exif', JSON.stringify(extractExifs(exif)));
           setPostValue('format', d.ext);
         }}
         defaultImage={defaultImage}

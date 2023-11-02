@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Upload as UploadIcon } from '@icon-park/react';
 import COLOR_MAP from '@/styles/colors';
 import { BASE_URL } from '@/configs';
+import ExifReader, { Tags as ExifTags } from 'exifreader';
 
 const Box = styled.div`
   position: relative;
@@ -60,7 +61,7 @@ export interface UploadProps {
   url?: string;
   allowExtensions?: string[];
   onChange?(file: File): void;
-  onFinish?(data: UploadData): void;
+  onFinish?(data: UploadData, exif?: ExifTags): void;
   onFailed?(): void;
   defaultImage?: string;
 }
@@ -106,6 +107,8 @@ export function Upload(props: UploadProps) :React.ReactElement {
     const formdata = new FormData();
     formdata.append('file', file);
     (async() => {
+      const exiftags = await ExifReader.load(file);
+
       const config: AxiosRequestConfig = {
         method: 'post',
         data: formdata,
@@ -125,8 +128,9 @@ export function Upload(props: UploadProps) :React.ReactElement {
       if (resp.data.code === 0) {
         setStatus(SUCCESS);
         if (onFinish) {
-          onFinish(resp.data.data);
-          setResult(resp.data.data);
+          const ret = resp.data.data;
+          onFinish(ret, exiftags);
+          setResult(ret);
         }
       } else {
         setStatus('上传失败');

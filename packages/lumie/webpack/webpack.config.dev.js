@@ -24,7 +24,7 @@ module.exports = {
     compress: true, // gzip 压缩静态文件
     host: 'localhost', // 允许其他设备访问
     open: true, // 启动后打开浏览器,
-    port: 8080, // 设置端口
+    port: 1234, // 设置端口
   },
   resolve: {
     alias: {

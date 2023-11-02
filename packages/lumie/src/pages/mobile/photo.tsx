@@ -13,6 +13,7 @@ import { Button } from '@/components/button';
 import DP from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { getLocalStorage } from '../admin';
+import { extractExifs } from '@/utils';
 
 const F = styled.div`
   display: flex;
@@ -155,10 +156,11 @@ export default function PhotoEdit() {
         <div className='inner'>
           <Upload
             url={BASE_URL + '/upload'}
-            onFinish={p => {
+            onFinish={(p, exif) => {
               setPhotoValue('url', p.url);
               setPhotoValue('format', p.ext);
-              setPhotoValue('exif', JSON.stringify({width: p.width, height: p.height}));
+              // setPhotoValue('exif', JSON.stringify({width: p.width, height: p.height}));
+              setPhotoValue('exif', JSON.stringify(extractExifs(exif)));
             }}
             allowExtensions={['jpg', 'jpeg', 'png', 'gif', 'webp']}
             defaultImage={state.url}
