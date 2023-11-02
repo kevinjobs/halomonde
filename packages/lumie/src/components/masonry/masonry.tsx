@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useDevice } from '@/hooks';
+import { MasonryItem } from './item';
 
 export interface MasonryItem {
   width: number,
   height: number,
-  key: string | number,
-  child: React.ReactNode,
+  src: string;
+  title?: string;
 }
 
 export interface MasonryProps {
@@ -13,26 +15,69 @@ export interface MasonryProps {
   colWidth?: number, // column width
   gutter?: number, // gutter between column,
   shadow?: boolean,
-  data: MasonryItem[],
-  onPreview?: (e: React.MouseEvent<HTMLElement>, item: MasonryItem) => void,
-  ref: React.RefObject<HTMLDivElement>,
+  items: MasonryItem[],
 }
 
 const Container = styled.div`
   position: relative;
+  .masonry-item {
+    position: absolute;
+    cursor: pointer;
+    box-shadow: 4px 4px 4px rgba(0,0,0,0.35);
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
 `;
-const Item = styled.div``;
 
-export const Masonry = React.forwardRef((props: MasonryProps, ref: React.RefObject<HTMLDivElement>) => {
+const genFinalSize = (width: number, height: number, clientWidth: number, clientHeight: number) => {
+  /**
+   * 计算预览图最终状态
+   * @param item
+   * @param clientWidth 窗口宽度
+   * @param clientHeight 窗口高度
+   */
+  // 原图比例
+  const ratio: number = width / height;
+
+  let finalHeight: number;
+  // 最终的高度
+  // 如果原图高度大于视窗高度的 90% 则将其裁剪
+  const limitHeight = clientHeight * 0.8;
+  
+  if (height > limitHeight) finalHeight = limitHeight;
+  else finalHeight = height;
+
+  // 根据高度计算出最终的宽度
+  let finalWidth = finalHeight * ratio;
+  if (finalWidth > clientWidth) {
+    finalWidth = clientWidth;
+    finalHeight = clientWidth / ratio;
+  }
+  // 计算出最终需要偏移的量
+  const finalTop = 50; //(clientHeight - finalHeight) / 2;
+  // 最终左偏移量，需要减去瀑布流主体距离左边的宽度
+  const finalLeft = (clientWidth - finalWidth) / 2;
+
+  return {
+    finalWidth,
+    finalHeight,
+    finalTop,
+    finalLeft,
+  };
+};
+
+export const Masonry = (props: MasonryProps) => {
   const [containerHeight, setContainerHeight] = React.useState(0);
+  const { clientWidth, clientHeight } = useDevice();
+  const containerRef = React.useRef<HTMLDivElement>();
 
   const {
     cols = 3,
     colWidth = 320,
     gutter = 8,
-    data,
-    onPreview,
-    shadow = false,
+    items,
   } = props;
 
   // create an arrary for col height storage
@@ -41,10 +86,6 @@ export const Masonry = React.forwardRef((props: MasonryProps, ref: React.RefObje
   // container height
   let tmpContainerHeight = 0;
 
-  const handlePreview = (e: React.MouseEvent<HTMLElement>, item: MasonryItem) => {
-    onPreview(e, item);
-  };
-
   // the shortest column
   const getShortestColIndex = () => {
     const min = Math.min(...colHeigthList);
@@ -52,17 +93,17 @@ export const Masonry = React.forwardRef((props: MasonryProps, ref: React.RefObje
   };
 
   // each item style
-  const getItemStyle = (item: MasonryItem, index: number) => {
+  const getItemStyle = (width: number, height: number, index: number) => {
     const shortestColIndex = getShortestColIndex();
 
     const offsetLeft = (colWidth + gutter) * shortestColIndex;
     const offsetTop = colHeigthList[shortestColIndex];
 
-    const normalizedItemHeight = (colWidth / item.width) * item.height;
+    const normalizedItemHeight = (colWidth / width) * height;
     colHeigthList[shortestColIndex] += (normalizedItemHeight + gutter);
 
     // 取列表中最长的值，作为整个组件的高度
-    if (index === data.length - 1) {
+    if (index === items.length - 1) {
       tmpContainerHeight = Math.max(...colHeigthList);
       // console.log(tmpContainerHeight);
     }
@@ -70,33 +111,49 @@ export const Masonry = React.forwardRef((props: MasonryProps, ref: React.RefObje
     return {
       left: offsetLeft,
       top: offsetTop,
-      position: 'absolute',
       width: colWidth,
       height: normalizedItemHeight,
-      cursor: 'pointer',
-      boxShadow: shadow ? '4px 4px 4px rgba(0,0,0,0.35)' : '',
-    } as React.CSSProperties;
+    };
   };
 
-  const renderItem = (item: MasonryItem, index: number) => {
-    const { key, child, } = item;
-    const style = getItemStyle(item, index);
+  const renderItem = (d: MasonryItem, i: number) => {
+    const {
+      left,
+      top,
+      width,
+      height
+    } = getItemStyle(d.width, d.height, i)
+
+    const {
+      finalWidth,
+      finalHeight,
+      finalLeft,
+      finalTop
+    } = genFinalSize(d.width, d.height, clientWidth, clientHeight);
 
     return (
-      <Item
-        style={{...style,}}
-        key={key}
-        data-key={key}
-        data-index={index}
-        onClick={e => handlePreview(e, item)}
-      >{ child }</Item>
-    );
-  };
+      <MasonryItem
+        key={d.src}
+        title={d.title}
+        src={d.src}
+        left={left}
+        top={top}
+        width={width}
+        height={height}
+        index={i}
+        finalWidth={finalWidth}
+        finalHeight={finalHeight}
+        finalLeft={finalLeft}
+        finalTop={finalTop}
+        originHeight={d.height}
+        originWidth={d.width}
+      />
+    )
+  }
 
   React.useEffect(() => {
     setContainerHeight(tmpContainerHeight);
-    // console.log(tmpContainerHeight);
-  }, [...colHeigthList, data.length]);
+  }, [...colHeigthList, items.length]);
 
   return (
     <Container
@@ -104,12 +161,12 @@ export const Masonry = React.forwardRef((props: MasonryProps, ref: React.RefObje
         width: (colWidth+gutter)*cols-gutter,
         height: containerHeight
       }}
-      ref={ref}
+      ref={containerRef}
     >
-      { data && data.map(renderItem) }
+      { items && items.map(renderItem) }
     </Container>
   );
-});
+};
 
 Masonry.displayName = 'Masonry';
 
