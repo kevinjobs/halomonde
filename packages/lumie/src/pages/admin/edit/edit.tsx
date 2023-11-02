@@ -259,9 +259,9 @@ const PhotoUpload = ({setPostValue, defaultImage}: {setPostValue: any, defaultIm
   return (
     <div style={{height: 600, width: 900}}>
       <Upload
-        allowExtensions={['jpg', 'jpeg']}
+        allowExtensions={['jpg', 'jpeg', 'png', 'webp']}
         url={BASE_URL + '/upload'}
-        onFinish={(d: any, exif) => {
+        onFinish={(d, exif) => {
           setPostValue('url', d.url);
           setPostValue('exif', JSON.stringify(extractExifs(exif)));
           setPostValue('format', d.ext);
