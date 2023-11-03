@@ -1,6 +1,6 @@
-import { useScroll } from '@/hooks';
 import React from 'react';
-import { useSpring, animated } from 'react-spring';
+import { useSpring, animated, config } from 'react-spring';
+import { Mask } from '../mask';
 
 export interface ItemProps {
   originWidth: number;
@@ -31,89 +31,103 @@ export const MasonryItem = (props: ItemProps) => {
     index,
   } = props;
   
-  const { toTop } = useScroll();
   const [picked, setPicked] = React.useState(false);
-  const [rect, setRect] = React.useState<Partial<DOMRect>>(null);
 
   const outRef = React.useRef<HTMLDivElement>(); 
 
-  const [styles, api] = useSpring(() => ({
-    width,
-    height,
-    left,
-    top,
-    position: 'absolute',
-  }))
+  const [styles, api] = useSpring(
+    () => ({
+      left: 0,
+      top: 0,
+      width,
+      height,
+      position: 'absolute',
+      zIndex: 1,
+      visibility: 'hidden'
+    }),
+    []
+  );
 
-  const handleClick = () => {
-    if (picked) {
-      setPicked(false);
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
 
+    const rect = outRef?.current?.getBoundingClientRect();
+
+    if (!picked) {
+      
       api.start({
-        to: {
-          width: rect.width,
-          height: rect.height,
+        from: {
+          position: 'fixed',
+          width: width,
+          height: height,
           left: rect.left,
           top: rect.top,
+          zIndex: 999,
+          visibility: 'visible'
+        },
+        to: {
           position: 'fixed',
-        }
-      });
-
+          width: finalWidth,
+          height: finalHeight,
+          left: finalLeft,
+          top: finalTop,
+          zIndex: 999,
+          visibility: 'visible'
+        },
+        config: { mass: 0.5, tension: 270, friction: 16 },
+      })
+      setPicked(true);
+    } else {
+      setPicked(false);
+      api.start({
+        from: {
+          position: 'fixed',
+          width: finalWidth,
+          height: finalHeight,
+          left: finalLeft,
+          top: finalTop,
+          zIndex: 999,
+          visibility: 'visible'
+        },
+        to: {
+          position: 'fixed',
+          width: width,
+          height: height,
+          left: rect.left,
+          top: rect.top,
+          zIndex: 1,
+          visibility: 'visible'
+        },
+        config: { mass: 0.8, tension: 280, friction: 26 },
+      })
       setTimeout(() => {
         api.set({
-          width,
-          height,
-          left,
-          top,
           position: 'absolute',
+          left: 0,
+          top: 0,
+          zIndex: 1,
+          visibility: 'hidden'
         })
-      }, 500);
-    } else {
-      setPicked(true);
-
-      api.set({
-        position: 'fixed',
-        width: rect.width,
-        height: rect.height,
-        left: rect.left,
-        top: rect.top,
-      })
-
-      setTimeout(() => {
-        api.start({
-          to: {
-            position: 'fixed',
-            width: finalWidth,
-            height: finalHeight,
-            left: finalLeft,
-            top: finalTop,
-          }
-        })
-      }, 500);
+      }, 250);
     }
   }
 
-  React.useEffect(() => {
-    const rect = outRef.current?.getBoundingClientRect();
-    setRect(rect);
-  }, [toTop]);
-
   return (
-    <div ref={outRef} onClick={handleClick} style={{width, height}}>
-      <div
-        className='masonry-item'
-        key={props.title}
-        style={{width, height, top, left}}
-      >
+    <div
+      key={props.title}
+      ref={outRef}
+      onClick={handleClick}
+      className='masonry-item'
+      style={{width, height, top, left}}
+    >
+      <div>
         <img src={props.src} alt={props.title} />
       </div>
-      <animated.div
-        className='masonry-item copy'
-        key={props.title}
-        style={styles as any}
-      >
+      <animated.div style={{...styles as any}}>
         <img src={props.src} alt={props.title} />
       </animated.div>
+      { picked && <Mask style={{zIndex: 998}} /> }
     </div>
   );
 };

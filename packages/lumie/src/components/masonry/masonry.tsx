@@ -44,7 +44,7 @@ const genFinalSize = (width: number, height: number, clientWidth: number, client
   let finalHeight: number;
   // 最终的高度
   // 如果原图高度大于视窗高度的 90% 则将其裁剪
-  const limitHeight = clientHeight * 0.8;
+  const limitHeight = clientHeight * 0.9;
   
   if (height > limitHeight) finalHeight = limitHeight;
   else finalHeight = height;
