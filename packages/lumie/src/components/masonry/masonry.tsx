@@ -56,7 +56,7 @@ const genFinalSize = (width: number, height: number, clientWidth: number, client
     finalHeight = clientWidth / ratio;
   }
   // 计算出最终需要偏移的量
-  const finalTop = 50; //(clientHeight - finalHeight) / 2;
+  const finalTop = (clientHeight - finalHeight) / 2;
   // 最终左偏移量，需要减去瀑布流主体距离左边的宽度
   const finalLeft = (clientWidth - finalWidth) / 2;
 
