@@ -34,7 +34,7 @@ export default function PostAdmin(): React.ReactElement {
   const navigate = useNavigate();
   const [posts, setPosts] = React.useState<IPost[]>(null);
   const [offset, setOffset] = React.useState(Number(localStorage.getItem('offset')) || 0);
-  const [typ, setTyp] = React.useState(localStorage.getItem('typ') || 'all');
+  const [typ, setTyp] = React.useState(localStorage.getItem('typ') || 'article');
   // 这两个状态是根据 posts 的情况计算出的，因此不需要保存
   const [hasPrev, setHasPrev] = React.useState(false);
   const [hasNext, setHasNext] = React.useState(true);
@@ -126,7 +126,6 @@ export default function PostAdmin(): React.ReactElement {
         </Header.Add>
         <div style={{marginLeft: 32}}>
           <span>点击筛选</span>
-          <Button type={typ === 'all' ? 'primary' : 'light'} onClick={() => handleFilter('all')}>所有</Button>
           <Button type={typ === 'article' ? 'primary' : 'light'} onClick={() => handleFilter('article')}>文章</Button>
           <Button type={typ === 'photo' ? 'primary' : 'light'} onClick={() => handleFilter('photo')}>照片</Button>
           <Button type={typ === 'cover' ? 'primary' : 'light'} onClick={() => handleFilter('cover')}>封面</Button>
