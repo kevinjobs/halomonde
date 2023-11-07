@@ -1,0 +1,21 @@
+{
+  "name": "horen-hooks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/src/index.js",
+  "scripts": {
+    "watch": "nodemon src/**/* -e ts --exec tsc",
+    "build": "tsc --watch -p tsconfig.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.35",
+    "nodemon": "2.0.7",
+    "typescript": "^5.2.2"
+  }
+}
