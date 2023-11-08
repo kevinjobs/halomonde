@@ -63,6 +63,9 @@ importers:
       '@types/styled-components':
         specifier: ^5.1.29
         version: 5.1.29
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
 
   packages/horen-docs:
     dependencies:
@@ -2100,6 +2103,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: false
     optional: true
@@ -2109,6 +2113,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: false
     optional: true
@@ -2118,6 +2123,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: false
     optional: true
@@ -2127,6 +2133,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: false
     optional: true
