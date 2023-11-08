@@ -1,0 +1,21 @@
+{
+  "name": "horen-core",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "watch": "tsc --watch -p tsconfig.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "horen-hooks": "workspace:*",
+    "react": "^18.2.0",
+    "styled-components": "^5.3.11"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.37",
+    "@types/styled-components": "^5.1.29"
+  }
+}

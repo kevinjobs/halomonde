@@ -4,8 +4,7 @@
   "description": "",
   "main": "dist/src/index.js",
   "scripts": {
-    "watch": "nodemon src/**/* -e ts --exec tsc",
-    "build": "tsc --watch -p tsconfig.json"
+    "watch": "tsc --watch -p tsconfig.json"
   },
   "keywords": [],
   "author": "",
