@@ -5,17 +5,16 @@ import marked from 'marked';
 import WE from 'wangeditor';
 import dayjs from 'dayjs';
 import { useLocation, useNavigate } from 'react-router-dom';
-
 import { IPost } from '@/types';
 import { Button } from '@/components/button';
 import { Input } from '@/components/input';
 import { Upload } from '@/components/upload';
 import { fetchPost, updatePost, addPost } from '@/apis/posts';
-import { BASE_URL } from '@/configs';
 import { MoreInfo } from './info';
 import COLOR_MAP from '@/styles/colors';
 import { EditItem } from './item';
 import { extractExifs } from '@/utils';
+import { UPLOAD_URL } from '@/constants';
 
 const renderer = {
   image(href: string, title: string, text: string): string {
@@ -260,7 +259,7 @@ const PhotoUpload = ({setPostValue, defaultImage}: {setPostValue: any, defaultIm
     <div style={{height: 600, width: 900}}>
       <Upload
         allowExtensions={['jpg', 'jpeg', 'png', 'webp']}
-        url={BASE_URL + '/upload'}
+        url={UPLOAD_URL}
         onFinish={(d, exif) => {
           setPostValue('url', d.url);
           setPostValue('exif', JSON.stringify(extractExifs(exif)));
@@ -277,7 +276,7 @@ const CoverUpload = ({onFinish, defaultImage}: {onFinish: any, defaultImage: str
     <EditItem label='封面' style={{width: 230}}>
       <Upload
         onFinish={onFinish}
-        url={BASE_URL + '/upload'}
+        url={UPLOAD_URL}
         allowExtensions={['jpg', 'png']}
         defaultImage={defaultImage}
       />

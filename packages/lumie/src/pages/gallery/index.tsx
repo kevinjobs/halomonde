@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { ViewportProvider } from '@/hooks';
-import { BASE_URL } from '@/configs';
 import { fetchPosts } from '@/apis/posts';
 import { random_int } from '@/utils';
 
@@ -100,7 +99,7 @@ export default function GalleryPage () {
   return (
     <ViewportProvider>
       <Background
-        cover={BASE_URL + cover}
+        cover={cover}
         verse={verses[random_int(0, verses.length)]}
       />
       <Gallery />

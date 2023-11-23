@@ -8,6 +8,7 @@ import { getLocalStorage } from '..';
 import { fetchUser } from '@/apis/user';
 import { IUser } from '@/types';
 import COLOR_MAP from '@/styles/colors';
+import { Link } from 'react-router-dom';
 
 const Nav = styled.div`
   width: 100%;
@@ -207,6 +208,9 @@ export default function Navbar (props: NavbarProps) :React.ReactElement {
               type="primary"
               onClick={e => handleSubmit(e, {username: username, password})}>登录</Button>
             <Button onClick={onCancel}>取消</Button>
+          </div>
+          <div>
+            <Link to={'/register'}>没有账户？点击注册...</Link>
           </div>
         </DialogContent>
       </Dialog>

@@ -3,7 +3,6 @@ import axios, { AxiosRequestConfig } from 'axios';
 import styled from 'styled-components';
 import { Upload as UploadIcon } from '@icon-park/react';
 import COLOR_MAP from '@/styles/colors';
-import { BASE_URL } from '@/configs';
 import ExifReader, { Tags as ExifTags } from 'exifreader';
 
 const Box = styled.div`
@@ -181,7 +180,7 @@ const Preview = ({url, title}: {url: string; title?: string}) => (
     className='preview'
     title='点击更换图片'
   >
-    <img src={BASE_URL + url} alt={title || 'pic'} />
+    <img src={url} alt={title || 'pic'} />
   </Pre>
 );
 

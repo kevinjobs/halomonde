@@ -2,6 +2,8 @@ import api from "@/utils/axios";
 import { IPost } from "@/types";
 import { Response } from "@/types";
 import { POSTS_URL, POST_URL } from "./_url";
+import { unix_stamp } from "@/utils";
+import { BASE_URL } from "@/configs";
 
 export interface PostsData {
   amount: number;
@@ -19,11 +21,13 @@ export interface PostParams {
   status?: string;
 }
 
-export const unix_stamp = (n: number | string) => {
-  return Number(String(n).slice(0, 10));
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+/**
+ * 抓取 post 列表
+ * @param offset 偏移量
+ * @param limit 限制量
+ * @param prs 查询参数
+ * @returns post 列表
+ */
 export async function fetchPosts(
   offset: number,
   limit: number,
@@ -36,6 +40,8 @@ export async function fetchPosts(
     const d = resp.data;
     const posts: IPost[] = d.data.posts;
     d.data['posts'] = posts.map(p => {
+      fullUrl(p);
+
       p.createAt = unix_stamp(p.createAt);
       p.updateAt = unix_stamp(p.updateAt);
       p.publishAt = unix_stamp(p.publishAt);
@@ -46,28 +52,56 @@ export async function fetchPosts(
   return resp.data.msg;
 }
 
+/**
+ * 通过 uid 删除 post
+ * @param uid uid
+ * @returns 
+ */
 export async function deletePost(uid: string) :Response {
   const resp = await api.delete(POST_URL, { params: { uid } });
   if (resp.data.code === 0) return resp.data;
   return resp.data.msg;
 }
 
+/**
+ * 通过 uid 更新 post
+ * @param uid uid
+ * @param data post
+ * @returns 
+ */
 export async function updatePost(uid: string, data: IPost) :Response {
+  shrinkUrl(data);
+
   const resp = await api.put(POST_URL, data, { params: { uid } });
   if (resp.data.code === 0) return resp.data;
   return resp.data.msg;
 }
 
+/**
+ * 新增 post
+ * @param data post
+ * @returns 
+ */
 export async function addPost(data: IPost) :Response {
+  shrinkUrl(data);
+
   const resp = await api.post(POST_URL, data);
   if (resp.data.code === 0) return resp.data;
   return resp.data.msg;
 }
 
+/**
+ * 通过 uid 抓取 post
+ * @param uid uid
+ * @returns 
+ */
 export async function fetchPost(uid: string) :Response<{post: IPost}> {
   const resp = await api.get(POST_URL, { params: { uid } });
   if (resp.data.code === 0) {
     const data = resp.data;
+
+    fullUrl(data.data.post);
+
     data.data.post['updateAt'] = unix_stamp(data.data.post['updateAt']);
     data.data.post['createAt'] = unix_stamp(data.data.post['createAt']);
     data.data.post['publishAt'] = unix_stamp(data.data.post['publishAt']);
@@ -75,3 +109,6 @@ export async function fetchPost(uid: string) :Response<{post: IPost}> {
   }
   return resp.data.msg;
 }
+
+const fullUrl = (post: IPost) => post.url = BASE_URL + post.url;
+const shrinkUrl = (post: IPost) => post.url = post.url.replace(BASE_URL, '');

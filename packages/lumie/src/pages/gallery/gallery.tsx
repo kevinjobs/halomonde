@@ -5,7 +5,6 @@ import { IPost, IExif } from '@/types';
 import { Masonry, MasonryItem } from '@/components/masonry';
 import { Loading } from '@/components/loading';
 import { useDevice, useScroll } from '@/hooks';
-import { BASE_URL } from '@/configs';
 
 const Container = styled.div`
   width: 100%;
@@ -124,7 +123,7 @@ const covertImageList = (imageList: Array<IPost>) :Array<PhotoItem> => {
       console.log(e);
     }
 
-    const src = BASE_URL + img.url;
+    const src = img.url;
     return {
       'src': src,
       'width': exif?.width,

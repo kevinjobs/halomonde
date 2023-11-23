@@ -2,7 +2,6 @@ import React from 'react';
 import dayjs from 'dayjs';
 import { IPost } from '@/types';
 import { getLocalStorage } from '..';
-import { BASE_URL } from '@/configs';
 import { Button, } from '@/components/button';
 import { Skeleton } from '@/components/skeleton';
 import { Tag } from '@/components/tag';
@@ -145,7 +144,7 @@ const renderTags = (tags: string) => {
 const renderPreview = (cover: string, title:string) => {
   return (
     <img
-      src={BASE_URL + cover}
+      src={cover}
       alt={title}
       style={{ width: 100, height: 80, objectFit: 'cover' }}
     />

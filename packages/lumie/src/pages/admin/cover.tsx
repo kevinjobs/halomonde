@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { Header } from './_partial/layout';
 import { Upload } from '@/components/upload';
-import { BASE_URL } from '@/configs';
 import { addPost, fetchPosts, deletePost } from '@/apis/posts';
 import { getLocalStorage } from '.';
 import { CloseOne } from '@icon-park/react';
+import { UPLOAD_URL } from '@/constants';
 
 const CE = styled.div``;
 const Up = styled.div`
@@ -105,7 +105,7 @@ export default function CoverEdit() :React.ReactElement {
         <div className='main'>
           <div className='upload'>
             <Upload
-              url={BASE_URL + '/upload'}
+              url={UPLOAD_URL}
               onFinish={handleFinish}
               allowExtensions={['jpg', 'jpeg', 'webp', 'png']}
             />
@@ -139,7 +139,7 @@ const renderPreviewItem = (data: any, onDel?: () => void) => {
       <div className='del' onClick={handleDel}>
         <CloseOne theme="outline" size="24" fill="#d0021b"/>
       </div>
-      <img src={BASE_URL + data.url} alt={data.title} />
+      <img src={data.url} alt={data.title} />
     </div>
   )
 }

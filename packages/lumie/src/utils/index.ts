@@ -31,4 +31,7 @@ export const extractExifs = (exif: ExifTags) => {
     exposure,
     model,
   };
-}
+};
+export const unix_stamp = (n: number | string) => {
+  return Number(String(n).slice(0, 10));
+};

@@ -6,7 +6,6 @@ import dayjs from 'dayjs';
 import { IPost } from '@/types';
 import COLOR_MAP from '@/styles/colors';
 import { Skeleton } from '@/components/skeleton';
-import { BASE_URL } from '@/configs';
 import { fetchPosts } from '@/apis/posts';
 
 const Container = styled.div`
@@ -103,7 +102,7 @@ function transformList(origin: IPost[]) :IPost[] {
   const arr = [];
   for (let i=0; i<origin?.length; i++) {
     const n = origin[i];
-    n.url = BASE_URL + n.url.replace('static/', 'static/thumb-');
+    n.url = n.url.replace('static/', 'static/thumb-');
     arr.push(n);
   }
   return arr;
