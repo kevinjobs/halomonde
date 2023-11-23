@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 // import axiosRetry from 'axios-retry';
-import { BASE_URL } from '@/configs';
+import { BASE_URL } from '@/constants';
 
 const api = axios.create();
 

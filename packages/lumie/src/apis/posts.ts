@@ -1,9 +1,8 @@
 import api from "@/utils/axios";
 import { IPost } from "@/types";
 import { Response } from "@/types";
-import { POSTS_URL, POST_URL } from "./_url";
+import { POSTS_URL, POST_URL, BASE_URL } from "@/constants";
 import { unix_stamp } from "@/utils";
-import { BASE_URL } from "@/configs";
 
 export interface PostsData {
   amount: number;

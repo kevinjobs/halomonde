@@ -1,8 +1,7 @@
 import api from "@/utils/axios";
 import { IUser } from "@/types";
-import { USERS_URL, USER_URL } from "./_url";
+import { USERS_URL, USER_URL, BASE_URL } from "@/constants";
 import { Response } from "@/types";
-import { BASE_URL } from "@/configs";
 
 interface UserParams {
   username?: string;

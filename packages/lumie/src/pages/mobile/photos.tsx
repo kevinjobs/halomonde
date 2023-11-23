@@ -2,7 +2,7 @@ import React from "react";
 import { fetchPosts } from "@/apis/posts";
 import { IPost } from "@/types";
 import styled from "styled-components";
-import { BASE_URL } from "@/configs";
+import { BASE_URL } from "@/constants";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/button";
 import { Image } from "@/components/image";

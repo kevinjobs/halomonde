@@ -6,7 +6,7 @@ import { Button } from '@/components/button';
 import { Select, Option } from '@/components/select';
 import COLOR_MAP from '@/styles/colors';
 import { Upload } from '@/components/upload';
-import { BASE_URL } from '@/configs';
+import { BASE_URL, UPLOAD_URL } from '@/constants';
 import { updateUser, addUser } from '@/apis/user';
 import DatePicker from 'react-datepicker';
 import dayjs from 'dayjs';
@@ -109,7 +109,7 @@ export function UserEdit({user, onSuccess}: UserEditProps) :React.ReactElement {
                   !state.avatar
                     ?
                     <Upload
-                      url={BASE_URL + '/upload'}
+                      url={UPLOAD_URL}
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       onFinish={(data: any) => dispatch({type: '', payload: {avatar: data.url}})}
                       allowExtensions={['jpg', 'png', 'jpeg', 'gif', 'webp']}

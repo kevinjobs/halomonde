@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Upload } from '@/components/upload';
-import { BASE_URL } from '@/configs';
+import { BASE_URL } from '@/constants';
 import COLOR_MAP from '@/styles/colors';
 import { Input } from '@/components/input';
 import { useParams, useNavigate } from 'react-router-dom';

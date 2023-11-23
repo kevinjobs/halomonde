@@ -1,5 +1,5 @@
 import api from '@/utils/axios';
-import { LOGIN_URL } from './_url';
+import { LOGIN_URL } from '@/constants';
 import { Response } from '@/types';
 
 export interface LoginForm {

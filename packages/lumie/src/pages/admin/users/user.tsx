@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { Skeleton } from "@/components/skeleton";
 import COLOR_MAP from "@/styles/colors";
 import dayjs from "dayjs";
-import { BASE_URL } from "@/configs";
 import { getLocation } from "@/apis/location";
 import {
   Avatar,
@@ -111,7 +110,7 @@ export function UserInfo({ user, onClick }: UserProps): React.ReactElement {
       <div className="left">
         <div className="avatar">
           {user.avatar ? (
-            <img src={BASE_URL + user.avatar} alt={user.username} />
+            <img src={user.avatar} alt={user.username} />
           ) : (
             <Avatar theme="outline" size="48" fill="#9b9b9b" strokeWidth={1} />
           )}
