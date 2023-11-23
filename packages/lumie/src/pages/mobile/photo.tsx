@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Upload } from '@/components/upload';
-import { BASE_URL } from '@/constants';
+import { UPLOAD_URL, BASE_URL } from '@/constants';
 import COLOR_MAP from '@/styles/colors';
 import { Input } from '@/components/input';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -155,7 +155,8 @@ export default function PhotoEdit() {
       <UploadArea>
         <div className='inner'>
           <Upload
-            url={BASE_URL + '/upload'}
+            url={UPLOAD_URL}
+            urlPrefix={BASE_URL}
             onFinish={(p, exif) => {
               setPhotoValue('url', p.url);
               setPhotoValue('format', p.ext);

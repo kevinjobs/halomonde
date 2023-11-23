@@ -2,7 +2,6 @@ import React from "react";
 import { fetchPosts } from "@/apis/posts";
 import { IPost } from "@/types";
 import styled from "styled-components";
-import { BASE_URL } from "@/constants";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/button";
 import { Image } from "@/components/image";
@@ -62,7 +61,7 @@ export default function Photos() {
   const Item = ({p}: {p: IPost}) => {
     return (
       <I onClick={() => navigate(`/mobile/photo/${p.uid}`)}>
-        <Image src={BASE_URL + p.url.replace('static/', 'static/thumb-')} alt={p.title} />
+        <Image src={p.url.replace('static/', 'static/thumb-')} alt={p.title} />
       </I>
     )
   }
@@ -82,13 +81,11 @@ export default function Photos() {
 
   return (
     <F>
-      <div className="add-photo">
-        <Button type="primary" onClick={() => navigate('/mobile/photo/0')}>添加图片</Button>
-      </div>
       <div className="photos">
         { photos?.map(p => <Item key={p.uid} p={p} />) }
       </div>
       <div className="prev-next">
+        <Button type="primary" onClick={() => navigate('/mobile/photo/0')}>添加图片</Button>
         <Button
           disabled={offset===0}
           onClick={() => {

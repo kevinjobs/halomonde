@@ -63,6 +63,7 @@ export interface UploadProps {
   onFinish?(data: UploadData, exif?: ExifTags): void;
   onFailed?(): void;
   defaultImage?: string;
+  urlPrefix?: string;
 }
 
 export type UploadData = {
@@ -75,7 +76,14 @@ export type UploadData = {
 };
 
 export function Upload(props: UploadProps) :React.ReactElement {
-  const { url, onFinish, onFailed, allowExtensions, defaultImage } = props;
+  const {
+    url,
+    onFinish,
+    onFailed,
+    allowExtensions,
+    defaultImage,
+    urlPrefix
+  } = props;
   const [status, setStatus] = React.useState(null);
   const [width, setWidth] = React.useState<number | string>(0);
   const [result, setResult] = React.useState(null);
@@ -163,7 +171,11 @@ export function Upload(props: UploadProps) :React.ReactElement {
       />
       {
         (status === SUCCESS) || defaultImage
-          ? <Preview url={result?.url || defaultImage} title={result?.filename} />
+          ?
+          <Preview
+            url={result?.url ? urlPrefix + result.url : defaultImage}
+            title={result?.filename}
+          />
           :
           <>
             <Mask style={{width: width, backgroundColor: MASK_COLOR}} />
