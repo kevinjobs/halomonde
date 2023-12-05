@@ -40,7 +40,19 @@ export function MoreInfo(props: MoreInfoProps) {
       <EditItem name="author" label="作者">
         <Input
           data-name="author"
-          defaultValue={state?.author || getLocalStorage().name}
+          defaultValue={(() => {
+            // 如果 state 存在 author 则直接使用
+            if (state?.author) return state.author;
+            // 如果 state 中不存在，但 localStorage 中存在
+            // 即已有登录用户，则使用登录用户名为作者
+            const localName = getLocalStorage().name;
+            if (localName) {
+              setPostValue('author', getLocalStorage().name);
+              return getLocalStorage().name;
+            }
+            // 都不存在则返回空字符
+            return '';
+          })()}
           onChange={setValue}
         />
       </EditItem>
