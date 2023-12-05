@@ -21,11 +21,11 @@ export interface TableRow {
   title: React.ReactNode;
   author: React.ReactNode;
   type: React.ReactNode;
-  updateAt: React.ReactNode;
+  updateAt?: React.ReactNode;
   createAt: React.ReactNode;
   preview: React.ReactNode;
   tags: React.ReactNode;
-  sumary: React.ReactNode;
+  sumary?: React.ReactNode;
   format: React.ReactNode;
   status: React.ReactNode;
   category: React.ReactNode;
@@ -33,15 +33,15 @@ export interface TableRow {
 }
 
 const TABLE_HEADERS = [
-  { field: 'id', name: 'ID', },
-  { field: 'uid', name: 'UID', width: 60, },
+  // { field: 'id', name: 'ID', },
+  // { field: 'uid', name: 'UID', width: 60, },
   { field: 'createAt', name: '创建日期', width: 100, },
-  { field: 'updateAt', name: '更新日期', width: 100, },
+  // { field: 'updateAt', name: '更新日期', width: 100, },
   { field: 'type', name: '类型', },
-  { field: 'title', name: '标题', },
+  { field: 'title', name: '标题', width: 200 },
   { field: 'author', name: '作者', },
   // { field: 'content', name: '内容', },
-  { field: 'sumary', name: '摘要', width: 200, },
+  // { field: 'sumary', name: '摘要', width: 200, },
   { field: 'preview', name: '预览', width: 100, },
   { field: 'status', name: '状态', },
   { field: 'tags', name: '标签', },
@@ -86,15 +86,15 @@ function toTableData (
 ) :TableRow[] {
   if (!posts) {
     const sk = {
-      id: <Skeleton width={20} />,
-      uid: <Skeleton />,
+      // id: <Skeleton width={20} />,
+      // uid: <Skeleton />,
       createAt: <Skeleton />,
-      updateAt: <Skeleton />,
+      // updateAt: <Skeleton />,
       type: <Skeleton width={40} />,
       title: <Skeleton width={140} />,
       author: <Skeleton width={60} />,
       // content: <span>{post.content}</span>,
-      sumary: <Skeleton />,
+      // sumary: <Skeleton />,
       preview: <Skeleton height={80} />,
       status: <Skeleton width={40} />,
       tags: <Skeleton width={40} />,
@@ -111,15 +111,15 @@ function toTableData (
   }
   const rows:TableRow[] = posts.map((post) => {
     return {
-      id: <span style={{fontSize: 14}}>{post.id}</span>,
-      uid: <span style={{fontSize: 12}}>{post.uid.slice(0, 10)+'...'}</span>,
+      // id: <span style={{fontSize: 14}}>{post.id}</span>,
+      // uid: <span style={{fontSize: 12}}>{post.uid.slice(0, 10)+'...'}</span>,
       createAt: <span>{dayjs.unix(Number(String(post.createAt).slice(0, 10))).format('YYYY-MM-DD')}</span>,
-      updateAt: <span>{dayjs.unix(Number(String(post.updateAt).slice(0, 10))).format('YYYY-MM-DD')}</span>,
+      // updateAt: <span>{dayjs.unix(Number(String(post.updateAt).slice(0, 10))).format('YYYY-MM-DD')}</span>,
       type: <span>{post.type}</span>,
       title: <span onClick={() => onView(post)} style={{cursor: 'pointer', color: COLOR_MAP.primary}}>{post.title}</span>,
       author: <span>{post.author}</span>,
       // content: <span>{post.content}</span>,
-      sumary: <span>{post.excerpt || post.description}</span>,
+      // sumary: <span>{post.excerpt || post.description}</span>,
       preview: renderPreview(post.url.replace('static/', 'static/thumb-'), post.title),
       status: renderStatus(post.status),
       tags: renderTags(post.tags),
