@@ -110,12 +110,13 @@ export function UserEdit({user, onSuccess}: UserEditProps) :React.ReactElement {
                     ?
                     <Upload
                       url={UPLOAD_URL}
+                      urlPrefix={BASE_URL}
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       onFinish={(data: any) => dispatch({type: '', payload: {avatar: data.url}})}
                       allowExtensions={['jpg', 'png', 'jpeg', 'gif', 'webp']}
                     />
                     :
-                    <img src={BASE_URL + state.avatar} alt={state.username} />
+                    <img src={state.avatar} alt={state.username} />
                 }
               </div>
             </div>

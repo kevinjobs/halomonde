@@ -16,13 +16,20 @@ interface UsersData {
 
 export async function fetchUsers(params?: UserParams) :Response<UsersData> {
   const resp = await api.get(USERS_URL, {params});
-  if (resp.data.code === 0) return resp.data;
+  if (resp.data.code === 0) {
+    resp.data.data.users.forEach((user: IUser) => {
+      user.avatar = BASE_URL + user.avatar;
+    });
+    return resp.data;
+  };
   return resp.data.msg;
 }
 
 export async function updateUser(uid: string,data: IUser) :Response {
   const resp = await api.put(USER_URL, data, { params: { uid } });
-  if (resp.data.code === 0) return resp.data;
+  if (resp.data.code === 0) {
+    return resp.data;
+  };
   return resp.data.msg;
 }
 
