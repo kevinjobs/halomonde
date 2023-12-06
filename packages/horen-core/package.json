@@ -2,9 +2,12 @@
   "name": "horen-core",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "type": "module",
   "scripts": {
-    "watch": "tsc --watch -p tsconfig.json"
+    "build": "rollup -c rollup.config.build.js",
+    "watch": "rollup -c rollup.config.dev.js --watch"
   },
   "keywords": [],
   "author": "",
@@ -15,8 +18,13 @@
     "styled-components": "^5.3.11"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.5",
     "@types/react": "^18.2.37",
     "@types/styled-components": "^5.1.29",
+    "rollup": "^4.6.1",
+    "rollup-plugin-node-externals": "^6.1.2",
     "typescript": "^5.2.2"
   }
 }
