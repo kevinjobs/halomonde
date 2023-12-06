@@ -2,9 +2,11 @@
   "name": "horen-hooks",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/src/index.js",
+  "main": "./dist/index.js",
+  "typings": "./dist/src/index.d.ts",
+  "type": "module",
   "scripts": {
-    "watch": "tsc --watch -p tsconfig.json"
+    "build": "rollup -c rollup.config.js"
   },
   "keywords": [],
   "author": "",
@@ -13,8 +15,15 @@
     "react": "^18.2.0"
   },
   "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.5",
     "@types/react": "^18.2.35",
     "nodemon": "2.0.7",
+    "rollup": "^4.6.1",
+    "tslib": "^2.6.2",
     "typescript": "^5.2.2"
+  },
+  "peerDependencies": {
+    "tslib": "^2.6.2"
   }
 }
