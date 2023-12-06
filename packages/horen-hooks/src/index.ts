@@ -1,1 +1,1 @@
- export { useMove, MovePosition } from './use-move';
+ export { useMove, type MovePosition } from './use-move';

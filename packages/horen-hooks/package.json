@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "./dist/index.js",
-  "typings": "./dist/src/index.d.ts",
+  "typings": "./dist/index.d.ts",
   "type": "module",
   "scripts": {
-    "build": "rollup -c rollup.config.js"
+    "build": "rollup -c rollup.config.build.js",
+    "watch": "rollup -c rollup.config.dev.js --watch"
   },
   "keywords": [],
   "author": "",
