@@ -5,6 +5,7 @@ const AdminPage = React.lazy(() => import('@/pages/admin'));
 const ArticlePage = React.lazy(() => import('@/pages/posts/post'));
 const ArticlesPage = React.lazy(() => import('@/pages/posts'));
 const GalleryPage = React.lazy(() => import('@/pages/gallery'));
+const GoPage = React.lazy(() => import('@/pages/go'));
 
 const PostsAdmin = React.lazy(() => import('./pages/admin/posts'));
 const HomeAdmin = React.lazy(() => import('./pages/admin/home'));
@@ -94,5 +95,9 @@ export const RootRouter = () => useRoutes(
       path: 'gallery',
       element: <React.Suspense><GalleryPage /></React.Suspense>,
     },
+    {
+      path: 'go',
+      element: <React.Suspense><GoPage /></React.Suspense>
+    }
   ]
 );
