@@ -12,6 +12,34 @@ const G = styled.div`
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    .go-search {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 12px 32px 12px;
+      background-color: #fff;
+      border-radius: 8px;
+      input {
+        height: 48px;
+        width: 100%;
+        padding: 0 16px;
+        border: none;
+        border-radius: 8px;
+        background-color: transparent;
+        &:focus {
+          outline: none;
+        }
+      }
+      button {
+        height: 48px;
+        width: 84px;
+        border: none;
+        background-color: #229453;
+        border-radius: 0 8px 8px 0;
+        color: #fff;
+      }
+    }
   }
 `;
 
@@ -81,6 +109,7 @@ export default function GoPage() {
   return (
     <G className="go-page">
       <div className="container">
+        <Search />
         {items.map(i => <Item {...i} />)}
         <Item
           title="增加"
@@ -89,6 +118,25 @@ export default function GoPage() {
         />
       </div>
     </G>
+  )
+}
+
+function Search() {
+  const bing = 'https://cn.bing.com/search?q=';
+
+  const [s, setS] = React.useState('');
+
+  const handleClick = () => {
+    const url = bing + s;
+    window.open(url);
+    setS('');
+  }
+
+  return (
+    <div className="go-search">
+      <input value={s} onChange={e => setS(e.target.value)} />
+      <button onClick={handleClick}>搜索</button>
+    </div>
   )
 }
 
