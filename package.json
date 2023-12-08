@@ -4,9 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "concurrently \"pnpm -F horen-hooks run watch\" \"pnpm -F horen-core run watch\" \"pnpm -F horen-docs run dev\""
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^7.2.1"
+  }
 }

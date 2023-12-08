@@ -16,6 +16,14 @@ export interface SliderProps {
    */
   onChange?(percent: number, value: number): void;
   /**
+   * 滑动条停止滚动时的回调函数
+   * 
+   * @param percent 范围为 0.01 ~ 1.00
+   * 
+   * @param value 实际长度或宽度
+   */
+  onChangeEnd?(percent: number, value: number): void;
+  /**
    * 滑动条的高度或宽度，默认为 8，单位为 px
    */
   size?: number;
@@ -45,11 +53,15 @@ export function Slider(props: SliderProps) {
   const {
     direction='horization',
     onChange,
+    onChangeEnd,
     size=8,
     defaultValue=0
   } = props;
+
+  const per = React.useRef<number>(0);
   
   const handleChange = (p: MovePosition) => {
+    per.current = direction === 'horization' ? p.x : (1 - p.y);
     setWidth(w * p.x);
     setHeight(h * (1 - p.y));
     if (onChange) {
@@ -60,11 +72,21 @@ export function Slider(props: SliderProps) {
 
   const { ref, active } = useMove<HTMLDivElement>(handleChange);
 
-  const w = Number(ref.current?.getBoundingClientRect().width);
-  const h = Number(ref.current?.getBoundingClientRect().height);
+  const w = Number(ref.current?.getBoundingClientRect()?.width);
+  const h = Number(ref.current?.getBoundingClientRect()?.height);
 
   const [width, setWidth] = React.useState(0);
   const [height, setHeight] = React.useState(0);
+
+  const handleChangeEnd = React.useCallback(() => {
+    if (!active && onChangeEnd) {
+      onChangeEnd(per.current, direction === 'horization' ? w : h);
+    } 
+  }, [active]);
+
+  React.useEffect(() => {
+    handleChangeEnd();
+  }, [active]);
 
   React.useEffect(() => {
     if (ref.current) {
