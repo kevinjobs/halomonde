@@ -1,12 +1,16 @@
 {
-  "name": "horen-hooks",
-  "version": "1.0.0",
+  "name": "@horen/hooks",
+  "version": "0.0.1",
   "description": "",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "type": "module",
+  "files": [
+    "dist/",
+    "package.json"
+  ],
   "scripts": {
-    "build": "rollup -c rollup.config.build.js",
+    "build": "rollup -c rollup.config.prod.js",
     "watch": "rollup -c rollup.config.dev.js --watch"
   },
   "keywords": [],
