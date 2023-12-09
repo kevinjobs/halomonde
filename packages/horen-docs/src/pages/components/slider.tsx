@@ -1,5 +1,5 @@
 import React from 'react';
-import { Slider } from 'horen-core';
+import { Slider } from '@horen/core';
 import { ComponentPage, Desc, Playground } from './_layout';
 
 export default function ComponentSlider() {

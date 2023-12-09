@@ -18,8 +18,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       '@koa/router':
-        specifier: ^10.1.1
-        version: 10.1.1
+        specifier: ^12.0.1
+        version: 12.0.1
       dayjs:
         specifier: ^1.11.2
         version: 1.11.10
@@ -51,8 +51,8 @@ importers:
 
   packages/horen-core:
     dependencies:
-      horen-hooks:
-        specifier: workspace:*
+      '@horen/hooks':
+        specifier: ^0.0.1
         version: link:../horen-hooks
       react:
         specifier: ^18.2.0
@@ -91,12 +91,9 @@ importers:
 
   packages/horen-docs:
     dependencies:
-      horen-core:
+      '@horen/core':
         specifier: workspace:*
         version: link:../horen-core
-      horen-hooks:
-        specifier: workspace:*
-        version: link:../horen-hooks
       next:
         specifier: 14.0.1
         version: 14.0.1(react-dom@18.2.0)(react@18.2.0)
@@ -160,8 +157,8 @@ importers:
         specifier: 3.1.0
         version: 3.1.0
       '@koa/router':
-        specifier: 10.0.0
-        version: 10.0.0
+        specifier: 12.0.1
+        version: 12.0.1
       ajv:
         specifier: ^8.10.0
         version: 8.12.0
@@ -2076,27 +2073,12 @@ packages:
       vary: 1.1.2
     dev: false
 
-  /@koa/router@10.0.0:
-    resolution: {integrity: sha512-z9ytrKWn/j/qUApMSJzZbUwkbLcN2ZXGq6UsqWkZb50Us+/Qpu0RwgZ6ytawVOhfFBZ1ai5iVWeD2Dcu0qcnJw==}
-    engines: {node: '>= 8.0.0'}
-    deprecated: '**IMPORTANT 10x+ PERFORMANCE UPGRADE**: Please upgrade to v12.0.1+ as we have fixed an issue with debuglog causing 10x slower router benchmark performance, see https://github.com/koajs/router/pull/173'
+  /@koa/router@12.0.1:
+    resolution: {integrity: sha512-ribfPYfHb+Uw3b27Eiw6NPqjhIhTpVFzEWLwyc/1Xp+DCdwRRyIlAUODX+9bPARF6aQtUu1+/PHzdNvRzcs/+Q==}
+    engines: {node: '>= 12'}
     dependencies:
       debug: 4.3.4(supports-color@6.1.0)
-      http-errors: 1.8.1
-      koa-compose: 4.1.0
-      methods: 1.1.2
-      path-to-regexp: 6.2.1
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
-  /@koa/router@10.1.1:
-    resolution: {integrity: sha512-ORNjq5z4EmQPriKbR0ER3k4Gh7YGNhWDL7JBW+8wXDrHLbWYKYSJaOJ9aN06npF5tbTxe2JBOsurpJDAvjiXKw==}
-    engines: {node: '>= 8.0.0'}
-    deprecated: '**IMPORTANT 10x+ PERFORMANCE UPGRADE**: Please upgrade to v12.0.1+ as we have fixed an issue with debuglog causing 10x slower router benchmark performance, see https://github.com/koajs/router/pull/173'
-    dependencies:
-      debug: 4.3.4(supports-color@6.1.0)
-      http-errors: 1.8.1
+      http-errors: 2.0.0
       koa-compose: 4.1.0
       methods: 1.1.2
       path-to-regexp: 6.2.1
@@ -6427,7 +6409,7 @@ packages:
     dev: true
 
   /file-uri-to-path@1.0.0:
-    resolution: {integrity: sha1-VTp7hEb/b2hDWcRF8eN6BdrMM90=, tarball: https://registry.npmmirror.com/file-uri-to-path/download/file-uri-to-path-1.0.0.tgz}
+    resolution: {integrity: sha512-0Zt+s3L7Vf1biwWZ29aARiVYLx7iMGnEUl9x33fbB/j3jR81u/O2LbqK+Bm1CDSNDKVtJ/YjwY7TUd5SkeLQLw==}
     requiresBuild: true
     dev: true
     optional: true

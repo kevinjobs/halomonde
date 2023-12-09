@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tag } from 'horen-core';
+import { Tag } from '@horen/core';
 
 export default function ComponentTag() {
   return (

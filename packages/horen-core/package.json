@@ -1,6 +1,6 @@
 {
-  "name": "horen-core",
-  "version": "1.0.0",
+  "name": "@horen/core",
+  "version": "0.0.1",
   "description": "",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "horen-hooks": "workspace:*",
+    "@horen/hooks": "^0.0.1",
     "react": "^18.2.0",
     "styled-components": "^5.3.11"
   },
