@@ -6,7 +6,7 @@
   "typings": "./dist/index.d.ts",
   "type": "module",
   "scripts": {
-    "build": "rollup -c rollup.config.build.js",
+    "build": "rollup -c rollup.config.prod.js",
     "watch": "rollup -c rollup.config.dev.js --watch"
   },
   "keywords": [],
@@ -25,6 +25,7 @@
     "@types/styled-components": "^5.1.29",
     "rollup": "^4.6.1",
     "rollup-plugin-node-externals": "^6.1.2",
+    "tslib": "^2.6.2",
     "typescript": "^5.2.2"
   }
 }

@@ -1,10 +1,10 @@
-import buildConfig from './rollup.config.build.js';
+import baseConfig from './rollup.config.base.js';
 import typescript from '@rollup/plugin-typescript';
 
 export default {
-  ...buildConfig,
+  ...baseConfig,
   plugins: [
-    ...buildConfig.plugins,
+    ...baseConfig.plugins,
     typescript({
       compilerOptions: {
         declarationMap: true,
