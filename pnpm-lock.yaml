@@ -12,6 +12,108 @@ importers:
         specifier: ^7.2.1
         version: 7.6.0
 
+  packages/@horen/core:
+    dependencies:
+      '@horen/hooks':
+        specifier: workspace:*
+        version: link:../hooks
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      styled-components:
+        specifier: ^5.3.11
+        version: 5.3.11(@babel/core@7.23.2)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
+    devDependencies:
+      '@rollup/plugin-commonjs':
+        specifier: ^25.0.7
+        version: 25.0.7(rollup@4.6.1)
+      '@rollup/plugin-node-resolve':
+        specifier: ^15.2.3
+        version: 15.2.3(rollup@4.6.1)
+      '@rollup/plugin-typescript':
+        specifier: ^11.1.5
+        version: 11.1.5(rollup@4.6.1)(tslib@2.6.2)(typescript@5.2.2)
+      '@types/react':
+        specifier: ^18.2.37
+        version: 18.2.37
+      '@types/styled-components':
+        specifier: ^5.1.29
+        version: 5.1.29
+      rollup:
+        specifier: ^4.6.1
+        version: 4.6.1
+      rollup-plugin-node-externals:
+        specifier: ^6.1.2
+        version: 6.1.2(rollup@4.6.1)
+      tslib:
+        specifier: ^2.6.2
+        version: 2.6.2
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+
+  packages/@horen/docs:
+    dependencies:
+      '@horen/core':
+        specifier: workspace:*
+        version: link:../core
+      next:
+        specifier: 14.0.1
+        version: 14.0.1(react-dom@18.2.0)(react@18.2.0)
+      react:
+        specifier: ^18
+        version: 18.2.0
+      react-dom:
+        specifier: ^18
+        version: 18.2.0(react@18.2.0)
+    devDependencies:
+      '@types/node':
+        specifier: ^20
+        version: 20.8.9
+      '@types/react':
+        specifier: ^18
+        version: 18.2.37
+      '@types/react-dom':
+        specifier: ^18
+        version: 18.2.14
+      eslint:
+        specifier: ^8
+        version: 8.52.0
+      eslint-config-next:
+        specifier: 14.0.1
+        version: 14.0.1(eslint@8.52.0)(typescript@5.2.2)
+      typescript:
+        specifier: ^5
+        version: 5.2.2
+
+  packages/@horen/hooks:
+    dependencies:
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+    devDependencies:
+      '@rollup/plugin-node-resolve':
+        specifier: ^15.2.3
+        version: 15.2.3(rollup@4.6.1)
+      '@rollup/plugin-typescript':
+        specifier: ^11.1.5
+        version: 11.1.5(rollup@4.6.1)(tslib@2.6.2)(typescript@5.2.2)
+      '@types/react':
+        specifier: ^18.2.35
+        version: 18.2.37
+      nodemon:
+        specifier: 2.0.7
+        version: 2.0.7
+      rollup:
+        specifier: ^4.6.1
+        version: 4.6.1
+      tslib:
+        specifier: ^2.6.2
+        version: 2.6.2
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+
   packages/collect:
     dependencies:
       '@koa/cors':
@@ -48,108 +150,6 @@ importers:
       supertest:
         specifier: ^6.2.4
         version: 6.3.3
-
-  packages/horen-core:
-    dependencies:
-      '@horen/hooks':
-        specifier: ^0.0.1
-        version: link:../horen-hooks
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      styled-components:
-        specifier: ^5.3.11
-        version: 5.3.11(@babel/core@7.23.2)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
-    devDependencies:
-      '@rollup/plugin-commonjs':
-        specifier: ^25.0.7
-        version: 25.0.7(rollup@4.6.1)
-      '@rollup/plugin-node-resolve':
-        specifier: ^15.2.3
-        version: 15.2.3(rollup@4.6.1)
-      '@rollup/plugin-typescript':
-        specifier: ^11.1.5
-        version: 11.1.5(rollup@4.6.1)(tslib@2.6.2)(typescript@5.2.2)
-      '@types/react':
-        specifier: ^18.2.37
-        version: 18.2.37
-      '@types/styled-components':
-        specifier: ^5.1.29
-        version: 5.1.29
-      rollup:
-        specifier: ^4.6.1
-        version: 4.6.1
-      rollup-plugin-node-externals:
-        specifier: ^6.1.2
-        version: 6.1.2(rollup@4.6.1)
-      tslib:
-        specifier: ^2.6.2
-        version: 2.6.2
-      typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
-
-  packages/horen-docs:
-    dependencies:
-      '@horen/core':
-        specifier: workspace:*
-        version: link:../horen-core
-      next:
-        specifier: 14.0.1
-        version: 14.0.1(react-dom@18.2.0)(react@18.2.0)
-      react:
-        specifier: ^18
-        version: 18.2.0
-      react-dom:
-        specifier: ^18
-        version: 18.2.0(react@18.2.0)
-    devDependencies:
-      '@types/node':
-        specifier: ^20
-        version: 20.8.9
-      '@types/react':
-        specifier: ^18
-        version: 18.2.33
-      '@types/react-dom':
-        specifier: ^18
-        version: 18.2.14
-      eslint:
-        specifier: ^8
-        version: 8.52.0
-      eslint-config-next:
-        specifier: 14.0.1
-        version: 14.0.1(eslint@8.52.0)(typescript@5.2.2)
-      typescript:
-        specifier: ^5
-        version: 5.2.2
-
-  packages/horen-hooks:
-    dependencies:
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-    devDependencies:
-      '@rollup/plugin-node-resolve':
-        specifier: ^15.2.3
-        version: 15.2.3(rollup@4.6.1)
-      '@rollup/plugin-typescript':
-        specifier: ^11.1.5
-        version: 11.1.5(rollup@4.6.1)(tslib@2.6.2)(typescript@5.2.2)
-      '@types/react':
-        specifier: ^18.2.35
-        version: 18.2.35
-      nodemon:
-        specifier: 2.0.7
-        version: 2.0.7
-      rollup:
-        specifier: ^4.6.1
-        version: 4.6.1
-      tslib:
-        specifier: ^2.6.2
-        version: 2.6.2
-      typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
 
   packages/koapi:
     dependencies:
@@ -2119,7 +2119,6 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
-    libc: [glibc]
     requiresBuild: true
     dev: false
     optional: true
@@ -2129,7 +2128,6 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
-    libc: [musl]
     requiresBuild: true
     dev: false
     optional: true
@@ -2139,7 +2137,6 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
-    libc: [glibc]
     requiresBuild: true
     dev: false
     optional: true
@@ -2149,7 +2146,6 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
-    libc: [musl]
     requiresBuild: true
     dev: false
     optional: true
@@ -2750,7 +2746,6 @@ packages:
     resolution: {integrity: sha512-9lhc4UZstsegbNLhH0Zu6TqvDfmhGzuCWtcTFXY10VjLLUe4Mr0Ye2L3rrtHaDd/J5+tFMEuo5LTCSCMXWfUKw==}
     cpu: [arm64]
     os: [linux]
-    libc: [glibc]
     requiresBuild: true
     dev: true
     optional: true
@@ -2759,7 +2754,6 @@ packages:
     resolution: {integrity: sha512-FfoOK1yP5ksX3wwZ4Zk1NgyGHZyuRhf99j64I5oEmirV8EFT7+OhUZEnP+x17lcP/QHJNWGsoJwrz4PJ9fBEXw==}
     cpu: [arm64]
     os: [linux]
-    libc: [musl]
     requiresBuild: true
     dev: true
     optional: true
@@ -2768,7 +2762,6 @@ packages:
     resolution: {integrity: sha512-DNGZvZDO5YF7jN5fX8ZqmGLjZEXIJRdJEdTFMhiyXqyXubBa0WVLDWSNlQ5JR2PNgDbEV1VQowhVRUh+74D+RA==}
     cpu: [x64]
     os: [linux]
-    libc: [glibc]
     requiresBuild: true
     dev: true
     optional: true
@@ -2777,7 +2770,6 @@ packages:
     resolution: {integrity: sha512-RkJVNVRM+piYy87HrKmhbexCHg3A6Z6MU0W9GHnJwBQNBeyhCJG9KDce4SAMdicQnpURggSvtbGo9xAWOfSvIQ==}
     cpu: [x64]
     os: [linux]
-    libc: [musl]
     requiresBuild: true
     dev: true
     optional: true
@@ -3099,7 +3091,7 @@ packages:
     resolution: {integrity: sha512-HV52yjxuRi49psAVuHTFXXr+RSrCbIFDn9ayei0YH8xVVAXCO+5GwHAGKeREAmNbneweN0ySGoByr90yJCAnrQ==}
     dependencies:
       '@popperjs/core': 2.11.8
-      '@types/react': 18.2.35
+      '@types/react': 18.2.37
       date-fns: 2.30.0
       react-popper: 2.3.0(@popperjs/core@2.11.8)(react-dom@18.2.0)(react@18.2.0)
     transitivePeerDependencies:
@@ -3110,7 +3102,7 @@ packages:
   /@types/react-dom@18.2.14:
     resolution: {integrity: sha512-V835xgdSVmyQmI1KLV2BEIUgqEuinxp9O4G6g3FqO/SqLac049E53aysv0oEFD2kHfejeKU+ZqL2bcFWj9gLAQ==}
     dependencies:
-      '@types/react': 18.2.35
+      '@types/react': 18.2.37
     dev: true
 
   /@types/react-reconciler@0.26.7:
@@ -3127,14 +3119,6 @@ packages:
 
   /@types/react@18.2.33:
     resolution: {integrity: sha512-v+I7S+hu3PIBoVkKGpSYYpiBT1ijqEzWpzQD62/jm4K74hPpSP7FF9BnKG6+fg2+62weJYkkBWDJlZt5JO/9hg==}
-    dependencies:
-      '@types/prop-types': 15.7.9
-      '@types/scheduler': 0.16.5
-      csstype: 3.1.2
-    dev: true
-
-  /@types/react@18.2.35:
-    resolution: {integrity: sha512-LG3xpFZ++rTndV+/XFyX5vUP7NI9yxyk+MQvBDq+CVs8I9DLSc3Ymwb1Vmw5YDoeNeHN4PDZa3HylMKJYT9PNQ==}
     dependencies:
       '@types/prop-types': 15.7.9
       '@types/scheduler': 0.16.5

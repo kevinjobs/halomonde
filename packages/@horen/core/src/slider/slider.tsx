@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useMove, MovePosition } from 'horen-hooks/dist/use-move';
+import { useMove, MovePosition } from '@horen/hooks/dist/use-move';
 
 export interface SliderProps {
   /**
