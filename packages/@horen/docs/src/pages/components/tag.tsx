@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tag } from '@horen/core';
-import { ComponentPage, Desc, Playground } from './_layout';
+import { ComponentPage, Desc, Playground, Group } from './_layout';
 
 export default function ComponentTag() {
   return (
@@ -11,7 +11,16 @@ export default function ComponentTag() {
         usage="import { Tag } from '@horen/core'"
       />
       <Playground>
-        <Tag>hello</Tag>
+        <Group>
+          一般样式 
+          <Tag>hello</Tag>
+        </Group>
+        
+        <Group>
+          圆角 
+          <Tag rounded>rounded</Tag>
+        </Group>
+        
       </Playground>
     </ComponentPage>
   )

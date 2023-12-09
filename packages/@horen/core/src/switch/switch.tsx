@@ -28,17 +28,13 @@ export interface SwitchProps {
   defaultValue?: boolean;
 }
 
-export function Switch({onChange, defaultValue}: SwitchProps) {
-  const [on, toggle] = useToggle();
+export function Switch({onChange, defaultValue=false}: SwitchProps) {
+  const [on, toggle] = useToggle([defaultValue, !defaultValue]);
 
   const handleClick = () => {
     if (onChange) onChange(!on);
     toggle();
   }
-
-  React.useEffect(() => {
-    if (defaultValue !== undefined) toggle(defaultValue);
-  }, []);
 
   return (
     <S

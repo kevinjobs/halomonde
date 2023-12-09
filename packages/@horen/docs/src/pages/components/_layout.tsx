@@ -17,6 +17,10 @@ export interface PlaygroundProps {
   height?: number | string;
 }
 
+export interface GroupProps {
+  children: React.ReactNode;
+}
+
 export function ComponentPage({children}: ComponentPageProps) {
   return (
     <div className={style.componentPage}>
@@ -48,5 +52,11 @@ export function Playground({children,width='auto',height='100%'}: PlaygroundProp
     <div className={style.playground} style={{width, height}}>
       { children }
     </div>
+  )
+}
+
+export function Group({children}: GroupProps) {
+  return (
+    <div className={style.playgroundGroup}>{children}</div>
   )
 }
