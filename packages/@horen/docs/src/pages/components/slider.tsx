@@ -11,7 +11,7 @@ export default function ComponentSlider() {
     <ComponentPage>
       <Desc
         title='Slider'
-        description='a slider to control progress of something'
+        description='滑动条可用于控制进度'
         usage="import { Slider } from 'horen-core'"
       />
       <Playground>

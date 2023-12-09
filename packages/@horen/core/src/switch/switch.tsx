@@ -24,7 +24,7 @@ const T = styled.span`
 `;
 
 export interface SwitchProps {
-  onChange(value?: boolean): void;
+  onChange(value: boolean): void;
   defaultValue?: boolean;
 }
 
@@ -32,7 +32,8 @@ export function Switch({onChange, defaultValue}: SwitchProps) {
   const [on, toggle] = useToggle();
 
   const handleClick = () => {
-    if (onChange) onChange(on);
+    if (onChange) onChange(!on);
+    toggle();
   }
 
   React.useEffect(() => {
@@ -41,7 +42,7 @@ export function Switch({onChange, defaultValue}: SwitchProps) {
 
   return (
     <S
-      onClick={() => toggle()}
+      onClick={handleClick}
       style={{
         borderColor: on ? '#229453' : '#333'
       }}

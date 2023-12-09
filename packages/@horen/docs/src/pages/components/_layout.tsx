@@ -27,11 +27,17 @@ export function ComponentPage({children}: ComponentPageProps) {
 
 export function Desc({title, description, usage}: DescProps) {
   return (
-    <div className='component-desc'>
+    <div className={style.componentDesc}>
       <h1>{title}</h1>
-      <h4>{description}</h4>
-      <div className='component-desc__usage'>
+      <div className={style.componentSubtitle}>
+        <span>Description</span>
+        <span>{description}</span>
+      </div>
+      <div className={style.componentUsage}>
+        <span>Usage</span>
+        <code>
         { usage }
+        </code>
       </div>
     </div>
   )
