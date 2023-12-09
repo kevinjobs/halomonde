@@ -13,3 +13,7 @@ export function clamp(value: number, min: number | undefined, max: number | unde
 
   return Math.min(Math.max(value, min!), max!);
 }
+
+export function randomInt(min: number, max: number) {
+  return parseInt(String(Math.random()*(max-min+1)+min),10);
+}
