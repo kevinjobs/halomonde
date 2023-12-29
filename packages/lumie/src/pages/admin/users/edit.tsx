@@ -81,7 +81,7 @@ export function UserEdit({user, onSuccess}: UserEditProps) :React.ReactElement {
     if (state.uid) {
       (async() => {
         const data = await updateUser(state.uid, state);
-        if (data) {
+        if (typeof data !== 'string') {
           window.alert('更新成功');
           if (onSuccess) onSuccess();
         } else window.alert('添加失败');
@@ -89,7 +89,7 @@ export function UserEdit({user, onSuccess}: UserEditProps) :React.ReactElement {
     } else {
       (async() => {
         const data = await addUser(state);
-        if (data) {
+        if (typeof data !== 'string') {
           window.alert('添加成功');
           if (onSuccess) onSuccess();
         } else window.alert('添加失败');
@@ -104,20 +104,22 @@ export function UserEdit({user, onSuccess}: UserEditProps) :React.ReactElement {
           <div className='item'>
             <label>头像</label>
             <div className='upload-avatar'>
-              <div>
-                {
-                  !state.avatar
-                    ?
-                    <Upload
-                      url={UPLOAD_URL}
-                      urlPrefix={BASE_URL}
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      onFinish={(data: any) => dispatch({type: '', payload: {avatar: data.url}})}
-                      allowExtensions={['jpg', 'png', 'jpeg', 'gif', 'webp']}
-                    />
-                    :
+              <div style={{position: 'relative'}}>
+                <div style={{position: 'absolute', zIndex: 1}}>
+                  {
+                    state.avatar &&
                     <img src={state.avatar} alt={state.username} />
-                }
+                  }
+                </div>
+                <div style={{position: 'absolute', zIndex: 2}}>
+                  <Upload
+                    url={UPLOAD_URL}
+                    urlPrefix={BASE_URL}
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    onFinish={(data: any) => dispatch({type: '', payload: {avatar: data.url}})}
+                    allowExtensions={['jpg', 'png', 'jpeg', 'gif', 'webp']}
+                  />
+                </div>
               </div>
             </div>
           </div>

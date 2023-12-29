@@ -26,10 +26,10 @@ export async function fetchUsers(params?: UserParams) :Response<UsersData> {
 }
 
 export async function updateUser(uid: string,data: IUser) :Response {
+  // 替换 BASE_URL 值
+  data.avatar = data.avatar.replaceAll(BASE_URL, '');
   const resp = await api.put(USER_URL, data, { params: { uid } });
-  if (resp.data.code === 0) {
-    return resp.data;
-  };
+  if (resp.data.code === 0) return resp.data;
   return resp.data.msg;
 }
 
