@@ -5,6 +5,7 @@ const T = styled.span`
   padding: 2px 4px;
   color: #fff;
   font-size: 0.8rem;
+  font-weight: 300;
 `;
 
 export interface TagProps {
