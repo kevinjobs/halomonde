@@ -4,7 +4,7 @@ import {
   FileEditing,
 } from '@icon-park/react';
 import { Header } from './_partial/layout';
-import { Button } from '@/components/button';
+import { AddButton, Button } from '@horen/core';
 import { Dialog } from '@/components/dialog';
 import { IPost } from '@/types';
 import { addPost, fetchPosts, deletePost, updatePost } from '@/apis/posts';
@@ -88,12 +88,12 @@ export default function AdminVerse() {
       <Header>
         <Header.Title>VERSE </Header.Title>
         <Header.Add>
-          <Button onClick={() => {
+          <AddButton onClick={() => {
             // 每次重新生成否则是旧的值
             VERSE_TPL.title = 'verse-' + (new Date()).valueOf();
             setPickVerse(VERSE_TPL);
             setMode('add');
-          }}>添加</Button>
+          }}>添加</AddButton>
         </Header.Add>
       </Header>
       <div className='verse-list'>

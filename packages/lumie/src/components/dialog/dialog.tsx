@@ -52,7 +52,7 @@ export function Dialog (props: DialogProps) :React.ReactElement {
     animation = 'zoom-in-out',
     onCancel,
     children,
-    mask=false,
+    mask=true,
   } = props;
 
   const slideTopToDown = useSpring({

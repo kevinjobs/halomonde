@@ -6,6 +6,7 @@ const M = styled.div`
   position: fixed;
   inset: 0;
   background-color: rgba(0,0,0,0.75);
+  z-index: 1;
 `;
 
 export function Mask() {
