@@ -5,7 +5,7 @@ import { Upload } from '@/components/upload';
 import { addPost, fetchPosts, deletePost } from '@/apis/posts';
 import { getLocalStorage } from '.';
 import { CloseOne } from '@icon-park/react';
-import { UPLOAD_URL } from '@/constants';
+import { BASE_URL, UPLOAD_URL } from '@/constants';
 
 const CE = styled.div``;
 const Up = styled.div`
@@ -102,17 +102,16 @@ export default function CoverEdit() :React.ReactElement {
         <Header.Title>画廊封面编辑</Header.Title>
       </Header>
       <Up>
-        <div className='main'>
-          <div className='upload'>
+        <div className='preview'>
+          { cover && cover.map(c => renderPreviewItem(c, onDelSuccess)) }
+          <div className='preview-item' style={{border: '1px solid #777'}}>
             <Upload
+              urlPrefix={BASE_URL}
               url={UPLOAD_URL}
               onFinish={handleFinish}
               allowExtensions={['jpg', 'jpeg', 'webp', 'png']}
             />
-          </div>
-        </div>
-        <div className='preview'>
-          { cover && cover.map(c => renderPreviewItem(c, onDelSuccess)) }    
+          </div>   
         </div>
       </Up>
     </CE>
