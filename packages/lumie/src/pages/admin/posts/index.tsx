@@ -18,6 +18,7 @@ const Article = styled.div`
 const TableContainer = styled.div`
   margin-top: 16px;
   width: 90%;
+  padding-bottom: 32px;
   .table {
     text-align: center;
   }
