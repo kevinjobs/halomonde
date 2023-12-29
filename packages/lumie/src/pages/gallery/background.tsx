@@ -39,7 +39,7 @@ interface IProps {
   verse: IVerse,
 }
 
-export default function Background (props: IProps) :React.ReactElement {
+function Background(props: IProps) :React.ReactElement {
   const { cover, verse } = props;
 
   return (
@@ -50,3 +50,5 @@ export default function Background (props: IProps) :React.ReactElement {
     </Container>
   );
 }
+
+export default React.memo(Background);
