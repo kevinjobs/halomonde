@@ -10,7 +10,8 @@ import {
   Config,
   MindmapList,
   User,
-  Camp
+  Camp,
+  Key,
 } from '@icon-park/react';
 
 const LM = styled.div`
@@ -97,7 +98,18 @@ export default function LeftMenu() {
                 <User theme="outline" size="16" fill="#4a4a4a"/>
               </div>
               <div className='link'>
-                <NavLink to='/admin/user'>用户</NavLink>
+                <NavLink to='/admin/user'>用户管理</NavLink>
+              </div>
+            </Item>
+            
+          </Menu.SubMenuItem>
+          <Menu.SubMenuItem>
+            <Item>
+              <div className='icon'>
+                <Key theme="outline" size="16" fill="#4a4a4a"/>
+              </div>
+              <div className='link'>
+                <NavLink to='/admin/invitations'>邀请码</NavLink>
               </div>
             </Item>
           </Menu.SubMenuItem>

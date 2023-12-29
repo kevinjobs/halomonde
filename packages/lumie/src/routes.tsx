@@ -11,6 +11,7 @@ const PostsAdmin = React.lazy(() => import('./pages/admin/posts'));
 const HomeAdmin = React.lazy(() => import('./pages/admin/home'));
 const CoverAdmin = React.lazy(() => import('./pages/admin/cover'));
 const VerseAdmin = React.lazy(() => import('./pages/admin/verse'));
+const InvitationsAdmin = React.lazy(() => import('./pages/admin/invitations'));
 const UserAdmin = React.lazy(() => import('./pages/admin/users'));
 const EditPage = React.lazy(() => import('@/pages/admin/edit'));
 
@@ -77,6 +78,10 @@ export const RootRouter = () => useRoutes(
         {
           path: 'verse',
           element: <React.Suspense><VerseAdmin /></React.Suspense>
+        },
+        {
+          path: 'invitations',
+          element: <React.Suspense><InvitationsAdmin /></React.Suspense>
         },
         {
           path: 'user',

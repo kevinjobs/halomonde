@@ -1,0 +1,31 @@
+.code-item {
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+}
+
+.code-item:hover {
+  background-color: #f1f2f3;
+}
+
+.code-item > #status {
+  margin-right: 8px;
+  position: relative;
+  top: 2px;
+}
+
+#code {
+  width: 280px;
+}
+
+#register-by-icon {
+  position: relative;
+  top: 2px;
+  margin-left: 16px;
+  margin-right: 8px;
+}
+
+#register-by {
+  font-weight: 200;
+  font-size: 16px;
+}

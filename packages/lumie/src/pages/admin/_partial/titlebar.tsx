@@ -171,7 +171,7 @@ export default function Navbar (props: NavbarProps) :React.ReactElement {
     <Nav className="admin-navbar">
       <div className="logo">
         <span><h2>后台管理系统</h2></span>
-        <span className="version">v2.0.0-20231027</span>
+        <span className="version">v0.0.9-20231229</span>
       </div>
       <div className="container">
         <div className="search">
