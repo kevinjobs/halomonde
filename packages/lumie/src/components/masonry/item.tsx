@@ -127,7 +127,7 @@ export const MasonryItem = (props: ItemProps) => {
       <animated.div style={{...styles as any}}>
         <img src={props.src} alt={props.title} />
       </animated.div>
-      { picked && <Mask style={{zIndex: 998}} /> }
+      { picked && <Mask /> }
     </div>
   );
 };
