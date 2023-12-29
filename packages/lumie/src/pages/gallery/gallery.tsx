@@ -55,7 +55,7 @@ const maskStyle = {
 
 type PhotoItem = MasonryItem & IPost;
 
-export default function GalleryPage () :React.ReactElement {
+function GalleryPage () :React.ReactElement {
   const [nowOffset, setNowOffset] = React.useState(0);
   const [photos, setPhotos] = React.useState<Array<PhotoItem>>([]);
   const [hasMore, setHasMore] = React.useState(false);
@@ -131,3 +131,5 @@ const covertImageList = (imageList: Array<IPost>) :Array<PhotoItem> => {
     };
   });
 };
+
+export default React.memo(GalleryPage);
