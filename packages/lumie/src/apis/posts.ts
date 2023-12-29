@@ -110,4 +110,4 @@ export async function fetchPost(uid: string) :Response<{post: IPost}> {
 }
 
 const fullUrl = (post: IPost) => post.url = BASE_URL + post.url;
-const shrinkUrl = (post: IPost) => post.url = post.url.replace(BASE_URL, '');
+const shrinkUrl = (post: IPost) => post.url = post.url?.replace(BASE_URL, '');

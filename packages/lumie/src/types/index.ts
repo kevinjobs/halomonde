@@ -81,16 +81,6 @@ export interface IColorMap {
   dark: string,
 }
 
-export interface IVerse {
-  createAt: string,
-  updateAt: string,
-  id: number,
-  uid: string,
-  title: string,
-  author: string,
-  content: string[],
-}
-
 export type Response<T = undefined> = Promise<{
   code: number;
   msg: string;

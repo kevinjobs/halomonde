@@ -4,7 +4,14 @@ import { NavLink } from 'react-router-dom';
 import { Menu } from '@/components/menu';
 import COLOR_MAP from '@/styles/colors';
 
-import { BlocksAndArrows, CollectPicture, Config, MindmapList, User, HomeTwo } from '@icon-park/react';
+import {
+  BlocksAndArrows,
+  CollectPicture,
+  Config,
+  MindmapList,
+  User,
+  Camp
+} from '@icon-park/react';
 
 const LM = styled.div`
   margin-top: 10px;
@@ -65,6 +72,16 @@ export default function LeftMenu() {
               </div>
               <div className='link'>
                 <NavLink to='/admin/cover'>画册封面</NavLink>
+              </div>
+            </Item>
+          </Menu.SubMenuItem>
+          <Menu.SubMenuItem>
+            <Item>
+              <div className='icon'>
+                <Camp theme="outline" size="16" fill="#4a4a4a"/>
+              </div>
+              <div className='link'>
+                <NavLink to='/admin/verse'>封面诗文</NavLink>
               </div>
             </Item>
           </Menu.SubMenuItem>

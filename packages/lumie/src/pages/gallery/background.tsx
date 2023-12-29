@@ -2,7 +2,7 @@ import COLOR_MAP from '@/styles/colors';
 import React from 'react';
 import styled from 'styled-components';
 
-import { IVerse } from '@/types';
+import { IPost } from '@/types';
 
 const Container = styled.div`
   width: 100%;
@@ -36,7 +36,7 @@ const Desc = styled.div`
 
 interface IProps {
   cover: string,
-  verse: IVerse,
+  verse: IPost,
 }
 
 function Background(props: IProps) :React.ReactElement {
@@ -45,7 +45,7 @@ function Background(props: IProps) :React.ReactElement {
   return (
     <Container style={{backgroundImage:`url(${cover})`}} className="gallery-cover">
       <Desc>
-        { verse && verse.content.map((c,i) => <p key={i}>{c}</p>) }
+        { verse && verse.content.split('|').map((c,i) => <p key={i}>{c}</p>) }
       </Desc>
     </Container>
   );

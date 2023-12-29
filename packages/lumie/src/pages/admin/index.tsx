@@ -10,6 +10,7 @@ import PostAdmin from './posts';
 import UserAdmin from './users';
 import HomeAdmin from './home';
 import CoverAdmin from './cover';
+import VerseAdmin from './verse';
 import EditAdmin from './edit';
 
 const Admin = styled.div`
@@ -122,6 +123,7 @@ export default function AdminPage () :ReactElement {
             <Route path='home' element={<HomeAdmin />} />
             <Route path='post' element={<PostAdmin />} />
             <Route path='user' element={<UserAdmin />} />
+            <Route path='verse' element={<VerseAdmin />} />
             <Route path='cover' element={<CoverAdmin />} />
             <Route path='edit/:mode/:typ/:uid' element={<EditAdmin />} />
           </Routes>
