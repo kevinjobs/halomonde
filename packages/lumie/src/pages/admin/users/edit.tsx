@@ -16,10 +16,7 @@ const Content = styled.div`
   display: flex;
   flex-wrap: wrap;
   padding: 8px 16px;
-  border-radius: 5px;
-  border: 1px solid ${COLOR_MAP.blue};
-  background-color: ${COLOR_MAP.white};
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  justify-content: center;
   .item {
     display: flex;
     align-items: center;

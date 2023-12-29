@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { fetchUsers } from '@/apis/user';
 import { UserInfo, UserSke } from './user';
 import { IUser } from '@/types';
@@ -6,6 +6,7 @@ import { Header } from '../_partial/layout';
 import styled from 'styled-components';
 import { UserEdit } from './edit';
 import { Button } from '@/components/button';
+import { Dialog } from '@/components/dialog';
 
 const Us = styled.div``;
 
@@ -30,6 +31,7 @@ const Content = styled.div`
 
 const DEFAULT_USER: IUser = {
   uid: '',
+  avatar: '',
   invitation: '',
   username: '',
   nickname: '',
@@ -96,16 +98,25 @@ export function UserAdmin() :React.ReactElement {
           }
         </div>
         <div className='edit-area'>
-          <div className='user-edit'>
+          <Dialog
+            title="编辑用户"
+            visible={Boolean(pickUser)}
+            onCancel={() => setPickUser(null)}
+            animation="slide-top-down"
+            width={560}
+            height={660}
+            mask
+          >
             {
-              pickUser &&
+              pickUser
+              &&
               <UserEdit
                 user={pickUser}
                 onSuccess={getAndSetUsers}
                 onBlur={() => setPickUser(null)}
               />
             }
-          </div>
+          </Dialog>
         </div>
       </Content>
     </Us>

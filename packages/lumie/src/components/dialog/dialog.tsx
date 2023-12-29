@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useSpring, animated } from 'react-spring';
 import { CloseSmall } from '@icon-park/react';
+import { Mask } from '../mask';
 
 export interface DialogProps {
   title: string,
@@ -12,6 +13,7 @@ export interface DialogProps {
   animation?: 'slide-top-down' | 'zoom-in-out',
   onCancel?: React.MouseEventHandler<HTMLButtonElement | HTMLSpanElement>,
   children?: React.ReactNode,
+  mask?: boolean,
 }
 
 const DialogStyled = styled(animated.div)`
@@ -50,6 +52,7 @@ export function Dialog (props: DialogProps) :React.ReactElement {
     animation = 'zoom-in-out',
     onCancel,
     children,
+    mask=false,
   } = props;
 
   const slideTopToDown = useSpring({
@@ -96,6 +99,7 @@ export function Dialog (props: DialogProps) :React.ReactElement {
       <Content style={{width:width,height:height,}}>
         { children }
       </Content>
+      {mask && visible && <Mask />}
     </DialogStyled>
   );
 }
