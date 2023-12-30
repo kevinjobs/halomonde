@@ -2,6 +2,7 @@ import typescript from '@rollup/plugin-typescript';
 import resolve from '@rollup/plugin-node-resolve';
 import externals from 'rollup-plugin-node-externals';
 import commonjs from '@rollup/plugin-commonjs';
+import postcss from 'rollup-plugin-postcss';
 
 export default {
   input: './src/index.ts',
@@ -19,5 +20,6 @@ export default {
     externals({
       exclude: ['styled-components']
     }),
+    postcss()
   ],
 }

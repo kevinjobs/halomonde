@@ -1,5 +1,8 @@
 {
-  "include": ["./src/**/*.ts", "./src/**/*.tsx"],
+  "include": [
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
+  ],
   "exclude": [],
   "compilerOptions": {
     "target": "es5",

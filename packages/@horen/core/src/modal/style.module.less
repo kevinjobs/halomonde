@@ -1,0 +1,64 @@
+.modal {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.modalContainer {
+  background-color: #fff;
+  border-radius: 5px;
+  display: inline-block;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 80px;
+  text-align: center;
+}
+
+.fullScreen {
+  inset: 0;
+  transform: none;
+}
+
+.closeModal {
+  text-align: right;
+}
+
+.closeIcon {
+  display: inline-block;
+  transform: rotate(45deg);
+  zoom: 1.6;
+  position: relative;
+  right: -1px;
+  height: 1rem;
+  line-height: 1rem;
+  user-select: none;
+  font-weight: 200;
+}
+
+.closeModalFrame {
+  display: inline-block;
+  position: relative;
+  right: 4px;
+  top: 2px;
+  border-radius: 3px;
+  &:hover {
+    background-color: #f2f3f4; 
+  }
+}
+
+.modalMain {
+  padding: 0px 28px 28px 28px;
+}
+
+.modalHeader {
+  position: relative;
+}
+
+.modalContent {
+  margin-top: 8px;
+}

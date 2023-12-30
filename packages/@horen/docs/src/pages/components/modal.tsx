@@ -17,7 +17,7 @@ export default function ComponentSlider() {
         <Button onClick={() => setV(!v)}>open modal</Button>
         <Modal visible={v} onClose={() => setV(false)}>
           <Modal.Header>
-            <h2>hello</h2>
+            <div>hello</div>
           </Modal.Header>
           <Modal.Content>
             <input />
