@@ -5,7 +5,7 @@ import { IUser } from '@/types';
 import { Header } from '../_partial/layout';
 import styled from 'styled-components';
 import { UserEdit } from './edit';
-import { Button } from '@/components/button';
+import { AddButton } from '@horen/core';
 import { Modal } from '@horen/core';
 
 const Us = styled.div``;
@@ -14,17 +14,9 @@ const Content = styled.div`
   display: flex;
   align-items: flex-start;
   .preview {
-    width: 1040px;
     .item {
       display: inline-block;
       vertical-align: top;
-    }
-  }
-  .edit-area {
-    width: 300px;
-    margin: 12px 32px;
-    .user-edit {
-      width: 300px;
     }
   }
 `;
@@ -69,10 +61,10 @@ export function UserAdmin() :React.ReactElement {
       <Header>
         <Header.Title>用户管理</Header.Title>
         <Header.Add>
-          <Button onClick={() => {
+          <AddButton onClick={() => {
             setPickUser(null);
             setTimeout(() => setPickUser(DEFAULT_USER), 100);
-          }}>新增用户</Button>
+          }}>新增用户</AddButton>
         </Header.Add>
       </Header>
       <Content>

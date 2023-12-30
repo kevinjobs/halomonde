@@ -12,7 +12,9 @@ const StyledHeader = styled.div`
 
 const StyledTitle = styled.h3``;
 
-const StyledAdd = styled.div``;
+const StyledAdd = styled.div`
+  margin-left: 8px;
+`;
 
 interface HeaderProps {
   children?: React.ReactNode
