@@ -15,6 +15,7 @@
   "dependencies": {
     "@horen/hooks": "workspace:*",
     "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "styled-components": "^5.3.11"
   },
   "devDependencies": {
@@ -22,6 +23,7 @@
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-typescript": "^11.1.5",
     "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.18",
     "@types/styled-components": "^5.1.29",
     "rollup": "^4.6.1",
     "rollup-plugin-node-externals": "^6.1.2",

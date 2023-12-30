@@ -21,5 +21,5 @@ export function Mask() {
   }, []);
   return document.getElementById(MASK_ID)
     ? ReactDOM.createPortal(<M/>, document.getElementById(MASK_ID))
-    : <div></div>;
+    : '';
 }

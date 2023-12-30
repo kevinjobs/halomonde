@@ -6,7 +6,7 @@ import { Header } from '../_partial/layout';
 import styled from 'styled-components';
 import { UserEdit } from './edit';
 import { Button } from '@/components/button';
-import { Dialog } from '@/components/dialog';
+import { Modal } from '@horen/core';
 
 const Us = styled.div``;
 
@@ -98,25 +98,22 @@ export function UserAdmin() :React.ReactElement {
           }
         </div>
         <div className='edit-area'>
-          <Dialog
-            title="编辑用户"
-            visible={Boolean(pickUser)}
-            onCancel={() => setPickUser(null)}
-            animation="slide-top-down"
-            width={560}
-            height={660}
-            mask
-          >
-            {
-              pickUser
-              &&
-              <UserEdit
-                user={pickUser}
-                onSuccess={getAndSetUsers}
-                onBlur={() => setPickUser(null)}
-              />
-            }
-          </Dialog>
+          <Modal visible={Boolean(pickUser)} onClose={() => setPickUser(null)}>
+            <Modal.Header>
+              <h2>{pickUser?.uid ? '编辑' : '新增'}用户</h2>
+            </Modal.Header>
+            <Modal.Content>
+              {
+                pickUser
+                &&
+                <UserEdit
+                  user={pickUser}
+                  onSuccess={getAndSetUsers}
+                  onBlur={() => setPickUser(null)}
+                />
+              }
+            </Modal.Content>
+          </Modal>
         </div>
       </Content>
     </Us>
