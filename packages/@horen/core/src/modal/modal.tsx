@@ -1,5 +1,6 @@
 import React, { HtmlHTMLAttributes } from 'react';
 import css from './style.module.less';
+import { Icon } from '../icon';
 
 export interface ModalProps extends HtmlHTMLAttributes<HTMLDivElement> {
   title?: string;
@@ -42,7 +43,9 @@ function Modal(props: ModalProps) {
             <span
               className={css.closeIcon}
               onClick={(e) => {if (onClose) onClose(e);}}
-            >＋</span>
+            >
+              <Icon name='close' />
+            </span>
           </div>
         </div>
         <div className={css.modalMain}>{ children }</div>

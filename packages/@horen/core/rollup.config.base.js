@@ -3,6 +3,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import externals from 'rollup-plugin-node-externals';
 import commonjs from '@rollup/plugin-commonjs';
 import postcss from 'rollup-plugin-postcss';
+import svgr from '@svgr/rollup';
 
 export default {
   input: './src/index.ts',
@@ -20,6 +21,7 @@ export default {
     externals({
       exclude: ['styled-components']
     }),
-    postcss()
+    postcss(),
+    svgr(),
   ],
 }
