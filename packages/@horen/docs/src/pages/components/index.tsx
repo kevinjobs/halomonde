@@ -11,6 +11,7 @@ export default function Component() {
       <div><Link href={'/components/switch'}>Switch</Link></div>
       <div><Link href={'/components/tag'}>Tag</Link></div>
       <h1>Hooks</h1>
+      <div><Link href={'/hooks/use-form'}>useForm</Link></div>
       <div><Link href={'/hooks/use-hover'}>useHover</Link></div>
       <div><Link href={'/hooks/use-toggle'}>useToggle</Link></div>
       <div><Link href={'/hooks/use-move'}>useMove</Link></div>

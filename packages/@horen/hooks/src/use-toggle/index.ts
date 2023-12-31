@@ -27,7 +27,7 @@ export function useToggle<T = boolean>(
       }
     }
     // 重新裁切数组
-    console.log(state);
+    // console.log(state);
     return state.slice(index).concat(state.slice(0, index));
   }, values as T[]);
 
