@@ -13,7 +13,7 @@ const Container = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   background-color: rgba(255, 255, 255, 0.9);
-  z-index: 1;
+  // z-index: 1;
   position: relative;
 `;
 
