@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { UploadButton, UploadButtonProps } from '../button';
+import { Icon } from '../icon';
 import css from './image-upload.module.less';
 
 export interface ImageUploadProps extends UploadButtonProps {}
@@ -21,10 +22,12 @@ export function ImageUpload(props: ImageUploadProps) {
 
   const handleDelete = (e: React.MouseEvent<HTMLSpanElement>, file: File) => {
     const idx = files.indexOf(file);
-    const arr = [...files];
-    arr.splice(idx, 1);
-    setFiles(arr);
-    if (onChange) onChange(e as any, arr);
+    if (window.confirm('确定删除？')) {
+      const arr = [...files];
+      arr.splice(idx, 1);
+      setFiles(arr);
+      if (onChange) onChange(e as any, arr);
+    }
   }
 
   // 当文件列表长度变化时更新数据
@@ -61,7 +64,9 @@ const PreviewItem = ({file, name, onDelete}: {file: File, name: string, onDelete
       <span>{file.name}</span>
     </div>
     <div className={css.previewDel}>
-      <span onClick={e => onDelete(e, file)} data-name={name}>×</span>
+      <span onClick={e => onDelete(e, file)} data-name={name}>
+        <Icon name="close" size={16} />
+      </span>
     </div>
   </div>
 )

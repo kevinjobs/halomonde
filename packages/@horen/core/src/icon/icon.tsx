@@ -5,8 +5,15 @@ import Correct from './icon-correct.svg';
 import Error from './icon-error.svg';
 import Upload from './icon-upload.svg';
 
+export type IconName =
+  | 'add'
+  | 'close'
+  | 'correct'
+  | 'error'
+  | 'upload';
+
 export interface IconProps extends React.HtmlHTMLAttributes<HTMLSpanElement> {
-  name: string;
+  name: IconName;
   size?: number;
   fill?: string;
 }
