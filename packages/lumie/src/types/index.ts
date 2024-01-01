@@ -96,3 +96,10 @@ export type UploadReturnType = {
   origin: string;
   url: string;
 }
+
+export type IFile = {
+  filename: string;
+  filepath: string;
+  origin: string;
+  url?: string;
+}

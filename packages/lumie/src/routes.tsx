@@ -13,7 +13,8 @@ const CoverAdmin = React.lazy(() => import('./pages/admin/cover'));
 const VerseAdmin = React.lazy(() => import('./pages/admin/verse'));
 const InvitationsAdmin = React.lazy(() => import('./pages/admin/invitations'));
 const UserAdmin = React.lazy(() => import('./pages/admin/users'));
-const EditPage = React.lazy(() => import('@/pages/admin/edit'));
+const EditAdmin = React.lazy(() => import('@/pages/admin/edit'));
+const FileListAdmin = React.lazy(() => import('@/pages/admin/files'));
 
 const MobileAdmin = React.lazy(() => import('@/pages/mobile'));
 const MobilePhoto = React.lazy(() => import('./pages/mobile/photo'));
@@ -84,12 +85,16 @@ export const RootRouter = () => useRoutes(
           element: <React.Suspense><InvitationsAdmin /></React.Suspense>
         },
         {
+          path: 'files',
+          element: <React.Suspense><FileListAdmin /></React.Suspense>
+        },
+        {
           path: 'user',
           element: <React.Suspense><UserAdmin /></React.Suspense>
         },
         {
           path: 'edit/:mode/:typ/:uid',
-          element: <React.Suspense><EditPage /></React.Suspense>,
+          element: <React.Suspense><EditAdmin /></React.Suspense>,
         }
       ]
     },

@@ -1,8 +1,12 @@
 export const BASE_URL = process.env.NODE_ENV === 'development'
-  ? 'https://api.kevinjobs.com:5000'
+  ? 'http://localhost:5000'
   : 'https://api.kevinjobs.com:5000';
 
 export const UPLOAD_URL = BASE_URL + '/upload';
+
+export const FILE_LIST_URL = BASE_URL + '/file/list';
+
+export const FILE_URL = BASE_URL + '/file';
 
 export const LOGIN_URL = BASE_URL + '/token';
 

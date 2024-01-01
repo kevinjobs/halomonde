@@ -1,0 +1,45 @@
+.file-list-admin {
+  padding-bottom: 100px;
+}
+.file-item {
+  display: inline-block;
+  margin: 4px;
+}
+#file-preview {
+  display: inline-block;
+  position: relative;
+  width: 128px;
+  height: 84px;
+  user-select: none;
+}
+
+#file-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#delete-file {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+#file-preview:hover #delete-file {
+  display: block;
+}
+
+#load-more-file {
+  display: inline-block;
+  width: 128px;
+  height: 84px;
+  margin: 4px;
+  background-color: #777;
+  color: #fff;
+  vertical-align: top;
+  text-align: center;
+  line-height: 84px;
+  user-select: none;
+}

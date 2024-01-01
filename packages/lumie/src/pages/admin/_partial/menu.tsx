@@ -113,6 +113,16 @@ export default function LeftMenu() {
               </div>
             </Item>
           </Menu.SubMenuItem>
+          <Menu.SubMenuItem>
+            <Item>
+              <div className='icon'>
+                <Key theme="outline" size="16" fill="#4a4a4a"/>
+              </div>
+              <div className='link'>
+                <NavLink to='/admin/files'>文件列表</NavLink>
+              </div>
+            </Item>
+          </Menu.SubMenuItem>
         </Menu.SubMenu>
       </Menu>
     </LM>

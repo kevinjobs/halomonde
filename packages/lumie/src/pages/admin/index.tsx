@@ -12,6 +12,7 @@ import HomeAdmin from './home';
 import CoverAdmin from './cover';
 import VerseAdmin from './verse';
 import EditAdmin from './edit';
+import FileListAdmin from './files';
 import InvitaionsAdmin from './invitations';
 
 const Admin = styled.div`
@@ -126,6 +127,7 @@ export default function AdminPage () :ReactElement {
             <Route path='user' element={<UserAdmin />} />
             <Route path='verse' element={<VerseAdmin />} />
             <Route path='invitations' element={<InvitaionsAdmin />} />
+            <Route path='files' element={<FileListAdmin />} />
             <Route path='cover' element={<CoverAdmin />} />
             <Route path='edit/:mode/:typ/:uid' element={<EditAdmin />} />
           </Routes>
