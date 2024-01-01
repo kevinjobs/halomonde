@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Header } from './_partial/layout';
-import { Upload } from '@/components/upload';
+import { AvatarUpload } from '@/components/upload';
 import { addPost, fetchPosts, deletePost } from '@/apis/posts';
 import { getLocalStorage } from '.';
 import { CloseOne } from '@icon-park/react';
-import { BASE_URL, UPLOAD_URL } from '@/constants';
+import { UPLOAD_URL } from '@/constants';
+import { UploadReturnType } from '@/types';
 
 const CE = styled.div``;
 const Up = styled.div`
@@ -43,6 +44,11 @@ const Up = styled.div`
         object-fit: cover;
       }
     }
+    .upload-to {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 `;
 
@@ -52,7 +58,7 @@ export default function CoverEdit() :React.ReactElement {
   const [cover, setCovers] = React.useState<any[]>();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleFinish = (d: any) => {
+  const handleFinish = (d: UploadReturnType) => {
     if (d) {
       setUrl(d.url);
       (async() => {
@@ -68,8 +74,8 @@ export default function CoverEdit() :React.ReactElement {
           status: 'publish',
         });
         if (data){
-          window.alert('添加封面成功');
           getAllCovers();
+          window.alert('添加封面成功');
         } else window.alert('添加失败');
       })();
     }
@@ -104,13 +110,8 @@ export default function CoverEdit() :React.ReactElement {
       <Up>
         <div className='preview'>
           { cover && cover.map(c => renderPreviewItem(c, onDelSuccess)) }
-          <div className='preview-item' style={{border: '1px solid #777'}}>
-            <Upload
-              urlPrefix={BASE_URL}
-              url={UPLOAD_URL}
-              onFinish={handleFinish}
-              allowExtensions={['jpg', 'jpeg', 'webp', 'png']}
-            />
+          <div className='preview-item upload-to' style={{border: '1px solid #777'}}>
+            <AvatarUpload url={UPLOAD_URL} onSuccess={handleFinish} />
           </div>   
         </div>
       </Up>

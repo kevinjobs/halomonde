@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Button, ButtonProps } from "./button";
 import { Icon } from '../icon';
+import { useDeepEffect } from "@horen/hooks";
 
 export type UploadButtonProps = {
   onClick?(e: React.MouseEvent<HTMLButtonElement>): void;
@@ -17,7 +18,7 @@ export type UploadButtonProps = {
   value?: File[];
 } & Omit<ButtonProps, 'onClick' | 'onChange' | 'value'>;
 
-export function UploadButton(props: UploadButtonProps) {
+function UploadButton(props: UploadButtonProps) {
   const {
     onClick,
     onChange,
@@ -28,7 +29,6 @@ export function UploadButton(props: UploadButtonProps) {
     ...restProps
   } = props;
   const ref = useRef<HTMLInputElement>(null);
-  const [fs, setFs] = useState<File[]>(value);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     ref.current?.click();
@@ -36,17 +36,17 @@ export function UploadButton(props: UploadButtonProps) {
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const tmp = [...fs, ...extractFiles(e.target.files)];
-    if (onChange) onChange(e, tmp);
-    setFs(tmp);
+    const files = e.target.files;
+    const newFileList = [...value, ...extractFiles(files)];
+    if (onChange) onChange(e, newFileList);
   }
 
-  const extractFiles = (fileList: FileList | null) => {
+  const extractFiles = (fs: FileList | null) => {
     const arr = [];
-    if (fileList) {
-      for (const file of fileList) {
+    if (fs) {
+      for (const file of fs) {
         const ext = file.type.split('/')[1];
-        if (!fs.includes(file)) {
+        if (!value.includes(file)) {
           if (accept.length === 0 || accept?.includes(ext)) {
             arr.push(file);
           }
@@ -55,20 +55,6 @@ export function UploadButton(props: UploadButtonProps) {
     }
     return arr;
   }
-
-  const deepChange = () => {
-    const names: number[] = [];
-    for (let i=0; i<100; i++) names.push(i);
-    const arr = names.slice(value.length);
-    const final: Array<string | number> = [];
-
-    for (let i=0; i<value.length; i++) {
-      if (value[i]) final.push(value[i]?.name);
-    }
-    return [...final, ...arr];
-  }
-
-  useEffect(() => setFs(value), [...deepChange()]);
 
   return (
     <Button
@@ -107,3 +93,5 @@ export function UploadButton(props: UploadButtonProps) {
     </Button>
   )
 }
+
+export default React.memo(UploadButton);

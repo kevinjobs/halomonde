@@ -16,19 +16,19 @@ export function Icon({name, size=24, fill='#333', ...restProps}: IconProps) {
   
   switch(name) {
     case 'add':
-      icon = <Add height='inhreit' width='inhreit' fill={fill} />;
+      icon = <Add height={size} width={size} fill={fill} />;
       break;
     case 'close':
-      icon = <Close height='inhreit' width='inhreit' fill={fill} />
+      icon = <Close height={size} width={size} fill={fill} />
       break;
     case 'correct':
-      icon = <Correct height='inhreit' width='inhreit' fill={fill} />
+      icon = <Correct height={size} width={size} fill={fill} />
       break;
     case 'error':
-      icon = <Error height='inhreit' width='inhreit' fill={fill} />
+      icon = <Error height={size} width={size} fill={fill} />
       break;
     case 'upload':
-      icon = <Upload height='inhreit' width='inhreit' fill={fill} />;
+      icon = <Upload height={size} width={size} fill={fill} />;
       break;
   }
 

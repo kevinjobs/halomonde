@@ -14,41 +14,48 @@ export interface UploadProps {
 
 export function AvatarUpload(props: UploadProps) {
   const { url, defaultValue, onSuccess, onFailed } = props;
-  const [pickFiles, setPickFiles] = useState<File[]>([]);
+  const [pickFiles, setPickFiles] = useState<File[]>();
   const [status, setStatus] = useState('');
+  const [maskWidth, setMaskWidth] = useState<string | number>('100%');
 
   const SUCCESS = 'success';
   const FAILED = 'failed';
+  const UPLOADING = 'uploading';
 
-  const handleChange = (_: any, values: File[]) => {
-    setPickFiles([values.pop()]);
-    upload({
-      url: url,
-      file: values.pop(),
-      onProgress: (per) => {},
-      onSuccess: (result) => {
-        setStatus(SUCCESS);
-        if (onSuccess) onSuccess(result);
-      },
-      onFailed: () => {
-        setStatus(FAILED);
-        if (onFailed) onFailed();
-      }
-    });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, values: File[]) => {
+    setPickFiles(values);
+    (async() => {
+      await upload({
+        url: url,
+        file: lastOne(values),
+        onProgress: (per) => {
+          setStatus(UPLOADING);
+          setMaskWidth(`${per*100}%`);
+        },
+        onSuccess: (result) => {
+          setStatus(SUCCESS);
+          if (onSuccess) onSuccess(result);
+        },
+        onFailed: () => {
+          setStatus(FAILED);
+          if (onFailed) onFailed();
+        }
+      })
+    })();
   }
 
   return (
     <div className='component-avatar-upload'>
       <div className='avatar-preview'>
         {
-          pickFiles.length > 0
-           ? <img src={genUrl(pickFiles[0])} />
-           : <img src={defaultValue} />
+          pickFiles?.length > 0
+           ? <img src={genUrl(pickFiles)} alt="avatar-preview" />
+           : (defaultValue && <img src={defaultValue} alt="avatar-preview" />)
         }
-        {
-          (status === SUCCESS || status === FAILED)
-          && <div className='avatar-status-mask'></div>
-        }
+        <div
+          className='avatar-status-mask'
+          style={{width: maskWidth}}
+        ></div>
         <div className='avatar-status'>
           {status === SUCCESS && <Icon name='correct' />}
           {status === FAILED && <Icon name='error' />}
@@ -97,6 +104,13 @@ async function readExif(file: File) {
   return await ExifReader.load(file);
 }
 
-const genUrl = (file: File) => {
-  return window.webkitURL.createObjectURL(file);
+const lastOne = (arr: any[]) => {
+  const a = [...arr];
+  const f = a.reverse()[0];
+  return f;
+}
+
+const genUrl = (files: File[]) => {
+  const last = lastOne(files);
+  if (last) return window.webkitURL.createObjectURL(last);
 }
