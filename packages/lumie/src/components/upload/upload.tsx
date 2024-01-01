@@ -1,7 +1,7 @@
 import React from 'react';
 import axios, { AxiosRequestConfig } from 'axios';
 import styled from 'styled-components';
-import { Upload as UploadIcon } from '@icon-park/react';
+import { UploadButton } from '@horen/core';
 import COLOR_MAP from '@/styles/colors';
 import ExifReader, { Tags as ExifTags } from 'exifreader';
 
@@ -163,12 +163,7 @@ export function Upload(props: UploadProps) :React.ReactElement {
       onClick={handleClick}
       style={{borderColor: BOX_BORDRE_COLOR}}
     >
-      <input
-        type='file'
-        onChange={handleChange}
-        style={{width: 1, height: 1, position: 'absolute'}}
-        ref={inputRef}
-      />
+      <UploadButton onChange={handleChange} name='upload' />
       {
         (status === SUCCESS) || defaultImage
           ?
@@ -179,7 +174,6 @@ export function Upload(props: UploadProps) :React.ReactElement {
           :
           <>
             <Mask style={{width: width, backgroundColor: MASK_COLOR}} />
-            <UploadText txt={status} />
           </>
       }
     </Box>
@@ -194,14 +188,4 @@ const Preview = ({url, title}: {url: string; title?: string}) => (
   >
     <img src={url} alt={title || 'pic'} />
   </Pre>
-);
-
-const UploadText = ({txt}: {txt?: string}) => (
-  <T>
-    {
-      txt
-        ? <span style={{color: COLOR_MAP.white2}}>{ txt }</span>
-        : <><UploadIcon theme="outline" size="24" fill="#333"/><span>点击上传</span></>
-    }
-  </T>
 );

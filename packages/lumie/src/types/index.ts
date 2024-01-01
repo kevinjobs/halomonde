@@ -86,3 +86,13 @@ export type Response<T = undefined> = Promise<{
   msg: string;
   data?: T
 } | string>;
+
+
+export type UploadReturnType = {
+  ext: string;
+  filename: string;
+  height: number;
+  width: number;
+  origin: string;
+  url: string;
+}

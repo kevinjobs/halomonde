@@ -1,6 +1,8 @@
 import React from "react";
 import Add from './icon-add.svg';
 import Close from './icon-close.svg';
+import Correct from './icon-correct.svg';
+import Error from './icon-error.svg';
 import Upload from './icon-upload.svg';
 
 export interface IconProps extends React.HtmlHTMLAttributes<HTMLSpanElement> {
@@ -18,6 +20,12 @@ export function Icon({name, size=24, fill='#333', ...restProps}: IconProps) {
       break;
     case 'close':
       icon = <Close height='inhreit' width='inhreit' fill={fill} />
+      break;
+    case 'correct':
+      icon = <Correct height='inhreit' width='inhreit' fill={fill} />
+      break;
+    case 'error':
+      icon = <Error height='inhreit' width='inhreit' fill={fill} />
       break;
     case 'upload':
       icon = <Upload height='inhreit' width='inhreit' fill={fill} />;

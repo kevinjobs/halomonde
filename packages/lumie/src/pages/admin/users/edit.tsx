@@ -5,7 +5,7 @@ import { Input } from '@/components/input';
 import { Button } from '@/components/button';
 import { Select, Option } from '@/components/select';
 import COLOR_MAP from '@/styles/colors';
-import { Upload } from '@/components/upload';
+import { AvatarUpload } from '@/components/upload';
 import { BASE_URL, UPLOAD_URL } from '@/constants';
 import { updateUser, addUser } from '@/apis/user';
 import DatePicker from 'react-datepicker';
@@ -33,20 +33,6 @@ const Content = styled.div`
     display: flex;
     justify-content: center;
     width: 100%;
-  }
-  .upload-avatar {
-    width: 188px;
-    display: flex;
-    justify-content: center;
-    div {
-      width: 152px;
-      height: 152px;
-    }
-    img {
-      object-fit: cover;
-      width: 100%;
-      height: 100%;
-    }
   }
 `;
 
@@ -100,25 +86,11 @@ export function UserEdit({user, onSuccess}: UserEditProps) :React.ReactElement {
         <div className='edit-form'>
           <div className='item'>
             <label>头像</label>
-            <div className='upload-avatar'>
-              <div style={{position: 'relative'}}>
-                <div style={{position: 'absolute', zIndex: 1}}>
-                  {
-                    state.avatar &&
-                    <img src={state.avatar} alt={state.username} />
-                  }
-                </div>
-                <div style={{position: 'absolute', zIndex: 2}}>
-                  <Upload
-                    url={UPLOAD_URL}
-                    urlPrefix={BASE_URL}
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    onFinish={(data: any) => dispatch({type: '', payload: {avatar: data.url}})}
-                    allowExtensions={['jpg', 'png', 'jpeg', 'gif', 'webp']}
-                  />
-                </div>
-              </div>
-            </div>
+            <AvatarUpload
+              defaultValue={state.avatar}
+              url={UPLOAD_URL}
+              onSuccess={(result) => dispatch({type: '', payload: {avatar: result.url}})}
+            />
           </div>
           <div className='item'>
             <label>用户编码</label>

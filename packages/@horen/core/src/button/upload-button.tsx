@@ -23,7 +23,7 @@ export function UploadButton(props: UploadButtonProps) {
     onChange,
     name,
     multiple=false,
-    accept,
+    accept=[],
     value=[],
     ...restProps
   } = props;
@@ -36,10 +36,9 @@ export function UploadButton(props: UploadButtonProps) {
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (onChange) {
-      onChange(e, [...fs, ...extractFiles(e.target.files)]);
-    }
-    setFs([...fs, ...extractFiles(e.target.files)]);
+    const tmp = [...fs, ...extractFiles(e.target.files)];
+    if (onChange) onChange(e, tmp);
+    setFs(tmp);
   }
 
   const extractFiles = (fileList: FileList | null) => {
@@ -47,13 +46,29 @@ export function UploadButton(props: UploadButtonProps) {
     if (fileList) {
       for (const file of fileList) {
         const ext = file.type.split('/')[1];
-        if (!fs.includes(file) && accept?.includes(ext)) arr.push(file);
+        if (!fs.includes(file)) {
+          if (accept.length === 0 || accept?.includes(ext)) {
+            arr.push(file);
+          }
+        } 
       }
     }
     return arr;
   }
 
-  useEffect(() => setFs(value), [value.length]);
+  const deepChange = () => {
+    const names: number[] = [];
+    for (let i=0; i<100; i++) names.push(i);
+    const arr = names.slice(value.length);
+    const final: Array<string | number> = [];
+
+    for (let i=0; i<value.length; i++) {
+      if (value[i]) final.push(value[i]?.name);
+    }
+    return [...final, ...arr];
+  }
+
+  useEffect(() => setFs(value), [...deepChange()]);
 
   return (
     <Button
@@ -67,6 +82,8 @@ export function UploadButton(props: UploadButtonProps) {
     >
       <div style={{display: 'flex', alignItems: 'center',}}>
         <input
+          title={name}
+          placeholder=""
           type="file"
           style={{width: 0, height: 0,}}
           ref={ref}
