@@ -5,4 +5,10 @@ export { Modal, type ModalProps } from './modal';
 export { Slider, type SliderProps } from './slider';
 export { Tag, type TagProps } from './tag';
 export { Switch, type SwitchProps } from './switch';
-export { Upload, ImageUpload, type UploadProps, type ImageUploadProps } from './upload';
+export {
+  Upload,
+  ImageUpload,
+  AvatarUpload,
+  type UploadProps,
+  type ImageUploadProps
+} from './upload';
