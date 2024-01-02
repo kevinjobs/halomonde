@@ -13,6 +13,7 @@ export default function Component() {
       <h1>Hooks</h1>
       <div><Link href={'/hooks/use-form'}>useForm</Link></div>
       <div><Link href={'/hooks/use-hover'}>useHover</Link></div>
+      <div><Link href={'/hooks/use-set-state'}>useSetState</Link></div>
       <div><Link href={'/hooks/use-toggle'}>useToggle</Link></div>
       <div><Link href={'/hooks/use-move'}>useMove</Link></div>
     </div>

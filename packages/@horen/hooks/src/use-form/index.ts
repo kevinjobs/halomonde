@@ -1,4 +1,5 @@
 import React from "react";
+import { useSetState } from '../use-set-state';
 
 export interface UseFormProps {
   initial: any;
@@ -30,40 +31,36 @@ interface Action {
 }
 
 export function useForm({initial}: UseFormProps): UseFormReturnType {
-  const reducer = (state: any, action: Action) => {
-    if (action.type === 'clear') {
-      const tmp: any = {};
-      for (const k of Object.keys(state)) {
-        if (typeof state[k] === 'string') tmp[k] = '';
-        if (typeof state[k] === 'number') tmp[k] = 0;
-        if (typeof state[k] === 'boolean') tmp[k] = undefined;
-        if (typeof state[k] === 'function') tmp[k] = undefined;
-        if (typeof state[k] === 'symbol') tmp[k] = undefined;
-        if (state[k] instanceof Array) tmp[k] = [];
-      }
-      return { ...state, ...tmp };
-    };
-    if (action.type === 'unset') {
-      return { ...state, ...initial };
-    };
-    return { ...state, ...action.payload };
-  };
+  const [state, setValue] = useSetState<any>({...initial});
 
-  const [state, dispatch] = React.useReducer(reducer, initial);
+  console.log(state);
+
+  const clear = () => {
+    const tmp: any = {};
+    for (const k of Object.keys(state)) {
+      if (typeof state[k] === 'string') tmp[k] = '';
+      if (typeof state[k] === 'number') tmp[k] = 0;
+      if (typeof state[k] === 'boolean') tmp[k] = undefined;
+      if (typeof state[k] === 'function') tmp[k] = undefined;
+      if (typeof state[k] === 'symbol') tmp[k] = undefined;
+      if (state[k] instanceof Array) tmp[k] = [];
+    }
+    setValue(tmp);
+  }
+
+  const reset = () => setValue(initial);;
 
   const get = (prop: string, options?: GetOptions): GetReturn => {
     const type = options?.type || 'input';
     const onChange = (e: FormItemChangeEvent, value: any) => {
       if (type === 'input') {
         const target = e.target as HTMLInputElement;
-        dispatch({payload: {[target.name]: value}});
+        setValue({[target.name]: value});
       } else {
         const target = e.target as HTMLSpanElement;
-        dispatch({
-          payload: {
-            [String(target.dataset['name'])]: value,
-          }
-        })
+        setValue({
+          [String(target.dataset['name'])]: value,
+        });
       }
     }
 
@@ -72,11 +69,6 @@ export function useForm({initial}: UseFormProps): UseFormReturnType {
       onChange,
     }
   }
-
-  const reset = () => dispatch({type: 'unset'});
-  const clear = () => dispatch({type: 'clear'});
-
-  console.log(state);
 
   return {
     get,
