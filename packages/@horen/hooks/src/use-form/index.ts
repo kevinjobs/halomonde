@@ -1,5 +1,4 @@
-import React from "react";
-import { useSetState } from '../use-set-state';
+import React, { useReducer } from "react";
 
 export interface UseFormProps {
   initial: any;
@@ -31,35 +30,42 @@ interface Action {
 }
 
 export function useForm({initial}: UseFormProps): UseFormReturnType {
-  const [state, setValue] = useSetState<any>({...initial});
+  const reducer = (state: any, action: Action) => {
+    if (action.type === 'clear') {
+      const tmp: any = {};
+      for (const k of Object.keys(state)) {
+        if (typeof state[k] === 'string') tmp[k] = '';
+        if (typeof state[k] === 'number') tmp[k] = 0;
+        if (typeof state[k] === 'boolean') tmp[k] = undefined;
+        if (typeof state[k] === 'function') tmp[k] = undefined;
+        if (typeof state[k] === 'symbol') tmp[k] = undefined;
+        if (state[k] instanceof Array) tmp[k] = [];
+      }
+      return { ...state, ...tmp };
+    };
+    if (action.type === 'reset') {
+      return { ...state, ...initial };
+    };
+    return { ...state, ...action.payload };
+  };
 
-  console.log(state);
+  const [state, dispatch] = useReducer(reducer, initial);
 
-  const clear = () => {
-    const tmp: any = {};
-    for (const k of Object.keys(state)) {
-      if (typeof state[k] === 'string') tmp[k] = '';
-      if (typeof state[k] === 'number') tmp[k] = 0;
-      if (typeof state[k] === 'boolean') tmp[k] = undefined;
-      if (typeof state[k] === 'function') tmp[k] = undefined;
-      if (typeof state[k] === 'symbol') tmp[k] = undefined;
-      if (state[k] instanceof Array) tmp[k] = [];
-    }
-    setValue(tmp);
-  }
-
-  const reset = () => setValue(initial);;
+  const reset = () => dispatch({type: 'reset'});
+  const clear = () => dispatch({type: 'clear'})
 
   const get = (prop: string, options?: GetOptions): GetReturn => {
     const type = options?.type || 'input';
     const onChange = (e: FormItemChangeEvent, value: any) => {
       if (type === 'input') {
         const target = e.target as HTMLInputElement;
-        setValue({[target.name]: value});
+        dispatch({payload: {[target.name]: value}});
       } else {
         const target = e.target as HTMLSpanElement;
-        setValue({
-          [String(target.dataset['name'])]: value,
+        dispatch({
+          payload: {
+            [String(target.dataset['name'])]: value,
+          }
         });
       }
     }
