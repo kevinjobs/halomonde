@@ -29,23 +29,23 @@ interface Action {
   payload?: any;
 }
 
+function clearState<T extends Record<string, any>>(state: T):T {
+  const tmp: any = {};
+  for (const k of Object.keys(state)) {
+    if (typeof state[k] === 'string') tmp[k] = '';
+    if (typeof state[k] === 'number') tmp[k] = 0;
+    if (typeof state[k] === 'boolean') tmp[k] = undefined;
+    if (typeof state[k] === 'function') tmp[k] = undefined;
+    if (typeof state[k] === 'symbol') tmp[k] = undefined;
+    if (state[k] instanceof Array) tmp[k] = [];
+  }
+  return { ...state, ...tmp };
+}
+
 export function useForm({initial}: UseFormProps): UseFormReturnType {
   const reducer = (state: any, action: Action) => {
-    if (action.type === 'clear') {
-      const tmp: any = {};
-      for (const k of Object.keys(state)) {
-        if (typeof state[k] === 'string') tmp[k] = '';
-        if (typeof state[k] === 'number') tmp[k] = 0;
-        if (typeof state[k] === 'boolean') tmp[k] = undefined;
-        if (typeof state[k] === 'function') tmp[k] = undefined;
-        if (typeof state[k] === 'symbol') tmp[k] = undefined;
-        if (state[k] instanceof Array) tmp[k] = [];
-      }
-      return { ...state, ...tmp };
-    };
-    if (action.type === 'reset') {
-      return { ...state, ...initial };
-    };
+    if (action.type === 'clear') return clearState<typeof initial>(state);
+    if (action.type === 'reset') return initial;
     return { ...state, ...action.payload };
   };
 
