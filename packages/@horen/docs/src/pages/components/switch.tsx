@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch } from '@horen/core';
-import { ComponentPage, Desc, Playground } from './_layout';
+import { ComponentPage, Desc } from './_layout';
+import { Playground } from './_playground';
 
 export default function ComponentSlider() {
   const [on, setOn] = React.useState<boolean>(false);
@@ -12,9 +13,9 @@ export default function ComponentSlider() {
         usage="import { Switch } from '@horen/core'"
       />
       <Playground>
-        <p>current: {String(on)}</p>
         <Switch onChange={setOn} />
-        <p>defaultValue is true</p>
+      </Playground>
+      <Playground>
         <Switch defaultValue={true} onChange={() => {}} />
       </Playground>
     </ComponentPage>

@@ -1,0 +1,27 @@
+.playground {
+  background-color: #dcdcdc;
+  padding: 0;
+  border: 1px solid #ccc;
+  display: inline-block;
+}
+
+.component {
+  background-color: #fff;
+  padding: 16px 32px;
+}
+
+.sourceCode {
+  padding: 16px 32px;
+}
+
+.header {
+  margin-bottom: 8px;
+  background-color: #fff;
+  margin: 0;
+}
+
+.setComponent,.setSourceCode {
+  user-select: none;
+  padding: 0 8px;
+  font-weight: 300;
+}

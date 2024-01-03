@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, Button } from '@horen/core';
-import { ComponentPage, Desc, Playground } from './_layout';
+import { ComponentPage, Desc } from './_layout';
+import { Playground } from './_playground';
 
 export default function ComponentSlider() {
   const [v, setV] = React.useState(false);
@@ -13,8 +14,8 @@ export default function ComponentSlider() {
         description='模态窗口'
         usage="import { Modal } from '@horen/core'"
       />
+      <Button onClick={() => setV(!v)}>open modal</Button>
       <Playground>
-        <Button onClick={() => setV(!v)}>open modal</Button>
         <Modal visible={v} onClose={() => setV(false)}>
           <Modal.Header>
             <div>hello</div>
@@ -26,8 +27,8 @@ export default function ComponentSlider() {
           </Modal.Content>
         </Modal>
       </Playground>
+      <Button onClick={() => setV2(!v2)}>open full screen modal</Button>
       <Playground>
-        <Button onClick={() => setV2(!v2)}>open full screen modal</Button>
         <Modal visible={v2} onClose={() => setV2(false)} fullScreen>
           <Modal.Header>
             <h2>hello</h2>

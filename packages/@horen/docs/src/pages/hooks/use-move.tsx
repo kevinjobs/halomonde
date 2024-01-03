@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useMove } from '@horen/hooks';
-import { ComponentPage, Desc, Playground } from '../components/_layout';
+import { ComponentPage, Desc } from '../components/_layout';
+import { Playground } from '../components/_playground';
 
 export default function ComponentSlider() {
   const [x, setX] = useState(0);
@@ -41,8 +42,8 @@ export default function ComponentSlider() {
             }}
           ></div>
         </div>
-        <span>values: x: {Math.round(x)}, y: {Math.round(y)}</span>
       </Playground>
+      <span>values: x: {Math.round(x)}, y: {Math.round(y)}</span>
     </ComponentPage>
   )
 }
