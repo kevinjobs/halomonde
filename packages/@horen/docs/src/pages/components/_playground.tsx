@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import jsxToString from 'jsx-to-string';
 import css from './_playground.module.css';
 import { useToggle } from '@horen/hooks';
+import { Icon } from '@horen/core';
+import hljs from '../_highlight';
+import 'highlight.js/styles/routeros.css';
 
 export interface PlaygroundProps {
   children: React.ReactNode;
@@ -9,32 +12,27 @@ export interface PlaygroundProps {
 
 export function Playground({children}: PlaygroundProps) {
   const [value, toggle] = useToggle(['component', 'sourceCode']);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (ref.current) hljs.highlightElement(ref.current);
+  }, [value]);
 
   return (
     <div className={css.playground}>
-      <div className={css.header}>
-        <span
-          className={css.setComponent}
-          onClick={() => toggle('component')}
-        >Componet</span>
-        <span
-          className={css.setSourceCode}
-          onClick={() => toggle('sourceCode')}
-        >SourceCode</span>
+      <div className={css.component}>{ children }</div>
+      <div className={css.footer}>
+        <span onClick={() => toggle()}><Icon name='code' /></span>
       </div>
-      {
-        value === 'component'
-        && <div className={css.component}>{ children }</div>
-      }
-      {
-        value === 'sourceCode'
-        &&
-        (
+        {
+          value === 'sourceCode'
+          &&
           <div className={css.sourceCode}>
-            { jsxToString(children, {useFunctionCode: true}) }
+            <code className={'javascript'} ref={ref}>
+              { jsxToString(children, {useFunctionCode: true}) }
+            </code>
           </div>
-        )
-      }
+        }
     </div>
   )
 }

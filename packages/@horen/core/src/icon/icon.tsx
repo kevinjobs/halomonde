@@ -1,6 +1,7 @@
 import React from "react";
 import Add from './icon-add.svg';
 import Close from './icon-close.svg';
+import Code from './icon-code.svg';
 import Correct from './icon-correct.svg';
 import Error from './icon-error.svg';
 import Upload from './icon-upload.svg';
@@ -8,6 +9,7 @@ import Upload from './icon-upload.svg';
 export type IconName =
   | 'add'
   | 'close'
+  | 'code'
   | 'correct'
   | 'error'
   | 'upload';
@@ -27,6 +29,9 @@ export function Icon({name, size=24, fill='#333', ...restProps}: IconProps) {
       break;
     case 'close':
       icon = <Close height={size} width={size} fill={fill} />
+      break;
+    case 'code':
+      icon = <Code height={size} width={size} fill={fill} />
       break;
     case 'correct':
       icon = <Correct height={size} width={size} fill={fill} />

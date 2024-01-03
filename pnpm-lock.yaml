@@ -118,6 +118,9 @@ importers:
       eslint-config-next:
         specifier: 14.0.1
         version: 14.0.1(eslint@8.52.0)(typescript@5.2.2)
+      highlight.js:
+        specifier: ^11.9.0
+        version: 11.9.0
       jsx-to-string:
         specifier: ^1.4.0
         version: 1.4.0
@@ -7074,7 +7077,7 @@ packages:
     dev: true
 
   /file-uri-to-path@1.0.0:
-    resolution: {integrity: sha1-VTp7hEb/b2hDWcRF8eN6BdrMM90=, tarball: https://registry.npmmirror.com/file-uri-to-path/download/file-uri-to-path-1.0.0.tgz}
+    resolution: {integrity: sha512-0Zt+s3L7Vf1biwWZ29aARiVYLx7iMGnEUl9x33fbB/j3jR81u/O2LbqK+Bm1CDSNDKVtJ/YjwY7TUd5SkeLQLw==}
     requiresBuild: true
     dev: true
     optional: true
@@ -7842,6 +7845,11 @@ packages:
   /hexoid@1.0.0:
     resolution: {integrity: sha512-QFLV0taWQOZtvIRIAdBChesmogZrtuXvVWsFHZTk2SU+anspqZ2vMnoLg7IE1+Uk16N19APic1BuF8bC8c2m5g==}
     engines: {node: '>=8'}
+    dev: true
+
+  /highlight.js@11.9.0:
+    resolution: {integrity: sha512-fJ7cW7fQGCYAkgv4CPfwFHrfd/cLS4Hau96JuJ+ZTOWhjnhoeN1ub1tFmALm/+lW5z4WCAuAV9bm05AP0mS6Gw==}
+    engines: {node: '>=12.0.0'}
     dev: true
 
   /hoist-non-react-statics@3.3.2:

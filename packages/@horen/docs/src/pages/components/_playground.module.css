@@ -1,8 +1,7 @@
 .playground {
-  background-color: #dcdcdc;
   padding: 0;
   border: 1px solid #ccc;
-  display: inline-block;
+  margin: 8px;
 }
 
 .component {
@@ -11,17 +10,20 @@
 }
 
 .sourceCode {
-  padding: 16px 32px;
+  display: flex;
+  align-items: center;
 }
 
-.header {
-  margin-bottom: 8px;
-  background-color: #fff;
-  margin: 0;
+.sourceCode code {
+  display: inline-block;
+  width: 100%;
+  padding: 8px 16px !important;
 }
 
-.setComponent,.setSourceCode {
+.footer {
+  display: flex;
+  justify-content: center;
   user-select: none;
-  padding: 0 8px;
-  font-weight: 300;
+  background-color: #f1f1f1;
+  border-top: 1px solid #ccc;
 }
