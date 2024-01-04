@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "concurrently \"pnpm -F @horen/hooks run watch\" \"pnpm -F @horen/core run watch\" \"pnpm -F @horen/docs run dev\""
+    "watch": "concurrently \"pnpm -F @horen/hooks run watch\" \"pnpm -F @horen/core run watch\" \"pnpm -F @horen/docs run dev\" \"pnpm -F @horen/utils run watch\""
   },
   "keywords": [],
   "author": "",

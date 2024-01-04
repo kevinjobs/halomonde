@@ -14,6 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "@horen/hooks": "workspace:*",
+    "@horen/utils": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "styled-components": "^5.3.11"

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { last } from '@horen/utils';
 import { Icon } from '../icon';
 import { UploadButton } from '../button';
 import css from './avatar-upload.module.less';
@@ -25,7 +26,7 @@ export function AvatarUpload<T>(props: UploadProps<T>) {
     (async() => {
       await upload({
         url: url,
-        file: lastOne(values),
+        file: last(values),
         onFailed: (err) => {
           setStatus(FAILED);
           if (onFailed) onFailed(err);
@@ -99,13 +100,7 @@ async function upload({file, url, onProgress, onSuccess, onFailed}: UploadParams
   xhr.send(formdata);
 }
 
-const lastOne = (arr: any[]) => {
-  const a = [...arr];
-  const f = a.reverse()[0];
-  return f;
-}
-
 const genUrl = (files: File[]) => {
-  const last = lastOne(files);
-  if (last) return window.webkitURL.createObjectURL(last);
+  const l = last(files);
+  if (l) return window.webkitURL.createObjectURL(l);
 }
