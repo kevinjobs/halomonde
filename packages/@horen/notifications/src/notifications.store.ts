@@ -1,4 +1,5 @@
 import React from 'react';
+import { HorenStore, createStore } from '@horen/store';
 
 export interface NotificationData {
   id?: string;
@@ -8,14 +9,16 @@ export interface NotificationData {
   onClose?(notify: NotificationData): void;
 }
 
-export interface NotificationStore {
+export interface NotificationState {
   notifications: NotificationData[],
 }
 
+export type NotificationStore = HorenStore<NotificationState>;
+
 export function createNotificationStore(): NotificationStore {
-  return {
+  return createStore<NotificationState>({
     notifications: [],
-  }
+  });
 }
 
 export const notificationStore = createNotificationStore();

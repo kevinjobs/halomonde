@@ -164,6 +164,12 @@ importers:
 
   packages/@horen/notifications:
     dependencies:
+      '@horen/core':
+        specifier: workspace:*
+        version: link:../core
+      '@horen/store':
+        specifier: workspace:*
+        version: link:../store
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -12458,6 +12464,7 @@ packages:
       envify: 3.4.1
       fbjs: 0.6.1
     dev: true
+    bundledDependencies: false
 
   /react@18.2.0:
     resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}

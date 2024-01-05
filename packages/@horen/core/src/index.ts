@@ -2,6 +2,10 @@ export { Button, UploadButton, AddButton, type ButtonProps } from './button';
 export { Icon, type IconProps } from './icon';
 export { Input, type InputProps } from './input';
 export { Modal, type ModalProps } from './modal';
+
+export type { NotificationProps } from './Notification';
+export { Notification } from './Notification';
+
 export { Slider, type SliderProps } from './slider';
 export { Tag, type TagProps } from './tag';
 export { Switch, type SwitchProps } from './switch';
