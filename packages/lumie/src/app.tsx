@@ -1,6 +1,7 @@
 import React from 'react';
 import { HashRouter } from 'react-router-dom';
 import { RootRouter } from '@/routes';
+import { Notifications } from '@horen/notifications';
 import { Navbar } from './components/navbar';
 
 const ITEMS = [
@@ -32,6 +33,7 @@ export default function App() {
       <HashRouter>
         <RootRouter />
         <Navbar menus={ITEMS} />
+        <Notifications />
       </HashRouter>
     </React.StrictMode>
   );

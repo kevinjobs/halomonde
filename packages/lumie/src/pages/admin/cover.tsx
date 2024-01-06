@@ -7,6 +7,7 @@ import { getLocalStorage } from '.';
 import { CloseOne } from '@icon-park/react';
 import { UPLOAD_URL } from '@/constants';
 import { UploadReturnType } from '@/types';
+import { notifications } from '@horen/notifications';
 
 const CE = styled.div``;
 const Up = styled.div`
@@ -75,8 +76,8 @@ export default function CoverEdit() :React.ReactElement {
         });
         if (data){
           getAllCovers();
-          window.alert('添加封面成功');
-        } else window.alert('添加失败');
+          notifications.show({title: '添加成功', message: '添加封面成功'});
+        } else notifications.show({title: '失败',  message: '添加失败'});
       })();
     }
   };
@@ -127,9 +128,9 @@ const renderPreviewItem = (data: any, onDel?: () => void) => {
       (async() => {
         const res = await deletePost(uid);
         if (typeof res !== 'string') {
-          window.alert('删除成功')
+          notifications.show({title: '成功', message: '删除成功'})
           if (onDel) onDel();
-        } else window.alert(res);
+        } else notifications.show({title: '失败', message: res});
       })();
     }
   };

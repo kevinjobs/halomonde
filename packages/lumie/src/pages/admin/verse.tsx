@@ -5,6 +5,7 @@ import {
 } from '@icon-park/react';
 import { Header } from './_partial/layout';
 import { AddButton, Button } from '@horen/core';
+import { notifications } from '@horen/notifications';
 import { Dialog } from '@/components/dialog';
 import { IPost } from '@/types';
 import { addPost, fetchPosts, deletePost, updatePost } from '@/apis/posts';
@@ -28,11 +29,11 @@ export default function AdminVerse() {
         p.status = 'publish';
         const res = await addPost(p);
         if (typeof res !== 'string') {
-          window.alert(res.msg);
+          notifications.show({message: res.msg});
           fetchVerses();
           setPickVerse(null);
         } else {
-          window.alert(res);
+          notifications.show({message: res});
         }
       })();
     }
@@ -41,11 +42,11 @@ export default function AdminVerse() {
       (async() => {
         const res = await updatePost(p.uid, p);
         if (typeof res !== 'string') {
-          window.alert(res.msg);
+          notifications.show({message: res.msg});
           fetchVerses();
           setPickVerse(null);
         } else {
-          window.alert(res);
+          notifications.show({message: res});
         }
       })();
     }
@@ -56,9 +57,9 @@ export default function AdminVerse() {
       (async () => {
         const resp = await deletePost(p.uid);
         if (typeof resp !== 'string') {
-          window.alert(resp.msg);
+          notifications.show({message: resp.msg});
           fetchVerses();
-        } else window.alert(resp);
+        } else notifications.show({message: resp});
       })();
     }
   }
@@ -74,7 +75,7 @@ export default function AdminVerse() {
       if (typeof resp !== 'string') {
         setVerses(resp.data.posts);
       } else {
-        window.alert(resp);
+        notifications.show({message: resp});
       }
     })();
   }

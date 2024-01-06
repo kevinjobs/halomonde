@@ -1,0 +1,9 @@
+import { notifications, Notifications } from '@horen/notifications';
+
+# Notifications
+
+### Base
+
+<Notifications />
+
+<button onClick={() => notifications.show({title: 'test', message: (new Date()).valueOf()})}>show notice</button>

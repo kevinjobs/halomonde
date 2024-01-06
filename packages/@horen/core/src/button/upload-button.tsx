@@ -15,7 +15,7 @@ export type UploadButtonProps = {
    */
   accept?: string[];
   value?: File[];
-} & Omit<ButtonProps, 'onClick' | 'onChange' | 'value'>;
+} & Omit<ButtonProps, 'onClick' | 'onChange' | 'value' | 'name'>;
 
 function UploadButton(props: UploadButtonProps) {
   const {
@@ -93,4 +93,4 @@ function UploadButton(props: UploadButtonProps) {
   )
 }
 
-export default React.memo(UploadButton) as React.MemoExoticComponent<React.ComponentType>;
+export default React.memo(UploadButton);

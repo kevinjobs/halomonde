@@ -19,6 +19,8 @@ export default function Component() {
       <div><Link href={'/hooks/use-set-state'}>useSetState</Link></div>
       <div><Link href={'/hooks/use-toggle'}>useToggle</Link></div>
       <div><Link href={'/hooks/use-move'}>useMove</Link></div>
+      <h1>Others</h1>
+      <div><Link href={'/others/notifications'}>Notifications</Link></div>
     </div>
   )
 }

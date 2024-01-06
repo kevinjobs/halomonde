@@ -14,7 +14,7 @@ export function Notification({title, message, ...rest}: NotificationProps) {
         <Icon name='info' />
       </div>
       <div className={css.right}>
-        <div className={css.title}>{title}</div>
+        <div className={css.title}>{title || '消息通知'}</div>
         <div className={css.message}>{message}</div>
       </div>
     </div>
