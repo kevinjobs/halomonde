@@ -76,7 +76,7 @@ export default function CoverEdit() :React.ReactElement {
         });
         if (data){
           getAllCovers();
-          notifications.show({title: '添加成功', message: '添加封面成功'});
+          notifications.show({type: 'success', title: '添加成功', message: '添加封面成功'});
         } else notifications.show({title: '失败',  message: '添加失败'});
       })();
     }
@@ -128,9 +128,9 @@ const renderPreviewItem = (data: any, onDel?: () => void) => {
       (async() => {
         const res = await deletePost(uid);
         if (typeof res !== 'string') {
-          notifications.show({title: '成功', message: '删除成功'})
+          notifications.show({type: 'success', message: '删除成功'})
           if (onDel) onDel();
-        } else notifications.show({title: '失败', message: res});
+        } else notifications.show({type: 'error', message: res});
       })();
     }
   };

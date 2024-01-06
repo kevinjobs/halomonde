@@ -4,6 +4,7 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const ReactRefreshTypeScript = require('react-refresh-typescript');
 const webpack = require('webpack');
+const WebpackBar = require('webpackbar');
 const EslintPlugin = require('eslint-webpack-plugin');
 
 const htmlWebpackPlugin = new HtmlWebPackPlugin({
@@ -61,5 +62,6 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new ReactRefreshWebpackPlugin(),
     new EslintPlugin(),
+    new WebpackBar()
   ],
 };

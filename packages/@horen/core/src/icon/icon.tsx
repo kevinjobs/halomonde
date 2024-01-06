@@ -5,7 +5,9 @@ import Code from './icon-code.svg';
 import Correct from './icon-correct.svg';
 import Error from './icon-error.svg';
 import Info from './icon-info.svg';
+import Success from './icon-success.svg';
 import Upload from './icon-upload.svg';
+import Warning from './icon-warning.svg';
 
 export type IconName =
   | 'add'
@@ -14,7 +16,9 @@ export type IconName =
   | 'correct'
   | 'error'
   | 'info'
-  | 'upload';
+  | 'success'
+  | 'upload'
+  | 'warning';
 
 export interface IconProps extends React.HtmlHTMLAttributes<HTMLSpanElement> {
   name: IconName;
@@ -30,22 +34,28 @@ export function Icon({name, size=24, fill='#333', ...restProps}: IconProps) {
       icon = <Add height={size} width={size} fill={fill} />;
       break;
     case 'close':
-      icon = <Close height={size} width={size} fill={fill} />
+      icon = <Close height={size} width={size} fill={fill} />;
       break;
     case 'code':
-      icon = <Code height={size} width={size} fill={fill} />
+      icon = <Code height={size} width={size} fill={fill} />;
       break;
     case 'correct':
-      icon = <Correct height={size} width={size} fill={fill} />
+      icon = <Correct height={size} width={size} fill={fill} />;
       break;
     case 'error':
-      icon = <Error height={size} width={size} fill={fill} />
+      icon = <Error height={size} width={size} fill={fill} />;
       break;
     case 'info':
-      icon = <Info height={size} width={size} fill={fill} />
+      icon = <Info height={size} width={size} fill={fill} />;
+      break;
+    case 'success':
+      icon = <Success height={size} width={size} fill={fill} />;
       break;
     case 'upload':
       icon = <Upload height={size} width={size} fill={fill} />;
+      break;
+    case 'warning':
+      icon = <Warning height={size} width={size} fill={fill} />;
       break;
   }
 

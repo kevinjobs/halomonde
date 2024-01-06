@@ -29,11 +29,11 @@ export default function AdminVerse() {
         p.status = 'publish';
         const res = await addPost(p);
         if (typeof res !== 'string') {
-          notifications.show({message: res.msg});
+          notifications.show({type: 'success', message: res.msg});
           fetchVerses();
           setPickVerse(null);
         } else {
-          notifications.show({message: res});
+          notifications.show({type: 'error', message: res});
         }
       })();
     }
@@ -42,11 +42,11 @@ export default function AdminVerse() {
       (async() => {
         const res = await updatePost(p.uid, p);
         if (typeof res !== 'string') {
-          notifications.show({message: res.msg});
+          notifications.show({type: 'success', message: res.msg});
           fetchVerses();
           setPickVerse(null);
         } else {
-          notifications.show({message: res});
+          notifications.show({type: 'error', message: res});
         }
       })();
     }
@@ -57,9 +57,9 @@ export default function AdminVerse() {
       (async () => {
         const resp = await deletePost(p.uid);
         if (typeof resp !== 'string') {
-          notifications.show({message: resp.msg});
+          notifications.show({type: 'success', message: resp.msg});
           fetchVerses();
-        } else notifications.show({message: resp});
+        } else notifications.show({type: 'error', message: resp});
       })();
     }
   }

@@ -1,12 +1,15 @@
 import React from 'react';
 import { HorenStore, createStore, useStore } from '@horen/store';
 
-export interface LetopItem {
+export interface LetopItem<T = string | undefined> {
   /** 信息 id */
   id?: string;
 
   /** 信息标题 可为空 */
   title?: string;
+
+  /** 通知类型 */
+  type?: T;
 
   /** 信息主文 不可以为空 */
   message?: React.ReactNode;

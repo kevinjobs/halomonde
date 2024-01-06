@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { CheckOne, CloseOne, User } from '@icon-park/react';
+import { notifications } from "@horen/notifications";
 import { Header } from './_partial/layout';
 import { getInvitations, InvitationCode } from "@/apis/auth";
 import './invitations.css';
@@ -11,7 +12,7 @@ export default function InvitaionsAdmin() {
     (async () => {
       const resp = await getInvitations();
       if (typeof resp !== 'string') setCodes(resp.data.invitations);
-      else window.alert(resp);
+      else notifications.show({type: 'error', message: resp});
     })();
   }
 
