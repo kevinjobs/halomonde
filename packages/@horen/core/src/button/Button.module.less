@@ -1,0 +1,54 @@
+@import '../colors.less';
+
+.button {
+  border: none;
+  border-radius: 3px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  color: @white;
+  &:active {
+    position: relative;
+    top: 2px;
+    transition: top 0.3s ease-in-out;
+  }
+  &:disabled {
+    background-color: @white-deep;
+    cursor: not-allowed;
+    color: @black;
+    &:active {
+      position: static;
+    }
+  }
+}
+
+.primary {
+  .button();
+  background-color: @primary;
+  color: @white;
+}
+.success {
+  .button();
+  background-color: @success;
+}
+.warning {
+  .button();
+  background-color: @warning;
+}
+.dark {
+  .button();
+  background-color: @black;
+}
+.light {
+  .button();
+  background-color: @white-deep;
+  color: @black;
+}
+.error {
+  .button();
+  background-color: @error;
+}
+.line {
+  .button();
+  border: 1px solid @grey;
+  color: @black;
+}

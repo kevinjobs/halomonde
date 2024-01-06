@@ -1,12 +1,5 @@
 import React from "react";
-import styled from "styled-components";
-
-const T = styled.span`
-  padding: 2px 4px;
-  color: #fff;
-  font-size: 0.8rem;
-  font-weight: 300;
-`;
+import css from './Tag.module.less';
 
 export interface TagProps {
   theme?: string;
@@ -18,10 +11,14 @@ export interface TagProps {
   rounded?: boolean;
 }
 
-export function Tag({theme, color="#229453", children, rounded=false}: TagProps) {
+export function Tag({theme, color, children, rounded=false}: TagProps) {
+  const styles: React.CSSProperties = {
+    borderRadius: rounded ? 3 : 0,
+  }
+
+  if (color) styles.backgroundColor = color;
+
   return (
-    <T
-      style={{backgroundColor: color, borderRadius: rounded ? 4 : 0}}
-    >{children}</T>
+    <span className={css.tag} style={styles}>{children}</span>
   )
 }
