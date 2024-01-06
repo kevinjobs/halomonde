@@ -1,4 +1,5 @@
 import { notifications, Notifications } from '@horen/notifications';
+import { randomInt } from '@horen/utils';
 
 # Notifications
 
@@ -6,4 +7,4 @@ import { notifications, Notifications } from '@horen/notifications';
 
 <Notifications />
 
-<button onClick={() => notifications.show({title: 'test', message: (new Date()).valueOf()})}>show notice</button>
+<button onClick={() => notifications.show({type: ['success', 'error', 'warning', 'info'][randomInt(0,4)], message: (new Date()).valueOf()})}>show notice</button>
