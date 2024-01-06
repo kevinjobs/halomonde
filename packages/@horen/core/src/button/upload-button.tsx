@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Button, ButtonProps } from "./button";
 import { Icon } from '../icon';
-import { useDeepEffect } from "@horen/hooks";
 
 export type UploadButtonProps = {
   onClick?(e: React.MouseEvent<HTMLButtonElement>): void;
@@ -94,4 +93,4 @@ function UploadButton(props: UploadButtonProps) {
   )
 }
 
-export default React.memo(UploadButton);
+export default React.memo(UploadButton) as React.MemoExoticComponent<React.ComponentType>;
