@@ -1,6 +1,56 @@
 import React from 'react';
 import styled from 'styled-components';
+import COLOR_MAP from '@/styles/colors';
 import { IPost } from '@/types';
+
+const StyledHeader = styled.div`
+  margin: 8px 0 16px 0;
+  padding-bottom: 16px;
+  border-bottom: 1px solid ${COLOR_MAP.white4};
+  display: flex;
+  align-items: center;
+`;
+
+const StyledTitle = styled.h3``;
+
+const StyledAdd = styled.div`
+  margin-left: 8px;
+`;
+
+interface HeaderProps {
+  children?: React.ReactNode
+}
+
+function Header (props: HeaderProps) :React.ReactElement {
+  const { children } = props;
+
+  return (
+    <StyledHeader>
+      { children }
+    </StyledHeader>
+  );
+}
+
+Header.Title = StyledTitle;
+Header.Add = StyledAdd;
+
+const CONTAINER = styled.div`
+  padding-bottom: 64px;
+`;
+
+interface ContainerProps {
+  children?: React.ReactNode,
+}
+
+export default function Container (props: ContainerProps) :React.ReactElement {
+  const { children } = props;
+
+  return (
+    <CONTAINER>
+      { children }
+    </CONTAINER>
+  );
+}
 
 const Wrapper = styled.div`
   margin: 8px;
@@ -74,4 +124,4 @@ function Card (props: WrapperProps) :React.ReactElement {
 
 Card.Img = Img;
 
-export default Card;
+export { Header, Container }

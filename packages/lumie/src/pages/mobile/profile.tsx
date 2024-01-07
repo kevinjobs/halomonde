@@ -9,6 +9,7 @@ import { Male, Female, Local } from "@icon-park/react";
 import { getLocation } from '@/apis/location';
 import { Button } from '@/components/button';
 import { clearLocalStorage } from '../admin';
+import { notifications } from '@horen/notifications';
 
 const F = styled.div`
   padding: 32px 0;
@@ -81,16 +82,18 @@ export default function Profile() {
   const [loc, setLoc] = React.useState(null);
 
   const handleLogout = () => {
-    clearLocalStorage();
-    window.alert('退出登录 即将跳转');
-    setTimeout(() => navigate(`/mobile?time=${dayjs().unix()}`), 500);
+    if (window.confirm('确定注销？')) {
+      clearLocalStorage();
+      notifications.show({message: '退出登录 立即跳转'});
+      setTimeout(() => navigate(`/mobile?time=${dayjs().unix()}`), 1500);
+    }
   }
 
   React.useEffect(() => {
     (async() => {
       const resp = await fetchUser(username);
       if (typeof resp !== 'string') setUser(resp.data.users[0]);
-      else window.alert('无法获取用户信息');
+      else notifications.show({type: 'error', message: '无法获取用户信息'});
     })();
   }, []);
 

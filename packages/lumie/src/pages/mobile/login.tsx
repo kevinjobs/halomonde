@@ -7,6 +7,7 @@ import { login } from '@/apis/auth';
 import { setLocalStorage } from '../admin';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
+import { notifications } from '@horen/notifications';
 
 const F = styled.div`
   display: flex;
@@ -58,9 +59,9 @@ export default function Login() {
       const resp = await login({username, password});
       if (typeof resp !== 'string') {
         setLocalStorage(resp.data.token, username);
-        window.alert('登录成功 马上跳转');
+        notifications.show({type: 'success', message: '登录成功 马上跳转'});
         setTimeout(() => navigate(`/mobile?time=${dayjs().unix()}`), 500);
-      } else window.alert('登录失败');
+      } else notifications.show({type: 'error', message: '登录失败'});
     })();
   }
 

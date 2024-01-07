@@ -4,3 +4,5 @@ export { useMove, type MovePosition } from './use-move';
 export { useHover } from './use-hover';
 export { useSetState } from './use-set-state';
 export { useToggle } from './use-toggle';
+export { useViewport } from'./use-viewport';
+export { useWindowEvent } from './use-window-event';
