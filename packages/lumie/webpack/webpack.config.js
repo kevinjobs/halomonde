@@ -1,50 +1,40 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
-const HtmlWebPackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const EslintPlugin = require('eslint-webpack-plugin');
-const HtmlMinimizer = require('html-minimizer-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssPlugin = require('mini-css-extract-plugin');
-const WebpackBar = require('webpackbar');
+const ReactRefreshTypeScript = require('react-refresh-typescript');
+const {
+  HTML_PLUGIN,
+  COPY_PLUGIN,
+  ESLINT_PLUGIN,
+  MINI_CSS_PLUGIN,
+  WEBPACK_BAR_PLUGIN,
+  HTML_MIMIMIZE_PLUGIN,
+  HOT_PLUGIN,
+  REACT_FRESH_PLUGIN,
+  TERSER_PLUGIN,
+} = require('./_plugins');
 
-const htmlWebpackPlugin = new HtmlWebPackPlugin({
-  template: path.resolve(__dirname, '../public/index.html'),
-  minify: {
-    removeComments: true,
-    removeRedundantAttributes: true,
-    removeEmptyAttributes: true,
-    collapseBooleanAttributes: false,
-    removeStyleLinkTypeAttributes: true,
-    minifyCSS: true,
-  }
-});
-
-// 用于复制文件
-const copyWebpackPlugin = new CopyWebpackPlugin({
-  patterns: [
-    {
-      from: path.resolve(__dirname, '../public'),
-      to: path.resolve(__dirname, '../dist'),
-      globOptions: {
-        dot: true,
-        gitignore: true,
-        ignore: ['**/index.html'],
-      }
-    }
-  ]
-});
+const IS_DEV = process.env.NODE_ENV === 'development';
 
 module.exports = {
-  mode: 'production',
+  mode: IS_DEV ? 'development' : 'production',
   entry: {
     index: path.resolve(__dirname, '../src/index.tsx'),
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: 'js/[name].[contenthash:8].bundle.js',
-    clean: true, // clean the old files when build everytimes. 
+    filename: IS_DEV ? 'js/bundle.js' : 'js/[name].[contenthash:8].bundle.js',
+    clean: IS_DEV ? false : true, // clean the old files when build everytimes. 
   },
+  devtool: IS_DEV && 'inline-source-map', // 调试定位错误行
+  devServer: IS_DEV ? {
+    contentBase: path.resolve(__dirname, '../dist'),
+    hot: true, // 热替换重载
+    compress: true, // gzip 压缩静态文件
+    host: 'localhost', // 允许其他设备访问
+    open: true, // 启动后打开浏览器,
+    port: 12345, // 设置端口
+  } : {},
   resolve: {
     alias: {
       '@': path.resolve(__dirname, '../src'),
@@ -56,38 +46,42 @@ module.exports = {
     rules: [
       {
         test: /\.(ts|tsx)$/,
-        use: ['ts-loader'],
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: require.resolve('ts-loader'),
+            options: IS_DEV ? {
+              getCustomTransformers: () => ({
+                before: [ReactRefreshTypeScript()],
+              }),
+              transpileOnly: true,
+            } : {}
+          }
+        ],
       },
       {
         test: /\.css$/i,
         use: [
-          MiniCssPlugin.loader,
+          IS_DEV ? 'style-loader' : MiniCssPlugin.loader,
           "css-loader"
         ],
       },
     ],
   },
   plugins: [
-    htmlWebpackPlugin,
-    copyWebpackPlugin,
-    new EslintPlugin(),
-    new MiniCssPlugin(),
-    new WebpackBar(),
+    HTML_PLUGIN,
+    ESLINT_PLUGIN,
+    WEBPACK_BAR_PLUGIN,
+    !IS_DEV && HTML_MIMIMIZE_PLUGIN,
+    !IS_DEV && COPY_PLUGIN,
+    !IS_DEV && MINI_CSS_PLUGIN,
+    IS_DEV && HOT_PLUGIN,
+    IS_DEV && REACT_FRESH_PLUGIN,
   ],
   optimization: {
-    minimize: true,
+    minimize: IS_DEV ? false : true,
     minimizer: [
-      new HtmlMinimizer(),
-      new TerserPlugin({
-        extractComments: true,
-        parallel: true,
-        terserOptions: {
-          compress: true,
-          mangle: true,
-          toplevel: false,
-          keep_classnames: false,
-        }
-      })
+      !IS_DEV && TERSER_PLUGIN,
     ]
   }
 };
