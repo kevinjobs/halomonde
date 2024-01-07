@@ -10,8 +10,12 @@ const G = styled.div`
   justify-content: center;
   .container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     flex-wrap: wrap;
+    .inner {
+      display: inline-block;
+      text-align: center;
+    }
     .go-search {
       width: 100%;
       display: flex;
@@ -43,11 +47,9 @@ const G = styled.div`
   }
 `;
 
-const GOI = styled.div`
+const GOI = styled.span`
   width: 64px;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  display: inline-block;
   margin: 8px;
   .go-item__icon {
     height: 64px;
@@ -110,12 +112,14 @@ export default function GoPage() {
     <G className="go-page">
       <div className="container">
         <Search />
-        {items.map(i => <Item {...i} />)}
-        <Item
-          title="增加"
-          link="/#/go"
-          icon={<Plus theme="outline" size="24" fill="#333"/>}
-        />
+        <div className="inner">
+          {items.map(i => <Item {...i} />)}
+          <Item
+            title="增加"
+            link="/#/go"
+            icon={<Plus theme="outline" size="24" fill="#333"/>}
+          />
+        </div>
       </div>
     </G>
   )
