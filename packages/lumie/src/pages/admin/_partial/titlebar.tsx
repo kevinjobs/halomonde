@@ -83,13 +83,12 @@ export default function Navbar (props: NavbarProps) :React.ReactElement {
    * @returns {null} 没有返回值
    */
   const User = () => (
-    <div className="user">
+    <div className={css.user}>
       <div className={css.avatar}>
         <img src={user?.avatar} alt={user?.username} />
       </div>
-      <div className="name">{getLocalStorage().name}</div>
-      <div className="level"></div>
-      <div className="logout">
+      <div className={css.name}>{getLocalStorage().name}</div>
+      <div className={css.logout}>
         <Button onClick={handleLogout} type="light">登出</Button>
       </div>
     </div>
@@ -111,10 +110,10 @@ export default function Navbar (props: NavbarProps) :React.ReactElement {
         <span className={css.version}>v0.0.9-20231229</span>
       </div>
       <div className={css.container}>
-        <div>
+        <div className={css.search}>
           <Input value={searchValue} onChange={e => setSearchValue(e.target.value)} />
         </div>
-        <div>
+        <div className={css.userAndLogin}>
           { isLogin ? <User /> : <Login /> }
         </div>
       </div>
