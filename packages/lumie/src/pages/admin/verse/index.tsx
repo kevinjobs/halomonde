@@ -3,7 +3,7 @@ import {
   Delete,
   FileEditing,
 } from '@icon-park/react';
-import { Header } from './_partial/layout';
+import { Header } from '../_partial/layout';
 import { AddButton, Button } from '@horen/core';
 import { notifications } from '@horen/notifications';
 import { Dialog } from '@/components/dialog';
@@ -87,15 +87,15 @@ export default function AdminVerse() {
   return (
     <div>
       <Header>
-        <Header.Title>VERSE </Header.Title>
-        <Header.Add>
+        <h2>VERSE </h2>
+        <div>
           <AddButton onClick={() => {
             // 每次重新生成否则是旧的值
             VERSE_TPL.title = 'verse-' + (new Date()).valueOf();
             setPickVerse(VERSE_TPL);
             setMode('add');
           }}>添加</AddButton>
-        </Header.Add>
+        </div>
       </Header>
       <div className='verse-list'>
         {verses && verses.map(p => {

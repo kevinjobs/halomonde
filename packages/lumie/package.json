@@ -59,6 +59,7 @@
     "gh-pages": "^3.2.3",
     "html-minimizer-webpack-plugin": "^4.4.0",
     "html-webpack-plugin": "^5.5.3",
+    "less-loader": "^11.1.4",
     "mini-css-extract-plugin": "^2.7.6",
     "mockjs": "^1.1.0",
     "react-refresh": "^0.14.0",

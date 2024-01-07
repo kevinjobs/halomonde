@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { CheckOne, CloseOne, User } from '@icon-park/react';
 import { notifications } from "@horen/notifications";
-import { Header } from './_partial/layout';
+import { Header } from '../_partial/layout';
 import { getInvitations, InvitationCode } from "@/apis/auth";
 import './invitations.css';
 
@@ -21,7 +21,7 @@ export default function InvitaionsAdmin() {
   return (
     <div>
       <Header>
-        <Header.Title>邀请码</Header.Title>
+        <h2>邀请码</h2>
       </Header>
       <div className="code-list">
         {codes && codes.map(c => {

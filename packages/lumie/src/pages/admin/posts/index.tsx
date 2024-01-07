@@ -120,11 +120,11 @@ export default function PostAdmin(): React.ReactElement {
   return (
     <Article>
       <Header>
-        <Header.Title>内容管理</Header.Title>
-        <Header.Add>
+        <h2>内容管理</h2>
+        <div>
           <Button onClick={() => clickAdd('article')}>新增文章</Button>
           <Button onClick={() => clickAdd('photo')}>添加图片</Button>
-        </Header.Add>
+        </div>
         <div style={{marginLeft: 32}}>
           <span>点击筛选</span>
           <Button type={typ === 'article' ? 'primary' : 'light'} onClick={() => handleFilter('article')}>文章</Button>

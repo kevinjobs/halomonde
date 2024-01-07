@@ -1,10 +1,21 @@
 import React, { ReactElement, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import {
+  BlocksAndArrows,
+  CollectPicture,
+  Config,
+  MindmapList,
+  User,
+  Camp,
+  Key,
+  Home,
+  FileSearch
+} from '@icon-park/react';
 
 import { login, LoginForm } from '@/apis/auth';
 import TitleBar from './_partial/titlebar';
-import LeftMenu from './_partial/menu';
+import LeftMenu, { SubMenuProps } from './_partial/menu';
 
 import PostAdmin from './posts';
 import UserAdmin from './users';
@@ -14,6 +25,60 @@ import VerseAdmin from './verse';
 import EditAdmin from './edit';
 import FileListAdmin from './files';
 import InvitaionsAdmin from './invitations';
+
+const ITEMS: Omit<SubMenuProps, 'children'>[] = [
+  {
+    title: '后台首页',
+    isOpen: false,
+    arrow: false,
+    icon: <Home theme="outline" size="20" fill="#333" strokeWidth={2}/>,
+    to: '/admin/home',
+  },
+  {
+    title: '内容管理',
+    isOpen: true,
+    icon: <BlocksAndArrows theme="outline" size="20" fill="#333" strokeWidth={2}/>,
+    items: [
+      {
+        title: '所有内容',
+        to: '/admin/post',
+        icon: <MindmapList theme="outline" size="16" fill="#4a4a4a"/>,
+      },
+      {
+        title: '画册封面',
+        to: '/admin/cover',
+        icon: <CollectPicture theme="outline" size="16" fill="#4a4a4a"/>,
+      },
+      {
+        title: '封面诗文',
+        to: '/admin/verse',
+        icon: <Camp theme="outline" size="16" fill="#4a4a4a"/>,
+      },
+    ]
+  },
+  {
+    title: '系统管理',
+    isOpen: true,
+    icon: <Config theme="outline" size="20" fill="#333" strokeWidth={2}/>,
+    items: [
+      {
+        title: '用户管理',
+        to: '/admin/user',
+        icon: <User theme="outline" size="16" fill="#4a4a4a"/>,
+      },
+      {
+        title: '邀请码',
+        to: '/admin/invitations',
+        icon: <Key theme="outline" size="16" fill="#4a4a4a"/>,
+      },
+      {
+        title: '文件列表',
+        to: '/admin/files',
+        icon: <FileSearch theme="outline" size="16" fill="#4a4a4a"/>,
+      }
+    ]
+  }
+]
 
 const Admin = styled.div`
   height: 100vh;
@@ -117,7 +182,7 @@ export default function AdminPage () :ReactElement {
       />
       <div className="main-container">
         <div className='menu-content'>
-          <LeftMenu />
+          <LeftMenu items={ITEMS} />
         </div>
         <div className="admin-content">
           <Routes>

@@ -60,10 +60,20 @@ module.exports = {
         ],
       },
       {
-        test: /\.css$/i,
+        test: /\.(le|c)ss$/i,
         use: [
           IS_DEV ? 'style-loader' : MiniCssPlugin.loader,
-          "css-loader"
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 1,
+              modules: {
+                auto: (resourcePath) => resourcePath.endsWith('.less'),  // 匹配.less文件来进行css模块化。
+                localIdentName: '[local]_[hash:base64:10]',
+              },
+            }
+          },
+          "less-loader"
         ],
       },
     ],

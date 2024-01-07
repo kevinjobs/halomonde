@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Icon, Button } from "@horen/core";
-import { Header } from './_partial/layout';
+import { Icon } from "@horen/core";
+import { Header } from '../_partial/layout';
 import { fetchFileList, deleteFileByFilename } from "@/apis";
 import { IFile } from "@/types";
+import { notifications } from "@horen/notifications";
 import './files.css';
 
 export default function AdminFile() {
@@ -19,7 +20,7 @@ export default function AdminFile() {
           setHasMore(false);
         }
       }
-      else window.alert(resp);
+      else notifications.show({type: 'error', message: resp});
     })();
   }
 
@@ -50,7 +51,7 @@ export default function AdminFile() {
   return (
     <div className="file-list-admin">
       <Header>
-        <Header.Title>文件列表</Header.Title>
+        <h2>文件列表</h2>
       </Header>
       <div className="file-list">
         {fs && fs.map(c => {

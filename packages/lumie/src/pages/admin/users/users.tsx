@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { UserEdit } from './edit';
 import { AddButton } from '@horen/core';
 import { Modal } from '@horen/core';
+import { notifications } from '@horen/notifications';
 
 const Us = styled.div``;
 
@@ -45,7 +46,7 @@ export function UserAdmin() :React.ReactElement {
     (async() => {
       const data = await fetchUsers();
       if (typeof data !== 'string') setUsers(data.data.users);
-      else window.alert(data);
+      else notifications.show({type: 'error', message: data});
     })();
   }
 
@@ -59,13 +60,13 @@ export function UserAdmin() :React.ReactElement {
   return (
     <Us>
       <Header>
-        <Header.Title>用户管理</Header.Title>
-        <Header.Add>
+        <h2>用户管理</h2>
+        <div>
           <AddButton onClick={() => {
             setPickUser(null);
             setTimeout(() => setPickUser(DEFAULT_USER), 100);
           }}>新增用户</AddButton>
-        </Header.Add>
+        </div>
       </Header>
       <Content>
         <div className='preview'>

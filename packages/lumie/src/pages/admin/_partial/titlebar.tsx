@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Input } from '@/components/input';
 import { Button } from '@/components/button';
 import { Dialog } from '@/components/dialog';
@@ -7,66 +6,8 @@ import { LoginForm } from '@/apis/auth';
 import { getLocalStorage } from '..';
 import { fetchUser } from '@/apis/user';
 import { IUser } from '@/types';
-import COLOR_MAP from '@/styles/colors';
 import { Link } from 'react-router-dom';
-
-const Nav = styled.div`
-  width: 100%;
-  height: 60px;
-  background-color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 60px 0 0;
-  .logo {
-    padding-left: 48px;
-    display: flex;
-    align-items: center;
-    .version {
-      position: relative;
-      top: 4px;
-      margin-left: 16px;
-      color: ${COLOR_MAP.white7};
-    }
-  }
-  .container {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    .user-status {
-      .user {
-        display: flex;
-        align-items: center;
-        margin-left: 32px;
-        .name {
-          margin: 0 8px;
-        }
-        .avatar {
-          width: 44px;
-          height: 44px;
-          border-radius: 7px;
-          img {
-            width: 100%;
-            height: 100%;
-            border-radius: inherit;
-          }
-        }
-      }
-    }
-  }
-`;
-
-const DialogContent = styled.div`
-  width: 100%;
-  margin-top: 32px;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  label {
-    width: 50px;
-    text-align: right;
-  }
-`;
+import css from './Titlebar.module.less';
 
 export interface NavbarProps {
   /**
@@ -133,11 +74,7 @@ export default function Navbar (props: NavbarProps) :React.ReactElement {
     if(window.confirm('确定要登出吗？')) onLogout(e);
   };
 
-  /**
-   * 渲染登录按钮
-   * @returns {null} 没有返回值
-   */
-  const renderLogin = () => (
+  const Login = () => (
     <Button className="login" type="primary" onClick={onLogin}>登录</Button>
   );
 
@@ -145,9 +82,9 @@ export default function Navbar (props: NavbarProps) :React.ReactElement {
    * 渲染用户信息
    * @returns {null} 没有返回值
    */
-  const renderUser = () => (
+  const User = () => (
     <div className="user">
-      <div className="avatar">
+      <div className={css.avatar}>
         <img src={user?.avatar} alt={user?.username} />
       </div>
       <div className="name">{getLocalStorage().name}</div>
@@ -168,17 +105,17 @@ export default function Navbar (props: NavbarProps) :React.ReactElement {
   }, [username]);
 
   return (
-    <Nav className="admin-navbar">
-      <div className="logo">
+    <div className={css.titlebar}>
+      <div className={css.logo}>
         <span><h2>后台管理系统</h2></span>
-        <span className="version">v0.0.9-20231229</span>
+        <span className={css.version}>v0.0.9-20231229</span>
       </div>
-      <div className="container">
-        <div className="search">
+      <div className={css.container}>
+        <div>
           <Input value={searchValue} onChange={e => setSearchValue(e.target.value)} />
         </div>
-        <div className="user-status">
-          { isLogin ? renderUser() : renderLogin() }
+        <div>
+          { isLogin ? <User /> : <Login /> }
         </div>
       </div>
       <Dialog
@@ -189,7 +126,7 @@ export default function Navbar (props: NavbarProps) :React.ReactElement {
         width={400}
         height={400}
       >
-        <DialogContent>
+        <div className={css.dialogContainer}>
           <div style={{width: 250}}>
             <form>
               <Input label="账号" value={username} name="username" onChange={e => setUsername(e.target.value)} />
@@ -212,8 +149,8 @@ export default function Navbar (props: NavbarProps) :React.ReactElement {
           <div>
             <Link to={'/register'}>没有账户？点击注册...</Link>
           </div>
-        </DialogContent>
+        </div>
       </Dialog>
-    </Nav>
+    </div>
   );
 }

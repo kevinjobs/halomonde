@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Header } from './_partial/layout';
+import { Header } from '../_partial/layout';
 import { AvatarUpload } from '@/components/upload';
 import { addPost, fetchPosts, deletePost } from '@/apis/posts';
-import { getLocalStorage } from '.';
+import { getLocalStorage } from '..';
 import { CloseOne } from '@icon-park/react';
 import { UPLOAD_URL } from '@/constants';
 import { UploadReturnType } from '@/types';
@@ -106,7 +106,7 @@ export default function CoverEdit() :React.ReactElement {
   return (
     <CE>
       <Header>
-        <Header.Title>画廊封面编辑</Header.Title>
+        <h2>画廊封面编辑</h2>
       </Header>
       <Up>
         <div className='preview'>

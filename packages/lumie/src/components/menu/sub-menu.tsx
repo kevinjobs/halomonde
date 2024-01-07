@@ -4,12 +4,15 @@ import { Up, Down } from '@icon-park/react';
 import COLOR_MAP from '@/styles/colors';
 import { useSpring, animated } from 'react-spring';
 import { ITEM_HEIGHT, ITEM_LEFT_PADDING, SUB_MENU_ITEM_PADDING } from './constant';
+import { NavLink } from 'react-router-dom';
 
 export type SubMenuProps = {
   children: React.ReactNode,
   title: string,
   isOpen?: boolean,
-  icon?: React.ReactNode
+  icon?: React.ReactNode,
+  arrow?: boolean;
+  to?: string;
 }
 
 const SubMenuStyled = styled.div`
@@ -18,6 +21,10 @@ const SubMenuStyled = styled.div`
     padding: 16px ${ITEM_LEFT_PADDING}px;
     display: flex;
     align-items: center;
+    a {
+      text-decoration: none;
+      color: #333;
+    }
   }
   .items {
     background-color: ${COLOR_MAP.white2};
@@ -36,21 +43,21 @@ const SMI = styled.div`
 `;
 
 export function SubMenu (props: SubMenuProps) {
-  const { children, title, icon, isOpen = false } = props;
+  const { children, title, icon, isOpen = false, arrow = true, to } = props;
 
   const [isItemsVisible, setIsItemsVisible] = React.useState(isOpen);
   const [amount, setAmount] = React.useState(0);
   const ref = React.useRef<HTMLDivElement>();
 
+  const subHeight = ITEM_HEIGHT * amount + SUB_MENU_ITEM_PADDING * 2 * amount;
+
   // react spring
   const { x } = useSpring({
-    from: { x: 0, p: 0 },
-    x: isItemsVisible ? ITEM_HEIGHT * amount + SUB_MENU_ITEM_PADDING * 2 * amount : 0,
+    from: { x: subHeight, p: 0 },
+    x: isItemsVisible ? subHeight : 0,
   });
 
-  const handleClick = () => {
-    setIsItemsVisible(!isItemsVisible);
-  };
+  const handleClick = () => setIsItemsVisible(!isItemsVisible);
 
   React.useEffect(() => {
     if (ref.current) {
@@ -63,11 +70,17 @@ export function SubMenu (props: SubMenuProps) {
     <SubMenuStyled>
       <div className="title" role="button" onClick={handleClick}>
         { icon }
-        <span style={{marginLeft: 8}}>{ title }</span>
         {
-          isItemsVisible
-            ? <Up theme="outline" size="16" fill="#333" strokeWidth={2}/>
-            : <Down theme="outline" size="16" fill="#333" strokeWidth={2}/>
+          to
+            ? <span style={{marginLeft: 8}}><NavLink to={to}>{ title }</NavLink></span>
+            : <span style={{marginLeft: 8}}>{ title }</span>
+        }
+        {
+          arrow
+            ? isItemsVisible
+              ? <Up theme="outline" size="16" fill="#333" strokeWidth={2}/>
+              : <Down theme="outline" size="16" fill="#333" strokeWidth={2}/>
+            : ''
         }
       </div>
       <animated.div
