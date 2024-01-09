@@ -74,10 +74,17 @@ export default function CoverEdit() :React.ReactElement {
           excerpt: '用于首页封面',
           status: 'publish',
         });
+
         if (data){
+          notifications.show({
+            type: 'success',
+            title: '添加成功',
+            message: '添加封面成功'
+          });
           getAllCovers();
-          notifications.show({type: 'success', title: '添加成功', message: '添加封面成功'});
-        } else notifications.show({title: '失败',  message: '添加失败'});
+        } else {
+          notifications.show({title: '失败',  message: '添加失败'})
+        };
       })();
     }
   };
@@ -91,12 +98,22 @@ export default function CoverEdit() :React.ReactElement {
           p.url = p.url.replace('static/', 'static/thumb-');
           return p;
         }))
+      } else {
+        setCovers([]);
+        notifications.show({
+          type: 'warning',
+          message: '无法获取或者为空'
+        })
       }
     })();
   }
 
-  const onDelSuccess = () => {
-    getAllCovers();
+  const onDelSuccess = (data: any) => {
+    setCovers((covers) => {
+      const idx = covers.indexOf(data);
+      const next = covers.splice(idx, 1);
+      return next;
+    })
   }
 
   React.useEffect(() => {
@@ -121,7 +138,7 @@ export default function CoverEdit() :React.ReactElement {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const renderPreviewItem = (data: any, onDel?: () => void) => {
+const renderPreviewItem = (data: any, onDel?: (data: any) => void) => {
   const handleDel = () => {
     const uid = data.uid;
     if (window.confirm('确定删除吗')) {
@@ -129,7 +146,7 @@ const renderPreviewItem = (data: any, onDel?: () => void) => {
         const res = await deletePost(uid);
         if (typeof res !== 'string') {
           notifications.show({type: 'success', message: '删除成功'})
-          if (onDel) onDel();
+          if (onDel) onDel(data);
         } else notifications.show({type: 'error', message: res});
       })();
     }
