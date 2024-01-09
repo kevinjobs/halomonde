@@ -45,8 +45,10 @@ export function UserAdmin() :React.ReactElement {
   const getAndSetUsers = () => {
     (async() => {
       const data = await fetchUsers();
-      if (typeof data !== 'string') setUsers(data.data.users);
-      else notifications.show({type: 'error', message: data});
+      if (typeof data !== 'string') {
+        setUsers(data.data.users);
+        setPickUser(null);
+      } else notifications.show({type: 'error', message: data});
     })();
   }
 

@@ -4,12 +4,12 @@ import { IUser } from '@/types';
 import { Input } from '@/components/input';
 import { Button } from '@/components/button';
 import { Select, Option } from '@/components/select';
-import COLOR_MAP from '@/styles/colors';
 import { AvatarUpload } from '@/components/upload';
-import { BASE_URL, UPLOAD_URL } from '@/constants';
+import { UPLOAD_URL } from '@/constants';
 import { updateUser, addUser } from '@/apis/user';
 import DatePicker from 'react-datepicker';
 import dayjs from 'dayjs';
+import { notifications } from '@horen/notifications';
 import "react-datepicker/dist/react-datepicker.css";
 
 const Content = styled.div`
@@ -65,17 +65,21 @@ export function UserEdit({user, onSuccess}: UserEditProps) :React.ReactElement {
       (async() => {
         const data = await updateUser(state.uid, state);
         if (typeof data !== 'string') {
-          window.alert('更新成功');
+          notifications.show({type: 'success', message: '更新成功'});
           if (onSuccess) onSuccess();
-        } else window.alert('添加失败');
+        } else {
+          notifications.show({type: 'error', message: '添加失败'});
+        }
       })();
     } else {
       (async() => {
         const data = await addUser(state);
         if (typeof data !== 'string') {
-          window.alert('添加成功');
+          notifications.show({type: 'success', message: '添加成功'});
           if (onSuccess) onSuccess();
-        } else window.alert('添加失败');
+        } else {
+          notifications.show({type: 'error', message: '添加失败'});
+        }
       })();
     }
   }
