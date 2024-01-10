@@ -1,7 +1,7 @@
 import React from 'react';
 import dayjs from 'dayjs';
 import { IPost } from '@/types';
-import { getLocalStorage } from '..';
+import { getLocalStorage } from '@/utils';
 import { Button, } from '@/components/button';
 import { Skeleton } from '@/components/skeleton';
 import { Tag } from '@/components/tag';

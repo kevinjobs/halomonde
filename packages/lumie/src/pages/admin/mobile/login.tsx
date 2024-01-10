@@ -4,7 +4,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Button } from '@/components/button';
 import { login } from '@/apis/auth';
-import { setLocalStorage } from '../admin';
+import { setLocalStorage } from '..';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { notifications } from '@horen/notifications';

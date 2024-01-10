@@ -7,7 +7,7 @@ import Photos from './photos';
 import Articles from './articles';
 import Users from './users';
 import { Down } from '@icon-park/react';
-import { getLocalStorage } from '../admin';
+import { getLocalStorage } from '..';
 import { IUser } from '@/types';
 import { fetchUser } from '@/apis/user';
 import Login from './login';

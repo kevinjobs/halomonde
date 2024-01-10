@@ -3,7 +3,7 @@ import {
   Delete,
   FileEditing,
 } from '@icon-park/react';
-import { Header } from '../_partial/layout';
+import { Header } from '../../_partial/layout';
 import { AddButton, Button } from '@horen/core';
 import { notifications } from '@horen/notifications';
 import { Dialog } from '@/components/dialog';

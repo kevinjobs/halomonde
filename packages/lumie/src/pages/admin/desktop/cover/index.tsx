@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Header } from '../_partial/layout';
+import { Header } from '../../_partial/layout';
 import { AvatarUpload } from '@/components/upload';
 import { addPost, fetchPosts, deletePost } from '@/apis/posts';
-import { getLocalStorage } from '..';
+import { getLocalStorage } from '@/utils';
 import { CloseOne } from '@icon-park/react';
 import { UPLOAD_URL } from '@/constants';
 import { UploadReturnType } from '@/types';

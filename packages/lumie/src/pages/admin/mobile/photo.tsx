@@ -12,7 +12,7 @@ import { Select, Option } from '@/components/select';
 import { Button } from '@/components/button';
 import DP from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import { getLocalStorage } from '../admin';
+import { getLocalStorage } from '..';
 import { extractExifs } from '@/utils';
 
 const F = styled.div`

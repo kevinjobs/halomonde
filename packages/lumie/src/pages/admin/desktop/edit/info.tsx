@@ -3,7 +3,7 @@ import { IPost } from "@/types";
 import { EditItem } from "./item";
 import { Input } from "@/components/input";
 import { Option, Select } from '@/components/select';
-import { getLocalStorage } from '..';
+import { getLocalStorage } from '../..';
 import DP from 'react-datepicker';
 import dayjs from 'dayjs';
 import "react-datepicker/dist/react-datepicker.css";

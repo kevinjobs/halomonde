@@ -5,7 +5,7 @@ import { Button } from '@/components/button';
 import { IPost } from '@/types';
 import { fetchPosts, deletePost } from '@/apis/posts';
 
-import { Header } from '../_partial/layout';
+import { Header } from '../../_partial/layout';
 import { PostTable } from './table';
 
 const Article = styled.div`

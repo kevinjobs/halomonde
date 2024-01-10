@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { CheckOne, CloseOne, User } from '@icon-park/react';
 import { notifications } from "@horen/notifications";
-import { Header } from '../_partial/layout';
+import { Header } from '../../_partial/layout';
 import { getInvitations, InvitationCode } from "@/apis/auth";
 import './invitations.css';
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Icon } from "@horen/core";
-import { Header } from '../_partial/layout';
+import { Header } from '../../_partial/layout';
 import { fetchFileList, deleteFileByFilename } from "@/apis";
 import { IFile } from "@/types";
 import { notifications } from "@horen/notifications";

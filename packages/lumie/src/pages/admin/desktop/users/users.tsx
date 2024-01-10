@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { fetchUsers } from '@/apis/user';
 import { UserInfo, UserSke } from './user';
 import { IUser } from '@/types';
-import { Header } from '../_partial/layout';
+import { Header } from '../../_partial/layout';
 import styled from 'styled-components';
 import { UserEdit } from './edit';
 import { AddButton } from '@horen/core';

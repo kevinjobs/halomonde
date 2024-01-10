@@ -16,15 +16,16 @@ import {
 import { login, LoginForm } from '@/apis/auth';
 import TitleBar from './_partial/titlebar';
 import LeftMenu, { SubMenuProps } from './_partial/menu';
+import { getLocalStorage, setLocalStorage, clearLocalStorage} from '@/utils'
 
-import PostAdmin from './posts';
-import UserAdmin from './users';
-import HomeAdmin from './home';
-import CoverAdmin from './cover';
-import VerseAdmin from './verse';
-import EditAdmin from './edit';
-import FileListAdmin from './files';
-import InvitaionsAdmin from './invitations';
+import PostAdmin from './desktop/posts';
+import UserAdmin from './desktop/users';
+import HomeAdmin from './desktop/home';
+import CoverAdmin from './desktop/cover';
+import VerseAdmin from './desktop/verse';
+import EditAdmin from './desktop/edit';
+import FileListAdmin from './desktop/files';
+import InvitaionsAdmin from './desktop/invitations';
 
 const ITEMS: Omit<SubMenuProps, 'children'>[] = [
   {
@@ -98,22 +99,6 @@ const Admin = styled.div`
     }
   }
 `;
-
-export const getLocalStorage = () :{token: string, name: string} => {
-  const token = localStorage.getItem('token');
-  const name = localStorage.getItem('name');
-  return { token, name };
-};
-
-export const clearLocalStorage = () => {
-  localStorage.removeItem('token');
-  localStorage.removeItem('name');
-};
-
-export const setLocalStorage = (token: string, name: string) => {
-  localStorage.setItem('token', token);
-  localStorage.setItem('name', name);
-};
 
 export default function AdminPage () :ReactElement {
   const [isLogin, setIsLogin] = React.useState(false);

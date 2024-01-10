@@ -7,22 +7,22 @@ const ArticlesPage = React.lazy(() => import('@/pages/posts'));
 const GalleryPage = React.lazy(() => import('@/pages/gallery'));
 const GoPage = React.lazy(() => import('@/pages/go'));
 
-const PostsAdmin = React.lazy(() => import('./pages/admin/posts'));
-const HomeAdmin = React.lazy(() => import('./pages/admin/home'));
-const CoverAdmin = React.lazy(() => import('./pages/admin/cover'));
-const VerseAdmin = React.lazy(() => import('./pages/admin/verse'));
-const InvitationsAdmin = React.lazy(() => import('./pages/admin/invitations'));
-const UserAdmin = React.lazy(() => import('./pages/admin/users'));
-const EditAdmin = React.lazy(() => import('@/pages/admin/edit'));
-const FileListAdmin = React.lazy(() => import('@/pages/admin/files'));
+const PostsAdmin = React.lazy(() => import('./pages/admin/desktop/posts'));
+const HomeAdmin = React.lazy(() => import('./pages/admin/desktop/home'));
+const CoverAdmin = React.lazy(() => import('./pages/admin/desktop/cover'));
+const VerseAdmin = React.lazy(() => import('./pages/admin/desktop/verse'));
+const InvitationsAdmin = React.lazy(() => import('./pages/admin/desktop/invitations'));
+const UserAdmin = React.lazy(() => import('./pages/admin/desktop/users'));
+const EditAdmin = React.lazy(() => import('@/pages/admin/desktop/edit'));
+const FileListAdmin = React.lazy(() => import('@/pages/admin/desktop/files'));
 
-const MobileAdmin = React.lazy(() => import('@/pages/mobile'));
-const MobilePhoto = React.lazy(() => import('./pages/mobile/photo'));
-const MobilePhotos = React.lazy(() => import('./pages/mobile/photos'));
-const MobileArticles = React.lazy(() => import('./pages/mobile/articles'));
-const MobileUsers = React.lazy(() => import('./pages/mobile/users'));
-const MobileLogin = React.lazy(() => import('./pages/mobile/login'));
-const MobileProfile = React.lazy(() => import('./pages/mobile/profile'));
+const MobileAdmin = React.lazy(() => import('@/pages/admin/mobile'));
+const MobilePhoto = React.lazy(() => import('./pages/admin/mobile/photo'));
+const MobilePhotos = React.lazy(() => import('./pages/admin/mobile/photos'));
+const MobileArticles = React.lazy(() => import('./pages/admin/mobile/articles'));
+const MobileUsers = React.lazy(() => import('./pages/admin/mobile/users'));
+const MobileLogin = React.lazy(() => import('./pages/admin/mobile/login'));
+const MobileProfile = React.lazy(() => import('./pages/admin/mobile/profile'));
 
 export const RootRouter = () => useRoutes(
   [
