@@ -3,6 +3,7 @@ import Add from './icon-add.svg';
 import Close from './icon-close.svg';
 import Code from './icon-code.svg';
 import Correct from './icon-correct.svg';
+import Dimension from './icon-dimension.svg';
 import Error from './icon-error.svg';
 import Info from './icon-info.svg';
 import Success from './icon-success.svg';
@@ -14,6 +15,7 @@ export type IconName =
   | 'close'
   | 'code'
   | 'correct'
+  | 'dimension'
   | 'error'
   | 'info'
   | 'success'
@@ -41,6 +43,9 @@ export function Icon({name, size=24, fill='#333', ...restProps}: IconProps) {
       break;
     case 'correct':
       icon = <Correct height={size} width={size} fill={fill} />;
+      break;
+    case 'dimension':
+      icon = <Dimension height={size} width={size} fill={fill} />;
       break;
     case 'error':
       icon = <Error height={size} width={size} fill={fill} />;

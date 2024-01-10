@@ -3,7 +3,7 @@ import { Input } from '@/components/input';
 import { Button } from '@/components/button';
 import { Dialog } from '@/components/dialog';
 import { LoginForm } from '@/apis/auth';
-import { getLocalStorage } from '..';
+import { getLocalStorage } from '@/utils';
 import { fetchUser } from '@/apis/user';
 import { IUser } from '@/types';
 import { Link } from 'react-router-dom';

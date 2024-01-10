@@ -24,6 +24,9 @@ const MobileUsers = React.lazy(() => import('./pages/admin/mobile/users'));
 const MobileLogin = React.lazy(() => import('./pages/admin/mobile/login'));
 const MobileProfile = React.lazy(() => import('./pages/admin/mobile/profile'));
 
+const Domo = React.lazy(() => import('./pages/domo'));
+const DomoHome = React.lazy(() => import('./pages/domo/home'));
+
 export const RootRouter = () => useRoutes(
   [
     {
@@ -113,6 +116,16 @@ export const RootRouter = () => useRoutes(
     {
       path: 'go',
       element: <React.Suspense><GoPage /></React.Suspense>
+    },
+    {
+      path: 'domo',
+      element: <React.Suspense><Domo /></React.Suspense>,
+      children: [
+        {
+          path: 'home',
+          element: <React.Suspense><DomoHome /></React.Suspense>
+        }
+      ]
     }
   ]
 );

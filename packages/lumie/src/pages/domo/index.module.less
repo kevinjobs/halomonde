@@ -1,0 +1,43 @@
+@import "../../styles/size.less";
+
+@topHeight: 48px;
+@leftWidth: 220px;
+
+.domo {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.top {
+  width: 100%;
+  height: @topHeight;
+  background-color: #fff;
+  margin: @gap @gap 0 @gap;
+  padding: 0 32px; 
+  border-radius: @borderRadius;
+  display: flex;
+  align-items: center;
+}
+
+.main {
+  display: flex;
+  height: calc(100vh - @topHeight - @gap * 2);
+}
+
+.left {
+  background-color: #fff;
+  margin: @gap;
+  border-radius: @borderRadius;
+  width: @leftWidth;
+}
+
+.right {
+  background-color: #fff;
+  margin: @gap @gap @gap 0;
+  padding: 32px 48px;
+  border-radius: @borderRadius;
+  width: calc(100vw - @leftWidth - @gap * 3);
+  height: calc(100% - @gap);
+}

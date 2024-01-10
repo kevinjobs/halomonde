@@ -1,0 +1,27 @@
+.layout {
+  padding: 4px;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0 0 16px 0;
+}
+
+.description {
+  margin: 16px 0;
+  color: #999;
+  position: relative;
+  &::after {
+    content: '';
+    width: 100%;
+    position: absolute;
+    border-top: 1px solid #ddd;
+    bottom: -16px;
+    left: 0;
+  }
+}
+
+.children {
+  margin-top: 32px;
+}

@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 import { Male, Female, Local } from "@icon-park/react";
 import { getLocation } from '@/apis/location';
 import { Button } from '@/components/button';
-import { clearLocalStorage } from '..';
+import { clearLocalStorage } from '@/utils';
 import { notifications } from '@horen/notifications';
 
 const F = styled.div`

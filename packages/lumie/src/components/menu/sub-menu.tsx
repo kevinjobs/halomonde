@@ -49,7 +49,7 @@ export function SubMenu (props: SubMenuProps) {
   const [amount, setAmount] = React.useState(0);
   const ref = React.useRef<HTMLDivElement>();
 
-  const subHeight = ITEM_HEIGHT * amount + SUB_MENU_ITEM_PADDING * 2 * amount;
+  const subHeight = ITEM_HEIGHT * amount;
 
   // react spring
   const { x } = useSpring({

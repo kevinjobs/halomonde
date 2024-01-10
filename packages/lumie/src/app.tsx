@@ -1,8 +1,12 @@
 import React from 'react';
-import { HashRouter } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { RootRouter } from '@/routes';
 import { Notifications } from '@horen/notifications';
-import { Navbar } from './components/navbar';
+import { Navbar } from '@/components/navbar';
+import DomoPage from '@/pages/domo';
+import GalleryPage from '@/pages/gallery';
+import ArticlePage from '@/pages/posts';
+import { Redirect } from './pages/domo/_components';
 
 const ITEMS = [
   {
@@ -17,23 +21,20 @@ const ITEMS = [
     title: 'Article',
     to: '/articles',
   },
-  {
-    title: 'Admin',
-    to: '/admin',
-  },
-  {
-    title: 'Mobile',
-    to: '/mobile'
-  }
 ]
 
 export default function App() {
   return (
     <React.StrictMode>
       <HashRouter>
-        <RootRouter />
         <Navbar menus={ITEMS} />
         <Notifications />
+        <Routes>
+          <Route path='/' element={<Redirect to='gallery' />} />
+          <Route path='domo/*' element={<DomoPage />} />
+          <Route path='gallery' element={<GalleryPage />} />
+          <Route path='articles' element={<ArticlePage />} />
+        </Routes>
       </HashRouter>
     </React.StrictMode>
   );
