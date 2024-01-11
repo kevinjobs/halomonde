@@ -10,11 +10,13 @@ export type LayoutProps = {
 export default function Layout({title, description, children}: LayoutProps) {
   return (
     <div className={style.layout}>
+      <div className={style.header}>
       <div className={style.title}>
         { title }
       </div>
       <div className={style.description}>
         { description }
+      </div>
       </div>
       <div className={style.children}>
         { children }

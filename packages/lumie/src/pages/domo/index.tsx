@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Icon } from '@horen/core';
 import Home from './home';
 import Cover from './cover';
+import Posts from './posts';
 import {
   Titlebar,
   TitlebarProps,
@@ -36,9 +37,9 @@ const LEFT_ITEMS: PageProps[] = [
     isOpen: true,
     items: [
       {
-        title: '文章管理',
-        description: '管理所有文章',
-        element: <Home />,
+        title: '所有内容',
+        description: '管理所有内容',
+        element: <Posts />,
         to: 'content/posts'
       },
       {
@@ -46,7 +47,7 @@ const LEFT_ITEMS: PageProps[] = [
         description: '管理相册封面',
         element: <Cover />,
         to: 'content/cover'
-      }
+      },
     ]
   },
 ]

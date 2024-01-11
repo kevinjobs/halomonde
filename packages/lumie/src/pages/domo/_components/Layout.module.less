@@ -2,16 +2,11 @@
   padding: 4px;
 }
 
-.title {
-  font-size: 1.5rem;
-  font-weight: 800;
-  margin: 0 0 16px 0;
-}
-
-.description {
-  margin: 16px 0;
-  color: #999;
+.header {
+  display: flex;
   position: relative;
+  align-items: end;
+  margin: 0 0 16px 0;
   &::after {
     content: '';
     width: 100%;
@@ -20,6 +15,16 @@
     bottom: -16px;
     left: 0;
   }
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.description {
+  color: #999;
+  margin-left: 16px;
 }
 
 .children {
