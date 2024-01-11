@@ -4,6 +4,7 @@ import { Icon } from '@horen/core';
 import Home from './home';
 import Cover from './cover';
 import Posts from './posts';
+import Verse from './verse';
 import {
   Titlebar,
   TitlebarProps,
@@ -48,6 +49,12 @@ const LEFT_ITEMS: PageProps[] = [
         element: <Cover />,
         to: 'content/cover'
       },
+      {
+        title: '诗句管理',
+        description: '管理首页诗句',
+        element: <Verse />,
+        to: 'content/verse'
+      }
     ]
   },
 ]
