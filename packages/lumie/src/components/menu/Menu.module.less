@@ -1,0 +1,54 @@
+@size: 40px;
+@padding: 8px;
+
+.menu {
+  overflow: hidden;
+}
+
+.menuGroup {
+  user-select: none;
+  overflow: hidden;
+  transition: height 200ms ease-in-out;
+}
+
+.groupHeader {
+  height: @size + @padding;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: @padding @padding * 2;
+}
+
+.groupIcon {
+  width: @size + @padding;
+  min-width: @size + @padding;
+  margin-right: @padding / 2;
+}
+
+.groupTitle {
+  font-weight: 700;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  padding: @padding @padding * 2;
+  overflow: hidden;
+  background-color: #f5f5f5;
+  &:hover {
+    background-color: #e2e2e2;
+  }
+}
+
+.menuItemIcon {
+  width: @size + @padding;
+  min-width: @size + @padding;
+  margin-right: @padding / 2;
+}
+
+.menuItemContent {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+}

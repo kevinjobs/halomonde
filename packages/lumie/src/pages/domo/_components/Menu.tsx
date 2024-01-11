@@ -1,52 +1,55 @@
 import React, { ReactNode } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Menu } from '@/components/menu';
+import Menu from '@/components/menu/Menu';
 import css from './Menu.module.less';
 
-export interface SubMenuProps {
+export interface LeftMenuItem {
   title: string;
   icon?: React.ReactNode;
-  isOpen?: boolean;
-  items?: SubMenuItemProps[];
+  expand?: boolean;
+  items?: LeftSubMenuItem[];
   children: ReactNode;
   arrow?: boolean;
   to?: string;
 }
 
-export type SubMenuItemProps = Omit<SubMenuProps, 'children'>;
+export type LeftSubMenuItem = Omit<LeftMenuItem, 'children'>;
 
-export default function LeftMenu({items}: {items: Omit<SubMenuProps, 'children'>[]}) {
-  const SubMenu = ({children, ...rest}: SubMenuProps) => (
-    <Menu.SubMenu {...rest}>
+export default function LeftMenu({items, shrink=false}: {items: LeftSubMenuItem[], shrink?: boolean}) {
+  const MenuGroup = ({children, ...rest}: LeftMenuItem) => (
+    <Menu.Group {...rest}>
       {children}
-    </Menu.SubMenu>
+    </Menu.Group>
   )
 
-  const SubMenuItem = ({icon, to, title}: SubMenuItemProps) => (
-    <Menu.SubMenuItem>
-      <div className={css.item}>
-        <div className={css.icon}>{icon}</div>
-        <div className={css.link}>
-          <NavLink to={to}>{title}</NavLink>
-        </div>
+  const MenuItem = ({icon, to, title}: LeftSubMenuItem) => (
+    <Menu.Item icon={icon}>
+      <div className={css.leftMenuItem}>
+        <NavLink to={to}>{title}</NavLink>
       </div>
-    </Menu.SubMenuItem>
+    </Menu.Item>
   )
 
-  const render = (items: Omit<SubMenuProps, 'children'>[]) =>
+  const render = (items: Omit<LeftMenuItem, 'children'>[]) =>
     items?.map(item => {
-      return (
-        <SubMenu {...item} key={item.title}>
-          {item.items?.map(i => (
-            <SubMenuItem {...i} key={i.title}/>
-          ))}
-        </SubMenu>
-      )
+      if (item.to) {
+        return (
+          <MenuItem key={item.to} {...item} />
+        )
+      } else {
+        return (
+          <MenuGroup {...item} key={item.title}>
+            {item.items?.map(i => (
+              <MenuItem {...i} key={i.title}/>
+            ))}
+          </MenuGroup>
+        )
+      }
     })
 
   return (
-    <div className={css.menu}>
-      <Menu mode="inline">
+    <div className={css.leftMenu}>
+      <Menu shrink={shrink}>
         {render(items)}
       </Menu>
     </div>

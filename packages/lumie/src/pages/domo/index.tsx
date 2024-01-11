@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Icon } from '@horen/core';
 import Home from './home';
@@ -16,12 +16,13 @@ import {
 } from './_components';
 import style from './index.module.less';
 
-type PageProps = {
+interface PageProps extends Omit<SubMenuProps, 'children'> {
   title: string;
   description: string;
   element: React.ReactNode;
+  // icon?: React.ReactNode;
   items?: PageProps[];
-} & Omit<SubMenuProps, 'children'>;
+};
 
 const LEFT_ITEMS: PageProps[] = [
   {
@@ -30,30 +31,35 @@ const LEFT_ITEMS: PageProps[] = [
     element: <Home />,
     to: 'home',
     arrow: false,
+    icon: <Icon name="home" />
   },
   {
     title: '内容管理',
     description: '主要内容管理',
     element: <Home />,
-    isOpen: true,
+    expand: true,
+    icon: <Icon name='menu' />,
     items: [
       {
         title: '所有内容',
         description: '管理所有内容',
         element: <Posts />,
-        to: 'content/posts'
+        to: 'content/posts',
+        icon: <Icon name='files' />,
       },
       {
         title: '封面管理',
         description: '管理相册封面',
         element: <Cover />,
-        to: 'content/cover'
+        to: 'content/cover',
+        icon: <Icon name='picture' />,
       },
       {
         title: '诗句管理',
         description: '管理首页诗句',
         element: <Verse />,
-        to: 'content/verse'
+        to: 'content/verse',
+        icon: <Icon name='verse' size={26} />,
       }
     ]
   },
@@ -64,6 +70,8 @@ const TITLE_BAR_PROPS: TitlebarProps = {
 }
 
 export default function Domo() {
+  const [shrink, setShrink] = useState(false);
+
   return (
     <div className={style.domo}>
       <div className={style.top}>
@@ -71,7 +79,8 @@ export default function Domo() {
       </div>
       <div className={style.main}>
         <div className={style.left}>
-          <LeftMenu items={LEFT_ITEMS} />
+          <LeftMenu items={LEFT_ITEMS} shrink={shrink} />
+          <button onClick={() => setShrink(!shrink)}>s</button>
         </div>
         <div className={style.right}>
           <Routes>

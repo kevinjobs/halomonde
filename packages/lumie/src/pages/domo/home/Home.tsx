@@ -1,5 +1,4 @@
-import React from "react";
-import { Layout } from '../_components';
+import React, { useState } from "react";
 import style from './Home.module.less';
 
 export default function Home() {
