@@ -5,7 +5,7 @@ import Item from './menu-item';
 import { SubMenu, SubMenuItem } from './sub-menu';
 
 type MenuProps = {
-  mode: 'horizontal' | 'inline',
+  mode: 'horizontal' | 'inline' | 'small',
   children: React.ReactNode
 }
 
@@ -14,7 +14,7 @@ const MenuStyled = styled.div``;
 function Menu (props: MenuProps) :React.ReactElement {
   const { mode, ...restProps } = props;
 
-  return mode === 'inline' ? <Inline {...restProps} /> : <MenuStyled />;
+  return mode === 'inline' && <Inline {...restProps} />;
 }
 
 Menu.Item = Item;
