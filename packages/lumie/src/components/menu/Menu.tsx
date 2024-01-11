@@ -3,7 +3,6 @@ import style from './Menu.module.less';
 import { Icon } from "@horen/core";
 
 export type MenuProps = {
-  shrink?: boolean;
   children?: React.ReactNode;
 }
 
@@ -24,13 +23,10 @@ const SIZE = 32;
 const PADDING = 8;
 
 function Menu(props: MenuProps) {
-  const {
-    shrink=false,
-    children,
-  } = props;
+  const { children } = props;
 
   return (
-    <div className={style.menu} style={{width: shrink ? SIZE + PADDING : '100%'}}>
+    <div className={style.menu}>
       { children }
     </div>
   )

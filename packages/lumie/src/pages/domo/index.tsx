@@ -10,9 +10,7 @@ import {
   TitlebarProps,
   LeftMenu,
   SubMenuProps,
-  Redirect,
   Layout,
-  LayoutProps
 } from './_components';
 import style from './index.module.less';
 
@@ -20,7 +18,6 @@ interface PageProps extends Omit<SubMenuProps, 'children'> {
   title: string;
   description: string;
   element: React.ReactNode;
-  // icon?: React.ReactNode;
   items?: PageProps[];
 };
 
@@ -70,8 +67,6 @@ const TITLE_BAR_PROPS: TitlebarProps = {
 }
 
 export default function Domo() {
-  const [shrink, setShrink] = useState(false);
-
   return (
     <div className={style.domo}>
       <div className={style.top}>
@@ -79,8 +74,7 @@ export default function Domo() {
       </div>
       <div className={style.main}>
         <div className={style.left}>
-          <LeftMenu items={LEFT_ITEMS} shrink={shrink} />
-          <button onClick={() => setShrink(!shrink)}>s</button>
+          <LeftMenu items={LEFT_ITEMS} />
         </div>
         <div className={style.right}>
           <Routes>

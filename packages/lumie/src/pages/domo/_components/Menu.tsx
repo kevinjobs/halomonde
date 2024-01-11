@@ -15,7 +15,7 @@ export interface LeftMenuItem {
 
 export type LeftSubMenuItem = Omit<LeftMenuItem, 'children'>;
 
-export default function LeftMenu({items, shrink=false}: {items: LeftSubMenuItem[], shrink?: boolean}) {
+export default function LeftMenu({items}: {items: LeftSubMenuItem[]}) {
   const MenuGroup = ({children, ...rest}: LeftMenuItem) => (
     <Menu.Group {...rest}>
       {children}
@@ -49,7 +49,7 @@ export default function LeftMenu({items, shrink=false}: {items: LeftSubMenuItem[
 
   return (
     <div className={css.leftMenu}>
-      <Menu shrink={shrink}>
+      <Menu>
         {render(items)}
       </Menu>
     </div>
