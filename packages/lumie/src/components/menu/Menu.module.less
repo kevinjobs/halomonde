@@ -29,6 +29,43 @@
   font-weight: 700;
 }
 
+.groupArrow {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  margin-left: 8px;
+}
+
+.groupArrow1 {
+  display: inline-block;
+  height: 2px;
+  width: 12px;
+  background-color: #333;
+  transform: rotate(45deg);
+  margin: 0;
+  position: relative;
+  right: -2px;
+  top: 8px;
+  transition-property: transform;
+  transition-duration: 200ms;
+  transition-timing-function: ease-in-out;
+}
+
+.groupArrow2 {
+  display: inline-block;
+  height: 2px;
+  width: 12px;
+  background-color: #333;
+  transform: rotate(-45deg);
+  margin: 0;
+  position: relative;
+  left: -2px;
+  top: 8px;
+  transition-property: transform;
+  transition-duration: 200ms;
+  transition-timing-function: ease-in-out;
+}
+
 .menuItem {
   display: flex;
   align-items: center;

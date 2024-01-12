@@ -46,6 +46,7 @@ function MenuGroup(props: MenuGroupProps) {
   const height = useRef<number>(0);
 
   const [h, setH] = useState(size);
+  const [r, setR] = useState(expand ? -45 : 45);
 
   useEffect(() => {
     if (ref.current) {
@@ -74,10 +75,19 @@ function MenuGroup(props: MenuGroupProps) {
         onClick={() => {
           if (h === size) setH(height.current);
           else setH(size);
+          if (r === 45) {
+            setR(-45);
+          } else {
+            setR(45);
+          }
         }}
       >
         <div className={style.groupIcon}>{ icon }</div>
         <div className={style.groupTitle}>{ title }</div>
+        <div className={style.groupArrow}>
+          <span className={style.groupArrow1} style={{transform: `rotate(${r}deg)`}}></span>
+          <span className={style.groupArrow2} style={{transform: `rotate(${-r}deg)`}}></span>
+        </div>
       </div>
       { children }
     </div>
