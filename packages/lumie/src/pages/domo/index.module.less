@@ -4,17 +4,16 @@
 @leftWidth: 188px;
 
 .domo {
-  padding: 0;
+  padding: @gap;
   margin: 0;
-  display: flex;
-  flex-wrap: wrap;
+  height: 100vh;
 }
 
 .top {
   width: 100%;
   height: @topHeight;
   background-color: #fff;
-  margin: @gap @gap 0 @gap;
+  margin: 0;
   padding: 0 32px; 
   border-radius: @borderRadius;
   display: flex;
@@ -28,17 +27,19 @@
 
 .left {
   background-color: #fff;
-  margin: @gap;
+  margin: @gap @gap 0 0;
   border-radius: @borderRadius;
   width: @leftWidth;
   height: calc(100% - @gap);
+  backdrop-filter: blur(20px);
 }
 
 .right {
   background-color: #fff;
-  margin: @gap @gap @gap 0;
+  margin: @gap 0 @gap 0;
   padding: 32px 48px;
   border-radius: @borderRadius;
   width: calc(100vw - @leftWidth - @gap * 3);
   height: calc(100% - @gap);
+  backdrop-filter: blur(20px);
 }

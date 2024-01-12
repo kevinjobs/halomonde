@@ -56,7 +56,7 @@ const LEFT_ITEMS: PageProps[] = [
         description: '管理首页诗句',
         element: <Verse />,
         to: 'content/verse',
-        icon: <Icon name='verse' size={26} />,
+        icon: <Icon name='verse' size={27} />,
       }
     ]
   },

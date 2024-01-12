@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import style from './Layout.module.less';
 
 export type LayoutProps = {
@@ -8,6 +8,10 @@ export type LayoutProps = {
 }
 
 export default function Layout({title, description, children}: LayoutProps) {
+  useEffect(() => {
+    document.title = 'Domo - ' + String(title);
+  }, [title]);
+
   return (
     <div className={style.layout}>
       <div className={style.header}>
