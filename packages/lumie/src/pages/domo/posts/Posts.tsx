@@ -1,10 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Modal } from '@horen/core';
 import { Button } from '@/components/button';
 import { IPost } from '@/types';
 import { fetchPosts, deletePost } from '@/apis/posts';
 import { PostTable } from './table';
 import style from './Posts.module.less';
+import EditPost from './EditPost';
 
 export default function PostAdmin(): React.ReactElement {
   const PAGE_LIMIT = 6;
@@ -15,6 +17,8 @@ export default function PostAdmin(): React.ReactElement {
   // 这两个状态是根据 posts 的情况计算出的，因此不需要保存
   const [hasPrev, setHasPrev] = React.useState(false);
   const [hasNext, setHasNext] = React.useState(true);
+  //
+  const [pickPost, setPickPost] = React.useState<IPost>(null);
 
   React.useEffect(() => {
     // 当列表变动时将其保存在 localStorage中
@@ -41,7 +45,7 @@ export default function PostAdmin(): React.ReactElement {
   };
 
   const editTableRow = (p: IPost) => {
-    navigate(`/admin/edit/update/${p.type}/${p.uid}`);
+    setPickPost(p);
   };
 
   const clickViewPost = (p: IPost) => {
@@ -121,6 +125,13 @@ export default function PostAdmin(): React.ReactElement {
           <Button onClick={clickNext} disabled={!hasNext}>Next</Button>
         </div>
       </div>
+      <Modal
+        visible={pickPost ? true : false}
+        onClose={() => setPickPost(null)}
+      >
+        <h2>编辑</h2>
+        {pickPost && <EditPost post={pickPost} />}
+      </Modal>
     </div>
   );
 }

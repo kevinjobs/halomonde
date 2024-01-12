@@ -14,7 +14,7 @@ export type FormItemChangeEvent =
   | React.MouseEvent<HTMLSpanElement>;
 
 export type GetReturn = {
-  onChange(e: FormItemChangeEvent, value: any): void;
+  onChange(e: FormItemChangeEvent | string, value: any): void;
   value: any;
 }
 export type UseFormReturnType = {
@@ -56,17 +56,21 @@ export function useForm({initial}: UseFormProps): UseFormReturnType {
 
   const get = (prop: string, options?: GetOptions): GetReturn => {
     const type = options?.type || 'input';
-    const onChange = (e: FormItemChangeEvent, value: any) => {
-      if (type === 'input') {
-        const target = e.target as HTMLInputElement;
-        dispatch({payload: {[target.name]: value}});
+    const onChange = (e: FormItemChangeEvent | string, value: any) => {
+      if (typeof e === 'string') {
+        dispatch({payload: {e: value}});
       } else {
-        const target = e.target as HTMLSpanElement;
-        dispatch({
-          payload: {
-            [String(target.dataset['name'])]: value,
-          }
-        });
+        if (type === 'input') {
+          const target = e.target as HTMLInputElement;
+          dispatch({payload: {[target.name]: value}});
+        } else {
+          const target = e.target as HTMLSpanElement;
+          dispatch({
+            payload: {
+              [String(target.dataset['name'])]: value,
+            }
+          });
+        }
       }
     }
 
