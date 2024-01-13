@@ -1,12 +1,28 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Modal, Select } from '@horen/core';
+import dayjs from 'dayjs';
+
+import { deletePost, fetchPosts, updatePost, addPost } from '@/apis/posts';
 import { Button } from '@/components/button';
+import EditPanel from '@/pages/domo/_components/edit-panel';
 import { IPost } from '@/types';
-import { fetchPosts, deletePost } from '@/apis/posts';
-import EditPost from '@/pages/domo/_components/EditPanel';
+import { Modal, Select } from '@horen/core';
+import { notifications } from '@horen/notifications';
+
 import style from './Everything.module.less';
 import { PostTable } from './Table';
+
+const TYPES: Record<string, any> = {
+  article: '文章',
+  verse: '诗文',
+  photo: '照片',
+  cover: '封面',
+}
+
+const MODES: Record<string, any> = {
+  create: '新增',
+  update: '更新',
+}
 
 export default function PostAdmin(): React.ReactElement {
   const PAGE_LIMIT = 6;
@@ -20,47 +36,39 @@ export default function PostAdmin(): React.ReactElement {
   //
   const [pickPost, setPickPost] = React.useState<IPost>(null);
 
-  React.useEffect(() => {
-    // 当列表变动时将其保存在 localStorage中
-    // 这样可以在下次加载时重新取出以恢复状态
-    // 在本页面中，只需要保存这两个状态就可以恢复整个页面
-    // 针对不同的页面，可能需要保存不同的值
-    localStorage.setItem('offset', String(offset));
-    localStorage.setItem('typ', typ);
-  }, [offset, typ]);
+  const mode = pickPost?.uid ? 'update' : 'create';
 
-  const clickPrev = () => {
+  const handleClickPrev = () => {
     setPosts(null);
     setOffset(offset - PAGE_LIMIT);
   };
 
-  const clickNext = () => {
+  const handleClickNext = () => {
     setPosts(null);
     setOffset(offset + PAGE_LIMIT);
   };
 
-  const editTableRow = (p: IPost) => {
-    setPickPost(p);
-  };
-
-  const clickViewPost = (p: IPost) => {
+  /** 点击查看详情 */
+  const handleViewPost = (p: IPost) => {
     navigate(`/${p.type}/${p.uid}`);
   };
 
-  const clickDelRow = (p: IPost) => {
+  /** 点击删除 */
+  const handleDeletePost = (p: IPost) => {
     const uid = p.uid;
     if (confirm('确定要删除？')) {
       (async() => {
         const data = await deletePost(uid);
         if (typeof data !== 'string') {
-          window.alert('删除成功');
-          getAndSet(offset, PAGE_LIMIT, typ);
+          notifications.show({type: 'success', message: '删除成功'});
+          refreshPosts(offset, PAGE_LIMIT, typ);
         } else window.alert(data);
       })();
     }
   };
 
-  const getAndSet = (offset = 0, limit: number, typ: string) => {
+  /** 刷新 */
+  const refreshPosts = (offset = 0, limit: number, typ: string) => {
     (async() => {
       const data = await fetchPosts(offset, limit, {status: 'all', type: typ});
       if (typeof data !== 'string') {
@@ -75,22 +83,93 @@ export default function PostAdmin(): React.ReactElement {
     })();
   };
 
-  const handleFilter = (e: any, t: string) => {
-    setTyp(t);
+  const reloadTable = (type: string) => {
+    setTyp(type);
     setOffset(0);
     setPosts(null);
     setTimeout(() => {
-      getAndSet(0, PAGE_LIMIT, t);
-    }, 100);
+      refreshPosts(0, PAGE_LIMIT, type);
+    }, 16);
+  }
+
+  /** 点击筛选按钮 */
+  const handleFilter = (_: any, type: string) => {
+    reloadTable(type);
+  }
+
+  /** 点击编辑按钮 */
+  const handleUpdatePost = (p: IPost) => {
+    setPickPost(p);
+  };
+
+  /** 点击新增 */
+  const handleCreate = (_: any, type: string) => {
+    const postTemplate: IPost = {
+      title: '',
+      author: '',
+      updateAt: dayjs().unix(),
+      createAt: dayjs().unix(),
+      content: '',
+      uid: '',
+      id: 0,
+      excerpt: '',
+      tags: '',
+      format: 'default',
+      status: 'draft',
+      type,
+      url: '',
+      category: 'default',
+    };
+    setPickPost(postTemplate);
+  }
+
+  /** 处理提交事件 */
+  const handleSubmitPost = (post: IPost) => {
+    if (mode === 'update') {
+      updatePost(post.uid, post).then(resp => {
+        if (typeof resp ==='string') {
+          notifications.show({type: 'error', message: resp});
+        } else {
+          notifications.show({type:'success', message: '更新成功'});
+          setPickPost(null);
+          reloadTable(post.type);
+        }
+      });
+    }
+
+    if (mode === 'create') {
+      addPost(post).then(resp => {
+        if (typeof resp ==='string') {
+          notifications.show({type: 'error', message: resp});
+        } else {
+          notifications.show({type:'success', message: '添加成功'});
+          setPickPost(null);
+          reloadTable(post.type);
+        }
+      });
+    }
+  }
+
+  const handleCancelEditPanel = () => {
+    setPickPost(null);
   }
 
   React.useEffect(() => {
-    getAndSet(offset, PAGE_LIMIT, typ);
+    refreshPosts(offset, PAGE_LIMIT, typ);
   }, [offset]);
 
   React.useEffect(() => {
-    getAndSet(offset, PAGE_LIMIT, typ);
+    refreshPosts(offset, PAGE_LIMIT, typ);
   }, []);
+
+  React.useEffect(() => {
+    // 当列表变动时将其保存在 localStorage中
+    // 这样可以在下次加载时重新取出以恢复状态
+    // 在本页面中，只需要保存这两个状态就可以恢复整个页面
+    // 针对不同的页面，可能需要保存不同的值
+    localStorage.setItem('offset', String(offset));
+    localStorage.setItem('typ', typ);
+  }, [offset, typ]);
 
   return (
     <div className={''}>
@@ -106,19 +185,30 @@ export default function PostAdmin(): React.ReactElement {
             </Select>
           </span>
         </div>
+        <div className={style.addOne}>
+          <span className={style.addText}>新增</span>
+          <span>
+            <Select value={typ} onChange={handleCreate} arrow>
+              <Select.Item name="文章" value="article" />
+              <Select.Item name="照片" value="photo" />
+              <Select.Item name="封面" value="cover" />
+              <Select.Item name="诗文" value="verse" />
+            </Select>
+          </span>
+        </div>
       </div>
       <div className={style.container}>
         <div className={style.table}>
           <PostTable
             posts={posts}
-            onEdit={editTableRow}
-            onDel={clickDelRow}
-            onView={clickViewPost}
+            onEdit={handleUpdatePost}
+            onDel={handleDeletePost}
+            onView={handleViewPost}
           />
         </div>
         <div className={style.prevNext}>
-          <Button onClick={clickPrev} disabled={!hasPrev}>Prev</Button>
-          <Button onClick={clickNext} disabled={!hasNext}>Next</Button>
+          <Button onClick={handleClickPrev} disabled={!hasPrev}>Prev</Button>
+          <Button onClick={handleClickNext} disabled={!hasNext}>Next</Button>
         </div>
       </div>
       <Modal
@@ -127,17 +217,17 @@ export default function PostAdmin(): React.ReactElement {
         fullScreen
       >
         <Modal.Header>
-          <h2>编 辑 内 容</h2>
+          <h2>{MODES[mode]}{TYPES[typ]}</h2>
         </Modal.Header>
         <Modal.Content>
           {
             pickPost &&
-            <EditPost
-              mode={pickPost?.uid ? 'update' : 'create'}
-              type={typ}
+            <EditPanel
+              mode={mode}
+              type={pickPost?.type}
               post={pickPost}
-              onSuccess={() => {setPickPost(null);getAndSet(offset, PAGE_LIMIT, typ);}}
-              onCancel={() => setPickPost(null)}
+              onSubmit={handleSubmitPost}
+              onCancel={handleCancelEditPanel}
             />
           }
         </Modal.Content>

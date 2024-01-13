@@ -1,26 +1,21 @@
-import React from "react";
-import WE from 'wangeditor';
+import 'react-datepicker/dist/react-datepicker.css';
+
+import dayjs from 'dayjs';
 import marked from 'marked';
+import React from 'react';
 import Datepicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
-import dayjs from "dayjs";
+import WE from 'wangeditor';
 
-import { useForm } from "@horen/hooks";
-import { AvatarUpload, Button, Input, Select } from "@horen/core";
-import { notifications } from "@horen/notifications";
+import { UPLOAD_URL } from '@/constants';
+import { IPost } from '@/types';
+import { AvatarUpload, Button, Input, Select } from '@horen/core';
+import { useForm } from '@horen/hooks';
+import { notifications } from '@horen/notifications';
 
-import { IPost } from "@/types";
-import { updatePost } from "@/apis/posts";
-import { UPLOAD_URL } from "@/constants";
-import style from './EditPanel.module.less';
+import { EditPanelProps } from './';
+import style from './ArticleEditPanel.module.less';
 
-export interface EditPostProps {
-  mode?: 'update' | 'create';
-  type?: 'article' | 'picture' | 'cover' | 'verse' | string;
-  post?: IPost;
-  onSuccess?(post: IPost): void;
-  onCancel?(): void;
-}
+export interface ArticleEditPanelProps extends EditPanelProps {}
 
 const renderer = {
   image(href: string, title: string, text: string): string {
@@ -33,37 +28,14 @@ const renderer = {
   },
 };
 
-export default function EditPost({mode, type, post, onSuccess, onCancel}: EditPostProps) {
+export function ArticleEditPanel({mode, post, onSubmit, onCancel}: ArticleEditPanelProps) {
   marked.use({ renderer });
 
-  const DEFAULT_POST: IPost = {
-    title: '',
-    author: '',
-    updateAt: (new Date()).valueOf(),
-    createAt: (new Date()).valueOf(),
-    content: '',
-    uid: '',
-    id: 0,
-    excerpt: '',
-    tags: '',
-    format: 'default',
-    status: 'draft',
-    type: type,
-    category: 'default',
-  };
-
-  const form = useForm({initial: mode === 'create' ? DEFAULT_POST : post});
+  const form = useForm({initial: post});
   const weditor = React.useRef<WE>(null);
 
-  const handleSubmit = () => {
-    updatePost(form.data.uid, form.data).then(resp => {
-      if (typeof resp ==='string') {
-        notifications.show({type: 'error', message: resp});
-      } else {
-        notifications.show({type:'success', message: '更新成功'});
-        if (onSuccess) onSuccess(form.data);
-      }
-    });
+  const handleSubmit = (post: IPost) => {
+    if (onSubmit) onSubmit(post);
   }
 
   const handleCancel = () => {
@@ -181,7 +153,7 @@ export default function EditPost({mode, type, post, onSuccess, onCancel}: EditPo
           />
         </EditItem>
         <div className={style.submitArea}>
-          <Button onClick={handleSubmit}>
+          <Button onClick={() => handleSubmit(form.data)}>
             { mode === 'create' ? '新增' : '更新' }
           </Button>
           <Button type='error' onClick={handleCancel}>取消</Button>

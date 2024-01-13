@@ -3,9 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Icon } from '@horen/core';
 
 import Home from './home';
-import Cover from './posts/cover';
 import Everything from './posts/everything';
-import Verse from './posts/verse';
 import User from './system/user';
 import Invitaition from './system/invitation';
 
@@ -49,20 +47,6 @@ const LEFT_ITEMS: PageProps[] = [
         to: 'content/posts',
         icon: <Icon name='files' />,
       },
-      {
-        title: '封面管理',
-        description: '管理相册封面',
-        element: <Cover />,
-        to: 'content/cover',
-        icon: <Icon name='picture' />,
-      },
-      {
-        title: '诗句管理',
-        description: '管理首页诗句',
-        element: <Verse />,
-        to: 'content/verse',
-        icon: <Icon name='verse' size={27} />,
-      }
     ]
   },
   {

@@ -3,7 +3,6 @@ import { Arrow } from './Arrow';
 import style from './Select.module.less';
 
 export interface SelectProps {
-  defaultValue?: string;
   onChange?(e: React.MouseEvent<HTMLDivElement> | null, value: string): void;
   value: string;
   border?: boolean;
@@ -17,7 +16,6 @@ export interface SelectItemProps {
 }
 
 function Select({
-  defaultValue,
   onChange,
   children,
   border=true,
@@ -44,10 +42,6 @@ function Select({
   }
 
   useEffect(() => {
-    if (defaultValue) setValue(defaultValue);
-  }, [defaultValue]);
-
-  useEffect(() => {
     if (ref.current) {
       const tmpKw: Record<string, any> = {};
       for (const child of ref.current.children) {
@@ -58,6 +52,8 @@ function Select({
       setKw(tmpKw);
     }
   }, [ref.current?.children]);
+
+  useEffect(() => setValue(value), [value]);
 
   return (
     <div
