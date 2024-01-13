@@ -10,6 +10,7 @@ export default function Component() {
       <div><Link href={'/components/input'}>Input</Link></div>
       <div><Link href={'/components/modal'}>Modal</Link></div>
       <div><Link href={'/components/notification'}>Notification</Link></div>
+      <div><Link href={'/components/select'}>Select</Link></div>
       <div><Link href={'/components/slider'}>Slider</Link></div>
       <div><Link href={'/components/switch'}>Switch</Link></div>
       <div><Link href={'/components/tag'}>Tag</Link></div>

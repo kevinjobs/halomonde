@@ -7,7 +7,7 @@ import { notifications } from "@horen/notifications";
 
 import { IPost } from "@/types";
 import style from './EditPost.module.less';
-import { AvatarUpload, Button, Input } from "@horen/core";
+import { AvatarUpload, Button, Input, Select } from "@horen/core";
 import { UPLOAD_URL } from "@/constants";
 
 export interface EditPostProps {
@@ -52,6 +52,7 @@ export default function EditPost({mode, type, post, onSubmit, onCancel}: EditPos
   const weditor = React.useRef<WE>(null);
 
   const handleSubmit = () => {
+    console.log(form.data);
     if (onSubmit) onSubmit(form.data);
   }
 
@@ -101,6 +102,35 @@ export default function EditPost({mode, type, post, onSubmit, onCancel}: EditPos
         <EditItem label="UID">
           <Input name="uid" {...form.get('uid')} disabled />
         </EditItem>
+        <EditItem label="类型">
+          <Select {...form.get('type')}>
+            <Select.Item name="文章" value="article" />
+            <Select.Item name="图片" value="picture" />
+            <Select.Item name="封面" value="cover" />
+            <Select.Item name="诗句" value="verse" />
+          </Select>
+        </EditItem>
+        <EditItem label="分类">
+          <Select {...form.get('category')}>
+            <Select.Item name="科幻" value="fiction" />
+            <Select.Item name="小说" value="novel" />
+            <Select.Item name="生活" value="life" />
+          </Select>
+        </EditItem>
+        <EditItem label="状态">
+          <Select {...form.get('status')}>
+            <Select.Item name="已发布" value="publish" />
+            <Select.Item name="草稿" value="draft" />
+            <Select.Item name="私密" value="private" />
+          </Select>
+        </EditItem>
+        <EditItem label="格式">
+          <Select {...form.get('format')}>
+            <Select.Item name="网页" value="html" />
+            <Select.Item name="Markdown" value="md" />
+            <Select.Item name="纯文本" value="text" />
+          </Select>
+        </EditItem>
         <EditItem label="标题">
           <Input name="title" {...form.get('title')} />
         </EditItem>
@@ -109,6 +139,9 @@ export default function EditPost({mode, type, post, onSubmit, onCancel}: EditPos
         </EditItem>
         <EditItem label="作者">
           <Input name="author" {...form.get('author')} />
+        </EditItem>
+        <EditItem label="备注">
+          <Input name="description" {...form.get('description')} />
         </EditItem>
         <div className={style.submitArea}>
           <Button onClick={handleSubmit}>
@@ -125,7 +158,7 @@ function EditItem({label, children}: {label: string, children: React.ReactNode})
   return (
     <div className={style.editItem}>
       <span className={style.itemLabel}>{label}</span>
-      <span className={style.itemData}>{children}</span>
+      <span className={style.itemContent}>{children}</span>
     </div>
   )
 }

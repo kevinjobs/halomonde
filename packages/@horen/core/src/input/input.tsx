@@ -1,5 +1,5 @@
 import React, { InputHTMLAttributes } from "react";
-import css from './input.module.less';
+import style from './Input.module.less';
 
 export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
   onChange(e: React.ChangeEvent<HTMLInputElement>, value: string | number): void;
@@ -8,7 +8,7 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
 export function Input(props: InputProps) {
   const { className, onChange, ...restProps } = props;
 
-  const cls = css.horenInput + ' ' + className;
+  const cls = style.horenInput + ' ' + className;
 
   return (
     <input

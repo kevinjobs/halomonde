@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from '@horen/hooks';
-import { Input, Switch, ImageUpload } from '@horen/core';
+import { Input, Switch, ImageUpload, Select } from '@horen/core';
 import { ComponentPage, Desc, Playground } from '../components/_layout';
 
 export default function ComponentSlider() {
@@ -9,6 +9,7 @@ export default function ComponentSlider() {
       username: 'kevinjobs',
       password: 'hello',
       gender: true,
+      sex: 'female',
     }
   });
 
@@ -24,6 +25,10 @@ export default function ComponentSlider() {
           <Input name='username' {...form.get('username')} /><br />
           <Input name='password' {...form.get('password')} /><br />
           <Switch name='gender' {...form.get('gender')} /><br />
+          <Select {...form.get('sex')}>
+            <Select.Item name='男' value='male' />
+            <Select.Item name='女' value='female' />
+          </Select>
           <ImageUpload name='upload' multiple {...form.get('upload')} />
         </div>
         <button onClick={() => form.reset()}>重置</button>

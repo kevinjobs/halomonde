@@ -1,10 +1,13 @@
 @import "../colors.less";
+@import "../style.less";
 
 .horenInput {
-  padding: 0 12px;
+  padding: 0 @largeGap;
   border: 1px solid @white-deep;
-  border-radius: 3px;
-  height: 1.8rem;
+  border-radius: @normalRadius;
+  height: @normalHeight;
+  width: 100%;
+  display: inline-block;
   &:focus,&:hover {
     outline: none;
     border-color: @primary;
