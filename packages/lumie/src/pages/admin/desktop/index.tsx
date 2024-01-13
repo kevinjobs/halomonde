@@ -18,15 +18,6 @@ import TitleBar from '../_partial/titlebar';
 import LeftMenu, { SubMenuProps } from '../_partial/menu';
 import { getLocalStorage, setLocalStorage, clearLocalStorage} from '@/utils'
 
-import PostAdmin from './posts';
-import UserAdmin from './users';
-import HomeAdmin from './home';
-import CoverAdmin from './cover';
-import VerseAdmin from './verse';
-import EditAdmin from './edit';
-import FileListAdmin from './files';
-import InvitaionsAdmin from './invitations';
-
 const ITEMS: Omit<SubMenuProps, 'children'>[] = [
   {
     title: '后台首页',
@@ -171,15 +162,7 @@ export default function DesktopPage () :ReactElement {
         </div>
         <div className="admin-content">
           <Routes>
-            <Route path='/' element={<Redirect to={'/admin/home'} />} />
-            <Route path='home' element={<HomeAdmin />} />
-            <Route path='post' element={<PostAdmin />} />
-            <Route path='user' element={<UserAdmin />} />
-            <Route path='verse' element={<VerseAdmin />} />
-            <Route path='invitations' element={<InvitaionsAdmin />} />
-            <Route path='files' element={<FileListAdmin />} />
-            <Route path='cover' element={<CoverAdmin />} />
-            <Route path='edit/:mode/:typ/:uid' element={<EditAdmin />} />
+            
           </Routes>
         </div>
       </div>

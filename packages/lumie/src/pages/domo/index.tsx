@@ -7,6 +7,7 @@ import Cover from './posts/cover';
 import Everything from './posts/everything';
 import Verse from './posts/verse';
 import User from './system/user';
+import Invitaition from './system/invitation';
 
 import {
   Titlebar,
@@ -65,7 +66,7 @@ const LEFT_ITEMS: PageProps[] = [
     ]
   },
   {
-    title: 'System',
+    title: '系统管理',
     description: '系统管理',
     element: <></>,
     expand: true,
@@ -76,6 +77,13 @@ const LEFT_ITEMS: PageProps[] = [
         description: '查看、编辑、更新用户',
         element: <User />,
         to: 'system/user',
+        icon: <Icon name='verse' size={27} />,
+      },
+      {
+        title: '邀请码管理',
+        description: '查看邀请码',
+        element: <Invitaition />,
+        to: 'system/invitaition',
         icon: <Icon name='verse' size={27} />,
       }
     ]

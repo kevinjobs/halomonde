@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { CheckOne, CloseOne, User } from '@icon-park/react';
-import { notifications } from "@horen/notifications";
-import { Header } from '../../_partial/layout';
-import { getInvitations, InvitationCode } from "@/apis/auth";
-import './invitations.css';
+import React, { useEffect, useState } from 'react';
 
-export default function InvitaionsAdmin() {
+import { getInvitations, InvitationCode } from '@/apis/auth';
+import { notifications } from '@horen/notifications';
+import { CheckOne, CloseOne, User } from '@icon-park/react';
+
+import style from './Invitation.module.less';
+
+export function Invitation() {
   const [codes, setCodes] = useState<InvitationCode[]>();
 
   const fetchCodes = () => {
@@ -20,28 +21,25 @@ export default function InvitaionsAdmin() {
 
   return (
     <div>
-      <Header>
-        <h2>邀请码</h2>
-      </Header>
-      <div className="code-list">
+      <div className={style.codeList}>
         {codes && codes.map(c => {
           return (
-            <div className="code-item">
-              <span id='status'>
+            <div className={style.codeItem}>
+              <span className={style.status}>
                 {
                   c.valid
                   ? <CheckOne theme="outline" size="24" fill="#6db61c"/>
                   : <CloseOne theme="outline" size="24" fill="#f3374f"/>
                 }
               </span>
-              <span id="code">{c.code}</span>
-              <span id='register-by-icon'>
+              <span className={style.code}>{c.code}</span>
+              <span className={style.registerByIcon}>
                 {
                   c.registerBy &&
                   <User theme="outline" size="20" fill="#4a90e2"/>
                 }
               </span>
-              <span id='register-by'>{c.registerBy}</span>
+              <span className={style.registerBy}>{c.registerBy}</span>
             </div>
           )
         })}
