@@ -4,21 +4,12 @@ export interface UseFormProps {
   initial: any;
 }
 
-export type InputType = 'input' | 'checkbox' | 'select' | 'switch' | 'upload';
-export type GetOptions = {
-  type: InputType;
-}
-export type FormItemChangeEvent =
-  | React.ChangeEvent<HTMLInputElement>
-  | React.MouseEvent<HTMLDivElement>
-  | React.MouseEvent<HTMLSpanElement>;
-
 export type GetReturn = {
-  onChange(e: FormItemChangeEvent | string, value: any): void;
+  onChange(e?: any, value?: any): void;
   value: any;
 }
 export type UseFormReturnType = {
-  get(prop: string, options?: GetOptions): GetReturn;
+  get(prop: string): GetReturn;
   reset(): void;
   clear(): void;
   data: any;
@@ -54,24 +45,9 @@ export function useForm({initial}: UseFormProps): UseFormReturnType {
   const reset = () => dispatch({type: 'reset'});
   const clear = () => dispatch({type: 'clear'})
 
-  const get = (prop: string, options?: GetOptions): GetReturn => {
-    const type = options?.type || 'input';
-    const onChange = (e: FormItemChangeEvent | string, value: any) => {
-      if (typeof e === 'string') {
-        dispatch({payload: {[String(e)]: value}});
-      } else {
-        if (type === 'input') {
-          const target = e.target as HTMLInputElement;
-          dispatch({payload: {[target.name]: value}});
-        } else {
-          const target = e.target as HTMLSpanElement;
-          dispatch({
-            payload: {
-              [String(target.dataset['name'])]: value,
-            }
-          });
-        }
-      }
+  const get = (prop: string): GetReturn => {
+    const onChange = (e: any, value?: any) => {
+      dispatch({payload: {[prop]: value}});
     }
 
     return {

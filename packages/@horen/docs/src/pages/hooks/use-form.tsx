@@ -23,8 +23,8 @@ export default function ComponentSlider() {
         <div>
           <Input name='username' {...form.get('username')} /><br />
           <Input name='password' {...form.get('password')} /><br />
-          <Switch name='gender' {...form.get('gender', {type: 'switch'})} /><br />
-          <ImageUpload name='upload' multiple {...form.get('upload', {type: 'upload'})} />
+          <Switch name='gender' {...form.get('gender')} /><br />
+          <ImageUpload name='upload' multiple {...form.get('upload')} />
         </div>
         <button onClick={() => form.reset()}>重置</button>
         <button onClick={() => form.clear()}>清空</button>

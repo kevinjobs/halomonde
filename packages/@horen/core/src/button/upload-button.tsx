@@ -4,7 +4,7 @@ import { Icon } from '../icon';
 
 export type UploadButtonProps = {
   onClick?(e: React.MouseEvent<HTMLButtonElement>): void;
-  onChange?(e: React.ChangeEvent<HTMLInputElement>, value: File[]): void;
+  onChange?(e: React.ChangeEvent<HTMLDivElement>, value: File[]): void;
   name: string;
   /**
    * 是否接受多文件上传，默认为 false

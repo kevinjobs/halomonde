@@ -72,7 +72,7 @@ export default function EditPost({mode, type, post, onSubmit, onCancel}: EditPos
       const c = form.get('content');
       weditor.current = new WE('#article-editor');
       weditor.current.config.height = 600;
-      weditor.current.config.onchange = (t: string) => c.onChange('content', t);
+      weditor.current.config.onchange = (t: string) => c.onChange(null, t);
       weditor.current.create();
       weditor.current.txt.html(c.value);
     }

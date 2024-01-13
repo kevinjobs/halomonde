@@ -15,7 +15,7 @@ export function ImageUpload(props: ImageUploadProps) {
   } = props;
   const [files, setFiles] = useState<File[]>(value);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, value: File[]) => {
+  const handleChange = (e: React.ChangeEvent<HTMLDivElement>, value: File[]) => {
     setFiles(value);
     if (onChange) onChange(e, value);
   }
