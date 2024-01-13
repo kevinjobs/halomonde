@@ -1,27 +1,14 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React from 'react';
 
 import { fetchUsers } from '@/apis/user';
 import { IUser } from '@/types';
-import { AddButton, Modal } from '@horen/core';
 import { notifications } from '@horen/notifications';
+import { Modal } from '@horen/core';
 
-import { Header } from '../../_partial/layout';
-import { UserEdit } from './edit';
-import { UserInfo, UserSke } from './user';
-
-const Us = styled.div``;
-
-const Content = styled.div`
-  display: flex;
-  align-items: flex-start;
-  .preview {
-    .item {
-      display: inline-block;
-      vertical-align: top;
-    }
-  }
-`;
+import style from './Users.module.less';
+import { UserCard } from './UserCard';
+import { UserEditPanel } from './UserEditPanel';
+import { Skeleton } from '@/components/skeleton';
 
 const DEFAULT_USER: IUser = {
   uid: '',
@@ -61,17 +48,8 @@ export function UserAdmin() :React.ReactElement {
   }
 
   return (
-    <Us>
-      <Header>
-        <h2>用户管理</h2>
-        <div>
-          <AddButton onClick={() => {
-            setPickUser(null);
-            setTimeout(() => setPickUser(DEFAULT_USER), 100);
-          }}>新增用户</AddButton>
-        </div>
-      </Header>
-      <Content>
+    <div className={style.users}>
+      <div className={style.container}>
         <div className='preview'>
           {
             users
@@ -79,17 +57,17 @@ export function UserAdmin() :React.ReactElement {
               users.map(u => (
                 <div
                   key={u.uid}
-                  className='item'
+                  className={style.item}
                 >
-                  <UserInfo user={u} onClick={handleClickUser} />
+                  <UserCard user={u} onClick={handleClickUser} />
                 </div>
               ))
               :
               <>
-                <div className='item'><UserSke /></div>
-                <div className='item'><UserSke /></div>
-                <div className='item'><UserSke /></div>
-                <div className='item'><UserSke /></div>
+                <div className={style.item}><UserSkeletion /></div>
+                <div className={style.item}><UserSkeletion /></div>
+                <div className={style.item}><UserSkeletion /></div>
+                <div className={style.item}><UserSkeletion /></div>
               </>
           }
         </div>
@@ -102,7 +80,7 @@ export function UserAdmin() :React.ReactElement {
               {
                 pickUser
                 &&
-                <UserEdit
+                <UserEditPanel
                   user={pickUser}
                   onSuccess={getAndSetUsers}
                   onBlur={() => setPickUser(null)}
@@ -111,7 +89,34 @@ export function UserAdmin() :React.ReactElement {
             </Modal.Content>
           </Modal>
         </div>
-      </Content>
-    </Us>
+      </div>
+    </div>
   )
+}
+
+function UserSkeletion() {
+  return (
+    <div className={style.userSkeletion}>
+      <div>
+        <Skeleton width={108} height={108} />
+      </div>
+      <div>
+        <span className={style.skeletion}>
+          <Skeleton width={170} height={12} />
+        </span>
+        <span className={style.skeletion}>
+          <Skeleton width={40} height={12} />
+        </span>
+        <span className={style.skeletion}>
+          <Skeleton width={60} height={12} />
+        </span>
+        <span className={style.skeletion}>
+          <Skeleton width={80} height={12} />
+        </span>
+        <span className={style.skeletion}>
+          <Skeleton width={100} height={12} />
+        </span>
+      </div>
+    </div>
+  );
 }

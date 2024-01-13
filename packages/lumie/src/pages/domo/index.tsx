@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Icon } from '@horen/core';
+
 import Home from './home';
-import Cover from './cover';
-import Posts from './posts';
-import Verse from './verse';
+import Cover from './posts/cover';
+import Everything from './posts/everything';
+import Verse from './posts/verse';
+import User from './system/user';
+
 import {
   Titlebar,
   TitlebarProps,
@@ -12,6 +15,7 @@ import {
   SubMenuProps,
   Layout,
 } from './_components';
+
 import style from './index.module.less';
 
 interface PageProps extends Omit<SubMenuProps, 'children'> {
@@ -33,14 +37,14 @@ const LEFT_ITEMS: PageProps[] = [
   {
     title: '内容管理',
     description: '主要内容管理',
-    element: <Home />,
+    element: <></>,
     expand: true,
     icon: <Icon name='menu' />,
     items: [
       {
         title: '所有内容浏览',
         description: '管理所有内容',
-        element: <Posts />,
+        element: <Everything />,
         to: 'content/posts',
         icon: <Icon name='files' />,
       },
@@ -60,6 +64,22 @@ const LEFT_ITEMS: PageProps[] = [
       }
     ]
   },
+  {
+    title: 'System',
+    description: '系统管理',
+    element: <></>,
+    expand: true,
+    icon: <Icon name='menu' />,
+    items: [
+      {
+        title: '用户管理',
+        description: '查看、编辑、更新用户',
+        element: <User />,
+        to: 'system/user',
+        icon: <Icon name='verse' size={27} />,
+      }
+    ]
+  }
 ]
 
 const TITLE_BAR_PROPS: TitlebarProps = {

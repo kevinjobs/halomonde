@@ -1,0 +1,85 @@
+@import "../../../../styles//colors.less";
+
+.userCard {
+  border: 1px solid #ccc;
+  display: flex;
+  margin: 8px;
+  padding: 4px;
+  width: 320px;
+  flex-wrap: nowrap;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    border-color: @primary;
+  }
+}
+.left {
+  
+}
+.avatar {
+  width: 108px;
+  height: 108px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+}
+.right {
+  margin-left: 8px;
+}
+
+.userSkeleton {
+  margin: 8px 0;
+}
+.nickname {
+  margin: 4px 0;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  color: #333;
+  font-size: 0.8rem;
+}
+.username {
+  font-size: 14px;
+  margin: 4px 0;
+  color: #ccc;
+}
+.name {
+  margin-right: 8px;
+}
+.gender {
+  position: relative;
+  top: 1px;
+}
+.uid {
+  font-size: 12px;
+  margin: 4px 0;
+  color: #ccc;
+  display: flex;
+  align-items: center;
+}
+.birthday {
+  font-size: 12px;
+  margin: 4px 0;
+  color: #ccc;
+  display: flex;
+  align-items: center;
+}
+.location {
+  font-size: 12px;
+  margin: 4px 0;
+  color: #ccc;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  position: relative;
+  top: 1px;
+  margin-right: 5px;
+}

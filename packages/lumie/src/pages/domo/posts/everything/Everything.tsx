@@ -4,9 +4,9 @@ import { Modal } from '@horen/core';
 import { Button } from '@/components/button';
 import { IPost } from '@/types';
 import { fetchPosts, deletePost } from '@/apis/posts';
-import { PostTable } from './table';
-import style from './Posts.module.less';
-import EditPost from './EditPost';
+import EditPost from '@/pages/domo/_components/EditPanel';
+import style from './Everything.module.less';
+import { PostTable } from './Table';
 
 export default function PostAdmin(): React.ReactElement {
   const PAGE_LIMIT = 6;
@@ -100,6 +100,7 @@ export default function PostAdmin(): React.ReactElement {
           <Button type={typ === 'article' ? 'primary' : 'light'} onClick={() => handleFilter('article')}>文章</Button>
           <Button type={typ === 'photo' ? 'primary' : 'light'} onClick={() => handleFilter('photo')}>照片</Button>
           <Button type={typ === 'cover' ? 'primary' : 'light'} onClick={() => handleFilter('cover')}>封面</Button>
+          <Button type={typ === 'verse' ? 'primary' : 'light'} onClick={() => handleFilter('verse')}>诗文</Button>
         </div>
       </div>
       <div className={style.container}>

@@ -12,7 +12,7 @@ import { notifications } from "@horen/notifications";
 import { IPost } from "@/types";
 import { updatePost } from "@/apis/posts";
 import { UPLOAD_URL } from "@/constants";
-import style from './EditPost.module.less';
+import style from './EditPanel.module.less';
 
 export interface EditPostProps {
   mode?: 'update' | 'create';

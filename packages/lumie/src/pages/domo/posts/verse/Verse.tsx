@@ -8,7 +8,7 @@ import { notifications } from '@horen/notifications';
 import { Dialog } from '@/components/dialog';
 import { IPost } from '@/types';
 import { addPost, fetchPosts, deletePost, updatePost } from '@/apis/posts';
-import './verse.css';
+import './Verse.css';
 
 const VERSE_TPL = {
   author: '',

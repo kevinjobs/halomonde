@@ -4,7 +4,7 @@ import { IUser } from '@/types';
 import { Input } from '@/components/input';
 import { Button } from '@/components/button';
 import { Select, Option } from '@/components/select';
-import { AvatarUpload } from '@/components/upload';
+import { AvatarUpload } from '@horen/core';
 import { UPLOAD_URL } from '@/constants';
 import { updateUser, addUser } from '@/apis/user';
 import DatePicker from 'react-datepicker';
@@ -93,7 +93,7 @@ export function UserEdit({user, onSuccess}: UserEditProps) :React.ReactElement {
             <AvatarUpload
               defaultValue={state.avatar}
               url={UPLOAD_URL}
-              onSuccess={(result) => dispatch({type: '', payload: {avatar: result.url}})}
+              onSuccess={(result: any) => dispatch({type: '', payload: {avatar: result.url}})}
             />
           </div>
           <div className='item'>
