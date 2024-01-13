@@ -1,20 +1,24 @@
 import React from "react";
 import WE from 'wangeditor';
 import marked from 'marked';
+import Datepicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+import dayjs from "dayjs";
 
 import { useForm } from "@horen/hooks";
+import { AvatarUpload, Button, Input, Select } from "@horen/core";
 import { notifications } from "@horen/notifications";
 
 import { IPost } from "@/types";
-import style from './EditPost.module.less';
-import { AvatarUpload, Button, Input, Select } from "@horen/core";
+import { updatePost } from "@/apis/posts";
 import { UPLOAD_URL } from "@/constants";
+import style from './EditPost.module.less';
 
 export interface EditPostProps {
   mode?: 'update' | 'create';
   type?: 'article' | 'picture' | 'cover' | 'verse' | string;
   post?: IPost;
-  onSubmit?(post: IPost): void;
+  onSuccess?(post: IPost): void;
   onCancel?(): void;
 }
 
@@ -29,7 +33,7 @@ const renderer = {
   },
 };
 
-export default function EditPost({mode, type, post, onSubmit, onCancel}: EditPostProps) {
+export default function EditPost({mode, type, post, onSuccess, onCancel}: EditPostProps) {
   marked.use({ renderer });
 
   const DEFAULT_POST: IPost = {
@@ -52,8 +56,14 @@ export default function EditPost({mode, type, post, onSubmit, onCancel}: EditPos
   const weditor = React.useRef<WE>(null);
 
   const handleSubmit = () => {
-    console.log(form.data);
-    if (onSubmit) onSubmit(form.data);
+    updatePost(form.data.uid, form.data).then(resp => {
+      if (typeof resp ==='string') {
+        notifications.show({type: 'error', message: resp});
+      } else {
+        notifications.show({type:'success', message: '更新成功'});
+        if (onSuccess) onSuccess(form.data);
+      }
+    });
   }
 
   const handleCancel = () => {
@@ -61,6 +71,7 @@ export default function EditPost({mode, type, post, onSubmit, onCancel}: EditPos
   }
 
   const handleUploadSuccess = (result: any) => {
+    form.setState('url', result.data.url);
     notifications.show({type: 'success', message: '上传封面成功'});
   }
 
@@ -94,6 +105,7 @@ export default function EditPost({mode, type, post, onSubmit, onCancel}: EditPos
             defaultValue={form.get('url').value}
             onSuccess={handleUploadSuccess}
             onFailed={handleUploadFailed}
+            token={localStorage.getItem('token')}
           />
         </EditItem>
         <EditItem label="ID">
@@ -102,10 +114,10 @@ export default function EditPost({mode, type, post, onSubmit, onCancel}: EditPos
         <EditItem label="UID">
           <Input name="uid" {...form.get('uid')} disabled />
         </EditItem>
-        <EditItem label="类型">
+        <EditItem label="Type">
           <Select {...form.get('type')}>
             <Select.Item name="文章" value="article" />
-            <Select.Item name="图片" value="picture" />
+            <Select.Item name="照片" value="photo" />
             <Select.Item name="封面" value="cover" />
             <Select.Item name="诗句" value="verse" />
           </Select>
@@ -137,11 +149,36 @@ export default function EditPost({mode, type, post, onSubmit, onCancel}: EditPos
         <EditItem label="梗概">
           <Input name="excerpt" {...form.get('excerpt')} />
         </EditItem>
+        <EditItem label="创建时间">
+          <Datepicker
+            selected={form?.data.createAt && dayjs.unix(form?.data.createAt).toDate()}
+            onChange={d => form.get('createAt').onChange(null, dayjs(d).unix())}
+            dateFormat={'yyyy-MM-dd'}
+          />
+        </EditItem>
+        <EditItem label="更新时间">
+          <Datepicker
+            selected={form?.data.updateAt && dayjs.unix(form?.data.updateAt).toDate()}
+            onChange={d => form.get('updateAt').onChange(null, dayjs(d).unix())}
+            dateFormat={'yyyy-MM-dd'}
+          />
+        </EditItem>
         <EditItem label="作者">
-          <Input name="author" {...form.get('author')} />
+          <Input
+            name="author"
+            placeholder="请输入作者姓名"
+            {...form.get('author')}
+          />
+        </EditItem>
+        <EditItem label="标签">
+          <Input name="tags" {...form.get('tags')} />
         </EditItem>
         <EditItem label="备注">
-          <Input name="description" {...form.get('description')} />
+          <Input
+            name="description"
+            placeholder="请输入其他情况"
+            {...form.get('description')}
+          />
         </EditItem>
         <div className={style.submitArea}>
           <Button onClick={handleSubmit}>

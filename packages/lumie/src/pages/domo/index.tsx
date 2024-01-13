@@ -38,7 +38,7 @@ const LEFT_ITEMS: PageProps[] = [
     icon: <Icon name='menu' />,
     items: [
       {
-        title: '所有内容',
+        title: '所有内容浏览',
         description: '管理所有内容',
         element: <Posts />,
         to: 'content/posts',

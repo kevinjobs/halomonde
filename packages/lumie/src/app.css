@@ -1,0 +1,22 @@
+.react-datepicker__input-container input {
+  width: 100%;
+  height: 32px;
+  display: inline-block;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 0 12px;
+  box-sizing: border-box;
+  &:focus {
+    outline: none;
+    border-color: #3498DB;
+  }
+}
+
+.react-datepicker-wrapper {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.react-datepicker__input-container {
+  box-sizing: border-box;
+}

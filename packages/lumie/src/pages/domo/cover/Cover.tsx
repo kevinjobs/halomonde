@@ -1,5 +1,5 @@
 import React from 'react';
-import { AvatarUpload } from '@/components/upload';
+import { AvatarUpload } from '@horen/core';
 import { addPost, fetchPosts, deletePost } from '@/apis/posts';
 import { getLocalStorage } from '@/utils';
 import { CloseOne } from '@icon-park/react';

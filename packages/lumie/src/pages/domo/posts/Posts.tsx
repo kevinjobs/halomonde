@@ -29,10 +29,6 @@ export default function PostAdmin(): React.ReactElement {
     localStorage.setItem('typ', typ);
   }, [offset, typ]);
 
-  const clickAdd = (type: string) => {
-    return;
-  };
-
   const clickPrev = () => {
     setPosts(null);
     setOffset(offset - PAGE_LIMIT);
@@ -99,16 +95,12 @@ export default function PostAdmin(): React.ReactElement {
   return (
     <div className={''}>
       <div className={style.options}>
-      <div>
-        <Button onClick={() => clickAdd('article')}>新增文章</Button>
-        <Button onClick={() => clickAdd('photo')}>添加图片</Button>
-      </div>
-      <div className={style.filter}>
-        <span>点击筛选</span>
-        <Button type={typ === 'article' ? 'primary' : 'light'} onClick={() => handleFilter('article')}>文章</Button>
-        <Button type={typ === 'photo' ? 'primary' : 'light'} onClick={() => handleFilter('photo')}>照片</Button>
-        <Button type={typ === 'cover' ? 'primary' : 'light'} onClick={() => handleFilter('cover')}>封面</Button>
-      </div>
+        <div className={style.filter}>
+          <span>点击筛选</span>
+          <Button type={typ === 'article' ? 'primary' : 'light'} onClick={() => handleFilter('article')}>文章</Button>
+          <Button type={typ === 'photo' ? 'primary' : 'light'} onClick={() => handleFilter('photo')}>照片</Button>
+          <Button type={typ === 'cover' ? 'primary' : 'light'} onClick={() => handleFilter('cover')}>封面</Button>
+        </div>
       </div>
       <div className={style.container}>
         <div className={style.table}>
@@ -139,6 +131,7 @@ export default function PostAdmin(): React.ReactElement {
               mode={pickPost?.uid ? 'update' : 'create'}
               type={typ}
               post={pickPost}
+              onSuccess={() => {setPickPost(null);getAndSet(offset, PAGE_LIMIT, typ);}}
               onCancel={() => setPickPost(null)}
             />
           }

@@ -12,6 +12,7 @@ export type UseFormReturnType = {
   get(prop: string): GetReturn;
   reset(): void;
   clear(): void;
+  setState(prop: string, value: any): void;
   data: any;
 }
 
@@ -56,10 +57,15 @@ export function useForm({initial}: UseFormProps): UseFormReturnType {
     }
   }
 
+  const setState = (prop: string, value: any) => {
+    dispatch({payload: {[prop]: value}});
+  }
+
   return {
     get,
     reset,
     data: state,
     clear,
+    setState,
   }
 }

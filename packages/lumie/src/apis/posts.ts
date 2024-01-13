@@ -44,6 +44,7 @@ export async function fetchPosts(
       p.createAt = unix_stamp(p.createAt);
       p.updateAt = unix_stamp(p.updateAt);
       p.publishAt = unix_stamp(p.publishAt);
+
       return p;
     })
     return d;

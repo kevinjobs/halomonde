@@ -9,10 +9,11 @@ export interface UploadProps<T> {
   defaultValue?: string;
   onSuccess?(result: T): void;
   onFailed?(err: any): void;
+  token?: string;
 }
 
 export function AvatarUpload<T>(props: UploadProps<T>) {
-  const { url, defaultValue, onSuccess, onFailed } = props;
+  const { url, defaultValue, onSuccess, onFailed, token } = props;
   const [pickFiles, setPickFiles] = useState<File[]>();
   const [status, setStatus] = useState('');
   const [maskWidth, setMaskWidth] = useState<string | number>('100%');
@@ -27,6 +28,7 @@ export function AvatarUpload<T>(props: UploadProps<T>) {
       await upload({
         url: url,
         file: last(values),
+        token,
         onFailed: (err) => {
           setStatus(FAILED);
           if (onFailed) onFailed(err);
@@ -73,16 +75,18 @@ export function AvatarUpload<T>(props: UploadProps<T>) {
 type UploadParams = {
   file: File;
   url: string;
+  token?: string;
   onProgress(per: number): void;
   onSuccess(result: any): void;
   onFailed?(msg: string): void;
 }
 
-async function upload({file, url, onProgress, onSuccess, onFailed}: UploadParams) {
+async function upload({file, url, token, onProgress, onSuccess, onFailed}: UploadParams) {
   const formdata = new FormData();
   formdata.append('file', file);
   const xhr = new XMLHttpRequest();
   xhr.open('POST', url);
+  xhr.setRequestHeader('Authorization', `Bearer ${token}`,);
   xhr.onreadystatechange = () => {
     if (xhr.readyState === 4 && xhr.status === 200) {
       const resp = JSON.parse(xhr.responseText);
