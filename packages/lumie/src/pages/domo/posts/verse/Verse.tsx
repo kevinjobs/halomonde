@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import {
-  Delete,
-  FileEditing,
-} from '@icon-park/react';
-import { Button, Icon } from '@horen/core';
-import { notifications } from '@horen/notifications';
-import { Dialog } from '@/components/dialog';
-import { IPost } from '@/types';
-import { addPost, fetchPosts, deletePost, updatePost } from '@/apis/posts';
 import './Verse.css';
+
+import React, { useEffect, useState } from 'react';
+
+import { addPost, deletePost, fetchPosts, updatePost } from '@/apis/posts';
+import { IPost } from '@/types';
+import { Button, Icon, Modal } from '@horen/core';
+import { notifications } from '@horen/notifications';
+import { Delete, FileEditing } from '@icon-park/react';
 
 const VERSE_TPL = {
   author: '',
@@ -108,16 +106,20 @@ export default function AdminVerse() {
           )
         })}
       </div>
-      <Dialog
-        title={(mode === 'add' ? '添加' : '更新') + "诗句"}
+      <Modal
         visible={Boolean(pickVerse)}
-        onCancel={() => setPickVerse(null)}
+        onClose={() => setPickVerse(null)}
       >
-        {
-          pickVerse &&
-          <VerseEdit post={pickVerse} onSubmit={handleSubmit} mode={mode} />
-        }
-      </Dialog>
+        <Modal.Header>
+          <h2>{(mode === 'add' ? '添加' : '更新') + "诗句"}</h2>
+        </Modal.Header>
+        <Modal.Content>
+          {
+            pickVerse &&
+            <VerseEdit post={pickVerse} onSubmit={handleSubmit} mode={mode} />
+          }
+        </Modal.Content>
+      </Modal>
     </div>
   )
 }
@@ -183,7 +185,10 @@ function VerseEdit({post, onSubmit, mode}: VerseEditProps) {
       <div id="submit-verse">
         <Button onClick={() => {
           onSubmit({
-            author, title, content: [verse1, verse2].join('|')
+            ...post,
+            author,
+            title,
+            content: [verse1, verse2].join('|')
           })
         }}>{mode === 'add' ? '新增' : '更新'}</Button>
       </div>
