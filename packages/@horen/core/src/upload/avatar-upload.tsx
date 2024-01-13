@@ -56,8 +56,8 @@ export function AvatarUpload<T>(props: UploadProps<T>) {
           style={{width: maskWidth}}
         ></div>
         <div className={css.avatarStatus}>
-          {status === SUCCESS && <Icon name='correct' />}
-          {status === FAILED && <Icon name='error' />}
+          {status === SUCCESS && <Icon name="correct" fill="#2ECC71" />}
+          {status === FAILED && <Icon name="error" fill='#E74C3C' />}
         </div>
       </div>
       <UploadButton
@@ -85,7 +85,12 @@ async function upload({file, url, onProgress, onSuccess, onFailed}: UploadParams
   xhr.open('POST', url);
   xhr.onreadystatechange = () => {
     if (xhr.readyState === 4 && xhr.status === 200) {
-      onSuccess(JSON.parse(xhr.responseText));
+      const resp = JSON.parse(xhr.responseText);
+      if (resp.code === 0) {
+        onSuccess(resp);
+      } else {
+        if (onFailed) onFailed(resp.msg);
+      }
     }
   }
   xhr.upload.onprogress = (e) => {

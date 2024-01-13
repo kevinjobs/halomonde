@@ -3,12 +3,14 @@
 }
 
 .left {
-  width: 500px;
+  width: 800px;
   display: inline-block;
+  text-align: left;
 }
 
 .right {
   display: inline-block;
+  margin-left: 16px;
 }
 
 .editorContainer {
@@ -20,7 +22,21 @@
   display: flex;
   align-items: center;
 }
+
 .itemLabel {
   display: inline-block;
   width: 64px;
+  font-weight: 300;
+  font-size: 0.9rem;
+  color: #515352;
+}
+
+.submitArea {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 32px 0;
+  button:nth-child(2) {
+    margin-left: 16px;
+  }
 }

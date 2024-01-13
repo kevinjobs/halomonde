@@ -38,57 +38,28 @@ export interface IconProps extends React.HtmlHTMLAttributes<HTMLSpanElement> {
   fill?: string;
 }
 
-export function Icon({name, size=24, fill='#333', ...restProps}: IconProps) {
+export function Icon({name, size=24, fill, ...restProps}: IconProps) {
   let icon;
-  
-  switch(name) {
-    case 'add':
-      icon = <Add height={size} width={size} fill={fill} />;
-      break;
-    case 'close':
-      icon = <Close height={size} width={size} fill={fill} />;
-      break;
-    case 'code':
-      icon = <Code height={size} width={size} fill={fill} />;
-      break;
-    case 'correct':
-      icon = <Correct height={size} width={size} fill={fill} />;
-      break;
-    case 'dimension':
-      icon = <Dimension height={size} width={size} fill={fill} />;
-      break;
-    case 'error':
-      icon = <Error height={size} width={size} fill={fill} />;
-      break;
-    case 'files':
-      icon = <Files height={size} width={size} fill={fill} />;
-      break;
-    case 'home':
-      icon = <Home height={size} width={size} fill={fill} />;
-      break;
-    case 'info':
-      icon = <Info height={size} width={size} fill={fill} />;
-      break;
-    case 'menu':
-      icon = <Menu height={size} width={size} fill={fill} />;
-      break;
-    case 'picture':
-      icon = <Picture height={size} width={size} fill={fill} />;
-      break;
-    case 'success':
-      icon = <Success height={size} width={size} fill={fill} />;
-      break;
-    case 'upload':
-      icon = <Upload height={size} width={size} fill={fill} />;
-      break;
-    case 'verse':
-      icon = <Verse height={size} width={size} fill={fill} />;
-      break;
-    case 'warning':
-      icon = <Warning height={size} width={size} fill={fill} />;
-      break;
+
+  const ICONS = {
+    'add': Add,
+    'close': Close,
+    'code': Code,
+    'correct': Correct,
+    'dimension': Dimension,
+    'error': Error,
+    'files': Files,
+    'home': Home,
+    'info': Info,
+    'menu': Menu,
+    'picture': Picture,
+    'success': Success,
+    'upload': Upload,
+    'verse': Verse,
+    'warning': Warning,
   }
 
+  const I = ICONS[name];
   
   return (
     <span
@@ -100,14 +71,13 @@ export function Icon({name, size=24, fill='#333', ...restProps}: IconProps) {
         margin: 0,
         padding: 0,
         border: 'none',
-        color: '#333',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         ...restProps.style
       }}
     >
-      {icon}
+      <I height={size} width={size} fill={fill} />
     </span>
   )
 }

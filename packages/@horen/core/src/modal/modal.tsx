@@ -1,4 +1,5 @@
 import React, { HtmlHTMLAttributes } from 'react';
+import ReactDOM from 'react-dom';
 import css from './style.module.less';
 import { Icon } from '../icon';
 
@@ -31,27 +32,25 @@ function Modal(props: ModalProps) {
     ? css.modalContainer + ' ' +  css.fullScreen
     : css.modalContainer;
 
-  return (
-    <div
-      {...restProps}
-      style={{display: visible ? 'block' : 'none'}}
-      className={css.modal}
-    >
-      <div className={cls}>
-        <div className={css.closeModal}>
-          <div className={css.closeModalFrame}>
-            <span
-              className={css.closeIcon}
-              onClick={(e) => {if (onClose) onClose(e);}}
-            >
-              <Icon name='close' />
-            </span>
-          </div>
+  return ReactDOM.createPortal(<div
+    {...restProps}
+    style={{display: visible ? 'block' : 'none'}}
+    className={css.modal}
+  >
+    <div className={cls}>
+      <div className={css.closeModal}>
+        <div className={css.closeModalFrame}>
+          <span
+            className={css.closeIcon}
+            onClick={(e) => {if (onClose) onClose(e);}}
+          >
+            <Icon name='close' />
+          </span>
         </div>
-        <div className={css.modalMain}>{ children }</div>
       </div>
+      <div className={css.modalMain}>{ children }</div>
     </div>
-  )
+  </div>, document.body);
 }
 
 function ModalHeader({children}: ModalHeaderProps) {

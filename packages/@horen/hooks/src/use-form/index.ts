@@ -58,7 +58,7 @@ export function useForm({initial}: UseFormProps): UseFormReturnType {
     const type = options?.type || 'input';
     const onChange = (e: FormItemChangeEvent | string, value: any) => {
       if (typeof e === 'string') {
-        dispatch({payload: {e: value}});
+        dispatch({payload: {[String(e)]: value}});
       } else {
         if (type === 'input') {
           const target = e.target as HTMLInputElement;

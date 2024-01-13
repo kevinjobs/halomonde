@@ -29,8 +29,7 @@ export default function PostAdmin(): React.ReactElement {
     localStorage.setItem('typ', typ);
   }, [offset, typ]);
 
-  const clickAdd = (t: string) => {
-    navigate(`/admin/edit/add/${t}/0`);
+  const clickAdd = (type: string) => {
     return;
   };
 
@@ -128,9 +127,22 @@ export default function PostAdmin(): React.ReactElement {
       <Modal
         visible={pickPost ? true : false}
         onClose={() => setPickPost(null)}
+        fullScreen
       >
-        <h2>编辑</h2>
-        {pickPost && <EditPost post={pickPost} />}
+        <Modal.Header>
+          <h2>编 辑 内 容</h2>
+        </Modal.Header>
+        <Modal.Content>
+          {
+            pickPost &&
+            <EditPost
+              mode={pickPost?.uid ? 'update' : 'create'}
+              type={typ}
+              post={pickPost}
+              onCancel={() => setPickPost(null)}
+            />
+          }
+        </Modal.Content>
       </Modal>
     </div>
   );
