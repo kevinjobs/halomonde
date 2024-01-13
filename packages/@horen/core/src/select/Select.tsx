@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-
+import { Arrow } from './Arrow';
 import style from './Select.module.less';
 
 export interface SelectProps {
   defaultValue?: string;
   onChange?(e: React.MouseEvent<HTMLDivElement> | null, value: string): void;
   value: string;
+  border?: boolean;
+  arrow?: boolean;
   children: React.ReactNode;
 }
 
@@ -14,7 +16,14 @@ export interface SelectItemProps {
   value: string;
 }
 
-function Select({defaultValue, onChange, children, value}: SelectProps) {
+function Select({
+  defaultValue,
+  onChange,
+  children,
+  border=true,
+  arrow=false,
+  value
+}: SelectProps) {
   const [kw, setKw] = useState<Record<string, any>>({});
   const [state, setValue] = useState(value);
   const [expand, setExpand] = useState(false);
@@ -57,7 +66,16 @@ function Select({defaultValue, onChange, children, value}: SelectProps) {
       onBlur={handleBlur}
       tabIndex={1}
     >
-      <div className={style.selectHeader}>{kw[state]}</div>
+      <div className={style.selectHeader}>
+        <div>{kw[state]}</div>
+        {
+          arrow
+          &&
+          <div className={style.headerArrow}>
+            <Arrow up={expand} />
+          </div>
+        }
+      </div>
       <div
         className={style.selectItems}
         style={{display: expand ? 'block' : 'none'}}

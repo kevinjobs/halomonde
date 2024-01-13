@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Modal } from '@horen/core';
+import { Modal, Select } from '@horen/core';
 import { Button } from '@/components/button';
 import { IPost } from '@/types';
 import { fetchPosts, deletePost } from '@/apis/posts';
@@ -75,7 +75,7 @@ export default function PostAdmin(): React.ReactElement {
     })();
   };
 
-  const handleFilter = (t: string) => {
+  const handleFilter = (e: any, t: string) => {
     setTyp(t);
     setOffset(0);
     setPosts(null);
@@ -96,11 +96,15 @@ export default function PostAdmin(): React.ReactElement {
     <div className={''}>
       <div className={style.options}>
         <div className={style.filter}>
-          <span>点击筛选</span>
-          <Button type={typ === 'article' ? 'primary' : 'light'} onClick={() => handleFilter('article')}>文章</Button>
-          <Button type={typ === 'photo' ? 'primary' : 'light'} onClick={() => handleFilter('photo')}>照片</Button>
-          <Button type={typ === 'cover' ? 'primary' : 'light'} onClick={() => handleFilter('cover')}>封面</Button>
-          <Button type={typ === 'verse' ? 'primary' : 'light'} onClick={() => handleFilter('verse')}>诗文</Button>
+          <span className={style.filterText}>类型筛选</span>
+          <span>
+            <Select value={typ} onChange={handleFilter} arrow>
+              <Select.Item name="文章" value="article" />
+              <Select.Item name="照片" value="photo" />
+              <Select.Item name="封面" value="cover" />
+              <Select.Item name="诗文" value="verse" />
+            </Select>
+          </span>
         </div>
       </div>
       <div className={style.container}>

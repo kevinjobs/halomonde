@@ -17,7 +17,6 @@ const TableStyled = styled.div`
     position: sticky;
     top: -16px;
     background-color: ${COLOR_MAP.white4};
-    z-index: 2;
   }
   tbody {
     tr {
