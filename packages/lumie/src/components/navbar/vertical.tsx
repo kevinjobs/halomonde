@@ -11,6 +11,7 @@ const Right = styled.div`
   height: 100vh;
   padding: 16px 0;
   z-index: 999;
+  user-select: none;
 `;
 
 const RightMenus = styled.div`
@@ -95,11 +96,13 @@ export function Navbar (props: NavbarProps) {
     <>
       <Right
         className="page-article-right-navi"
+        tabIndex={1}
         style={{
           width: rightNaviWidth,
           right:visible ? 0 : rightNavMenuWidth - rightNaviWidth,
           backgroundColor: visible ? COLOR_MAP.dark : 'transparent',
         }}
+        onBlur={() => setVisible(false)}
       >
         <div style={{
           marginLeft:visible ? 16 : 0,
