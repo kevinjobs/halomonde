@@ -42,28 +42,37 @@ export default function Photo() {
           : <Skeleton height={600} width={800} />
         }
       </div>
-      <PhotoInfo post={post} visible={visible} onClickView={handleClickView} />
+      <PhotoInfoPanel post={post} visible={visible} onClickView={handleClickView} />
     </div>
   );
 }
 
-function PhotoInfo({
+export function PhotoInfoPanel({
   post,
   visible,
-  onClickView
+  onClickView,
+  alwaysShow=false,
 }: {
   post: IPost,
   visible: boolean,
-  onClickView: () => void
+  onClickView: (e: React.MouseEvent<HTMLDivElement>) => void,
+  alwaysShow?: boolean,
 }) {
   const exif: IExif = post?.exif ? JSON.parse(post?.exif) : null;
   const { width } = useViewport();
-  const cls = width < 1080 ? style.hidedInfo : style.info;
+  const cls =
+    width < 1080
+      ? style.hidedInfo
+      : alwaysShow ? style.hidedInfo : style.info;
 
   return (
-    <div className={cls} style={{top: visible ? 'calc(100vh - 500px)' : 'calc(100vh - 50px)'}}>
+    <div
+      className={cls}
+      style={{top: visible ? 'calc(100vh - 500px)' : 'calc(100vh - 50px)'}}
+      onClick={e => e.stopPropagation()}
+    >
         {
-          width < 1080 &&
+          (width < 1080 || alwaysShow) &&
           <div className={style.clickToView} onClick={onClickView}>
             <Arrow up={visible} />
           </div>

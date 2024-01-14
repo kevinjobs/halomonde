@@ -98,6 +98,7 @@ const covertImageList = (imageList: Array<IPost>) :Array<PhotoItem> => {
       'src': src,
       'width': exif?.width,
       'height': exif?.height,
+      'post': img,
     };
   });
 };

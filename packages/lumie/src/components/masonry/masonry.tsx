@@ -2,12 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import { useDevice } from '@/hooks';
 import { MasonryItem } from './item';
+import { PhotoInfoPanel } from '@/pages/photo';
+import { IPost } from '@/types';
 
 export interface MasonryItem {
   width: number,
   height: number,
   src: string;
   title?: string;
+  post?: IPost;
 }
 
 export interface MasonryProps {
@@ -147,6 +150,7 @@ export const Masonry = (props: MasonryProps) => {
         finalTop={finalTop}
         originHeight={d.height}
         originWidth={d.width}
+        post={d.post}
       />
     )
   }

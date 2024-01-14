@@ -1,5 +1,8 @@
+import { PhotoInfoPanel } from '@/pages/photo';
+import { IPost } from '@/types';
 import React from 'react';
 import { useSpring, animated } from 'react-spring';
+import style from './Item.module.less';
 
 export interface ItemProps {
   originWidth: number;
@@ -15,6 +18,8 @@ export interface ItemProps {
   finalHeight: number;
   finalTop: number;
   finalLeft: number;
+  children?: React.ReactNode;
+  post?: IPost;
 }
 
 export const MasonryItem = (props: ItemProps) => {
@@ -28,9 +33,12 @@ export const MasonryItem = (props: ItemProps) => {
     finalWidth,
     finalTop,
     index,
+    children,
+    post,
   } = props;
   
   const [picked, setPicked] = React.useState(false);
+  const [visible, setVisible] = React.useState(false);
 
   const outRef = React.useRef<HTMLDivElement>(); 
 
@@ -126,6 +134,26 @@ export const MasonryItem = (props: ItemProps) => {
       <animated.div style={{...styles as any}}>
         <img src={props.src} alt={props.title} />
       </animated.div>
+      {children}
+      {
+        picked
+        && 
+        <PhotoInfoPanel
+          alwaysShow
+          post={post}
+          visible={visible}
+          onClickView={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setVisible(!visible)
+          }}
+        />
+      }
+      {
+        picked
+        &&
+        <div className={style.mask}></div>
+      }
     </div>
   );
 };
