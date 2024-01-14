@@ -69,7 +69,7 @@ const LEFT_ITEMS: PageProps[] = [
         to: 'system/user',
         icon: <Icon name='verse' size={27} />,
         loginRequired: true,
-        allowLevels: ['admin'],
+        allowLevels: ['admin', 'superuser'],
       },
       {
         title: '邀请码管理',

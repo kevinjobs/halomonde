@@ -2,7 +2,7 @@ import React from 'react';
 
 import { fetchUserList } from '@/utils/apis';
 import { IUser } from '@/types';
-import { Modal, Skeleton } from '@horen/core';
+import { AddButton, Modal, Skeleton } from '@horen/core';
 import { notifications } from '@horen/notifications';
 
 import { UserCard } from './UserCard';
@@ -26,28 +26,38 @@ const DEFAULT_USER: IUser = {
 }
 
 export function UserAdmin() :React.ReactElement {
-  const [users, setUsers] = React.useState<IUser[]>();
+  const [users, setUsers] = React.useState<IUser[]>([]);
   const [pickUser, setPickUser] = React.useState<IUser>(null);
 
-  const getAndSetUsers = () => {
+  const refreshUsers = () => {
     (async() => {
       const data = await fetchUserList();
       if (typeof data !== 'string') {
         setUsers(data.data.users);
         setPickUser(null);
-      } else notifications.show({type: 'error', message: data});
+      } else {
+        notifications.show({type: 'error', message: data});
+        setUsers([]);
+      }
     })();
   }
 
-  React.useEffect(() => getAndSetUsers(), []);
+  React.useEffect(() => refreshUsers(), []);
 
   const handleClickUser = (u: IUser) => {
     setPickUser(null);
     setTimeout(() => setPickUser(u), 100);
   }
 
+  const handleClickAddUser = () => {
+    setPickUser(DEFAULT_USER);
+  }
+
   return (
     <div className={style.users}>
+      <div className={style.operate}>
+        <AddButton onClick={handleClickAddUser}>添加用户</AddButton>
+      </div>
       <div className={style.container}>
         <div className='preview'>
           {
@@ -71,7 +81,10 @@ export function UserAdmin() :React.ReactElement {
           }
         </div>
         <div className='edit-area'>
-          <Modal visible={Boolean(pickUser)} onClose={() => setPickUser(null)}>
+          <Modal
+            visible={Boolean(pickUser)}
+            onClose={() => setPickUser(null)}
+          >
             <Modal.Header>
               <h2>{pickUser?.uid ? '编辑' : '新增'}用户</h2>
             </Modal.Header>
@@ -81,7 +94,14 @@ export function UserAdmin() :React.ReactElement {
                 &&
                 <UserEditPanel
                   user={pickUser}
-                  onSuccess={getAndSetUsers}
+                  onSubmitSuccess={() => {
+                    refreshUsers();
+                    setPickUser(null);
+                  }}
+                  onDeleteSuccess={() => {
+                    refreshUsers();
+                    setPickUser(null);
+                  }}
                   onBlur={() => setPickUser(null)}
                 />
               }

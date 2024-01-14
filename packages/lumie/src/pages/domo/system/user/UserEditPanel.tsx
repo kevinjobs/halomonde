@@ -4,23 +4,36 @@ import dayjs from 'dayjs';
 import React from 'react';
 import DatePicker from 'react-datepicker';
 
-import { addUser, updateUser } from '@/utils/apis/user';
+import { addUser, updateUser, deleteUser } from '@/utils/apis/user';
 import { API_URL } from '@/constants';
 import { IUser } from '@/types';
 import { AvatarUpload, Button, Input, Select } from '@horen/core';
 import { useForm } from '@horen/hooks';
 import { notifications } from '@horen/notifications';
+import { setLoginedUser, store } from '@/store';
+import { useStore } from '@horen/store';
 
 import style from './UserEditPanel.module.less';
 
 export interface UserEditProps {
   user?: IUser
-  onSuccess?(): void;
+  onSubmitSuccess?(): void;
+  onSubmitFailed?(): void;
+  onDeleteSuccess?(): void;
+  onDeleteFailed?(): void;
   onBlur?(): void;
 }
 
-export function UserEditPanel({user, onSuccess}: UserEditProps) :React.ReactElement {
-  const form = useForm({initial: user});
+export function UserEditPanel({
+  user,
+  onSubmitSuccess,
+  onSubmitFailed,
+  onDeleteSuccess,
+  onDeleteFailed,
+  onBlur,
+}: UserEditProps) :React.ReactElement {
+  const form = useForm({initial: {...user, password: ''}});
+  const state = useStore(store);
 
   const handleSubmit = () => {
     if (form.data.uid) {
@@ -28,7 +41,15 @@ export function UserEditPanel({user, onSuccess}: UserEditProps) :React.ReactElem
         const data = await updateUser(form.data.uid, form.data);
         if (typeof data !== 'string') {
           notifications.show({type: 'success', message: '更新成功'});
-          if (onSuccess) onSuccess();
+          // 如果修改的是当前用户则更新用户
+          if (form.data.uid === state.user.uid) {
+            setLoginedUser({
+              ...state.user,
+              ...form.data,
+              avatar: API_URL.base + form.data.avatar,
+            });
+          }
+          if (onSubmitSuccess) onSubmitSuccess();
         } else {
           notifications.show({type: 'error', message: '添加失败'});
         }
@@ -38,11 +59,24 @@ export function UserEditPanel({user, onSuccess}: UserEditProps) :React.ReactElem
         const data = await addUser(form.data);
         if (typeof data !== 'string') {
           notifications.show({type: 'success', message: '添加成功'});
-          if (onSuccess) onSuccess();
+          if (onSubmitSuccess) onSubmitSuccess();
         } else {
           notifications.show({type: 'error', message: '添加失败'});
         }
       })();
+    }
+  }
+
+  const handleDeleteUser = () => {
+    if (window.confirm('确定删除用户?')) {
+      deleteUser(form.data.uid).then(resp => {
+        if (typeof resp === 'string') {
+          notifications.show({type: 'error', message: resp});
+        } else {
+          notifications.show({type: 'success', message: resp.msg});
+          if (onDeleteSuccess) onDeleteSuccess();
+        }
+      })
     }
   }
 
@@ -62,7 +96,7 @@ export function UserEditPanel({user, onSuccess}: UserEditProps) :React.ReactElem
                 defaultValue={form.data.avatar}
                 url={API_URL.upload}
                 onSuccess={handleUploadSuccess}
-                token={localStorage.getItem('token')}
+                token={state.user?.token}
               />
             </span>
           </div>
@@ -88,7 +122,7 @@ export function UserEditPanel({user, onSuccess}: UserEditProps) :React.ReactElem
           </div>
           <div className={style.item}>
             <label>密码</label>
-            <span><Input {...form.get('password')} /></span>
+            <span><Input type="password" {...form.get('password')} /></span>
           </div>
           <div className={style.item}>
             <label>昵称</label>
@@ -136,11 +170,10 @@ export function UserEditPanel({user, onSuccess}: UserEditProps) :React.ReactElem
           </div>
         </div>
         <div className={style.submit}>
-          <Button
-            type='primary'
-            style={{width: 200, height: 40}}
-            onClick={handleSubmit}
-          >
+          <Button type="error" onClick={handleDeleteUser}>
+            删除用户
+          </Button>
+          <Button type='primary' onClick={handleSubmit}>
             { form.data.uid ? '更新' : '注册' }
           </Button>
         </div>

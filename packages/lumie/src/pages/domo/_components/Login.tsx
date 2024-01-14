@@ -66,10 +66,8 @@ export default function Login(props: LoginProps) {
     <div className={style.login}>
       {
         state.user
-        ?
-        <LoginedInfo user={state.user} />
-        :
-        <Button onClick={handleLogin}>Login</Button>
+        ? <LoginedInfo user={state.user} />
+        : <Button onClick={handleLogin}>Login</Button>
       }
       <Modal
         visible={visible}

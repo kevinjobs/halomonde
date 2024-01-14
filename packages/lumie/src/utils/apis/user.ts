@@ -17,24 +17,24 @@ export type UserListRespData = {
 export async function getUserList(params?: GetUserListParams): ApiResponse<UserListRespData> {
   const resp = await api.get(API_URL.users, {params});
   if (resp.data.code === 0) {
-    resp.data.data.users.forEach((user: IUser) => {
-      user.avatar = API_URL.base + user.avatar;
-    });
+    resp.data.data.users.forEach((user: IUser) => fullAvatar(user));
     return resp.data;
   };
   return resp.data.msg;
 }
 
-export async function updateUser(uid: string,data: IUser): ApiResponse {
-  // 替换 BASE_URL 值
-  data.avatar = data.avatar.replaceAll(API_URL.base, '');
-  const resp = await api.put(API_URL.user, data, { params: { uid } });
+export async function updateUser(uid: string, newUser: IUser): ApiResponse {
+  const resp = await api.put(
+    API_URL.user,
+    shrinkAvatar(newUser),
+    { params: { uid } }
+  );
   if (resp.data.code === 0) return resp.data;
   return resp.data.msg;
 }
 
 export async function addUser(data: IUser): ApiResponse {
-  const resp = await api.post(API_URL.user, data);
+  const resp = await api.post(API_URL.user, shrinkAvatar(data));
   if (resp.data.code === 0) return resp.data;
   return resp.data.msg;
 }
@@ -49,4 +49,19 @@ export async function getUser(username: string): ApiResponse<UserListRespData> {
     return resp.data;
   };
   return resp.data.msg;
+}
+
+export async function deleteUser(uid: string): ApiResponse {
+  const resp = await api.delete(API_URL.user, { params: { uid } });
+  if (resp.data.code === 0) return resp.data;
+  return resp.data.msg;
+}
+
+const fullAvatar = (user: IUser) => {
+  user.avatar = API_URL.base + user.avatar;
+  return user;
+}
+const shrinkAvatar = (user: IUser) => {
+  user.avatar = user.avatar?.replace(API_URL.base, '');
+  return user;
 }
