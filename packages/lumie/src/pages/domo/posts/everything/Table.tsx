@@ -2,7 +2,7 @@ import React from 'react';
 import dayjs from 'dayjs';
 import { IPost } from '@/types';
 import { getLocalStorage } from '@/utils';
-import { Button, } from '@/components/button';
+import { Button, } from '@horen/core';
 import { Skeleton } from '@/components/skeleton';
 import { Tag } from '@/components/tag';
 import { Table } from '@/components/table';
@@ -170,7 +170,7 @@ const renderEdit = (
   return (
     <span>
       <Button onClick={() => onEdit(a)} disabled={!isLogin}>编辑</Button>
-      <Button onClick={() => onDel(a)} danger disabled={!isLogin}>删除</Button>
+      <Button type="error" onClick={() => onDel(a)} disabled={!isLogin}>删除</Button>
     </span>
   );
 };

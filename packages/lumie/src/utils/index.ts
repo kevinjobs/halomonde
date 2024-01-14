@@ -1,10 +1,28 @@
 import dayjs from 'dayjs';
-import { Tags as ExifTags } from 'exifreader';
+import ExifReader, { Tags as ExifTags } from 'exifreader';
 
 export function random_int(min: number, max: number) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
+export async function getExifs(file: File) {
+  const tags = await ExifReader.load(file);
+  return extractExifs(tags);
+}
+
+interface IExif {
+  createDate: number;
+  modifyDate: number;
+  fileType: string;
+  iso: string;
+  width: number;
+  height: number;
+  lens: string;
+  focal: string;
+  focalNumber: number;
+  exposure: string;
+  model: string;
+}
 
 export const extractExifs = (exif: ExifTags) => {
   const createDate = dayjs(exif.CreateDate?.value).unix();
@@ -32,6 +50,7 @@ export const extractExifs = (exif: ExifTags) => {
     model,
   };
 };
+
 export const unix_stamp = (n: number | string) => {
   return Number(String(n).slice(0, 10));
 };

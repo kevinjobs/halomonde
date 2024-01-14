@@ -7,14 +7,14 @@ import css from './avatar-upload.module.less';
 export interface UploadProps<T> {
   url: string;
   defaultValue?: string;
-  onSuccess?(result: T): void;
+  onSuccess?(result: T, file?: File): void;
   onFailed?(err: any): void;
   token?: string;
 }
 
 export function AvatarUpload<T>(props: UploadProps<T>) {
   const { url, defaultValue, onSuccess, onFailed, token } = props;
-  const [pickFiles, setPickFiles] = useState<File[]>();
+  const [pickFiles, setPickFiles] = useState<File[]>([]);
   const [status, setStatus] = useState('');
   const [maskWidth, setMaskWidth] = useState<string | number>('100%');
 
@@ -35,7 +35,7 @@ export function AvatarUpload<T>(props: UploadProps<T>) {
         } ,
         onSuccess: (result) => {
           setStatus(SUCCESS);
-          if (onSuccess) onSuccess(result);
+          if (onSuccess) onSuccess(result, last(values));
         },
         onProgress: (per) => {
           setStatus(UPLOADING);

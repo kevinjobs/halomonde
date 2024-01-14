@@ -9,9 +9,13 @@ import { IPost } from '@/types';
 import { AvatarUpload, Button, Input, Select } from '@horen/core';
 import { useForm } from '@horen/hooks';
 import { notifications } from '@horen/notifications';
+import { getExifs } from '@/utils';
 
 import { EditPanelProps } from '.';
-import style from './ArticleEditPanel.module.less';
+import {default as _style} from './ArticleEditPanel.module.less';
+import {default as _s } from './PhotoEditPanel.module.less';
+
+const style = {..._style, ..._s}
 
 export interface PhotoEditPanelProps extends EditPanelProps {}
 
@@ -26,9 +30,13 @@ export function PhotoEditPanel({mode, post, onSubmit, onCancel}: PhotoEditPanelP
     if (onCancel) onCancel();
   }
 
-  const handleUploadSuccess = (result: any) => {
-    form.setState('url', result.data.url);
-    notifications.show({type: 'success', message: '上传封面成功'});
+  const handleUploadSuccess = (result: any, file: File) => {
+    getExifs(file).then(tags => {
+      form.setState('url', result.data.url);
+      form.setState('exif', JSON.stringify(tags));
+      form.setState('format', tags.fileType);
+      notifications.show({type: 'success', message: '上传封面成功'});
+    })
   }
 
   const handleUploadFailed = (msg: string) => {
@@ -69,6 +77,9 @@ export function PhotoEditPanel({mode, post, onSubmit, onCancel}: PhotoEditPanelP
             <Select.Item name="诗句" value="verse" />
           </Select>
         </EditItem>
+        <EditItem label="Exif">
+          <Input name="exif" {...form.get('exif')} />
+        </EditItem>
         <EditItem label="分类">
           <Select {...form.get('category')}>
             <Select.Item name="生活" value="life" />
@@ -85,8 +96,8 @@ export function PhotoEditPanel({mode, post, onSubmit, onCancel}: PhotoEditPanelP
         </EditItem>
         <EditItem label="格式">
           <Select {...form.get('format')}>
-            <Select.Item name="JPG" value="jpeg" />
-            <Select.Item name="JPEG" value="JPEG" />
+            <Select.Item name="JPG" value="jpg" />
+            <Select.Item name="JPEG" value="jpeg" />
             <Select.Item name="PNG" value="png" />
             <Select.Item name="WEBP" value="webp" />
           </Select>

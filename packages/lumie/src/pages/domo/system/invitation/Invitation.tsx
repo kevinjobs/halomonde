@@ -24,7 +24,7 @@ export function Invitation() {
       <div className={style.codeList}>
         {codes && codes.map(c => {
           return (
-            <div className={style.codeItem}>
+            <div className={style.codeItem} key={c.code}>
               <span className={style.status}>
                 {
                   c.valid

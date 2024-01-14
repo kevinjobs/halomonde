@@ -67,14 +67,19 @@ export function Navbar (props: NavbarProps) {
   };
 
 
-  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+  const handleClickOpen = (e: React.MouseEvent<HTMLElement>) => {
     setVisible(!visible);
     if (onClick) onClick(e);
   };
 
+  const handleClickItem = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+    setVisible(!visible);
+  }
+
   const NavbarItem = ({title, to}: NavbarItem) => {
     return (
-      <div className={classnames({title, to})} onClick={handleClick}>
+      <div className={classnames({title, to})} onClick={handleClickItem}>
         <NavLink to={to}>{title}</NavLink>
       </div>
     )
@@ -96,13 +101,11 @@ export function Navbar (props: NavbarProps) {
     <>
       <Right
         className="page-article-right-navi"
-        tabIndex={1}
         style={{
           width: rightNaviWidth,
           right:visible ? 0 : rightNavMenuWidth - rightNaviWidth,
           backgroundColor: visible ? COLOR_MAP.dark : 'transparent',
         }}
-        onBlur={() => setVisible(false)}
       >
         <div style={{
           marginLeft:visible ? 16 : 0,
@@ -117,7 +120,7 @@ export function Navbar (props: NavbarProps) {
                 size="28"
                 fill="#555555"
                 strokeWidth={2}
-                onClick={handleClick}
+                onClick={handleClickOpen}
               />
               :
               <PullDoor
@@ -125,7 +128,7 @@ export function Navbar (props: NavbarProps) {
                 size="28"
                 fill="#d1d1d1"
                 strokeWidth={2}
-                onClick={handleClick}
+                onClick={handleClickOpen}
               />
           }
         </div>

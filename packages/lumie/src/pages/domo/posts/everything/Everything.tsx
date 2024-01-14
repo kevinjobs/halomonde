@@ -1,12 +1,11 @@
+import dayjs from 'dayjs';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import dayjs from 'dayjs';
 
-import { deletePost, fetchPosts, updatePost, addPost } from '@/apis/posts';
-import { Button } from '@/components/button';
+import { addPost, deletePost, fetchPosts, updatePost } from '@/apis/posts';
 import EditPanel from '@/pages/domo/_components/edit-panel';
 import { IPost } from '@/types';
-import { Modal, Select } from '@horen/core';
+import { Button, Modal, Select } from '@horen/core';
 import { notifications } from '@horen/notifications';
 
 import style from './Everything.module.less';

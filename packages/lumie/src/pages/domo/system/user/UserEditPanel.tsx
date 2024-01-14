@@ -5,10 +5,9 @@ import React from 'react';
 import DatePicker from 'react-datepicker';
 
 import { addUser, updateUser } from '@/apis/user';
-import { Button } from '@/components/button';
 import { UPLOAD_URL } from '@/constants';
 import { IUser } from '@/types';
-import { AvatarUpload, Input, Select } from '@horen/core';
+import { AvatarUpload, Button, Input, Select } from '@horen/core';
 import { useForm } from '@horen/hooks';
 import { notifications } from '@horen/notifications';
 
