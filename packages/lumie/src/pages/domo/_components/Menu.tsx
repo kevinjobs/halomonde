@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { NavLink } from 'react-router-dom';
-import Menu from '@/components/menu/Menu';
+import Menu from '@/components/menu';
 import css from './Menu.module.less';
 
 export interface LeftMenuItem {

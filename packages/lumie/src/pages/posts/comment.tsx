@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { IComment } from '@/types';
-import { Button } from '@/components/button';
+import { Button } from '@horen/core';
 
 const Container = styled.div`
   width: 100%;
@@ -65,7 +65,7 @@ export function Comment () {
       </Inputs>
       <div style={{marginTop:16,textAlign:'right',width:'100%',}}>
         <Button onClick={e => e.preventDefault()}>提交</Button>
-        <Button onClick={e => e.preventDefault()} danger>清空</Button>
+        <Button type="error" onClick={e => e.preventDefault()}>清空</Button>
       </div>
       <div><h4>热门评论</h4></div>
       <div>

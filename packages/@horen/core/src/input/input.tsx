@@ -2,7 +2,7 @@ import React, { InputHTMLAttributes } from "react";
 import style from './Input.module.less';
 
 export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
-  onChange(e: React.ChangeEvent<HTMLInputElement>, value: string | number): void;
+  onChange(e: React.ChangeEvent<HTMLInputElement>, value?: string | number): void;
 }
 
 export function Input(props: InputProps) {

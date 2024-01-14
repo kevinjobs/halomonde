@@ -1,6 +1,5 @@
 import React from 'react';
-import { useSpring, animated, config } from 'react-spring';
-import { Mask } from '../mask';
+import { useSpring, animated } from 'react-spring';
 
 export interface ItemProps {
   originWidth: number;
@@ -127,7 +126,6 @@ export const MasonryItem = (props: ItemProps) => {
       <animated.div style={{...styles as any}}>
         <img src={props.src} alt={props.title} />
       </animated.div>
-      { picked && <Mask /> }
     </div>
   );
 };

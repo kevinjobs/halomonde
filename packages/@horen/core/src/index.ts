@@ -11,6 +11,8 @@ export { Notification } from './notification';
 
 export { Select, type SelectProps } from './select';
 
+export { Skeleton, type SkeletonProps } from './skeleton';
+
 export { Slider, type SliderProps } from './slider';
 
 export { Tag, type TagProps } from './tag';

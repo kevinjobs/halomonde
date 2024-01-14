@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Spin } from '../spin';
+import { Spin } from './spin';
 import { Loading2 } from './loading2';
 
 const Container = styled.div`

@@ -1,5 +1,5 @@
 import api from '@/utils/axios';
-import { LOGIN_URL, INVITATION_URL } from '@/constants';
+import { API_URL } from '@/constants';
 import { Response } from '@/types';
 
 export interface LoginForm {
@@ -24,13 +24,13 @@ interface Invitations {
 }
 
 export async function login(data: {username: string; password: string}) :Response<LoginData> {
-  const resp = await api.post(LOGIN_URL, data);
+  const resp = await api.post(API_URL.token, data);
   if (resp.data.code === 0) return resp.data;
   return resp.data.msg;
 }
 
 export async function getInvitations() :Response<Invitations> {
-  const resp = await api.get(INVITATION_URL);
+  const resp = await api.get(API_URL.invitationList);
   if (resp.data.code === 0) return resp.data;
   return resp.data.msg;
 }

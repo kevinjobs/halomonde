@@ -1,10 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Modal, Input } from '@horen/core';
 
 import { LoginForm } from '@/apis/auth';
 import { fetchUser } from '@/apis/user';
-import { Dialog } from '@/components/dialog';
-import { Input } from '@/components/input';
 import { IUser } from '@/types';
 import { getLocalStorage } from '@/utils';
 import { Button } from '@horen/core';
@@ -119,21 +118,21 @@ export default function Navbar (props: NavbarProps) :React.ReactElement {
           { isLogin ? <User /> : <Login /> }
         </div>
       </div>
-      <Dialog
+      <Modal
         title="登录界面"
         visible={visible}
-        onCancel={onCancel}
-        animation="slide-top-down"
-        width={400}
-        height={400}
+        onClose={onCancel}
       >
         <div className={css.dialogContainer}>
           <div style={{width: 250}}>
             <form>
-              <Input label="账号" value={username} name="username" onChange={e => setUsername(e.target.value)} />
+              <Input
+                value={username}
+                name="username"
+                onChange={e => setUsername(e.target.value)}
+              />
               <Input
                 type="password"
-                label="密码"
                 value={password}
                 name="password"
                 onChange={e => setPassword(e.target.value)}
@@ -151,7 +150,7 @@ export default function Navbar (props: NavbarProps) :React.ReactElement {
             <Link to={'/register'}>没有账户？点击注册...</Link>
           </div>
         </div>
-      </Dialog>
+      </Modal>
     </div>
   );
 }

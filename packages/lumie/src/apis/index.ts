@@ -1,5 +1,5 @@
 import api from "@/utils/axios";
-import { BASE_URL, FILE_LIST_URL, FILE_URL } from "@/constants";
+import { API_URL } from "@/constants";
 import { IFile, Response } from "@/types";
 
 interface FileListData {
@@ -16,10 +16,10 @@ interface FileListParams {
 }
 
 export async function fetchFileList(params?: FileListParams) :Response<FileListData> {
-  const resp = await api.get(FILE_LIST_URL, {params});
+  const resp = await api.get(API_URL.fileList, {params});
   if (resp.data.code === 0) {
     resp.data.data.files.forEach((f: IFile) => {
-      f.url = BASE_URL + '/static/thumb-' + f.filename;
+      f.url = API_URL.base + '/static/thumb-' + f.filename;
     });
     return resp.data;
   };
@@ -27,7 +27,7 @@ export async function fetchFileList(params?: FileListParams) :Response<FileListD
 }
 
 export async function deleteFileByFilename(filename: string) :Response {
-  const resp = await api.delete(FILE_URL, {params: {filename}});
+  const resp = await api.delete(API_URL.file, {params: {filename}});
   if (resp.data.code === 0) return resp.data;
   return resp.data.msg;
 }

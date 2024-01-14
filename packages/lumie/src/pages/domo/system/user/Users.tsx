@@ -2,13 +2,12 @@ import React from 'react';
 
 import { fetchUsers } from '@/apis/user';
 import { IUser } from '@/types';
+import { Modal, Skeleton } from '@horen/core';
 import { notifications } from '@horen/notifications';
-import { Modal } from '@horen/core';
 
-import style from './Users.module.less';
 import { UserCard } from './UserCard';
 import { UserEditPanel } from './UserEditPanel';
-import { Skeleton } from '@/components/skeleton';
+import style from './Users.module.less';
 
 const DEFAULT_USER: IUser = {
   uid: '',

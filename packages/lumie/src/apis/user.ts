@@ -1,6 +1,6 @@
 import api from "@/utils/axios";
 import { IUser } from "@/types";
-import { USERS_URL, USER_URL, BASE_URL } from "@/constants";
+import { API_URL } from "@/constants";
 import { Response } from "@/types";
 
 interface UserParams {
@@ -15,10 +15,10 @@ interface UsersData {
 }
 
 export async function fetchUsers(params?: UserParams) :Response<UsersData> {
-  const resp = await api.get(USERS_URL, {params});
+  const resp = await api.get(API_URL.users, {params});
   if (resp.data.code === 0) {
     resp.data.data.users.forEach((user: IUser) => {
-      user.avatar = BASE_URL + user.avatar;
+      user.avatar = API_URL.base + user.avatar;
     });
     return resp.data;
   };
@@ -27,23 +27,23 @@ export async function fetchUsers(params?: UserParams) :Response<UsersData> {
 
 export async function updateUser(uid: string,data: IUser) :Response {
   // 替换 BASE_URL 值
-  data.avatar = data.avatar.replaceAll(BASE_URL, '');
-  const resp = await api.put(USER_URL, data, { params: { uid } });
+  data.avatar = data.avatar.replaceAll(API_URL.base, '');
+  const resp = await api.put(API_URL.user, data, { params: { uid } });
   if (resp.data.code === 0) return resp.data;
   return resp.data.msg;
 }
 
 export async function addUser(data: IUser) :Response {
-  const resp = await api.post(USER_URL, data);
+  const resp = await api.post(API_URL.user, data);
   if (resp.data.code === 0) return resp.data;
   return resp.data.msg;
 }
 
 export async function fetchUser(username: string) :Response<UsersData> {
-  const resp = await api.get(USER_URL, { params: { username }});
+  const resp = await api.get(API_URL.user, { params: { username }});
   if (resp.data.code === 0) {
     resp.data.data.users[0].avatar =
-      BASE_URL + resp.data.data.users[0].avatar.replace('static/', 'static/thumb-');
+      API_URL.base + resp.data.data.users[0].avatar.replace('static/', 'static/thumb-');
     resp.data.data.users[0].birthday =
       Number(String(resp.data.data.users[0].birthday).slice(0,11));
     return resp.data;

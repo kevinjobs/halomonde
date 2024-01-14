@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import React from 'react';
 import Datepicker from 'react-datepicker';
 
-import { UPLOAD_URL, BASE_URL } from '@/constants';
+import { API_URL } from '@/constants';
 import { IPost } from '@/types';
 import { AvatarUpload, Button, Input, Select } from '@horen/core';
 import { useForm } from '@horen/hooks';
@@ -48,7 +48,7 @@ export function PhotoEditPanel({mode, post, onSubmit, onCancel}: PhotoEditPanelP
       <div className={style.left}>
         <div className={style.photoPreview}>
           <img
-            src={BASE_URL + form.data.url.replace(BASE_URL, '')}
+            src={API_URL.base + form.data.url.replace(API_URL.base, '')}
             alt={form.data.title}
           />
         </div>
@@ -56,7 +56,7 @@ export function PhotoEditPanel({mode, post, onSubmit, onCancel}: PhotoEditPanelP
       <div className={style.right}>
         <EditItem label='封面'>
           <AvatarUpload
-            url={UPLOAD_URL}
+            url={API_URL.upload}
             defaultValue={form.get('url').value}
             onSuccess={handleUploadSuccess}
             onFailed={handleUploadFailed}

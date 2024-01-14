@@ -6,7 +6,7 @@ import React from 'react';
 import Datepicker from 'react-datepicker';
 import WE from 'wangeditor';
 
-import { UPLOAD_URL } from '@/constants';
+import { API_URL } from '@/constants';
 import { IPost } from '@/types';
 import { AvatarUpload, Button, Input, Select } from '@horen/core';
 import { useForm } from '@horen/hooks';
@@ -73,7 +73,7 @@ export function ArticleEditPanel({mode, post, onSubmit, onCancel}: ArticleEditPa
       <div className={style.right}>
         <EditItem label='封面'>
           <AvatarUpload
-            url={UPLOAD_URL}
+            url={API_URL.upload}
             defaultValue={form.get('url').value}
             onSuccess={handleUploadSuccess}
             onFailed={handleUploadFailed}

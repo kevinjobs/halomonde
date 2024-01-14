@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Button, Input } from '@horen/core';
-import { IPost } from "@/types";
 import { EditPanelProps } from '.';
 import style from './VerseEditPanel.module.less';
 

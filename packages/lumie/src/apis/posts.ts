@@ -1,7 +1,7 @@
 import api from "@/utils/axios";
 import { IPost } from "@/types";
 import { Response } from "@/types";
-import { POSTS_URL, POST_URL, BASE_URL } from "@/constants";
+import { API_URL } from "@/constants";
 import { unix_stamp } from "@/utils";
 
 export interface PostsData {
@@ -34,7 +34,7 @@ export async function fetchPosts(
 ) :Response<PostsData> {
   let params = { offset, limit, status: 'publish' };
   if (prs) params = {...params, ...prs};
-  const resp = await api.get(POSTS_URL, {params});
+  const resp = await api.get(API_URL.posts, {params});
   if (resp.data.code === 0) {
     const d = resp.data;
     const posts: IPost[] = d.data.posts;
@@ -58,7 +58,7 @@ export async function fetchPosts(
  * @returns 
  */
 export async function deletePost(uid: string) :Response {
-  const resp = await api.delete(POST_URL, { params: { uid } });
+  const resp = await api.delete(API_URL.post, { params: { uid } });
   if (resp.data.code === 0) return resp.data;
   return resp.data.msg;
 }
@@ -72,7 +72,7 @@ export async function deletePost(uid: string) :Response {
 export async function updatePost(uid: string, data: IPost) :Response {
   shrinkUrl(data);
 
-  const resp = await api.put(POST_URL, data, { params: { uid } });
+  const resp = await api.put(API_URL.post, data, { params: { uid } });
   if (resp.data.code === 0) return resp.data;
   return resp.data.msg;
 }
@@ -85,7 +85,7 @@ export async function updatePost(uid: string, data: IPost) :Response {
 export async function addPost(data: IPost) :Response {
   shrinkUrl(data);
 
-  const resp = await api.post(POST_URL, data);
+  const resp = await api.post(API_URL.post, data);
   if (resp.data.code === 0) return resp.data;
   return resp.data.msg;
 }
@@ -96,7 +96,7 @@ export async function addPost(data: IPost) :Response {
  * @returns 
  */
 export async function fetchPost(uid: string) :Response<{post: IPost}> {
-  const resp = await api.get(POST_URL, { params: { uid } });
+  const resp = await api.get(API_URL.post, { params: { uid } });
   if (resp.data.code === 0) {
     const data = resp.data;
 
@@ -110,5 +110,5 @@ export async function fetchPost(uid: string) :Response<{post: IPost}> {
   return resp.data.msg;
 }
 
-const fullUrl = (post: IPost) => post.url = BASE_URL + post.url;
-const shrinkUrl = (post: IPost) => post.url = post.url?.replace(BASE_URL, '');
+const fullUrl = (post: IPost) => post.url = API_URL.base + post.url;
+const shrinkUrl = (post: IPost) => post.url = post.url?.replace(API_URL.base, '');

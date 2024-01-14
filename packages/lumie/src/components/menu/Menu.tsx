@@ -2,18 +2,18 @@ import React, { useEffect, useRef, useState } from "react";
 import style from './Menu.module.less';
 import { Icon } from "@horen/core";
 
-export type MenuProps = {
+type MenuProps = {
   children?: React.ReactNode;
 }
 
-export type MenuGroupProps = {
+type MenuGroupProps = {
   title: React.ReactNode;
   expand?: boolean;
   icon?: React.ReactNode;
   children?: React.ReactNode;
 }
 
-export type MenuItemProps = {
+type MenuItemProps = {
   onClick?(e: React.MouseEvent<HTMLDivElement>): void;
   icon?: React.ReactNode;
   children?: React.ReactNode;
@@ -116,4 +116,4 @@ function MenuItem(props: MenuItemProps) {
 Menu.Item = MenuItem;
 Menu.Group = MenuGroup;
 
-export default Menu;
+export { Menu, MenuProps, MenuGroupProps, MenuItemProps};

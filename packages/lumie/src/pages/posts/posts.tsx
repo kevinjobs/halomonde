@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 
 import { IPost } from '@/types';
 import COLOR_MAP from '@/styles/colors';
-import { Skeleton } from '@/components/skeleton';
+import { Skeleton } from '@horen/core';
 import { fetchPosts } from '@/apis/posts';
 
 const Container = styled.div`
