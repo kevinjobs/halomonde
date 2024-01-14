@@ -5,15 +5,17 @@ import React from 'react';
 import Datepicker from 'react-datepicker';
 
 import { API_URL } from '@/constants';
+import { store } from '@/store';
 import { IPost } from '@/types';
+import { getExifs } from '@/utils/exif';
 import { AvatarUpload, Button, Input, Select } from '@horen/core';
 import { useForm } from '@horen/hooks';
 import { notifications } from '@horen/notifications';
-import { getExifs } from '@/utils/exif';
+import { useStore } from '@horen/store';
 
-import { EditPanelProps } from '.';
-import {default as _style} from './ArticleEditPanel.module.less';
-import {default as _s } from './PhotoEditPanel.module.less';
+import { EditPanelProps } from './';
+import { default as _style } from './ArticleEditPanel.module.less';
+import { default as _s } from './PhotoEditPanel.module.less';
 
 const style = {..._style, ..._s}
 
@@ -21,6 +23,7 @@ export interface PhotoEditPanelProps extends EditPanelProps {}
 
 export function PhotoEditPanel({mode, post, onSubmit, onCancel}: PhotoEditPanelProps) {
   const form = useForm({initial: post});
+  const state = useStore(store);
 
   const handleSubmit = (post: IPost) => {
     if (onSubmit) onSubmit(post);
@@ -60,7 +63,7 @@ export function PhotoEditPanel({mode, post, onSubmit, onCancel}: PhotoEditPanelP
             defaultValue={form.get('url').value}
             onSuccess={handleUploadSuccess}
             onFailed={handleUploadFailed}
-            token={localStorage.getItem('token')}
+            token={state.user?.token}
           />
         </EditItem>
         <EditItem label="ID">

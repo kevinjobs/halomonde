@@ -7,10 +7,12 @@ import Datepicker from 'react-datepicker';
 import WE from 'wangeditor';
 
 import { API_URL } from '@/constants';
+import { store } from '@/store';
 import { IPost } from '@/types';
 import { AvatarUpload, Button, Input, Select } from '@horen/core';
 import { useForm } from '@horen/hooks';
 import { notifications } from '@horen/notifications';
+import { useStore } from '@horen/store';
 
 import { EditPanelProps } from './';
 import style from './ArticleEditPanel.module.less';
@@ -33,6 +35,7 @@ export function ArticleEditPanel({mode, post, onSubmit, onCancel}: ArticleEditPa
 
   const form = useForm({initial: post});
   const weditor = React.useRef<WE>(null);
+  const state = useStore(store);
 
   const handleSubmit = (post: IPost) => {
     if (onSubmit) onSubmit(post);
@@ -77,7 +80,7 @@ export function ArticleEditPanel({mode, post, onSubmit, onCancel}: ArticleEditPa
             defaultValue={form.get('url').value}
             onSuccess={handleUploadSuccess}
             onFailed={handleUploadFailed}
-            token={localStorage.getItem('token')}
+            token={state.user?.token}
           />
         </EditItem>
         <EditItem label="ID">
