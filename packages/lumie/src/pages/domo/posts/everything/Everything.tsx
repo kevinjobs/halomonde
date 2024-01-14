@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { addPost, deletePost, fetchPosts, updatePost } from '@/utils/apis';
+import { addPost, deletePost, getPostList, updatePost } from '@/utils/apis';
 import EditPanel from '@/pages/domo/_components/edit-panel';
 import { IPost } from '@/types';
 import { Button, Modal, Select } from '@horen/core';
@@ -69,7 +69,7 @@ export default function PostAdmin(): React.ReactElement {
   /** 刷新 */
   const refreshPosts = (offset = 0, limit: number, typ: string) => {
     (async() => {
-      const data = await fetchPosts(offset, limit, {status: 'all', type: typ});
+      const data = await getPostList(offset, limit, {status: 'all', type: typ});
       if (typeof data !== 'string') {
         if (offset <= 0) setHasPrev(false);
         else setHasPrev(true);

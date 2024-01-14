@@ -14,11 +14,11 @@ export default function GalleryPage () {
 
   React.useEffect(() => {
     (async() => {
-      const data = await getPostList(0, 10, {type: 'cover'});
+      const data = await getPostList(0, 999, {type: 'cover'});
       if (typeof data !== 'string') {
         const amount = data.data.amount;
-        const idx = randomInt(0, amount);
-        setCover(data.data.posts[idx].url);
+        const idx = randomInt(0, amount-1);
+        setCover(data.data.posts[idx]?.url);
       }
     })();
   }, []);

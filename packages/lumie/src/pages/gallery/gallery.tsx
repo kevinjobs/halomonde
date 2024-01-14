@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { getPostList } from '@/utils/apis/post';
-import { IPost, IExif } from '@/types';
-import { Masonry, MasonryItem } from '@/components/masonry';
+
 import { Loading } from '@/components/loading';
+import { Masonry, MasonryItem } from '@/components/masonry';
 import { useDevice, useScroll } from '@/hooks';
+import { IPost } from '@/types';
+import { getPostList } from '@/utils/apis';
+import { IExif } from '@/utils/exif';
 
 const Container = styled.div`
   width: 100%;
@@ -20,38 +22,6 @@ const Container = styled.div`
 const ImageMasonry = styled.div`
   margin: 48px 0;
 `;
-
-const Mask = styled.div``;
-const MaskDesc = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  .mask-desc-item {
-    display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
-    margin: 8px;
-  }
-  .i-icon {
-    display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
-  }
-`;
-
-const maskStyle = {
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  backgroundColor: 'rgba(255,249,247,1)',
-  zIndex: 10,
-  transition: 'all .3s ease-in-out',
-  filter: 'opacity(98%)',
-} as React.CSSProperties;
 
 type PhotoItem = MasonryItem & IPost;
 

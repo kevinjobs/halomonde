@@ -1,14 +1,15 @@
-import React from 'react';
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import './app.css';
 
-import { Notifications } from '@horen/notifications';
+import React from 'react';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 
 import { Navbar } from '@/components/navbar';
+import ArticlesPage from '@/pages/articles';
+import ArticlePage from '@/pages/articles/article';
 import DomoPage from '@/pages/domo';
-import GalleryPage from '@/pages/gallery';
-import ArticlePage from '@/pages/posts';
 import { Redirect } from '@/pages/domo/_components';
-import './app.css';
+import GalleryPage from '@/pages/gallery';
+import { Notifications } from '@horen/notifications';
 
 const ITEMS = [
   {
@@ -35,7 +36,8 @@ export default function App() {
           <Route path='/' element={<Redirect to='gallery' />} />
           <Route path='domo/*' element={<DomoPage />} />
           <Route path='gallery' element={<GalleryPage />} />
-          <Route path='articles' element={<ArticlePage />} />
+          <Route path='articles' element={<ArticlesPage />} />
+          <Route path='article/:uid' element={<ArticlePage />} />
         </Routes>
       </HashRouter>
     </React.StrictMode>

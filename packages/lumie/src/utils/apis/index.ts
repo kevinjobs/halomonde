@@ -2,7 +2,7 @@ export { getToken, getInvitationList, GetTokenParams, TokenRespData, InvitationL
 export { getFileList as fetchFileList, deleteFileByFilename, FileRespData, FileListRespData, GetFileListParams } from './file';
 export {
   fetchPost,
-  getPostList as fetchPosts,
+  getPostList,
   addPost,
   updatePost,
   deletePost,
