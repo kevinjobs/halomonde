@@ -5,7 +5,7 @@ import { UPLOAD_URL, BASE_URL } from '@/constants';
 import COLOR_MAP from '@/styles/colors';
 import { Input } from '@/components/input';
 import { useParams, useNavigate } from 'react-router-dom';
-import { addPost, fetchPost, updatePost } from '@/apis/posts';
+import { addPost, fetchPost, updatePost } from '@/utils/apis/post';
 import { IPost } from '@/types';
 import dayjs from 'dayjs';
 import { Select, Option } from '@/components/select';

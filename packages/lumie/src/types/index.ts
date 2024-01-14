@@ -1,12 +1,9 @@
-import React from 'react';
-
 export interface IBase {
   id?: number,
   uid?: string,
 }
 
 export type IPost = Partial<{
-  //
   createAt: number;
   publishAt: number;
   updateAt: number;
@@ -15,7 +12,6 @@ export type IPost = Partial<{
   author: string;
   content: string;
   excerpt: string;
-  // cover: string;
   status: string;
   tags: string;
   category: string;
@@ -24,11 +20,6 @@ export type IPost = Partial<{
   exif: string;
   description: string;
 }> & IBase;
-
-export interface IExif {
-  width?: number;
-  height?: number;
-}
 
 export interface IUser extends IBase {
   username: string,
@@ -46,18 +37,6 @@ export interface IUser extends IBase {
 }
 
 export interface IComment extends IPost {}
-
-export interface IRouteItem {
-  key: number,
-  icon?: React.ReactNode,
-  paths: Array<string>,
-  name: string,
-  title: string,
-  component: React.ReactNode,
-  exact: boolean,
-  type: 'history' | 'hash',
-  show?: boolean,
-}
 
 export interface IColorMap {
   [key: string]: string,
@@ -79,27 +58,4 @@ export interface IColorMap {
   white7: string,
   white8: string;
   dark: string,
-}
-
-export type Response<T = undefined> = Promise<{
-  code: number;
-  msg: string;
-  data?: T
-} | string>;
-
-
-export type UploadReturnType = {
-  ext: string;
-  filename: string;
-  height: number;
-  width: number;
-  origin: string;
-  url: string;
-}
-
-export type IFile = {
-  filename: string;
-  filepath: string;
-  origin: string;
-  url?: string;
 }

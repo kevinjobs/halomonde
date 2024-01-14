@@ -4,7 +4,7 @@ import React from 'react';
 import { Table } from '@/components/table';
 import COLOR_MAP from '@/styles/colors';
 import { IPost } from '@/types';
-import { getLocalStorage } from '@/utils';
+import { getLocalStorage } from '@/utils/store';
 import { Button, Skeleton, Tag } from '@horen/core';
 
 export interface PostTableProps {

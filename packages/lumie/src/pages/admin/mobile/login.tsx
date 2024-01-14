@@ -3,7 +3,7 @@ import COLOR_MAP from '@/styles/colors';
 import React from 'react';
 import styled from 'styled-components';
 import { Button } from '@/components/button';
-import { login } from '@/apis/auth';
+import { getToken } from '@/utils/apis/auth';
 import { setLocalStorage } from '@/utils';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
@@ -56,7 +56,7 @@ export default function Login() {
 
   const handleLogin = () => {
     (async() => {
-      const resp = await login({username, password});
+      const resp = await getToken({username, password});
       if (typeof resp !== 'string') {
         setLocalStorage(resp.data.token, username);
         notifications.show({type: 'success', message: '登录成功 马上跳转'});

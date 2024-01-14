@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { fetchUsers } from '@/apis/user';
+import { fetchUserList } from '@/utils/apis';
 import { IUser } from '@/types';
 import { Modal, Skeleton } from '@horen/core';
 import { notifications } from '@horen/notifications';
@@ -31,7 +31,7 @@ export function UserAdmin() :React.ReactElement {
 
   const getAndSetUsers = () => {
     (async() => {
-      const data = await fetchUsers();
+      const data = await fetchUserList();
       if (typeof data !== 'string') {
         setUsers(data.data.users);
         setPickUser(null);

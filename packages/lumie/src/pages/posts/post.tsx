@@ -1,14 +1,15 @@
-import React from 'react';
-import styled from 'styled-components';
 import dayjs from 'dayjs';
-
+import React from 'react';
 import { useParams } from 'react-router-dom';
-import { Left } from '@icon-park/react';
-import { IPost } from '@/types';
-import { Skeleton } from '@/components/skeleton';
-import { fetchPost } from '@/apis/posts';
-import { Comment } from './comment';
+import styled from 'styled-components';
+
 import COLOR_MAP from '@/styles/colors';
+import { IPost } from '@/types';
+import { fetchPost } from '@/utils/apis/post';
+import { Skeleton } from '@horen/core';
+import { Left } from '@icon-park/react';
+
+import { Comment } from './comment';
 
 const Container = styled.div`
   max-width: 1000px;

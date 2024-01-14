@@ -1,10 +1,10 @@
-import api from "@/utils/axios";
+import api from "@/utils/network";
 import { IPost } from "@/types";
-import { Response } from "@/types";
+import { ApiResponse } from ".";
 import { API_URL } from "@/constants";
-import { unix_stamp } from "@/utils";
+import { covertToUnixStamp10 } from "@/utils/datetime";
 
-export interface PostsData {
+export type PostListRespData = {
   amount: number;
   offset: number;
   limit: number;
@@ -12,7 +12,7 @@ export interface PostsData {
   totals: number;
 }
 
-export interface PostParams {
+export type GetPostListParams = {
   publish?: string;
   author?: string;
   category?: string;
@@ -27,11 +27,11 @@ export interface PostParams {
  * @param prs 查询参数
  * @returns post 列表
  */
-export async function fetchPosts(
+export async function getPostList(
   offset: number,
   limit: number,
-  prs: PostParams
-) :Response<PostsData> {
+  prs: GetPostListParams
+): ApiResponse<PostListRespData> {
   let params = { offset, limit, status: 'publish' };
   if (prs) params = {...params, ...prs};
   const resp = await api.get(API_URL.posts, {params});
@@ -41,9 +41,9 @@ export async function fetchPosts(
     d.data['posts'] = posts.map(p => {
       fullUrl(p);
 
-      p.createAt = unix_stamp(p.createAt);
-      p.updateAt = unix_stamp(p.updateAt);
-      p.publishAt = unix_stamp(p.publishAt);
+      p.createAt = covertToUnixStamp10(p.createAt);
+      p.updateAt = covertToUnixStamp10(p.updateAt);
+      p.publishAt = covertToUnixStamp10(p.publishAt);
 
       return p;
     })
@@ -57,7 +57,7 @@ export async function fetchPosts(
  * @param uid uid
  * @returns 
  */
-export async function deletePost(uid: string) :Response {
+export async function deletePost(uid: string): ApiResponse {
   const resp = await api.delete(API_URL.post, { params: { uid } });
   if (resp.data.code === 0) return resp.data;
   return resp.data.msg;
@@ -69,7 +69,7 @@ export async function deletePost(uid: string) :Response {
  * @param data post
  * @returns 
  */
-export async function updatePost(uid: string, data: IPost) :Response {
+export async function updatePost(uid: string, data: IPost): ApiResponse {
   shrinkUrl(data);
 
   const resp = await api.put(API_URL.post, data, { params: { uid } });
@@ -82,7 +82,7 @@ export async function updatePost(uid: string, data: IPost) :Response {
  * @param data post
  * @returns 
  */
-export async function addPost(data: IPost) :Response {
+export async function addPost(data: IPost): ApiResponse {
   shrinkUrl(data);
 
   const resp = await api.post(API_URL.post, data);
@@ -95,16 +95,16 @@ export async function addPost(data: IPost) :Response {
  * @param uid uid
  * @returns 
  */
-export async function fetchPost(uid: string) :Response<{post: IPost}> {
+export async function fetchPost(uid: string): ApiResponse<{post: IPost}> {
   const resp = await api.get(API_URL.post, { params: { uid } });
   if (resp.data.code === 0) {
     const data = resp.data;
 
     fullUrl(data.data.post);
 
-    data.data.post['updateAt'] = unix_stamp(data.data.post['updateAt']);
-    data.data.post['createAt'] = unix_stamp(data.data.post['createAt']);
-    data.data.post['publishAt'] = unix_stamp(data.data.post['publishAt']);
+    data.data.post['updateAt'] = covertToUnixStamp10(data.data.post['updateAt']);
+    data.data.post['createAt'] = covertToUnixStamp10(data.data.post['createAt']);
+    data.data.post['publishAt'] = covertToUnixStamp10(data.data.post['publishAt']);
     return data;
   }
   return resp.data.msg;

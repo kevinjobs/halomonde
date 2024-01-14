@@ -4,8 +4,8 @@ import dayjs from 'dayjs';
 import React from 'react';
 import DatePicker from 'react-datepicker';
 
-import { addUser, updateUser } from '@/apis/user';
-import { UPLOAD_URL } from '@/constants';
+import { addUser, updateUser } from '@/utils/apis/user';
+import { API_URL } from '@/constants';
 import { IUser } from '@/types';
 import { AvatarUpload, Button, Input, Select } from '@horen/core';
 import { useForm } from '@horen/hooks';
@@ -60,7 +60,7 @@ export function UserEditPanel({user, onSuccess}: UserEditProps) :React.ReactElem
             <span>
               <AvatarUpload
                 defaultValue={form.data.avatar}
-                url={UPLOAD_URL}
+                url={API_URL.upload}
                 onSuccess={handleUploadSuccess}
                 token={localStorage.getItem('token')}
               />

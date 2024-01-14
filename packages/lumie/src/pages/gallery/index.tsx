@@ -1,12 +1,12 @@
 import React from 'react';
 
 import { ViewportProvider } from '@/hooks';
-import { fetchPosts } from '@/apis/posts';
-import { random_int } from '@/utils';
+import { IPost } from '@/types';
+import { getPostList } from '@/utils/apis/post';
+import { randomInt } from '@horen/utils';
 
 import Background from './background';
 import Gallery from './gallery';
-import { IPost } from '@/types';
 
 export default function GalleryPage () {
   const [cover, setCover] = React.useState<string>();
@@ -14,10 +14,10 @@ export default function GalleryPage () {
 
   React.useEffect(() => {
     (async() => {
-      const data = await fetchPosts(0, 10, {type: 'cover'});
+      const data = await getPostList(0, 10, {type: 'cover'});
       if (typeof data !== 'string') {
         const amount = data.data.amount;
-        const idx = random_int(0, amount);
+        const idx = randomInt(0, amount);
         setCover(data.data.posts[idx].url);
       }
     })();
@@ -25,7 +25,7 @@ export default function GalleryPage () {
 
   React.useEffect(() => {
     (async() => {
-      const data = await fetchPosts(0, 999, {type: 'verse'});
+      const data = await getPostList(0, 999, {type: 'verse'});
       if (typeof data !== 'string') {
         setVerses(data.data.posts);
       }
@@ -36,7 +36,7 @@ export default function GalleryPage () {
     <ViewportProvider>
       <Background
         cover={cover}
-        verse={verses[random_int(0, verses.length)]}
+        verse={verses[randomInt(0, verses.length)]}
       />
       <Gallery />
     </ViewportProvider>

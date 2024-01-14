@@ -9,7 +9,7 @@ import Users from './users';
 import { Down } from '@icon-park/react';
 import { getLocalStorage } from '@/utils';
 import { IUser } from '@/types';
-import { fetchUser } from '@/apis/user';
+import { fetchUser } from '@/utils/apis/user';
 import Login from './login';
 import Profile from './profile';
 

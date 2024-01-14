@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 
-import { getInvitations, InvitationCode } from '@/apis/auth';
+import { getInvitationList, InvitationListRespData } from '@/utils/apis';
 import { notifications } from '@horen/notifications';
 import { CheckOne, CloseOne, User } from '@icon-park/react';
 
 import style from './Invitation.module.less';
 
 export function Invitation() {
-  const [codes, setCodes] = useState<InvitationCode[]>();
+  const [codes, setCodes] = useState<InvitationListRespData['invitations']>();
 
   const fetchCodes = () => {
     (async () => {
-      const resp = await getInvitations();
+      const resp = await getInvitationList();
       if (typeof resp !== 'string') setCodes(resp.data.invitations);
       else notifications.show({type: 'error', message: resp});
     })();

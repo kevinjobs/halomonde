@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Modal, Input } from '@horen/core';
 
-import { LoginForm } from '@/apis/auth';
-import { fetchUser } from '@/apis/user';
+import { GetTokenParams } from '@/utils/apis/auth';
+import { fetchUser } from '@/utils/apis/user';
 import { IUser } from '@/types';
-import { getLocalStorage } from '@/utils';
+import { getLocalStorage } from '@/utils/store';
 import { Button } from '@horen/core';
 
 import css from './Titlebar.module.less';
@@ -22,7 +22,7 @@ export interface NavbarProps {
   /**
    * 点击登录 dialog 的【提交】按钮时触发
    */
-  onSubmit: (e: React.MouseEvent<HTMLElement>, form: LoginForm) => void,
+  onSubmit: (e: React.MouseEvent<HTMLElement>, form: GetTokenParams) => void,
   /**
    * 点击登录 dialog 的【取消】按钮或右上角【X】按钮时触发
    */
@@ -60,7 +60,7 @@ export default function Navbar (props: NavbarProps) :React.ReactElement {
    * @param form 登录表单
    * @returns {null}
    */
-  const handleSubmit = (e: React.MouseEvent<HTMLElement>, form: LoginForm) => {
+  const handleSubmit = (e: React.MouseEvent<HTMLElement>, form: GetTokenParams) => {
     e.preventDefault();
     onSubmit(e, form);
   };

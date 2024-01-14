@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { addPost, deletePost, fetchPosts, updatePost } from '@/apis/posts';
+import { addPost, deletePost, fetchPosts, updatePost } from '@/utils/apis';
 import EditPanel from '@/pages/domo/_components/edit-panel';
 import { IPost } from '@/types';
 import { Button, Modal, Select } from '@horen/core';

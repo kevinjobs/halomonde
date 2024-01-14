@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { fetchPosts } from '@/apis/posts';
+import { getPostList } from '@/utils/apis/post';
 import { IPost, IExif } from '@/types';
 import { Masonry, MasonryItem } from '@/components/masonry';
 import { Loading } from '@/components/loading';
@@ -67,7 +67,7 @@ function GalleryPage () :React.ReactElement {
 
   // 获取图片
   const getImageList = async (page: number, size = 12) => {
-    const data = await fetchPosts(page, size, {type: 'photo'});
+    const data = await getPostList(page, size, {type: 'photo'});
     if (typeof data !== 'string') {
       setPhotos(photos.concat(covertImageList(data.data.posts)));
       if (pageLimit + nowOffset >= data.data.totals) {

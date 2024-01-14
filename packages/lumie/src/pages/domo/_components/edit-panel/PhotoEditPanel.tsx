@@ -9,7 +9,7 @@ import { IPost } from '@/types';
 import { AvatarUpload, Button, Input, Select } from '@horen/core';
 import { useForm } from '@horen/hooks';
 import { notifications } from '@horen/notifications';
-import { getExifs } from '@/utils';
+import { getExifs } from '@/utils/exif';
 
 import { EditPanelProps } from '.';
 import {default as _style} from './ArticleEditPanel.module.less';

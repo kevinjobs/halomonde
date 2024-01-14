@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 import { IPost } from '@/types';
 import COLOR_MAP from '@/styles/colors';
 import { Skeleton } from '@horen/core';
-import { fetchPosts } from '@/apis/posts';
+import { getPostList } from '@/utils/apis/post';
 
 const Container = styled.div`
   padding: 48px 0;
@@ -126,7 +126,7 @@ export function ArticlesPage () :React.ReactElement {
 
   const getAndSet = (offset: number, limit=pageLimit) => {
     (async() => {
-      const data = await fetchPosts(offset, pageLimit, { type: 'article'});
+      const data = await getPostList(offset, pageLimit, { type: 'article'});
       if (typeof data !== 'string') {
         setPosts([...posts, ...transformList(data.data.posts)]);
         if (offset + pageLimit >= data.data.totals) {

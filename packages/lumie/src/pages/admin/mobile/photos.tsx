@@ -1,5 +1,5 @@
 import React from "react";
-import { fetchPosts } from "@/apis/posts";
+import { getPostList } from "@/utils/apis/post";
 import { IPost } from "@/types";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -68,7 +68,7 @@ export default function Photos() {
 
   const getAndSet = (offset: number, limit=LIMIT) => {
     (async() => {
-      const resp = await fetchPosts(offset, limit, {type: 'photo'});
+      const resp = await getPostList(offset, limit, {type: 'photo'});
       if (typeof resp !== 'string') {
         setPhotos(resp.data.posts);
         if (limit + offset >= resp.data.totals) setHasMore(false);

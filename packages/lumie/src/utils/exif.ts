@@ -1,16 +1,12 @@
 import dayjs from 'dayjs';
 import ExifReader, { Tags as ExifTags } from 'exifreader';
 
-export function random_int(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min)) + min;
-}
-
 export async function getExifs(file: File) {
   const tags = await ExifReader.load(file);
   return extractExifs(tags);
 }
 
-interface IExif {
+export type IExif = {
   createDate: number;
   modifyDate: number;
   fileType: string;
@@ -24,7 +20,7 @@ interface IExif {
   model: string;
 }
 
-export const extractExifs = (exif: ExifTags) => {
+const extractExifs = (exif: ExifTags) => {
   const createDate = dayjs(exif.CreateDate?.value).unix();
   const modifyDate = dayjs(exif.ModifyDate?.value).unix();
   const fileType = exif.FileType?.value;
@@ -49,10 +45,4 @@ export const extractExifs = (exif: ExifTags) => {
     exposure,
     model,
   };
-};
-
-export const unix_stamp = (n: number | string) => {
-  return Number(String(n).slice(0, 10));
-};
-
-export { getLocalStorage, clearLocalStorage, setLocalStorage } from './store';
+}

@@ -436,6 +436,9 @@ importers:
       '@horen/notifications':
         specifier: workspace:*
         version: link:../@horen/notifications
+      '@horen/utils':
+        specifier: workspace:*
+        version: link:../@horen/utils
       '@icon-park/react':
         specifier: ^1.4.2
         version: 1.4.2(react-dom@18.2.0)(react@18.2.0)

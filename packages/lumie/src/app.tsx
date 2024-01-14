@@ -7,7 +7,6 @@ import { Navbar } from '@/components/navbar';
 import DomoPage from '@/pages/domo';
 import GalleryPage from '@/pages/gallery';
 import ArticlePage from '@/pages/posts';
-import AdminPage from '@/pages/admin';
 import { Redirect } from '@/pages/domo/_components';
 import './app.css';
 
@@ -35,7 +34,6 @@ export default function App() {
         <Routes>
           <Route path='/' element={<Redirect to='gallery' />} />
           <Route path='domo/*' element={<DomoPage />} />
-          <Route path='admin/*' element={<AdminPage />} />
           <Route path='gallery' element={<GalleryPage />} />
           <Route path='articles' element={<ArticlePage />} />
         </Routes>

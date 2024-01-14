@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { fetchUser } from '@/apis/user';
+import { fetchUser } from '@/utils/apis/user';
 import { useNavigate, useParams } from 'react-router-dom';
 import { IUser } from '@/types';
 import COLOR_MAP from '@/styles/colors';
 import dayjs from 'dayjs';
 import { Male, Female, Local } from "@icon-park/react";
-import { getLocation } from '@/apis/location';
+import { getLocation } from '@/utils/apis/location';
 import { Button } from '@/components/button';
 import { clearLocalStorage } from '@/utils';
 import { notifications } from '@horen/notifications';

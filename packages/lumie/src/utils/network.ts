@@ -1,10 +1,10 @@
 import axios, { AxiosRequestConfig } from 'axios';
 // import axiosRetry from 'axios-retry';
-import { BASE_URL } from '@/constants';
+import { API_URL } from '@/constants';
 
 const api = axios.create();
 
-api.defaults.baseURL = BASE_URL;
+api.defaults.baseURL = API_URL.base;
 
 api.interceptors.request.use(
   (config: AxiosRequestConfig) => {
