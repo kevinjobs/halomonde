@@ -61,7 +61,7 @@ export function UserAdmin() :React.ReactElement {
       <div className={style.container}>
         <div className='preview'>
           {
-            users
+            users.length
               ?
               users.map(u => (
                 <div

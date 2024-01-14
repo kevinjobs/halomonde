@@ -20,6 +20,8 @@ const USER_URL = BASE_URL + '/user';
 
 const INVITATION_LIST_URL = BASE_URL + '/invitation/list';
 
+const GEN_INVITATION_LIST_URL = BASE_URL + '/genInvitations';
+
 export const API_URL = {
   /** base url */
   base: BASE_URL,
@@ -41,4 +43,6 @@ export const API_URL = {
   user: USER_URL,
   /** 邀请码 */
   invitationList: INVITATION_LIST_URL,
+  /** 生成邀请码 */
+  genInvitationList: GEN_INVITATION_LIST_URL,
 }

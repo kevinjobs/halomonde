@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
-import { getInvitationList, InvitationListRespData } from '@/utils/apis';
+import { getInvitationList, InvitationListRespData, genInvitations } from '@/utils/apis';
 import { notifications } from '@horen/notifications';
 import { CheckOne, CloseOne, User } from '@icon-park/react';
 
 import style from './Invitation.module.less';
+import { AddButton } from '@horen/core';
 
 export function Invitation() {
   const [codes, setCodes] = useState<InvitationListRespData['invitations']>();
@@ -17,10 +18,25 @@ export function Invitation() {
     })();
   }
 
+  const handleGenCodes = () => {
+    if (window.confirm('确定生成?')) {
+      (async () => {
+        const resp = await genInvitations();
+        if (typeof resp!=='string') {
+          fetchCodes();
+          notifications.show({type: 'success', message: resp.msg});
+        } else notifications.show({type: 'error', message: resp});
+      })();
+    }
+  }
+
   useEffect(() => fetchCodes(), []);
 
   return (
-    <div>
+    <div className={style.invitation}>
+      <div className={style.operate}>
+        <AddButton onClick={handleGenCodes}>生成邀请码</AddButton>
+      </div>
       <div className={style.codeList}>
         {codes && codes.map(c => {
           return (

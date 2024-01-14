@@ -1,4 +1,4 @@
-export { getToken, getInvitationList, GetTokenParams, TokenRespData, InvitationListRespData} from './auth';
+export { getToken, getInvitationList, genInvitations, GetTokenParams, TokenRespData, InvitationListRespData} from './auth';
 export { getFileList as fetchFileList, deleteFileByFilename, FileRespData, FileListRespData, GetFileListParams } from './file';
 export {
   fetchPost,

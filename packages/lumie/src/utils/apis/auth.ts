@@ -32,3 +32,9 @@ export async function getInvitationList(): ApiResponse<InvitationListRespData> {
   if (resp.data.code === 0) return resp.data;
   return resp.data.msg;
 }
+
+export async function genInvitations(): ApiResponse {
+  const resp = await api.post(API_URL.genInvitationList);
+  if (resp.data.code === 0) return resp.data;
+  return resp.data.msg;
+}
