@@ -79,15 +79,15 @@ function UploadButton(props: UploadButtonProps) {
           accept={accept?.map(a => '.'+a).join(',')}
         />
         <Icon name="upload" size={22} />
-        <span
+        <div 
           style={{
-            display: 'inline-block',
             height: 22,
+            width: 64,
             verticalAlign: 'top',
             lineHeight: '22px',
             marginLeft: 4
           }}
-        >点击上传</span>
+        >点击上传</div>
       </div>
     </Button>
   )

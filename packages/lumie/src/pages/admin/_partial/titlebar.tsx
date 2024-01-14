@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Modal, Input } from '@horen/core';
 
 import { GetTokenParams } from '@/utils/apis/auth';
-import { fetchUser } from '@/utils/apis/user';
+import { getUser } from '@/utils/apis/user';
 import { IUser } from '@/types';
 import { getLocalStorage } from '@/utils/store';
 import { Button } from '@horen/core';
@@ -97,7 +97,7 @@ export default function Navbar (props: NavbarProps) :React.ReactElement {
 
   React.useEffect(() => {
     (async() => {
-      const resp = await fetchUser(getLocalStorage().name);
+      const resp = await getUser(getLocalStorage().name);
       if (typeof resp !== 'string') {
         setUser(resp.data.users[0]);
       }

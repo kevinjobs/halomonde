@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 // import axiosRetry from 'axios-retry';
 import { API_URL } from '@/constants';
+import { getLocalUser } from './store';
 
 const api = axios.create();
 
@@ -11,7 +12,7 @@ api.interceptors.request.use(
     config.data = JSON.stringify(config.data);
     config.headers = {
       'content-type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      'Authorization': `Bearer ${getLocalUser()?.token}`,
     };
     return config;
   }

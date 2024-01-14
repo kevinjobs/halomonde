@@ -1,4 +1,5 @@
-import React from "react";
+import React from 'react';
+
 import Add from './icon-add.svg';
 import Close from './icon-close.svg';
 import Code from './icon-code.svg';
@@ -8,11 +9,14 @@ import Error from './icon-error.svg';
 import Files from './icon-files.svg';
 import Home from './icon-home.svg';
 import Info from './icon-info.svg';
+import Logout from './icon-logout.svg';
 import Menu from './icon-menu.svg';
 import Picture from './icon-picture.svg';
 import Success from './icon-success.svg';
 import Upload from './icon-upload.svg';
+import User from './icon-user.svg';
 import Verse from './icon-verse.svg';
+import Vip from './icon-vip.svg';
 import Warning from './icon-warning.svg';
 
 export type IconName =
@@ -24,12 +28,15 @@ export type IconName =
   | 'error'
   | 'files'
   | 'home'
+  | 'logout'
   | 'info'
   | 'menu'
   | 'picture'
   | 'success'
   | 'upload'
+  | 'user'
   | 'verse'
+  | 'vip'
   | 'warning';
 
 export interface IconProps extends React.HtmlHTMLAttributes<HTMLSpanElement> {
@@ -51,11 +58,14 @@ export function Icon({name, size=24, fill, ...restProps}: IconProps) {
     'files': Files,
     'home': Home,
     'info': Info,
+    'logout': Logout,
     'menu': Menu,
     'picture': Picture,
     'success': Success,
     'upload': Upload,
+    'user': User,
     'verse': Verse,
+    'vip': Vip,
     'warning': Warning,
   }
 

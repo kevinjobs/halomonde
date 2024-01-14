@@ -4,8 +4,10 @@ import React from 'react';
 import { Table } from '@/components/table';
 import COLOR_MAP from '@/styles/colors';
 import { IPost } from '@/types';
-import { getLocalStorage } from '@/utils/store';
 import { Button, Skeleton, Tag } from '@horen/core';
+import { useStore } from '@horen/store';
+
+import { store } from '@/store';
 
 export interface PostTableProps {
   posts: IPost[];
@@ -164,8 +166,8 @@ const renderEdit = (
   onEdit: (a: IPost) => void,
   onDel: (a: IPost) => void
 ) => {
-  const { token } = getLocalStorage();
-  const isLogin = token === null ? false : true;
+  const state = useStore(store);
+  const isLogin = state.user?.token ? true : false;
   return (
     <span>
       <Button onClick={() => onEdit(a)} disabled={!isLogin}>编辑</Button>

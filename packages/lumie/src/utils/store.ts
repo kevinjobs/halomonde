@@ -1,15 +1,17 @@
-export const getLocalStorage = () :{token: string, name: string} => {
-  const token = localStorage.getItem('token');
-  const name = localStorage.getItem('name');
-  return { token, name };
-};
+import { IUser } from "@/types";
 
-export const clearLocalStorage = () => {
-  localStorage.removeItem('token');
-  localStorage.removeItem('name');
-};
+interface User extends Partial<IUser> {
+  token?: string;
+}
 
-export const setLocalStorage = (token: string, name: string) => {
-  localStorage.setItem('token', token);
-  localStorage.setItem('name', name);
-};
+export const getLocalUser = (): User => {
+  return JSON.parse(localStorage.getItem('user'));
+}
+
+export const setLocalUser = (user: User) => {
+  localStorage.setItem('user', JSON.stringify(user));
+}
+
+export const clearLocalUser = () => {
+  localStorage.removeItem('user');
+}

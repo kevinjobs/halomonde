@@ -39,7 +39,7 @@ export async function addUser(data: IUser): ApiResponse {
   return resp.data.msg;
 }
 
-export async function fetchUser(username: string): ApiResponse<UserListRespData> {
+export async function getUser(username: string): ApiResponse<UserListRespData> {
   const resp = await api.get(API_URL.user, { params: { username }});
   if (resp.data.code === 0) {
     resp.data.data.users[0].avatar =

@@ -22,7 +22,7 @@ export type IPost = Partial<{
 }> & IBase;
 
 export interface IUser extends IBase {
-  username: string,
+  username?: string,
   password?: string,
   nickname?: string;
   birthday?: number;
@@ -34,6 +34,7 @@ export interface IUser extends IBase {
   motto?: string;
   description?: string;
   invitation?: string;
+  token?: string;
 }
 
 export interface IComment extends IPost {}

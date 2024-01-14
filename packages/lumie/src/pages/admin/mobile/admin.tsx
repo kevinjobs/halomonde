@@ -9,7 +9,7 @@ import Users from './users';
 import { Down } from '@icon-park/react';
 import { getLocalStorage } from '@/utils';
 import { IUser } from '@/types';
-import { fetchUser } from '@/utils/apis/user';
+import { getUser } from '@/utils/apis/user';
 import Login from './login';
 import Profile from './profile';
 
@@ -122,7 +122,7 @@ export function MobileAdmin() {
     if (token && name) {
       setIsLogin(true);
       (async() => {
-        const resp = await fetchUser(getLocalStorage().name);
+        const resp = await getUser(getLocalStorage().name);
         if (typeof resp !== 'string') setUser(resp.data.users[0]);
       })();
     } else {

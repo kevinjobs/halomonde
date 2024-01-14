@@ -19,8 +19,10 @@ export default function Titlebar(props: TitlebarProps) {
 
   return (
     <div className={style.titlebar}>
-      {logo && <div className={style.logo}>{logo}</div>}
-      {title && <div className={style.title}>{title}</div>}
+      <div className={style.logoArea}>
+        {logo && <div className={style.logo}>{logo}</div>}
+        {title && <div className={style.title}>{title}</div>}
+      </div>
       {children && <div className={style.children}>{children}</div>}
     </div>
   )

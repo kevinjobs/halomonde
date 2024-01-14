@@ -1,6 +1,6 @@
 import './app.css';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 
 import { Navbar } from '@/components/navbar';
@@ -10,6 +10,9 @@ import DomoPage from '@/pages/domo';
 import { Redirect } from '@/pages/domo/_components';
 import GalleryPage from '@/pages/gallery';
 import { Notifications } from '@horen/notifications';
+
+import { store } from './store';
+import { getLocalUser } from './utils/store';
 
 const ITEMS = [
   {
@@ -27,6 +30,11 @@ const ITEMS = [
 ]
 
 export default function App() {
+  useEffect(() => {
+    const user = getLocalUser();
+    if (user) store.setState({user});
+  }, []);
+
   return (
     <React.StrictMode>
       <HashRouter>

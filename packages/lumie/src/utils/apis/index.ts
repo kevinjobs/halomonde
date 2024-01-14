@@ -13,7 +13,7 @@ export {
   getUserList as fetchUserList,
   updateUser,
   addUser,
-  fetchUser,
+  getUser,
   type UserListRespData,
   type GetUserListParams,
 } from './user';

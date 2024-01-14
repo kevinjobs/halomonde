@@ -10,6 +10,8 @@ import { notifications } from '@horen/notifications';
 
 import style from './Everything.module.less';
 import { PostTable } from './Table';
+import { useStore } from '@horen/store';
+import { store } from '@/store';
 
 const TYPES: Record<string, any> = {
   article: '文章',
@@ -34,6 +36,8 @@ export default function PostAdmin(): React.ReactElement {
   const [hasNext, setHasNext] = React.useState(true);
   //
   const [pickPost, setPickPost] = React.useState<IPost>(null);
+  //
+  const state = useStore(store);
 
   const mode = pickPost?.uid ? 'update' : 'create';
 
@@ -184,7 +188,10 @@ export default function PostAdmin(): React.ReactElement {
             </Select>
           </span>
         </div>
-        <div className={style.addOne}>
+        <div
+          className={style.addOne}
+          style={{display: state?.user ? 'block' : 'none'}}
+        >
           <span className={style.addText}>新增</span>
           <span>
             <Select value={typ} onChange={handleCreate} arrow>

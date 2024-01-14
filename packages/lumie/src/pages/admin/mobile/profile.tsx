@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { fetchUser } from '@/utils/apis/user';
+import { getUser } from '@/utils/apis/user';
 import { useNavigate, useParams } from 'react-router-dom';
 import { IUser } from '@/types';
 import COLOR_MAP from '@/styles/colors';
@@ -91,7 +91,7 @@ export default function Profile() {
 
   React.useEffect(() => {
     (async() => {
-      const resp = await fetchUser(username);
+      const resp = await getUser(username);
       if (typeof resp !== 'string') setUser(resp.data.users[0]);
       else notifications.show({type: 'error', message: '无法获取用户信息'});
     })();

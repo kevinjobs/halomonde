@@ -13,15 +13,21 @@ import {
   LeftMenu,
   SubMenuProps,
   Layout,
+  Login,
+  BanPage,
 } from './_components';
 
 import style from './index.module.less';
+import { useStore } from '@horen/store';
+import { store } from '@/store';
 
 interface PageProps extends Omit<SubMenuProps, 'children'> {
   title: string;
   description: string;
   element: React.ReactNode;
   items?: PageProps[];
+  loginRequired?: boolean;
+  allowLevels?: string[];
 };
 
 const LEFT_ITEMS: PageProps[] = [
@@ -62,6 +68,8 @@ const LEFT_ITEMS: PageProps[] = [
         element: <User />,
         to: 'system/user',
         icon: <Icon name='verse' size={27} />,
+        loginRequired: true,
+        allowLevels: ['admin'],
       },
       {
         title: '邀请码管理',
@@ -69,6 +77,8 @@ const LEFT_ITEMS: PageProps[] = [
         element: <Invitaition />,
         to: 'system/invitaition',
         icon: <Icon name='verse' size={27} />,
+        loginRequired: true,
+        allowLevels: ['superuser'],
       }
     ]
   }
@@ -82,7 +92,11 @@ export default function Domo() {
   return (
     <div className={style.domo}>
       <div className={style.top}>
-        <Titlebar {...TITLE_BAR_PROPS} />
+        <Titlebar {...TITLE_BAR_PROPS}>
+          <div className={style.loginArea}>
+            <Login />
+          </div>
+        </Titlebar>
       </div>
       <div className={style.main}>
         <div className={style.left}>
@@ -99,13 +113,39 @@ export default function Domo() {
 }
 
 const renderPages = (pages: PageProps[]) => {
+  const state = useStore(store);
+  const isLogined = state?.user;
+
   const arr = [];
   for (const page of pages) {
     if (page.to) arr.push(page)
     else if (page.items) {
       for (const item of page.items) {
         if (item.to) {
-          arr.push(item);
+          if (item.loginRequired) {
+            if (isLogined) {
+              if (item.allowLevels.includes(state.user.role)) {
+                arr.push(item);
+              } else {
+                arr.push({
+                  ...item,
+                  element: (
+                    <BanPage
+                      currentRole={state.user.role}
+                      allowRole={item.allowLevels.join(',')}
+                    />
+                  )
+                })
+              }
+            } else {
+              arr.push({
+                ...item,
+                element: <BanPage message='请登录后访问' />,
+              })
+            }
+          } else {
+            arr.push(item);
+          }
         }
       }
     }
@@ -114,7 +154,14 @@ const renderPages = (pages: PageProps[]) => {
     return (
       <Route
         path={page.to}
-        element={<Layout title={page.title} description={page.description}>{page.element}</Layout>}
+        element={(
+          <Layout
+            title={page.title}
+            description={page.description}
+          >
+            {page.element}
+          </Layout>
+        )}
         key={page.to}
       />
     )
