@@ -1,0 +1,101 @@
+.photo {
+  height: 100vh;
+  background-color: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #f1f1f1;
+}
+.preview {
+  height: 80vh;
+  min-width: 20vw;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.info {
+  margin-left: 64px;
+}
+
+.infoItem {
+  display: flex;
+  align-items: center;
+  margin: 16px 0;
+  span:nth-child(1) {
+    display: flex;
+    width: 30px;
+    justify-content: center;
+  }
+  span:nth-child(2) {
+    margin-left: 8px;
+  }
+}
+
+.title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.author {
+  .infoItem();
+}
+
+.date {
+  .infoItem();
+}
+
+.description {
+  .infoItem();
+}
+
+.iso {
+  .infoItem();
+}
+
+.exposure {
+  .infoItem();
+}
+
+.focal {
+  .infoItem();
+}
+
+.model {
+  .infoItem();
+}
+
+.lens {
+  .infoItem();
+}
+
+.infoContainer {
+  width: fit-content;
+}
+
+.hidedInfo {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  padding: 16px 32px 16px 32px;
+  border-radius: 5px;
+  width: 70vw;
+  transition: top .25s ease-in-out;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.clickToView {
+  margin-bottom: 32px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

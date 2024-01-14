@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  position: relative;
+  width: 48px;
+  height: 20px;
+}
+
+.arrow1 {
+  width: 16px;
+  height: 2px;
+  background-color: #fff;
+  transform: rotate(30deg);
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  transition-property: transform;
+  transition-duration: 200ms;
+  transition-timing-function: ease-in-out;
+  border-radius: 2px;
+}
+
+.arrow2 {
+  .arrow1();
+  transform: rotate(-30deg);
+  left: 10px;
+}

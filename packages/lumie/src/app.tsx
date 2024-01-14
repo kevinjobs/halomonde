@@ -9,6 +9,7 @@ import ArticlesPage from '@/pages/articles';
 import DomoPage from '@/pages/domo';
 import { Redirect } from '@/pages/domo/_components';
 import GalleryPage from '@/pages/gallery';
+import PhotoPage from '@/pages/photo';
 import { Notifications } from '@horen/notifications';
 
 import { store } from './store';
@@ -44,6 +45,7 @@ export default function App() {
           <Route path='/' element={<Redirect to='gallery' />} />
           <Route path='domo/*' element={<DomoPage />} />
           <Route path='gallery' element={<GalleryPage />} />
+          <Route path='photo/:uid' element={<PhotoPage />} />
           <Route path='articles' element={<ArticlesPage />} />
           <Route path='article/:uid' element={<ArticlePage />} />
         </Routes>

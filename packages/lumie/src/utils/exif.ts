@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat'
 import ExifReader, { Tags as ExifTags } from 'exifreader';
 
 export async function getExifs(file: File) {
@@ -6,32 +7,48 @@ export async function getExifs(file: File) {
   return extractExifs(tags);
 }
 
+dayjs.extend(customParseFormat);
+
 export type IExif = {
   createDate: number;
   modifyDate: number;
   fileType: string;
-  iso: string;
+  iso: number;
   width: number;
   height: number;
   lens: string;
-  focal: string;
-  focalNumber: number;
+  focalLength: string;
+  focalNumber: string;
   exposure: string;
   model: string;
+  /** gps */
+  gpsLatitude: number;
+  gpsLongitude: number;
+  gpsAltitude: string;
+  gpsAltitudeRef: string;
+  gpsLongitudeRef: string;
+  gpsLatitudeRef: string;
 }
 
-const extractExifs = (exif: ExifTags) => {
-  const createDate = dayjs(exif.CreateDate?.value).unix();
+const extractExifs = (exif: ExifTags): IExif => {
+  const createDate = dayjs(exif['DateTime']?.description, 'YYYY:MM:DD HH:mm:ss', true).unix();
   const modifyDate = dayjs(exif.ModifyDate?.value).unix();
   const fileType = exif.FileType?.value;
-  const iso = exif.ISOSpeedRatings?.value;
+  const iso = Number(exif.ISOSpeedRatings?.value);
   const width = exif['Image Width']?.value | exif.ImageWidth?.value;
   const height = exif['Image Height']?.value | exif.ImageHeight?.value;
-  const lens = exif.Lens?.value;
-  const focal = exif.FocalLength?.description;
+  const lens = exif.LensModel?.description;
+  const focalLength = exif.FocalLength?.description;
   const focalNumber = exif.FNumber?.description;
   const exposure = exif.ExposureTime?.description;
   const model = exif.Model?.description;
+
+  const gpsLatitude = Number(exif.GPSLatitude?.description);
+  const gpsLongitude = Number(exif.GPSLongitude?.description);
+  const gpsAltitude = exif.GPSAltitude?.description;
+  const gpsAltitudeRef = exif.GPSAltitudeRef?.description;
+  const gpsLongitudeRef = exif.GPSLongitudeRef?.description;
+  const gpsLatitudeRef = exif.GPSLatitudeRef?.description;
   return {
     createDate,
     modifyDate,
@@ -40,9 +57,15 @@ const extractExifs = (exif: ExifTags) => {
     width,
     height,
     lens,
-    focal,
+    focalLength,
     focalNumber,
     exposure,
     model,
+    gpsAltitude,
+    gpsAltitudeRef,
+    gpsLongitude,
+    gpsLongitudeRef,
+    gpsLatitude,
+    gpsLatitudeRef,
   };
 }
