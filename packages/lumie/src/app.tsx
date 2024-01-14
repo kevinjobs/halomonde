@@ -4,8 +4,8 @@ import React, { useEffect } from 'react';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 
 import { Navbar } from '@/components/navbar';
+import ArticlePage from '@/pages/article';
 import ArticlesPage from '@/pages/articles';
-import ArticlePage from '@/pages/articles/article';
 import DomoPage from '@/pages/domo';
 import { Redirect } from '@/pages/domo/_components';
 import GalleryPage from '@/pages/gallery';
