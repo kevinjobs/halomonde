@@ -125,7 +125,7 @@ export const MasonryItem = (props: ItemProps) => {
       key={props.title}
       ref={outRef}
       onClick={handleClick}
-      className='masonry-item'
+      className={style.masnoryItem}
       style={{width, height, top, left}}
     >
       <div>
@@ -134,6 +134,14 @@ export const MasonryItem = (props: ItemProps) => {
       <animated.div style={{...styles as any}}>
         <img src={props.src} alt={props.title} />
       </animated.div>
+      <div className={style.info} style={{width, height}}>
+        <div className={style.title}>
+          <span>{post?.title}</span>
+        </div>
+        <div className={style.content}>
+          <span>{post?.content || post?.excerpt}</span>
+        </div>
+      </div>
       {children}
       {
         picked

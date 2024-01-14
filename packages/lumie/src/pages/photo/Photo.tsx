@@ -97,7 +97,7 @@ export function PhotoInfoPanel({
             <span><Icon name="date" fill="#f1f1f1" size={20} /></span>
             {
               exif
-                ? <span>{dayjs.unix(exif.createDate).format('YYYY年M月D日')}</span>
+                ? <span>{dayjs.unix(exif.createDate || post?.createAt).format('YYYY年M月D日')}</span>
                 : <span><Skeleton height={16} width={120} /></span>
             }
           </div>
@@ -105,7 +105,7 @@ export function PhotoInfoPanel({
             <span><Icon name="info" fill="#f1f1f1" size={22}  /></span>
             {
               post
-                ? <span>{post?.content || '没有描述'}</span>
+                ? <span>{post?.content || post?.excerpt || '没有描述'}</span>
                 : <span><Skeleton height={16} width={180} /></span>
             }
           </div>

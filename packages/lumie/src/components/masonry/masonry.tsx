@@ -23,15 +23,6 @@ export interface MasonryProps {
 
 const Container = styled.div`
   position: relative;
-  .masonry-item {
-    position: absolute;
-    cursor: pointer;
-    box-shadow: 4px 4px 4px rgba(0,0,0,0.35);
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
 `;
 
 const genFinalSize = (width: number, height: number, clientWidth: number, clientHeight: number) => {

@@ -31,6 +31,7 @@ export type IExif = {
 }
 
 const extractExifs = (exif: ExifTags): IExif => {
+  // TODO: 部分图片的方向不对到导致读取的长宽对调
   const createDate = dayjs(exif['DateTime']?.description, 'YYYY:MM:DD HH:mm:ss', true).unix();
   const modifyDate = dayjs(exif.ModifyDate?.value).unix();
   const fileType = exif.FileType?.value;
