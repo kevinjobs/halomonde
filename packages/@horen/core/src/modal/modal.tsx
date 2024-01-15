@@ -1,6 +1,6 @@
 import React, { HtmlHTMLAttributes } from 'react';
 import ReactDOM from 'react-dom';
-import css from './style.module.less';
+import css from './Modal.module.less';
 import { Icon } from '../icon';
 
 export interface ModalProps extends HtmlHTMLAttributes<HTMLDivElement> {
@@ -32,25 +32,27 @@ function Modal(props: ModalProps) {
     ? css.modalContainer + ' ' +  css.fullScreen
     : css.modalContainer;
 
-  return ReactDOM.createPortal(<div
-    {...restProps}
-    style={{display: visible ? 'block' : 'none'}}
-    className={css.modal}
-  >
-    <div className={cls}>
-      <div className={css.closeModal}>
-        <div className={css.closeModalFrame}>
-          <span
-            className={css.closeIcon}
-            onClick={(e) => {if (onClose) onClose(e);}}
-          >
-            <Icon name='close' />
-          </span>
+  return ReactDOM.createPortal(
+    <div
+      {...restProps}
+      style={{display: visible ? 'block' : 'none'}}
+      className={css.modal}
+    >
+      <div className={cls}>
+        <div className={css.closeModal}>
+          <div className={css.closeModalFrame}>
+            <span
+              className={css.closeIcon}
+              onClick={(e) => {if (onClose) onClose(e);}}
+            >
+              <Icon name='close' />
+            </span>
+          </div>
         </div>
+        <div className={css.modalMain}>{ children }</div>
       </div>
-      <div className={css.modalMain}>{ children }</div>
-    </div>
-  </div>, document.body);
+    </div>,
+    document.body);
 }
 
 function ModalHeader({children}: ModalHeaderProps) {
