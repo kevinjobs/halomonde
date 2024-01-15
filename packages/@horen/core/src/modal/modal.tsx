@@ -1,7 +1,8 @@
-import React, { HtmlHTMLAttributes } from 'react';
+import React, { HtmlHTMLAttributes, } from 'react';
 import ReactDOM from 'react-dom';
+
+import { Icon, } from '../icon';
 import css from './Modal.module.less';
-import { Icon } from '../icon';
 
 export interface ModalProps extends HtmlHTMLAttributes<HTMLDivElement> {
   title?: string;

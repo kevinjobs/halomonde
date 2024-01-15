@@ -1,9 +1,11 @@
-import React from "react";
-import { IPost } from "@/types";
-import { ArticleEditPanel } from './ArticleEditPanel';
-import { PhotoEditPanel } from "./PhotoEditPanel";
-import { VerseEditPanel } from './VerseEditPanel';
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
+import React from 'react';
+
+import { IPost, } from '@/types';
+
+import { ArticleEditPanel, } from './ArticleEditPanel';
+import { PhotoEditPanel, } from './PhotoEditPanel';
+import { VerseEditPanel, } from './VerseEditPanel';
 
 export interface EditPanelProps {
   mode?: 'update' | 'create';

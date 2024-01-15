@@ -1,3 +1,9 @@
+import httpStatus from 'http-status';
+import jwt from 'jsonwebtoken';
+
+import config from '../configs';
+import { UserModel, } from '../db/models';
+import { IUser, } from '../types';
 /*
  * @Author       : Kevin Jobs
  * @Date         : 2022-03-16 16:45:57
@@ -6,12 +12,7 @@
  * @FilePath     : \koa-restful-api\src\services\token.service.ts
  * @Description  : 
  */
-import { ApiError, encrypt } from '../utils';
-import { UserModel } from '../db/models';
-import jwt from 'jsonwebtoken';
-import config from '../configs';
-import httpStatus from 'http-status';
-import { IUser } from '../types';
+import { ApiError, } from '../utils';
 
 export default class TokenService {
   static async generate(loginUser: IUser) {

@@ -1,4 +1,4 @@
-import { IColorMap } from '@/types';
+import { IColorMap, } from '@/types';
 
 const COLOR_MAP: IColorMap = {
   red: '#E74C3C',

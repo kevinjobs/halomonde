@@ -1,5 +1,6 @@
 import React from 'react';
-import { clamp } from '@horen/utils';
+
+import { clamp, } from '@horen/utils';
 
 export interface MovePosition {
   x: number;

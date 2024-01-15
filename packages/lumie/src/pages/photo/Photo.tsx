@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { fetchPost } from "@/utils/apis";
-import { IPost } from "@/types";
-import { useParams } from 'react-router-dom';
+import dayjs from 'dayjs';
+import React, { useEffect, useState, } from 'react';
+import { useParams, } from 'react-router-dom';
+
+import { IPost, } from '@/types';
+import { fetchPost, } from '@/utils/apis';
+import { IExif, } from '@/utils/exif';
+import { Icon, Skeleton, } from '@horen/core';
+import { useViewport, } from '@horen/hooks';
+
+import { Arrow, } from './Arrow';
 import style from './Photo.module.less';
-import dayjs from "dayjs";
-import { Icon, Skeleton } from "@horen/core";
-import { IExif } from "@/utils/exif";
-import { useViewport } from '@horen/hooks';
-import { Arrow } from "./Arrow";
 
 export default function Photo() {
   const params: any = useParams();

@@ -6,7 +6,7 @@
  * @FilePath     : \koa-restful-api\src\db\models\index.d.ts
  * @Description  : 
  */
-import { Model } from 'sequelize';
+import { Model, } from 'sequelize';
 
 declare namespace db {
   class ArticleModel extends Model {}

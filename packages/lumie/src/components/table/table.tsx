@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import COLOR_MAP from '@/styles/colors';
 
 const TableStyled = styled.div`

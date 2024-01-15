@@ -1,14 +1,13 @@
 import dayjs from 'dayjs';
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, } from 'react-router-dom';
 
-import { IPost } from '@/types';
-import { fetchPost } from '@/utils/apis/post';
-import { Skeleton } from '@horen/core';
-import { Left } from '@icon-park/react';
+import { IPost, } from '@/types';
+import { fetchPost, } from '@/utils/apis/post';
+import { Skeleton, } from '@horen/core';
+import { Left, } from '@icon-park/react';
 
-import { Comment } from '../articles/comment';
-
+import { Comment, } from '../articles/comment';
 import style from './Article.module.less';
 
 export default function ArticlePage () :React.ReactElement {

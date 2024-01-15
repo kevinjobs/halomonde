@@ -1,6 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import { useToggle } from "@horen/hooks";
+import React from 'react';
+import styled from 'styled-components';
+
+import { useToggle, } from '@horen/hooks';
 
 const SWITCH = styled.span`
   display: inline-block;

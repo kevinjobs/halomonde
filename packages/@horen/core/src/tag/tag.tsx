@@ -1,4 +1,5 @@
-import React from "react";
+import React from 'react';
+
 import css from './Tag.module.less';
 
 export interface TagProps {

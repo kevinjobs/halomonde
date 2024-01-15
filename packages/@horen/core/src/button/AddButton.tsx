@@ -1,5 +1,6 @@
-import React, { ButtonHTMLAttributes } from "react";
-import { Icon } from "../icon";
+import React, { ButtonHTMLAttributes, } from 'react';
+
+import { Icon, } from '../icon';
 import style from './AddButton.module.less';
 
 export function AddButton(props: ButtonHTMLAttributes<HTMLButtonElement>) {

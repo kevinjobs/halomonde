@@ -1,10 +1,11 @@
-import Koa from 'koa';
+import dayjs from 'dayjs';
 import fs from 'fs';
+import Koa from 'koa';
 import path from 'path';
-import dayjs from 'dayjs'
+
 import config from '../configs';
-import { ILog } from '../types';
-import { LoggerModel } from '../db/models';
+import { LoggerModel, } from '../db/models';
+import { ILog, } from '../types';
 
 const logger = () => {
   return async function (ctx: Koa.Context, next: Koa.Next) {

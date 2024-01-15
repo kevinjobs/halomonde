@@ -1,5 +1,6 @@
-import React, { HtmlHTMLAttributes } from 'react';
-import { Icon } from '../icon';
+import React, { HtmlHTMLAttributes, } from 'react';
+
+import { Icon, } from '../icon';
 import css from './Notification.module.less';
 
 export interface NotificationProps extends HtmlHTMLAttributes<HTMLDivElement> {

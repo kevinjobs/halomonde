@@ -1,6 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import { Plus } from '@icon-park/react';
+import React from 'react';
+import styled from 'styled-components';
+
+import { Plus, } from '@icon-park/react';
 
 const G = styled.div`
   height: 100vh;

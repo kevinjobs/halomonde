@@ -1,4 +1,4 @@
-import { IRoute } from './route';
+import { IRoute, } from './route';
 
 interface IConfig {
   token: {

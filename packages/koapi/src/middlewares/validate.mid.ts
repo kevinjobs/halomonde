@@ -1,10 +1,12 @@
-import koa from 'koa';
 import Ajv from 'ajv';
-import Localize from 'ajv-i18n';
 import addFormats from 'ajv-formats';
-import { pick, ApiError } from '../utils';
+import Localize from 'ajv-i18n';
 import httpStatus from 'http-status';
-import { IRoute } from '@/types';
+import koa from 'koa';
+
+import { IRoute, } from '@/types';
+
+import { ApiError, pick, } from '../utils';
 
 export default function (validation: IRoute['validation']) {
   const schema = validation;

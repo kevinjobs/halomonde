@@ -1,7 +1,9 @@
 import React from 'react';
-import { Switch } from '@horen/core';
-import { ComponentPage, Desc } from './_layout';
-import { Playground } from './_playground';
+
+import { Switch, } from '@horen/core';
+
+import { ComponentPage, Desc, } from './_layout';
+import { Playground, } from './_playground';
 
 export default function ComponentSlider() {
   const [on, setOn] = React.useState<boolean>(false);

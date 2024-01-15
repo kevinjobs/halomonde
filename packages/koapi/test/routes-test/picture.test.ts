@@ -1,3 +1,6 @@
+import { expect, } from 'chai';
+import request from 'supertest';
+
 /*
  * @Author       : Kevin Jobs
  * @Date         : 2022-03-08 17:50:30
@@ -7,9 +10,7 @@
  * @Description  : 
  */
 import app from '../../src';
-import request from 'supertest';
-import { expect } from 'chai';
-import { token } from './auth.test';
+import { token, } from './auth.test';
 
 describe('#Picture', async () => {
   const url = '/v2/picture';

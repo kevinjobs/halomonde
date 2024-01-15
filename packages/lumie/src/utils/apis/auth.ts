@@ -1,6 +1,7 @@
+import { API_URL, } from '@/constants';
 import api from '@/utils/network';
-import { API_URL } from '@/constants';
-import { ApiResponse } from '.';
+
+import { ApiResponse, } from './';
 
 export type GetTokenParams = {
   username: string;

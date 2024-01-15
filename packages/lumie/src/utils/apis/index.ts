@@ -1,5 +1,18 @@
-export { getToken, getInvitationList, genInvitations, GetTokenParams, TokenRespData, InvitationListRespData} from './auth';
-export { getFileList as fetchFileList, deleteFileByFilename, FileRespData, FileListRespData, GetFileListParams } from './file';
+export {
+  getToken,
+  getInvitationList,
+  genInvitations,
+  GetTokenParams,
+  TokenRespData,
+  InvitationListRespData,
+} from './auth';
+export {
+  getFileList as fetchFileList,
+  deleteFileByFilename,
+  FileRespData,
+  FileListRespData,
+  GetFileListParams,
+} from './file';
 export {
   fetchPost,
   getPostList,
@@ -18,9 +31,11 @@ export {
   type GetUserListParams,
 } from './user';
 
-export type ApiResponse<T = undefined> = Promise<{
-  code: number;
-  msg: string;
-  data?: T
-} | string>;
-
+export type ApiResponse<T = undefined> = Promise<
+  | {
+      code: number;
+      msg: string;
+      data?: T;
+    }
+  | string
+>;

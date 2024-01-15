@@ -1,4 +1,4 @@
-import { IUser } from "@/types";
+import { IUser, } from '@/types';
 
 interface User extends Partial<IUser> {
   token?: string;

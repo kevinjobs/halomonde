@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { ViewportProvider } from '@/hooks';
-import { IPost } from '@/types';
-import { getPostList } from '@/utils/apis/post';
-import { randomInt } from '@horen/utils';
+import { ViewportProvider, } from '@/hooks';
+import { IPost, } from '@/types';
+import { getPostList, } from '@/utils/apis/post';
+import { randomInt, } from '@horen/utils';
 
 import Background from './background';
 import Gallery from './gallery';

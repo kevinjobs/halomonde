@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from 'react';
+
 import style from './Home.module.less';
 
 export default function Home() {

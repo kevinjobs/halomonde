@@ -1,5 +1,5 @@
-import React from 'react';
 import lodash from 'lodash';
+import React from 'react';
 
 interface ViewportProps {
   children: React.ReactNode;

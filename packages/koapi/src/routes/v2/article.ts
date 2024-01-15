@@ -1,6 +1,6 @@
-import { ArticleController } from '../../controllers';
+import { IRoute, } from '@/types';
 
-import { IRoute } from '@/types';
+import { ArticleController, } from '../../controllers';
 
 const articleRoutes: IRoute[] = [
   // 文章系列

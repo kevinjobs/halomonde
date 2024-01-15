@@ -1,25 +1,18 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import { Icon } from '@horen/core';
+import { Route, Routes, } from 'react-router-dom';
 
-import Home from './home';
-import Everything from './posts/everything';
-import User from './system/user';
-import Invitaition from './system/invitation';
+import { store, } from '@/store';
+import { Icon, } from '@horen/core';
+import { useStore, } from '@horen/store';
 
 import {
-  Titlebar,
-  TitlebarProps,
-  LeftMenu,
-  SubMenuProps,
-  Layout,
-  Login,
-  BanPage,
+    BanPage, Layout, LeftMenu, Login, SubMenuProps, Titlebar, TitlebarProps,
 } from './_components';
-
+import Home from './home';
 import style from './index.module.less';
-import { useStore } from '@horen/store';
-import { store } from '@/store';
+import Everything from './posts/everything';
+import Invitaition from './system/invitation';
+import User from './system/user';
 
 interface PageProps extends Omit<SubMenuProps, 'children'> {
   title: string;

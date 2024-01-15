@@ -4,14 +4,14 @@ import dayjs from 'dayjs';
 import React from 'react';
 import DatePicker from 'react-datepicker';
 
-import { addUser, updateUser, deleteUser } from '@/utils/apis/user';
-import { API_URL } from '@/constants';
-import { IUser } from '@/types';
-import { AvatarUpload, Button, Input, Select } from '@horen/core';
-import { useForm } from '@horen/hooks';
-import { notifications } from '@horen/notifications';
-import { setLoginedUser, store } from '@/store';
-import { useStore } from '@horen/store';
+import { API_URL, } from '@/constants';
+import { setLoginedUser, store, } from '@/store';
+import { IUser, } from '@/types';
+import { addUser, deleteUser, updateUser, } from '@/utils/apis/user';
+import { AvatarUpload, Button, Input, Select, } from '@horen/core';
+import { useForm, } from '@horen/hooks';
+import { notifications, } from '@horen/notifications';
+import { useStore, } from '@horen/store';
 
 import style from './UserEditPanel.module.less';
 

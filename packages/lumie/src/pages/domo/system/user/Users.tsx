@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { fetchUserList } from '@/utils/apis';
-import { IUser } from '@/types';
-import { AddButton, Modal, Skeleton } from '@horen/core';
-import { notifications } from '@horen/notifications';
+import { IUser, } from '@/types';
+import { fetchUserList, } from '@/utils/apis';
+import { AddButton, Modal, Skeleton, } from '@horen/core';
+import { notifications, } from '@horen/notifications';
 
-import { UserCard } from './UserCard';
-import { UserEditPanel } from './UserEditPanel';
+import { UserCard, } from './UserCard';
+import { UserEditPanel, } from './UserEditPanel';
 import style from './Users.module.less';
 
 const DEFAULT_USER: IUser = {

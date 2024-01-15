@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
-import { useWindowEvent } from "../use-window-event";
+import { useCallback, useEffect, useState, } from 'react';
+
+import { useWindowEvent, } from '../use-window-event';
 
 export function useViewport() {
   const [windowSize, setWindowSize] = useState({

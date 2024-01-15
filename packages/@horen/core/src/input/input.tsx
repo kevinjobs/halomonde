@@ -1,4 +1,5 @@
-import React, { InputHTMLAttributes } from "react";
+import React, { InputHTMLAttributes, } from 'react';
+
 import style from './Input.module.less';
 
 export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> {

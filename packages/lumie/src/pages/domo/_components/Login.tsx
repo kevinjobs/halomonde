@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, } from 'react';
 
-import { IUser } from '@/types';
-import { Button, Icon, Input, Modal } from '@horen/core';
-import { getToken, getUser } from '@/utils/apis';
-import { notifications } from '@horen/notifications';
-import { setLoginedUser, clearLoginedUser } from '@/store';
+import { clearLoginedUser, setLoginedUser, store, } from '@/store';
+import { IUser, } from '@/types';
+import { getToken, getUser, } from '@/utils/apis';
+import { Button, Icon, Input, Modal, } from '@horen/core';
+import { notifications, } from '@horen/notifications';
+import { useStore, } from '@horen/store';
 
 import style from './Login.module.less';
-import { useStore } from '@horen/store';
-import { store } from '@/store';
 
 export type LoginProps = {
   onSuccess?(user: IUser): void;

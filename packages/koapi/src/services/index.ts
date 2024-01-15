@@ -6,12 +6,12 @@
  * @FilePath     : \koa-restful-api\src\services\index.ts
  * @Description  : 
  */
-import ArticleService from "./article.service";
-import LogsService from "./logs.service";
+import ArticleService from './article.service';
+import LogsService from './logs.service';
 import PictureService from './picture.service';
-import TokenService from "./token.service";
-import UserService from "./user.service";
-import PropertyService from "./property.service";
+import PropertyService from './property.service';
+import TokenService from './token.service';
+import UserService from './user.service';
 
 export {
   ArticleService,

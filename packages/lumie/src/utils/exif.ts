@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat'
-import ExifReader, { Tags as ExifTags } from 'exifreader';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import ExifReader, { Tags as ExifTags, } from 'exifreader';
 
 export async function getExifs(file: File) {
   const tags = await ExifReader.load(file);

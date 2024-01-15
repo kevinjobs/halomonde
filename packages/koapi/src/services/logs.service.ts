@@ -1,3 +1,7 @@
+import httpStatus from 'http-status';
+import { Op, } from 'sequelize';
+
+import { LoggerModel, } from '../db/models';
 /*
  * @Author       : Kevin Jobs
  * @Date         : 2022-03-17 11:26:44
@@ -6,10 +10,7 @@
  * @FilePath     : \koa-restful-api\src\services\logs.service.ts
  * @Description  : 
  */
-import { ApiError } from '../utils';
-import { Op } from 'sequelize';
-import { LoggerModel } from '../db/models';
-import httpStatus from 'http-status';
+import { ApiError, } from '../utils';
 
 export default class LogsService {
   static async getAllLogs(datetime: string, orderBy: string, order: string) {

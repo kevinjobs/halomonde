@@ -1,6 +1,7 @@
-import api from "../network";
-import { API_URL } from "@/constants";
-import { ApiResponse } from ".";
+import { API_URL, } from '@/constants';
+
+import api from '../network';
+import { ApiResponse, } from './';
 
 export type FileRespData = {
   filename: string;

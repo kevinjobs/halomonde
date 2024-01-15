@@ -1,5 +1,6 @@
 import Koa from 'koa';
-import { UserService } from '../services';
+
+import { UserService, } from '../services';
 
 export default class UserController {
   static getList = async (ctx: Koa.Context) => {

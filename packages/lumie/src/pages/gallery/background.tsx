@@ -1,8 +1,8 @@
-import COLOR_MAP from '@/styles/colors';
 import React from 'react';
 import styled from 'styled-components';
 
-import { IPost } from '@/types';
+import COLOR_MAP from '@/styles/colors';
+import { IPost, } from '@/types';
 
 const Container = styled.div`
   width: 100%;

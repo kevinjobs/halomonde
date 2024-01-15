@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Spin } from './spin';
-import { Loading2 } from './loading2';
+import { Loading2, } from './loading2';
+import { Spin, } from './spin';
 
 const Container = styled.div`
   width: 100%;

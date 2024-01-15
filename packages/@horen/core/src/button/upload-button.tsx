@@ -1,6 +1,7 @@
-import React, { useRef, useState } from "react";
-import { Button, ButtonProps } from "./button";
-import { Icon } from '../icon';
+import React, { useRef, } from 'react';
+
+import { Icon, } from '../icon';
+import { Button, ButtonProps, } from './button';
 
 export type UploadButtonProps = {
   onClick?(e: React.MouseEvent<HTMLButtonElement>): void;

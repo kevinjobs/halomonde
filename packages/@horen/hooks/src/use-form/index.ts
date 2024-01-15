@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, } from 'react';
 
 export interface UseFormProps {
   initial: any;

@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Loading } from '@/components/loading';
-import { Masonry, MasonryItem } from '@/components/masonry';
-import { useDevice, useScroll } from '@/hooks';
-import { IPost } from '@/types';
-import { getPostList } from '@/utils/apis';
-import { IExif } from '@/utils/exif';
+import { Loading, } from '@/components/loading';
+import { Masonry, MasonryItem, } from '@/components/masonry';
+import { useDevice, useScroll, } from '@/hooks';
+import { IPost, } from '@/types';
+import { getPostList, } from '@/utils/apis';
+import { IExif, } from '@/utils/exif';
 
 const Container = styled.div`
   width: 100%;

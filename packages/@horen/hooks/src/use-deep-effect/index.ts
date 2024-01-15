@@ -1,5 +1,6 @@
-import { DependencyList, EffectCallback, useEffect, useRef } from "react";
-import { isEqual } from '@horen/utils';
+import { DependencyList, EffectCallback, useEffect, useRef, } from 'react';
+
+import { isEqual, } from '@horen/utils';
 
 const deepDeps = (value: any) => {
   const ref = useRef(value);

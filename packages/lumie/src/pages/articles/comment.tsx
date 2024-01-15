@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { IComment } from '@/types';
-import { Button } from '@horen/core';
+import { IComment, } from '@/types';
+import { Button, } from '@horen/core';
 
 const Container = styled.div`
   width: 100%;

@@ -1,6 +1,6 @@
-import { PropertyController } from '../../controllers';
+import { IRoute, } from '@/types';
 
-import { IRoute } from '@/types';
+import { PropertyController, } from '../../controllers';
 
 const propertyRoutes: IRoute[] = [
   // 文章系列

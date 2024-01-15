@@ -1,6 +1,7 @@
-import { IRoute } from "@/types";
+import { IRoute, } from '@/types';
+
+import { AuthController, } from '../../controllers';
 import * as validation from '../../validations';
-import { AuthController } from "../../controllers";
 
 const authRoutes: IRoute[] = [
   {

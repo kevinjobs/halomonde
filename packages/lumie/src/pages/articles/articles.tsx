@@ -1,12 +1,12 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
+import React from 'react';
+import { useNavigate, } from 'react-router-dom';
+import styled from 'styled-components';
 
-import { IPost } from '@/types';
 import COLOR_MAP from '@/styles/colors';
-import { Skeleton } from '@horen/core';
-import { getPostList } from '@/utils/apis/post';
+import { IPost, } from '@/types';
+import { getPostList, } from '@/utils/apis/post';
+import { Skeleton, } from '@horen/core';
 
 const Container = styled.div`
   padding: 48px 0;

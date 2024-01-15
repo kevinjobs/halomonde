@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { useForm } from '@horen/hooks';
-import { Input, Switch, ImageUpload, Select } from '@horen/core';
-import { ComponentPage, Desc, Playground } from '../components/_layout';
+import React from 'react';
+
+import { ImageUpload, Input, Select, Switch, } from '@horen/core';
+import { useForm, } from '@horen/hooks';
+
+import { ComponentPage, Desc, Playground, } from '../components/_layout';
 
 export default function ComponentSlider() {
   const form = useForm({

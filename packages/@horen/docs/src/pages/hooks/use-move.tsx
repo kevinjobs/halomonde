@@ -1,7 +1,9 @@
-import React, { useRef, useState } from 'react';
-import { useMove } from '@horen/hooks';
-import { ComponentPage, Desc } from '../components/_layout';
-import { Playground } from '../components/_playground';
+import React, { useState, } from 'react';
+
+import { useMove, } from '@horen/hooks';
+
+import { ComponentPage, Desc, } from '../components/_layout';
+import { Playground, } from '../components/_playground';
 
 export default function ComponentSlider() {
   const [x, setX] = useState(0);

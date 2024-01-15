@@ -1,5 +1,6 @@
-import { useReducer } from 'react';
-import { randomInt } from '@horen/utils';
+import { useReducer, } from 'react';
+
+import { randomInt, } from '@horen/utils';
 
 export type UseToggleSequence = 'forward' | 'reverse' | 'random';
 

@@ -1,13 +1,12 @@
 import dayjs from 'dayjs';
 import React from 'react';
 
-import { Table } from '@/components/table';
+import { Table, } from '@/components/table';
+import { store, } from '@/store';
 import COLOR_MAP from '@/styles/colors';
-import { IPost } from '@/types';
-import { Button, Skeleton, Tag } from '@horen/core';
-import { useStore } from '@horen/store';
-
-import { store } from '@/store';
+import { IPost, } from '@/types';
+import { Button, Skeleton, Tag, } from '@horen/core';
+import { useStore, } from '@horen/store';
 
 export interface PostTableProps {
   posts: IPost[];

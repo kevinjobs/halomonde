@@ -1,10 +1,12 @@
 import Koa from 'koa';
 import koaBody from 'koa-body';
+
 import cors from '@koa/cors';
-import router from './routes';
+
 // middlewares
 import logger from './middlewares/logger.mid';
 import onerror from './middlewares/onerror.mid';
+import router from './routes';
 
 // 创建 Koa 对象
 const app = new Koa();

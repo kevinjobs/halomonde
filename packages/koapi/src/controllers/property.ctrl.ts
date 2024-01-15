@@ -1,5 +1,6 @@
-import { PropertyService } from '../services';
 import Koa from 'koa';
+
+import { PropertyService, } from '../services';
 
 export default class PostController {
   // 获取

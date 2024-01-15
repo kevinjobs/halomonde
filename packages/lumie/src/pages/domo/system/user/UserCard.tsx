@@ -1,8 +1,10 @@
 import dayjs from 'dayjs';
 import React from 'react';
 
-import { IUser } from '@/types';
-import { Avatar, BirthdayCake, CodeOne, Female, Local, Male, User } from '@icon-park/react';
+import { IUser, } from '@/types';
+import {
+    Avatar, BirthdayCake, CodeOne, Female, Local, Male, User,
+} from '@icon-park/react';
 
 import style from './UserCard.module.less';
 

@@ -1,3 +1,3 @@
-import { UserAdmin } from "./Users";
+import { UserAdmin, } from './Users';
 
 export default UserAdmin;

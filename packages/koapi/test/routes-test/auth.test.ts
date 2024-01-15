@@ -1,3 +1,7 @@
+import { expect, } from 'chai';
+import request from 'supertest';
+import { v4 as UUIDV4, } from 'uuid';
+
 /*
  * @Author       : Kevin Jobs
  * @Date         : 2022-03-08 17:50:30
@@ -7,10 +11,7 @@
  * @Description  : 
  */
 import app from '../../src';
-import request from 'supertest';
-import { expect } from 'chai';
-import { InvitationModel } from '../../src/db/models';
-import { v4 as UUIDV4 } from 'uuid';
+import { InvitationModel, } from '../../src/db/models';
 
 let token: string;
 

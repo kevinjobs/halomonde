@@ -8,7 +8,7 @@
  */
 import Router from '@koa/router';
 
-import { router as v2router } from './v2';
+import { router as v2router, } from './v2';
 
 const router = new Router({
   prefix: '/v2'

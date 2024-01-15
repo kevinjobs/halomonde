@@ -1,6 +1,8 @@
 import React from 'react';
-import { useSetState } from '@horen/hooks';
-import { ComponentPage, Desc, Playground } from '../components/_layout';
+
+import { useSetState, } from '@horen/hooks';
+
+import { ComponentPage, Desc, Playground, } from '../components/_layout';
 
 export default function ComponentSlider() {
   const [obj, setObj] = useSetState<any>({});

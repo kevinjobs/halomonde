@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { UploadButton, UploadButtonProps } from "../button";
+import React from 'react';
+
+import { UploadButton, UploadButtonProps, } from '../button';
 import css from './upload.module.less';
 
 export interface UploadProps extends UploadButtonProps {}

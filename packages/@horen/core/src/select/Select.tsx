@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Arrow } from './Arrow';
+import React, { useEffect, useRef, useState, } from 'react';
+
+import { Arrow, } from './Arrow';
 import style from './Select.module.less';
 
 export interface SelectProps {

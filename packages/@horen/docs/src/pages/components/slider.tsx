@@ -1,7 +1,9 @@
 import React from 'react';
-import { Slider } from '@horen/core';
-import { ComponentPage, Desc } from './_layout';
-import { Playground } from './_playground';
+
+import { Slider, } from '@horen/core';
+
+import { ComponentPage, Desc, } from './_layout';
+import { Playground, } from './_playground';
 
 export default function ComponentSlider() {
   const [inactivePer, setInactivePer] = React.useState(0);

@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import Koa from 'koa';
-import { LogsService } from '../services';
+
+import { LogsService, } from '../services';
 
 export default class LogsController {
   static getList = async (ctx: Koa.Context) => {

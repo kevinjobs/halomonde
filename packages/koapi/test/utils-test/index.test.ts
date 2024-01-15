@@ -1,3 +1,6 @@
+import { expect, } from 'chai';
+import validator from 'validator';
+
 /*
  * @Author       : Kevin Jobs
  * @Date         : 2022-03-08 17:50:30
@@ -6,9 +9,7 @@
  * @FilePath     : \koa-restful-api\test\utils-test\index.test.ts
  * @Description  : 
  */
-import { encrypt, genInvitationCode, ApiError } from '../../src/utils';
-import { expect } from 'chai';
-import validator from 'validator';
+import { ApiError, encrypt, genInvitationCode, } from '../../src/utils';
 
 describe('#Utils', () => {
   it('#test encrypt', () => {

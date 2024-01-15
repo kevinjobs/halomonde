@@ -1,8 +1,12 @@
-import { forwardRef, useEffect, useRef } from "react";
-import { Transition as _Transition, TransitionGroup, TransitionStatus } from 'react-transition-group';
-import { Notification } from "@horen/core";
-import { useLp, notifications, LetopItem } from "./notifications.store";
+import { forwardRef, useEffect, useRef, } from 'react';
+import {
+    Transition as _Transition, TransitionGroup, TransitionStatus,
+} from 'react-transition-group';
+
+import { Notification, } from '@horen/core';
+
 import css from './Notifications.module.less';
+import { LetopItem, notifications, useLp, } from './notifications.store';
 
 const Transition: any = _Transition;
 

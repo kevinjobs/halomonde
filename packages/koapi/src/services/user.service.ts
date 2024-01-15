@@ -1,3 +1,5 @@
+import status from 'http-status';
+
 /*
  * @Author       : Kevin Jobs
  * @Date         : 2022-03-16 09:53:34
@@ -6,10 +8,9 @@
  * @FilePath     : \koa-restful-api\src\services\user.service.ts
  * @Description  : 
  */
-import { UserModel, InvitationModel } from '../db/models';
-import { ApiError } from '../utils';
-import { IUser } from '../types';
-import status from 'http-status';
+import { InvitationModel, UserModel, } from '../db/models';
+import { IUser, } from '../types';
+import { ApiError, } from '../utils';
 
 export default class UserService {
   /**

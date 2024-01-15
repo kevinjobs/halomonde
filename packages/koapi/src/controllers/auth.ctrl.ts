@@ -1,5 +1,6 @@
 import Koa from 'koa';
-import { UserService, TokenService } from '../services';
+
+import { TokenService, UserService, } from '../services';
 
 export default class AuthController {
   static token = async (ctx: Koa.Context) => {

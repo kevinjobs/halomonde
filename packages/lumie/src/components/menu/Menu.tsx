@@ -1,6 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, } from 'react';
+
+import { Icon, } from '@horen/core';
+
 import style from './Menu.module.less';
-import { Icon } from "@horen/core";
 
 type MenuProps = {
   children?: React.ReactNode;

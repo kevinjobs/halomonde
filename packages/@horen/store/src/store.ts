@@ -1,4 +1,4 @@
-import { useSyncExternalStore } from "react";
+import { useSyncExternalStore, } from 'react';
 
 export type StoreSubscriber<T> = (value: T) => void;
 

@@ -1,4 +1,5 @@
-import React from "react";
+import React from 'react';
+
 import style from './Titlebar.module.less';
 
 export type TitlebarProps = {

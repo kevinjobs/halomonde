@@ -1,19 +1,19 @@
 import './app.css';
 
-import React, { useEffect } from 'react';
-import { HashRouter, Route, Routes } from 'react-router-dom';
+import React, { useEffect, } from 'react';
+import { HashRouter, Route, Routes, } from 'react-router-dom';
 
-import { Navbar } from '@/components/navbar';
+import { Navbar, } from '@/components/navbar';
 import ArticlePage from '@/pages/article';
 import ArticlesPage from '@/pages/articles';
 import DomoPage from '@/pages/domo';
-import { Redirect } from '@/pages/domo/_components';
+import { Redirect, } from '@/pages/domo/_components';
 import GalleryPage from '@/pages/gallery';
 import PhotoPage from '@/pages/photo';
-import { Notifications } from '@horen/notifications';
+import { Notifications, } from '@horen/notifications';
 
-import { store } from './store';
-import { getLocalUser } from './utils/store';
+import { store, } from './store';
+import { getLocalUser, } from './utils/store';
 
 const ITEMS = [
   {

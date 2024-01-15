@@ -1,7 +1,8 @@
-import api from "@/utils/network";
-import { IUser } from "@/types";
-import { API_URL } from "@/constants";
-import { ApiResponse } from ".";
+import { API_URL, } from '@/constants';
+import { IUser, } from '@/types';
+import api from '@/utils/network';
+
+import { ApiResponse, } from './';
 
 export type GetUserListParams = {
   username?: string;

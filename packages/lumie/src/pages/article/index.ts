@@ -1,3 +1,3 @@
-import { default as Article } from './Article';
+import { default as Article, } from './Article';
 
 export default Article;

@@ -6,9 +6,9 @@
  * @FilePath     : \koa-restful-api\src\routes\v2\user.ts
  * @Description  : 
  */
-import { IRoute } from "@/types";
+import { IRoute, } from '@/types';
 
-import { UserController } from "../../controllers";
+import { UserController, } from '../../controllers';
 
 const authRoutes: IRoute[] = [
   { method: 'get', path: '/users', fn: UserController.getList, authRequired: true, },

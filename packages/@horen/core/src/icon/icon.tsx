@@ -2,6 +2,7 @@ import React from 'react';
 
 import Add from './icon-add.svg';
 import Aperture from './icon-aperture.svg';
+import Camera from './icon-camera.svg';
 import Clock from './icon-clock.svg';
 import Close from './icon-close.svg';
 import Code from './icon-code.svg';
@@ -9,10 +10,13 @@ import Correct from './icon-correct.svg';
 import Date from './icon-date.svg';
 import Dimension from './icon-dimension.svg';
 import Error from './icon-error.svg';
+import Exposure from './icon-exposure.svg';
 import Files from './icon-files.svg';
+import Focal from './icon-focal.svg';
 import Home from './icon-home.svg';
 import Info from './icon-info.svg';
 import Iso from './icon-iso.svg';
+import Lens from './icon-lens.svg';
 import Location from './icon-location.svg';
 import Logout from './icon-logout.svg';
 import Menu from './icon-menu.svg';
@@ -23,11 +27,6 @@ import User from './icon-user.svg';
 import Verse from './icon-verse.svg';
 import Vip from './icon-vip.svg';
 import Warning from './icon-warning.svg';
-import Exposure from './icon-exposure.svg';
-import Focal from './icon-focal.svg';
-import Lens from './icon-lens.svg';
-import Camera from './icon-camera.svg';
-
 
 export type IconName =
   | 'add'

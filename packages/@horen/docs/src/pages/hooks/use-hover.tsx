@@ -1,6 +1,8 @@
 import React from 'react';
-import { useHover } from '@horen/hooks';
-import { ComponentPage, Desc, Playground } from '../components/_layout';
+
+import { useHover, } from '@horen/hooks';
+
+import { ComponentPage, Desc, Playground, } from '../components/_layout';
 
 export default function ComponentSlider() {
   const { hovered, ref } = useHover();

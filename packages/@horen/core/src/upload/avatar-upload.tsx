@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { last } from '@horen/utils';
-import { Icon } from '../icon';
-import { UploadButton } from '../button';
+import React, { useState, } from 'react';
+
+import { last, } from '@horen/utils';
+
+import { UploadButton, } from '../button';
+import { Icon, } from '../icon';
 import css from './avatar-upload.module.less';
 
 export interface UploadProps<T> {

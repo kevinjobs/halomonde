@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { UploadButton, UploadButtonProps } from '../button';
-import { Icon } from '../icon';
+import React, { useEffect, useState, } from 'react';
+
+import { UploadButton, UploadButtonProps, } from '../button';
+import { Icon, } from '../icon';
 import css from './image-upload.module.less';
 
 export interface ImageUploadProps extends UploadButtonProps {}

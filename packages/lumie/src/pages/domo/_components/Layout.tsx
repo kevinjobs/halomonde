@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, } from 'react';
+
 import style from './Layout.module.less';
 
 export type LayoutProps = {

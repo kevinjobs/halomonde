@@ -1,7 +1,9 @@
-import { PhotoInfoPanel } from '@/pages/photo';
-import { IPost } from '@/types';
 import React from 'react';
-import { useSpring, animated } from 'react-spring';
+import { animated, useSpring, } from 'react-spring';
+
+import { PhotoInfoPanel, } from '@/pages/photo';
+import { IPost, } from '@/types';
+
 import style from './Item.module.less';
 
 export interface ItemProps {

@@ -1,4 +1,5 @@
-import React, { ButtonHTMLAttributes } from "react";
+import React, { ButtonHTMLAttributes, } from 'react';
+
 import _css from './Button.module.less';
 
 export type ButtonProps = {

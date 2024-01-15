@@ -1,4 +1,5 @@
 import React from 'react';
+
 import style from './Skeleton.module.less';
 
 export interface SkeletonProps {

@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken';
 import Koa from 'koa';
+
 import config from '../configs';
-import { IUser } from '../types';
+import { IUser, } from '../types';
 
 export default function Auth(level = 5) {
   return async function (ctx: Koa.Context, next: Koa.Next) {

@@ -1,3 +1,5 @@
+import { IRoute, } from '@/types';
+
 /*
  * @Author       : Kevin Jobs
  * @Date         : 2022-03-08 17:50:30
@@ -6,9 +8,7 @@
  * @FilePath     : \koa-restful-api\src\routes\v2\picture.ts
  * @Description  : 
  */
-import { PictureController } from '../../controllers';
-
-import { IRoute } from '@/types';
+import { PictureController, } from '../../controllers';
 
 const pictureRoutes: IRoute[] = [
   // 图片系列

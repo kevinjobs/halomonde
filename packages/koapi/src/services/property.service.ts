@@ -1,7 +1,9 @@
-import { IProperty } from '@/types';
 import httpStatus from 'http-status';
-import { PropertyModel } from '../db/models';
-import { ApiError } from '../utils';
+
+import { IProperty, } from '@/types';
+
+import { PropertyModel, } from '../db/models';
+import { ApiError, } from '../utils';
 
 export default class PropertyService {
   static async getOneByUid(uid: string) {

@@ -6,8 +6,9 @@
  * @FilePath     : \koa-restful-api\src\utils\invitation.ts
  * @Description  : 
  */
-import { v4 as UUIDV4 } from 'uuid';
-import { InvitationModel } from '../db/models';
+import { v4 as UUIDV4, } from 'uuid';
+
+import { InvitationModel, } from '../db/models';
 
 export async function genInvitationCode(t: number = 1) {
   const codes = [];

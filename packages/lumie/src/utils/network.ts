@@ -1,7 +1,9 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig, } from 'axios';
+
 // import axiosRetry from 'axios-retry';
-import { API_URL } from '@/constants';
-import { getLocalUser } from './store';
+import { API_URL, } from '@/constants';
+
+import { getLocalUser, } from './store';
 
 const api = axios.create();
 

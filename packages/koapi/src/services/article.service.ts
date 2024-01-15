@@ -1,7 +1,9 @@
-import { IArticle } from '@/types';
 import httpStatus from 'http-status';
-import { ArticleModel } from '../db/models';
-import { ApiError } from '../utils';
+
+import { IArticle, } from '@/types';
+
+import { ArticleModel, } from '../db/models';
+import { ApiError, } from '../utils';
 
 export default class ArticleService {
   static async getOneByUid(uid: string) {

@@ -1,5 +1,6 @@
-import { IRoute } from "@/types";
-import { LogsController } from "../../controllers";
+import { IRoute, } from '@/types';
+
+import { LogsController, } from '../../controllers';
 
 const logRoutes: IRoute[] = [
   // 日志系列

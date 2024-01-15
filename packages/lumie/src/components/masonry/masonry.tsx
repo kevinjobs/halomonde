@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useDevice } from '@/hooks';
-import { MasonryItem } from './item';
-import { PhotoInfoPanel } from '@/pages/photo';
-import { IPost } from '@/types';
+
+import { useDevice, } from '@/hooks';
+import { IPost, } from '@/types';
+
+import { MasonryItem, } from './item';
 
 export interface MasonryItem {
   width: number,

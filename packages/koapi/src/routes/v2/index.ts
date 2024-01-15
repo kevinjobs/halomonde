@@ -1,3 +1,4 @@
+import { IRoute, } from '@/types';
 /*
  * @Author       : Kevin Jobs
  * @Date         : 2022-03-08 17:50:30
@@ -7,15 +8,14 @@
  * @Description  : 
  */
 import Router from '@koa/router';
-import validate from '../../middlewares/validate.mid';
-import { IRoute } from '@/types';
-import auth from '../../middlewares/auth.mid';
 
+import auth from '../../middlewares/auth.mid';
+import validate from '../../middlewares/validate.mid';
 import articleRoutes from './article';
 import authRoutes from './auth';
 import logRoutes from './log';
 import pictureRoutes from './picture';
-import propertyRoutes from "./property";
+import propertyRoutes from './property';
 import userRoutes from './user';
 
 const router = new Router();

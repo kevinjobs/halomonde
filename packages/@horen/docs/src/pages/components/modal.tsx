@@ -1,7 +1,9 @@
 import React from 'react';
-import { Modal, Button } from '@horen/core';
-import { ComponentPage, Desc } from './_layout';
-import { Playground } from './_playground';
+
+import { Button, Modal, } from '@horen/core';
+
+import { ComponentPage, Desc, } from './_layout';
+import { Playground, } from './_playground';
 
 export default function ComponentSlider() {
   const [v, setV] = React.useState(false);

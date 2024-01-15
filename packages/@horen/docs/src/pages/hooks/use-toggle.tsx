@@ -1,6 +1,8 @@
 import React from 'react';
-import { useToggle } from '@horen/hooks';
-import { ComponentPage, Desc, Playground } from '../components/_layout';
+
+import { useToggle, } from '@horen/hooks';
+
+import { ComponentPage, Desc, Playground, } from '../components/_layout';
 
 export default function ComponentSlider() {
   const [value, toggle] = useToggle();

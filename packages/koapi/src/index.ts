@@ -1,8 +1,10 @@
-import https from 'https';
-import http from 'http';
 import fs from 'fs';
-import db from './db/models';
+import http from 'http';
+import https from 'https';
+
 import app from './app';
+import db from './db/models';
+
 // db connect and authenticate.
 db.connect();
 

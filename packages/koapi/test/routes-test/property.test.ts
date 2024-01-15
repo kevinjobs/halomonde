@@ -1,7 +1,8 @@
-import app from '../../src';
+import { expect, } from 'chai';
 import request from 'supertest';
-import { expect } from 'chai';
-import { token } from './auth.test';
+
+import app from '../../src';
+import { token, } from './auth.test';
 
 describe('#Property', async () => {
   let uid: string;
