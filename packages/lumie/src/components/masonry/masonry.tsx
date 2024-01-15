@@ -1,32 +1,37 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { useDevice, } from '@/hooks';
-import { IPost, } from '@/types';
+import { useDevice } from '@/hooks';
+import { IPost } from '@/types';
 
-import { MasonryItem, } from './item';
+import { MasonryItem } from './item';
 
 export interface MasonryItem {
-  width: number,
-  height: number,
+  width: number;
+  height: number;
   src: string;
   title?: string;
   post?: IPost;
 }
 
 export interface MasonryProps {
-  cols?: number, // columns
-  colWidth?: number, // column width
-  gutter?: number, // gutter between column,
-  shadow?: boolean,
-  items: MasonryItem[],
+  cols?: number; // columns
+  colWidth?: number; // column width
+  gutter?: number; // gutter between column,
+  shadow?: boolean;
+  items: MasonryItem[];
 }
 
 const Container = styled.div`
   position: relative;
 `;
 
-const genFinalSize = (width: number, height: number, clientWidth: number, clientHeight: number) => {
+const genFinalSize = (
+  width: number,
+  height: number,
+  clientWidth: number,
+  clientHeight: number,
+) => {
   /**
    * 计算预览图最终状态
    * @param item
@@ -40,7 +45,7 @@ const genFinalSize = (width: number, height: number, clientWidth: number, client
   // 最终的高度
   // 如果原图高度大于视窗高度的 90% 则将其裁剪
   const limitHeight = clientHeight * 0.9;
-  
+
   if (height > limitHeight) finalHeight = limitHeight;
   else finalHeight = height;
 
@@ -68,16 +73,11 @@ export const Masonry = (props: MasonryProps) => {
   const { clientWidth, clientHeight } = useDevice();
   const containerRef = React.useRef<HTMLDivElement>();
 
-  const {
-    cols = 3,
-    colWidth = 320,
-    gutter = 8,
-    items,
-  } = props;
+  const { cols = 3, colWidth = 320, gutter = 8, items } = props;
 
   // create an arrary for col height storage
   // the length equals to cols
-  const colHeigthList = Array.from({length: cols}, () => 0);
+  const colHeigthList = Array.from({ length: cols }, () => 0);
   // container height
   let tmpContainerHeight = 0;
 
@@ -95,7 +95,7 @@ export const Masonry = (props: MasonryProps) => {
     const offsetTop = colHeigthList[shortestColIndex];
 
     const normalizedItemHeight = (colWidth / width) * height;
-    colHeigthList[shortestColIndex] += (normalizedItemHeight + gutter);
+    colHeigthList[shortestColIndex] += normalizedItemHeight + gutter;
 
     // 取列表中最长的值，作为整个组件的高度
     if (index === items.length - 1) {
@@ -112,23 +112,18 @@ export const Masonry = (props: MasonryProps) => {
   };
 
   const renderItem = (d: MasonryItem, i: number) => {
-    const {
-      left,
-      top,
-      width,
-      height
-    } = getItemStyle(d.width, d.height, i)
+    const { left, top, width, height } = getItemStyle(d.width, d.height, i);
 
-    const {
-      finalWidth,
-      finalHeight,
-      finalLeft,
-      finalTop
-    } = genFinalSize(d.width, d.height, clientWidth, clientHeight);
+    const { finalWidth, finalHeight, finalLeft, finalTop } = genFinalSize(
+      d.width,
+      d.height,
+      clientWidth,
+      clientHeight,
+    );
 
     return (
       <MasonryItem
-        key={d.src}
+        key={d.title + d.src}
         title={d.title}
         src={d.src}
         left={left}
@@ -144,8 +139,8 @@ export const Masonry = (props: MasonryProps) => {
         originWidth={d.width}
         post={d.post}
       />
-    )
-  }
+    );
+  };
 
   React.useEffect(() => {
     setContainerHeight(tmpContainerHeight);
@@ -154,12 +149,11 @@ export const Masonry = (props: MasonryProps) => {
   return (
     <Container
       style={{
-        width: (colWidth+gutter)*cols-gutter,
-        height: containerHeight
+        width: (colWidth + gutter) * cols - gutter,
+        height: containerHeight,
       }}
-      ref={containerRef}
-    >
-      { items && items.map(renderItem) }
+      ref={containerRef}>
+      {items && items.map(renderItem)}
     </Container>
   );
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import COLOR_MAP from '@/styles/colors';
-import { IPost, } from '@/types';
+import { IPost } from '@/types';
 
 const Container = styled.div`
   width: 100%;
@@ -35,17 +35,19 @@ const Desc = styled.div`
 `;
 
 interface IProps {
-  cover: string,
-  verse: IPost,
+  cover: string;
+  verse: IPost;
 }
 
-function Background(props: IProps) :React.ReactElement {
+function Background(props: IProps): React.ReactElement {
   const { cover, verse } = props;
 
   return (
-    <Container style={{backgroundImage:`url(${cover})`}} className="gallery-cover">
+    <Container
+      style={{ backgroundImage: `url(${cover})` }}
+      className="gallery-cover">
       <Desc>
-        { verse && verse.content.split('|').map((c,i) => <p key={i}>{c}</p>) }
+        {verse && verse.content.split('|').map((c, i) => <p key={i}>{c}</p>)}
       </Desc>
     </Container>
   );

@@ -1,9 +1,9 @@
-import { API_URL } from '@/constants';
+import { API_URL, PostType } from '@/constants';
 import { IPost } from '@/types';
 import { covertToUnixStamp10 } from '@/utils/datetime';
 import api from '@/utils/network';
 
-import { ApiResponse } from './';
+import { ApiResponseType, ApiResponse } from './';
 
 export type PostListRespData = {
   amount: number;
@@ -17,40 +17,50 @@ export type GetPostListParams = {
   publish?: string;
   author?: string;
   category?: string;
-  type?: string;
+  type?: PostType;
   status?: string;
+  offset?: number;
+  limit?: number;
 };
 
+type GetPostListSuccessCallback = (
+  /** Post 列表 */
+  postList: IPost[],
+  /** 是否有上一页 */
+  hasPrev?: boolean,
+  /** 是否有下一页 */
+  hasNext?: boolean,
+) => void;
+
+type FailedCallback = (errMsg: string) => void;
+
 /**
- * 抓取 post 列表
- * @param offset 偏移量
- * @param limit 限制量
- * @param prs 查询参数
- * @returns post 列表
+ * 伪同步方式获取 PostList
+ * @param params 参数
+ * @param onSuccess 获取数据成功时的回调
+ * @param onFailed 获取数据失败时的回调
  */
-export async function getPostList(
-  offset: number,
-  limit: number,
-  prs: GetPostListParams,
-): ApiResponse<PostListRespData> {
-  let params = { offset, limit, status: 'publish' };
-  if (prs) params = { ...params, ...prs };
-  const resp = await api.get(API_URL.posts, { params });
-  if (resp.data.code === 0) {
-    const d = resp.data;
-    const posts: IPost[] = d.data.posts;
-    d.data['posts'] = posts.map((p) => {
-      fullUrl(p);
-
-      p.createAt = covertToUnixStamp10(p.createAt);
-      p.updateAt = covertToUnixStamp10(p.updateAt);
-      p.publishAt = covertToUnixStamp10(p.publishAt);
-
-      return p;
-    });
-    return d;
-  }
-  return resp.data.msg;
+export function getPostListSync(
+  params: GetPostListParams,
+  onSuccess: GetPostListSuccessCallback,
+  onFailed: FailedCallback,
+) {
+  api
+    .get(API_URL.posts, { params: { status: 'publish', ...params } })
+    .then((resp) => {
+      const respData = resp.data as ApiResponseType<PostListRespData>;
+      if (respData.code === 0) {
+        respData.data.posts = convertPosts(respData.data.posts);
+        onSuccess(
+          respData.data.posts,
+          respData.data.offset > 0,
+          respData.data.offset + respData.data.limit < respData.data.totals,
+        );
+      } else {
+        onFailed(resp.data.msg);
+      }
+    })
+    .catch((err) => onFailed(err));
 }
 
 /**
@@ -120,3 +130,14 @@ export async function fetchPost(uid: string): ApiResponse<{ post: IPost }> {
 const fullUrl = (post: IPost) => (post.url = API_URL.base + post.url);
 const shrinkUrl = (post: IPost) =>
   (post.url = post.url?.replace(API_URL.base, ''));
+const convertPosts = (posts: IPost[]) => {
+  return posts.map((p) => {
+    fullUrl(p);
+
+    p.createAt = covertToUnixStamp10(p.createAt);
+    p.updateAt = covertToUnixStamp10(p.updateAt);
+    p.publishAt = covertToUnixStamp10(p.publishAt);
+
+    return p;
+  });
+};

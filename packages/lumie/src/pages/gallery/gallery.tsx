@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Loading, } from '@/components/loading';
-import { Masonry, MasonryItem, } from '@/components/masonry';
-import { useDevice, useScroll, } from '@/hooks';
-import { IPost, } from '@/types';
-import { getPostList, } from '@/utils/apis';
-import { IExif, } from '@/utils/exif';
+import { Loading } from '@/components/loading';
+import { Masonry, MasonryItem } from '@/components/masonry';
+import { useDevice, useScroll } from '@/hooks';
+import { IPost } from '@/types';
+import { getPostListSync } from '@/utils/apis';
+import { IExif } from '@/utils/exif';
 
 const Container = styled.div`
   width: 100%;
@@ -25,7 +25,7 @@ const ImageMasonry = styled.div`
 
 type PhotoItem = MasonryItem & IPost;
 
-function GalleryPage () :React.ReactElement {
+function GalleryPage(): React.ReactElement {
   const [nowOffset, setNowOffset] = React.useState(0);
   const [photos, setPhotos] = React.useState<Array<PhotoItem>>([]);
   const [hasMore, setHasMore] = React.useState(false);
@@ -37,16 +37,15 @@ function GalleryPage () :React.ReactElement {
 
   // 获取图片
   const getImageList = async (page: number, size = 12) => {
-    const data = await getPostList(page, size, {type: 'photo'});
-    if (typeof data !== 'string') {
-      setPhotos(photos.concat(covertImageList(data.data.posts)));
-      if (pageLimit + nowOffset >= data.data.totals) {
-        setHasMore(false);
-      } else {
-        setHasMore(true);
-        setNowOffset(nowOffset + pageLimit);
-      }
-    }
+    getPostListSync(
+      { offset: page, limit: size, type: 'photo' },
+      (postList, hasPrev, hasNext) => {
+        setPhotos(photos.concat(covertImageList(postList)));
+        setHasMore(hasNext);
+        setNowOffset(page + size);
+      },
+      (errMsg) => console.log(errMsg),
+    );
   };
 
   React.useEffect(() => {
@@ -64,27 +63,25 @@ function GalleryPage () :React.ReactElement {
   return (
     <Container>
       <ImageMasonry>
-        {
-          photos.length !== 0
-            ? 
-            <Masonry
-              items={photos as PhotoItem[]}
-              cols={device === 'mobile' ? 2 : 4}
-              colWidth={device === 'mobile' ? (clientWidth - 12)/2 : 320}
-              gutter={device === 'mobile' ? 4 : 24}
-              shadow
-            />
-            :
-            <Loading />
-        }
+        {photos.length !== 0 ? (
+          <Masonry
+            items={photos as PhotoItem[]}
+            cols={device === 'mobile' ? 2 : 4}
+            colWidth={device === 'mobile' ? (clientWidth - 12) / 2 : 320}
+            gutter={device === 'mobile' ? 4 : 24}
+            shadow
+          />
+        ) : (
+          <Loading />
+        )}
       </ImageMasonry>
-      { hasMore && <Loading /> }
+      {hasMore && <Loading />}
     </Container>
   );
 }
 
 // covert the raw image list to the masonry required.
-const covertImageList = (imageList: Array<IPost>) :Array<PhotoItem> => {
+const covertImageList = (imageList: Array<IPost>): Array<PhotoItem> => {
   return imageList.map((img: IPost) => {
     let exif: IExif;
     try {
@@ -95,10 +92,10 @@ const covertImageList = (imageList: Array<IPost>) :Array<PhotoItem> => {
 
     const src = img.url;
     return {
-      'src': src,
-      'width': exif?.width,
-      'height': exif?.height,
-      'post': img,
+      src: src,
+      width: exif?.width,
+      height: exif?.height,
+      post: img,
     };
   });
 };

@@ -8,7 +8,7 @@ export { getFileList as fetchFileList, deleteFileByFilename } from './file';
 export type { FileRespData, FileListRespData, GetFileListParams } from './file';
 export {
   fetchPost,
-  getPostList,
+  getPostListSync,
   addPost,
   updatePost,
   deletePost,
@@ -30,3 +30,9 @@ export type ApiResponse<T = undefined> = Promise<
     }
   | string
 >;
+
+export type ApiResponseType<T = undefined> = {
+  code: number;
+  msg: string;
+  data?: T;
+};

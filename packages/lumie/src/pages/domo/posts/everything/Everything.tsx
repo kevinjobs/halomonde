@@ -11,7 +11,7 @@ import {
 import EditPanel from '@/pages/domo/_components/edit-panel';
 import { store } from '@/store';
 import { IPost } from '@/types';
-import { addPost, deletePost, getPostList, updatePost } from '@/utils/apis';
+import { addPost, deletePost, getPostListSync, updatePost } from '@/utils/apis';
 import { Button, Modal, Select } from '@horen/core';
 import { useDidUpdate, useSetState, useUnmount } from '@horen/hooks';
 import { notifications } from '@horen/notifications';
@@ -75,23 +75,18 @@ export default function PostAdmin(): React.ReactElement {
   };
 
   /** 刷新 */
-  const refreshPosts = (offset = 0, limit: number, typ: string) => {
-    (async () => {
-      const data = await getPostList(offset, limit, {
-        status: 'all',
+  const refreshPosts = (offset = 0, limit: number, typ: PostType) => {
+    getPostListSync(
+      {
+        offset,
+        limit,
         type: typ,
-      });
-      if (typeof data !== 'string') {
-        if (offset <= 0) setPageState({ hasPrev: false });
-        else setPageState({ hasPrev: true });
-
-        if (offset + limit >= data.data.totals)
-          setPageState({ hasNext: false });
-        else setPageState({ hasNext: true });
-
-        setPageState({ postList: data.data.posts });
-      }
-    })();
+      },
+      (postList, hasPrev, hasNext) => {
+        setPageState({ postList, hasPrev, hasNext });
+      },
+      (errMsg) => console.log(errMsg),
+    );
   };
 
   const reloadTable = (type: PostType) => {

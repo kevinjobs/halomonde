@@ -1,12 +1,12 @@
 import dayjs from 'dayjs';
 import React from 'react';
-import { useNavigate, } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import COLOR_MAP from '@/styles/colors';
-import { IPost, } from '@/types';
-import { getPostList, } from '@/utils/apis/post';
-import { Skeleton, } from '@horen/core';
+import { IPost } from '@/types';
+import { getPostListSync } from '@/utils/apis/post';
+import { Skeleton } from '@horen/core';
 
 const Container = styled.div`
   padding: 48px 0;
@@ -23,7 +23,7 @@ const ArticleItem = styled.div`
   margin: 16px 0;
   border-radius: 5px;
   position: relative;
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
   display: flex;
   border: 1px solid ${COLOR_MAP.white4};
   &:hover {
@@ -35,7 +35,7 @@ const Cover = styled.div`
   width: 44%;
   min-height: 160px;
   max-height: 300px;
-  transition: width .2s ease-in-out;
+  transition: width 0.2s ease-in-out;
   img {
     width: 100%;
     height: 100%;
@@ -63,7 +63,8 @@ const Info = styled.div`
     bottom: 16px;
     font-size: 12px;
     color: ${COLOR_MAP.dark};
-    .info-author,.info-date {
+    .info-author,
+    .info-date {
       display: inline-block;
       margin-right: 16px;
     }
@@ -98,9 +99,9 @@ const Sk = styled.div`
   }
 `;
 
-function transformList(origin: IPost[]) :IPost[] {
+function transformList(origin: IPost[]): IPost[] {
   const arr = [];
-  for (let i=0; i<origin?.length; i++) {
+  for (let i = 0; i < origin?.length; i++) {
     const n = origin[i];
     n.url = n.url.replace('static/', 'static/thumb-');
     arr.push(n);
@@ -108,55 +109,52 @@ function transformList(origin: IPost[]) :IPost[] {
   return arr;
 }
 
-export function ArticlesPage () :React.ReactElement {
-  const [posts, setPosts] = React.useState<IPost[]>([]);
+export function ArticlesPage(): React.ReactElement {
+  const [articleList, setArticleList] = React.useState<IPost[]>([]);
   const [offset, setOffset] = React.useState(0);
   const [hasMore, setHasMore] = React.useState(true);
-  
+
   const pageLimit = 5;
   const navigate = useNavigate();
 
   const handleClickMore = () => {
-    getAndSet(offset);
+    refreshArticleList(offset);
   };
 
   const handleClickArticle = (a: IPost) => {
     navigate(`/article/${a.uid}`);
   };
 
-  const getAndSet = (offset: number, limit=pageLimit) => {
-    (async() => {
-      const data = await getPostList(offset, pageLimit, { type: 'article'});
-      if (typeof data !== 'string') {
-        setPosts([...posts, ...transformList(data.data.posts)]);
-        if (offset + pageLimit >= data.data.totals) {
-          setHasMore(false); 
-        } else {
-          setOffset(offset + limit);
-          setHasMore(true)
-        }
-      } else window.alert(data);
-    })();
-  }
+  const refreshArticleList = (offset: number, limit = pageLimit) => {
+    getPostListSync(
+      { offset, limit, type: 'article' },
+      (postList, _, hasNext) => {
+        setArticleList([...articleList, ...transformList(postList)]);
+        setHasMore(hasNext);
+        setOffset(offset + limit);
+      },
+      (errMsg) => console.log(errMsg),
+    );
+  };
 
-  const PostItem = ({a}: {a: IPost}) => {
+  const PostItem = ({ a }: { a: IPost }) => {
     return (
       <ArticleItem key={a.uid}>
-        <Cover onClick={() => handleClickArticle(a)} className='cover'>
+        <Cover onClick={() => handleClickArticle(a)} className="cover">
           <img src={a.url} alt={a.title} />
         </Cover>
         <Info>
-          <div style={{margin:16}}>
+          <div style={{ margin: 16 }}>
             <h3 className="info-item" onClick={() => handleClickArticle(a)}>
-              { a.title }
+              {a.title}
             </h3>
-            <div className="info-item" style={{color: COLOR_MAP.white7}}>
-              { a.excerpt }
+            <div className="info-item" style={{ color: COLOR_MAP.white7 }}>
+              {a.excerpt}
             </div>
             <div className="info-author-date info-item">
-              <div className="info-author">{ a.author }</div>
+              <div className="info-author">{a.author}</div>
               <div className="info-date">
-                { dayjs.unix(a.updateAt).format('YYYY年M月D日') }
+                {dayjs.unix(a.updateAt).format('YYYY年M月D日')}
               </div>
             </div>
           </div>
@@ -166,43 +164,54 @@ export function ArticlesPage () :React.ReactElement {
   };
 
   // 组件加载时获取文章列表
-  React.useEffect(() => getAndSet(offset), []);
+  React.useEffect(() => refreshArticleList(offset), []);
 
   return (
     <Container>
       <ArticleList>
-        { 
-          posts.length > 0
-            ? posts.map(p => <PostItem key={p.uid} a={p} />)
-            : renderSkeleton()
-        }
+        {articleList.length > 0
+          ? articleList.map((p) => <PostItem key={p.uid} a={p} />)
+          : renderSkeleton()}
       </ArticleList>
-      {
-        hasMore &&
-        <LoadMore role="button" onClick={handleClickMore}>点击加载更多</LoadMore>
-      }
+      {hasMore && (
+        <LoadMore role="button" onClick={handleClickMore}>
+          点击加载更多
+        </LoadMore>
+      )}
     </Container>
   );
 }
 
 const renderSkeleton = () => {
   const sk = [];
-  for (let i=0; i<6; i++) {
-    sk.push((
-      <Sk className='wait' key={i}>
-        <div className='left'>
+  for (let i = 0; i < 6; i++) {
+    sk.push(
+      <Sk className="wait" key={i}>
+        <div className="left">
           <Skeleton height={200} width={320} />
         </div>
-        <div className='right'>
-          <div className='item'><Skeleton height={20} width={460} /></div>
-          <div className='item'><Skeleton height={16} width={260} /></div>
-          <div className='item'><Skeleton height={16} width={180} /></div>
-          <div className='item'><Skeleton height={16} width={240} /></div>
-          <div className='item'><Skeleton height={16} width={300} /></div>
-          <div className='item'><Skeleton height={12} width={380} /></div>
+        <div className="right">
+          <div className="item">
+            <Skeleton height={20} width={460} />
+          </div>
+          <div className="item">
+            <Skeleton height={16} width={260} />
+          </div>
+          <div className="item">
+            <Skeleton height={16} width={180} />
+          </div>
+          <div className="item">
+            <Skeleton height={16} width={240} />
+          </div>
+          <div className="item">
+            <Skeleton height={16} width={300} />
+          </div>
+          <div className="item">
+            <Skeleton height={12} width={380} />
+          </div>
         </div>
-      </Sk>
-    ));
+      </Sk>,
+    );
   }
   return <>{sk}</>;
 };
