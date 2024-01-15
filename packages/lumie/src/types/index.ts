@@ -1,13 +1,15 @@
+import { PostType } from '@/constants';
+
 export interface IBase {
-  id?: number,
-  uid?: string,
+  id?: number;
+  uid?: string;
 }
 
 export type IPost = Partial<{
   createAt: number;
   publishAt: number;
   updateAt: number;
-  type: string;
+  type: PostType;
   title: string;
   author: string;
   content: string;
@@ -19,11 +21,12 @@ export type IPost = Partial<{
   url: string;
   exif: string;
   description: string;
-}> & IBase;
+}> &
+  IBase;
 
 export interface IUser extends IBase {
-  username?: string,
-  password?: string,
+  username?: string;
+  password?: string;
   nickname?: string;
   birthday?: number;
   gender?: string;
@@ -40,23 +43,23 @@ export interface IUser extends IBase {
 export interface IComment extends IPost {}
 
 export interface IColorMap {
-  [key: string]: string,
-  red: string,
-  orange: string,
-  yellow: string,
-  green: string,
-  cyan: string,
-  blue: string,
-  purple: string,
-  primary: string,
-  white: string,
-  white1: string,
-  white2: string,
-  white3: string,
-  white4: string,
-  white5: string,
-  white6: string,
-  white7: string,
+  [key: string]: string;
+  red: string;
+  orange: string;
+  yellow: string;
+  green: string;
+  cyan: string;
+  blue: string;
+  purple: string;
+  primary: string;
+  white: string;
+  white1: string;
+  white2: string;
+  white3: string;
+  white4: string;
+  white5: string;
+  white6: string;
+  white7: string;
   white8: string;
-  dark: string,
+  dark: string;
 }

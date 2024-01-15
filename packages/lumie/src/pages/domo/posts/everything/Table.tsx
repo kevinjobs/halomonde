@@ -1,12 +1,12 @@
 import dayjs from 'dayjs';
 import React from 'react';
 
-import { Table, } from '@/components/table';
-import { store, } from '@/store';
+import { Table } from '@/components/table';
+import { store } from '@/store';
 import COLOR_MAP from '@/styles/colors';
-import { IPost, } from '@/types';
-import { Button, Skeleton, Tag, } from '@horen/core';
-import { useStore, } from '@horen/store';
+import { IPost } from '@/types';
+import { Button, Skeleton, Tag } from '@horen/core';
+import { useStore } from '@horen/store';
 
 export interface PostTableProps {
   posts: IPost[];
@@ -35,22 +35,22 @@ export interface TableRow {
 const TABLE_HEADERS = [
   // { field: 'id', name: 'ID', },
   // { field: 'uid', name: 'UID', width: 60, },
-  { field: 'createAt', name: '创建日期', width: 100, },
-  { field: 'updateAt', name: '更新日期', width: 100, },
-  { field: 'type', name: '类型', },
+  { field: 'createAt', name: '创建日期', width: 100 },
+  { field: 'updateAt', name: '更新日期', width: 100 },
+  { field: 'type', name: '类型' },
   { field: 'title', name: '标题', width: 200 },
-  { field: 'author', name: '作者', },
+  { field: 'author', name: '作者' },
   // { field: 'content', name: '内容', },
   // { field: 'sumary', name: '摘要', width: 200, },
-  { field: 'preview', name: '预览', width: 100, },
-  { field: 'status', name: '状态', },
-  { field: 'tags', name: '标签', },
-  { field: 'category', name: '分类', },
-  { field: 'format', name: '格式', },
+  { field: 'preview', name: '预览', width: 100 },
+  { field: 'status', name: '状态' },
+  { field: 'tags', name: '标签' },
+  { field: 'category', name: '分类' },
+  { field: 'format', name: '格式' },
   // { field: 'url', name: '预览', },
   // { field: 'exif', name: '图片信息', },
   // { field: 'description', name: '描述', },
-  { field: 'edit', name: '编辑', width: 120, },
+  { field: 'edit', name: '编辑', width: 120 },
 ];
 
 export const PostTable: React.FC<PostTableProps> = (props: PostTableProps) => {
@@ -69,7 +69,7 @@ export const PostTable: React.FC<PostTableProps> = (props: PostTableProps) => {
   };
 
   return (
-    <div className='post-table'>
+    <div className="post-table">
       <Table
         data={toTableData(posts, clickEdit, clickDel, clickView)}
         heads={TABLE_HEADERS}
@@ -78,12 +78,12 @@ export const PostTable: React.FC<PostTableProps> = (props: PostTableProps) => {
   );
 };
 
-function toTableData (
+function toTableData(
   posts: IPost[],
   onEdit: (p: IPost) => void,
   onDel: (p: IPost) => void,
-  onView?: (p: IPost) => void
-) :TableRow[] {
+  onView?: (p: IPost) => void,
+): TableRow[] {
   if (!posts) {
     const sk = {
       // id: <Skeleton width={20} />,
@@ -106,21 +106,42 @@ function toTableData (
       edit: <Skeleton />,
     };
     const sks = [];
-    for (let i=0; i<6; i++) sks.push(sk);
+    for (let i = 0; i < 6; i++) sks.push(sk);
     return sks;
   }
-  const rows:TableRow[] = posts.map((post) => {
+  const rows: TableRow[] = posts.map((post) => {
     return {
       // id: <span style={{fontSize: 14}}>{post.id}</span>,
       // uid: <span style={{fontSize: 12}}>{post.uid.slice(0, 10)+'...'}</span>,
-      createAt: <span>{dayjs.unix(Number(String(post.createAt).slice(0, 10))).format('YYYY-MM-DD')}</span>,
-      updateAt: <span>{dayjs.unix(Number(String(post.updateAt).slice(0, 10))).format('YYYY-MM-DD')}</span>,
+      createAt: (
+        <span>
+          {dayjs
+            .unix(Number(String(post.createAt).slice(0, 10)))
+            .format('YYYY-MM-DD')}
+        </span>
+      ),
+      updateAt: (
+        <span>
+          {dayjs
+            .unix(Number(String(post.updateAt).slice(0, 10)))
+            .format('YYYY-MM-DD')}
+        </span>
+      ),
       type: <span>{post.type}</span>,
-      title: <span onClick={() => onView(post)} style={{cursor: 'pointer', color: COLOR_MAP.primary}}>{post.title}</span>,
+      title: (
+        <span
+          onClick={() => onView(post)}
+          style={{ cursor: 'pointer', color: COLOR_MAP.primary }}>
+          {post.title}
+        </span>
+      ),
       author: <span>{post.author}</span>,
       // content: <span>{post.content}</span>,
       // sumary: <span>{post.excerpt || post.description}</span>,
-      preview: renderPreview(post.url.replace('static/', 'static/thumb-'), post.title),
+      preview: renderPreview(
+        post.url.replace('static/', 'static/thumb-'),
+        post.title,
+      ),
       status: renderStatus(post.status),
       tags: renderTags(post.tags),
       category: renderTags(post.category),
@@ -137,11 +158,15 @@ function toTableData (
 const renderTags = (tags: string) => {
   if (!tags) return <span></span>;
   return (
-    <span>{tags.split('|').map((t, i) => <Tag key={i}>{t}</Tag>)}</span>
+    <span>
+      {tags.split('|').map((t, i) => (
+        <Tag key={i}>{t}</Tag>
+      ))}
+    </span>
   );
 };
 
-const renderPreview = (cover: string, title:string) => {
+const renderPreview = (cover: string, title: string) => {
   return (
     <img
       src={cover}
@@ -155,22 +180,24 @@ const renderStatus = (status: string) => {
   let s = '';
   if (status === 'publish') s = '已发表';
   else if (status === 'draft') s = '草稿';
-  return (
-    <span>{s}</span>
-  );
+  return <span>{s}</span>;
 };
 
 const renderEdit = (
   a: IPost,
   onEdit: (a: IPost) => void,
-  onDel: (a: IPost) => void
+  onDel: (a: IPost) => void,
 ) => {
   const state = useStore(store);
   const isLogin = state.user?.token ? true : false;
   return (
     <span>
-      <Button onClick={() => onEdit(a)} disabled={!isLogin}>编辑</Button>
-      <Button type="error" onClick={() => onDel(a)} disabled={!isLogin}>删除</Button>
+      <Button onClick={() => onEdit(a)} disabled={!isLogin}>
+        编辑
+      </Button>
+      <Button type="error" onClick={() => onDel(a)} disabled={!isLogin}>
+        删除
+      </Button>
     </span>
   );
 };

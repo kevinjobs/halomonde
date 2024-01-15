@@ -1,6 +1,7 @@
-const BASE_URL = process.env.NODE_ENV === 'development'
-  ? 'http://localhost:5000'
-  : 'https://api.kevinjobs.com:5000';
+const BASE_URL =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:5000'
+    : 'https://api.kevinjobs.com:5000';
 
 const UPLOAD_URL = BASE_URL + '/upload';
 
@@ -45,4 +46,13 @@ export const API_URL = {
   invitationList: INVITATION_LIST_URL,
   /** 生成邀请码 */
   genInvitationList: GEN_INVITATION_LIST_URL,
-}
+};
+
+export type PostType = 'article' | 'photo' | 'verse' | 'cover';
+
+export const POST_TYPES: Record<PostType, string> = {
+  article: '文章',
+  photo: '照片',
+  verse: '诗文',
+  cover: '封面',
+};

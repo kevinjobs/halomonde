@@ -8,7 +8,7 @@ export default {
     typescript({
       compilerOptions: {
         declarationMap: true,
-      }
+      },
     }),
-  ]
-}
+  ],
+};

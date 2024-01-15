@@ -1,40 +1,40 @@
 import dayjs from 'dayjs';
-import React from 'react';
-import { useNavigate, } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
+import {
+  DOMO_POSTS_STATE,
+  DomoPostsState,
+  POST_TYPES,
+  PostType,
+} from '@/constants';
 import EditPanel from '@/pages/domo/_components/edit-panel';
-import { store, } from '@/store';
-import { IPost, } from '@/types';
-import { addPost, deletePost, getPostList, updatePost, } from '@/utils/apis';
-import { Button, Modal, Select, } from '@horen/core';
-import { notifications, } from '@horen/notifications';
-import { useStore, } from '@horen/store';
+import { store } from '@/store';
+import { IPost } from '@/types';
+import { addPost, deletePost, getPostList, updatePost } from '@/utils/apis';
+import { Button, Modal, Select } from '@horen/core';
+import { useDidUpdate, useSetState, useUnmount } from '@horen/hooks';
+import { notifications } from '@horen/notifications';
+import { useStore } from '@horen/store';
 
 import style from './Everything.module.less';
-import { PostTable, } from './Table';
-
-const TYPES: Record<string, any> = {
-  article: '文章',
-  verse: '诗文',
-  photo: '照片',
-  cover: '封面',
-}
+import { PostTable } from './Table';
 
 const MODES: Record<string, any> = {
   create: '新增',
   update: '更新',
-}
+};
 
 export default function PostAdmin(): React.ReactElement {
   const PAGE_LIMIT = 6;
   const navigate = useNavigate();
-  const [posts, setPosts] = React.useState<IPost[]>(null);
-  const [offset, setOffset] = React.useState(Number(localStorage.getItem('offset')) || 0);
-  const [typ, setTyp] = React.useState(localStorage.getItem('typ') || 'article');
-  // 这两个状态是根据 posts 的情况计算出的，因此不需要保存
-  const [hasPrev, setHasPrev] = React.useState(false);
-  const [hasNext, setHasNext] = React.useState(true);
-  //
+  const [pageState, setPageState] = useSetState<DomoPostsState>({
+    offset: 0,
+    postType: 'article',
+    postList: null,
+    hasPrev: false,
+    hasNext: true,
+  });
   const [pickPost, setPickPost] = React.useState<IPost>(null);
   //
   const state = useStore(store);
@@ -42,13 +42,17 @@ export default function PostAdmin(): React.ReactElement {
   const mode = pickPost?.uid ? 'update' : 'create';
 
   const handleClickPrev = () => {
-    setPosts(null);
-    setOffset(offset - PAGE_LIMIT);
+    setPageState({
+      offset: pageState.offset - PAGE_LIMIT,
+      postList: null,
+    });
   };
 
   const handleClickNext = () => {
-    setPosts(null);
-    setOffset(offset + PAGE_LIMIT);
+    setPageState({
+      offset: pageState.offset + PAGE_LIMIT,
+      postList: null,
+    });
   };
 
   /** 点击查看详情 */
@@ -60,11 +64,11 @@ export default function PostAdmin(): React.ReactElement {
   const handleDeletePost = (p: IPost) => {
     const uid = p.uid;
     if (confirm('确定要删除？')) {
-      (async() => {
+      (async () => {
         const data = await deletePost(uid);
         if (typeof data !== 'string') {
-          notifications.show({type: 'success', message: '删除成功'});
-          refreshPosts(offset, PAGE_LIMIT, typ);
+          notifications.show({ type: 'success', message: '删除成功' });
+          refreshPosts(pageState.offset, PAGE_LIMIT, pageState.postType);
         } else window.alert(data);
       })();
     }
@@ -72,33 +76,35 @@ export default function PostAdmin(): React.ReactElement {
 
   /** 刷新 */
   const refreshPosts = (offset = 0, limit: number, typ: string) => {
-    (async() => {
-      const data = await getPostList(offset, limit, {status: 'all', type: typ});
+    (async () => {
+      const data = await getPostList(offset, limit, {
+        status: 'all',
+        type: typ,
+      });
       if (typeof data !== 'string') {
-        if (offset <= 0) setHasPrev(false);
-        else setHasPrev(true);
+        if (offset <= 0) setPageState({ hasPrev: false });
+        else setPageState({ hasPrev: true });
 
-        if (offset + limit >= data.data.totals) setHasNext(false);
-        else setHasNext(true);
+        if (offset + limit >= data.data.totals)
+          setPageState({ hasNext: false });
+        else setPageState({ hasNext: true });
 
-        setPosts(data.data.posts);
+        setPageState({ postList: data.data.posts });
       }
     })();
   };
 
-  const reloadTable = (type: string) => {
-    setTyp(type);
-    setOffset(0);
-    setPosts(null);
+  const reloadTable = (type: PostType) => {
+    setPageState({ offset: 0, postType: type, postList: null });
     setTimeout(() => {
       refreshPosts(0, PAGE_LIMIT, type);
     }, 16);
-  }
+  };
 
   /** 点击筛选按钮 */
-  const handleFilter = (_: any, type: string) => {
+  const handleFilter = (_: any, type: PostType) => {
     reloadTable(type);
-  }
+  };
 
   /** 点击编辑按钮 */
   const handleUpdatePost = (p: IPost) => {
@@ -106,7 +112,7 @@ export default function PostAdmin(): React.ReactElement {
   };
 
   /** 点击新增 */
-  const handleCreate = (_: any, type: string) => {
+  const handleCreate = (_: any, type: PostType) => {
     const postTemplate: IPost = {
       title: '',
       author: '',
@@ -124,16 +130,16 @@ export default function PostAdmin(): React.ReactElement {
       category: 'default',
     };
     setPickPost(postTemplate);
-  }
+  };
 
   /** 处理提交事件 */
   const handleSubmitPost = (post: IPost) => {
     if (mode === 'update') {
-      updatePost(post.uid, post).then(resp => {
-        if (typeof resp ==='string') {
-          notifications.show({type: 'error', message: resp});
+      updatePost(post.uid, post).then((resp) => {
+        if (typeof resp === 'string') {
+          notifications.show({ type: 'error', message: resp });
         } else {
-          notifications.show({type:'success', message: '更新成功'});
+          notifications.show({ type: 'success', message: '更新成功' });
           setPickPost(null);
           reloadTable(post.type);
         }
@@ -141,38 +147,45 @@ export default function PostAdmin(): React.ReactElement {
     }
 
     if (mode === 'create') {
-      addPost(post).then(resp => {
-        if (typeof resp ==='string') {
-          notifications.show({type: 'error', message: resp});
+      addPost(post).then((resp) => {
+        if (typeof resp === 'string') {
+          notifications.show({ type: 'error', message: resp });
         } else {
-          notifications.show({type:'success', message: '添加成功'});
+          notifications.show({ type: 'success', message: '添加成功' });
           setPickPost(null);
           reloadTable(post.type);
         }
       });
     }
-  }
+  };
 
   const handleCancelEditPanel = () => {
     setPickPost(null);
-  }
+  };
 
   React.useEffect(() => {
-    refreshPosts(offset, PAGE_LIMIT, typ);
-  }, [offset]);
-
-  React.useEffect(() => {
-    refreshPosts(offset, PAGE_LIMIT, typ);
+    const ps = localStorage.getItem(DOMO_POSTS_STATE);
+    if (ps) {
+      const { offset, postType, postList, hasNext, hasPrev } = JSON.parse(
+        ps,
+      ) as DomoPostsState;
+      setPageState({ offset, postType, postList, hasNext, hasPrev });
+    } else {
+      refreshPosts(0, PAGE_LIMIT, 'article');
+    }
   }, []);
 
-  React.useEffect(() => {
-    // 当列表变动时将其保存在 localStorage中
+  useDidUpdate(() => {
+    refreshPosts(pageState.offset, PAGE_LIMIT, pageState.postType);
+  }, [pageState.offset, pageState.postType]);
+
+  useUnmount(() => {
+    // 组件卸载时 将其保存在 localStorage中
     // 这样可以在下次加载时重新取出以恢复状态
     // 在本页面中，只需要保存这两个状态就可以恢复整个页面
     // 针对不同的页面，可能需要保存不同的值
-    localStorage.setItem('offset', String(offset));
-    localStorage.setItem('typ', typ);
-  }, [offset, typ]);
+    localStorage.setItem(DOMO_POSTS_STATE, JSON.stringify(pageState));
+  });
 
   return (
     <div className={''}>
@@ -180,7 +193,7 @@ export default function PostAdmin(): React.ReactElement {
         <div className={style.filter}>
           <span className={style.filterText}>类型筛选</span>
           <span>
-            <Select value={typ} onChange={handleFilter} arrow>
+            <Select value={pageState.postType} onChange={handleFilter} arrow>
               <Select.Item name="文章" value="article" />
               <Select.Item name="照片" value="photo" />
               <Select.Item name="封面" value="cover" />
@@ -190,11 +203,10 @@ export default function PostAdmin(): React.ReactElement {
         </div>
         <div
           className={style.addOne}
-          style={{display: state?.user ? 'block' : 'none'}}
-        >
+          style={{ display: state?.user ? 'block' : 'none' }}>
           <span className={style.addText}>新增</span>
           <span>
-            <Select value={typ} onChange={handleCreate} arrow>
+            <Select value={pageState.postType} onChange={handleCreate} arrow>
               <Select.Item name="文章" value="article" />
               <Select.Item name="照片" value="photo" />
               <Select.Item name="封面" value="cover" />
@@ -206,28 +218,33 @@ export default function PostAdmin(): React.ReactElement {
       <div className={style.container}>
         <div className={style.table}>
           <PostTable
-            posts={posts}
+            posts={pageState.postList}
             onEdit={handleUpdatePost}
             onDel={handleDeletePost}
             onView={handleViewPost}
           />
         </div>
         <div className={style.prevNext}>
-          <Button onClick={handleClickPrev} disabled={!hasPrev}>Prev</Button>
-          <Button onClick={handleClickNext} disabled={!hasNext}>Next</Button>
+          <Button onClick={handleClickPrev} disabled={!pageState.hasPrev}>
+            Prev
+          </Button>
+          <Button onClick={handleClickNext} disabled={!pageState.hasNext}>
+            Next
+          </Button>
         </div>
       </div>
       <Modal
         visible={pickPost ? true : false}
         onClose={() => setPickPost(null)}
-        fullScreen
-      >
+        fullScreen>
         <Modal.Header>
-          <h2>{MODES[mode]}{TYPES[typ]}</h2>
+          <h2>
+            {MODES[mode]}
+            {POST_TYPES[pageState.postType]}
+          </h2>
         </Modal.Header>
         <Modal.Content>
-          {
-            pickPost &&
+          {pickPost && (
             <EditPanel
               mode={mode}
               type={pickPost?.type}
@@ -235,7 +252,7 @@ export default function PostAdmin(): React.ReactElement {
               onSubmit={handleSubmitPost}
               onCancel={handleCancelEditPanel}
             />
-          }
+          )}
         </Modal.Content>
       </Modal>
     </div>
