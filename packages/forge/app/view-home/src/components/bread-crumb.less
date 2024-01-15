@@ -1,0 +1,21 @@
+.component-breadcrumb {
+  .cb-item {
+    display: inline-block;
+    margin: 0 16px 0 0;
+    position: relative;
+    a {
+      text-decoration: none;
+      color: #2376b7;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    &:not(:last-child) {
+      &::after {
+        position: absolute;
+        content: '/';
+        right: -12px;
+      }
+    }
+  }
+}
