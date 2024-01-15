@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import ExifReader, { Tags as ExifTags, } from 'exifreader';
+import ExifReader, { Tags as ExifTags } from 'exifreader';
 
 export async function getExifs(file: File) {
   const tags = await ExifReader.load(file);
@@ -28,11 +28,15 @@ export type IExif = {
   gpsAltitudeRef: string;
   gpsLongitudeRef: string;
   gpsLatitudeRef: string;
-}
+};
 
 const extractExifs = (exif: ExifTags): IExif => {
   // TODO: 部分图片的方向不对到导致读取的长宽对调
-  const createDate = dayjs(exif['DateTime']?.description, 'YYYY:MM:DD HH:mm:ss', true).unix();
+  const createDate = dayjs(
+    exif['DateTime']?.description,
+    'YYYY:MM:DD HH:mm:ss',
+    true,
+  ).unix();
   const modifyDate = dayjs(exif.ModifyDate?.value).unix();
   const fileType = exif.FileType?.value;
   const iso = Number(exif.ISOSpeedRatings?.value);
@@ -69,4 +73,4 @@ const extractExifs = (exif: ExifTags): IExif => {
     gpsLatitude,
     gpsLatitudeRef,
   };
-}
+};

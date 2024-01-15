@@ -1,16 +1,16 @@
-import { API_URL, } from '@/constants';
+import { API_URL } from '@/constants';
 import api from '@/utils/network';
 
-import { ApiResponse, } from './';
+import { ApiResponse } from './';
 
 export type GetTokenParams = {
   username: string;
   password: string;
-}
+};
 
 export type TokenRespData = {
   token: string;
-}
+};
 
 export type InvitationListRespData = {
   invitations: {
@@ -20,9 +20,11 @@ export type InvitationListRespData = {
     registerBy: string;
     valid: boolean;
   }[];
-}
+};
 
-export async function getToken(params: GetTokenParams): ApiResponse<TokenRespData> {
+export async function getToken(
+  params: GetTokenParams,
+): ApiResponse<TokenRespData> {
   const resp = await api.post(API_URL.token, params);
   if (resp.data.code === 0) return resp.data;
   return resp.data.msg;
