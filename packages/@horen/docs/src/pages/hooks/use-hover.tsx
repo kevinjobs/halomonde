@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { useHover, } from '@horen/hooks';
+import { useHover } from '@horen/hooks';
 
-import { ComponentPage, Desc, Playground, } from '../components/_layout';
+import { ComponentPage, Desc, Playground } from '../../components/_layout';
 
 export default function ComponentSlider() {
   const { hovered, ref } = useHover();
@@ -10,8 +10,8 @@ export default function ComponentSlider() {
   return (
     <ComponentPage>
       <Desc
-        title='useHover'
-        description='useHover'
+        title="useHover"
+        description="useHover"
         usage="import { useHover } from '@horen/hooks'"
       />
       <Playground>
@@ -20,12 +20,11 @@ export default function ComponentSlider() {
           style={{
             width: 300,
             height: 200,
-            backgroundColor: hovered ? '#7f8c' : '#f1f2f3'
-          }}
-        >
+            backgroundColor: hovered ? '#7f8c' : '#f1f2f3',
+          }}>
           {hovered ? 'hovered' : 'leave'}
         </div>
       </Playground>
     </ComponentPage>
-  )
+  );
 }
