@@ -39,7 +39,7 @@ export default function PostAdmin(): React.ReactElement {
   //
   const state = useStore(store);
 
-  const mode = pickPost?.uid ? 'update' : 'create';
+  const mode: 'update' | 'create' = pickPost?.uid ? 'update' : 'create';
 
   const handleClickPrev = () => {
     setPageState({
@@ -201,7 +201,7 @@ export default function PostAdmin(): React.ReactElement {
           style={{ display: state?.user ? 'block' : 'none' }}>
           <span className={style.addText}>新增</span>
           <span>
-            <Select value={pageState.postType} onChange={handleCreate} arrow>
+            <Select value="article" onChange={handleCreate} arrow>
               <Select.Item name="文章" value="article" />
               <Select.Item name="照片" value="photo" />
               <Select.Item name="封面" value="cover" />
@@ -235,7 +235,11 @@ export default function PostAdmin(): React.ReactElement {
         <Modal.Header>
           <h2>
             {MODES[mode]}
-            {POST_TYPES[pageState.postType]}
+            {
+              POST_TYPES[
+                mode === 'create' ? pickPost?.type : pageState.postType
+              ]
+            }
           </h2>
         </Modal.Header>
         <Modal.Content>
