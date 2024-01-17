@@ -11,6 +11,7 @@ const SWITCH = styled.span`
   background-color: #fff;
   border-radius: 0.5rem;
   border: 1px solid #229453;
+  user-select: none;
 `;
 const TRACK = styled.span`
   display: inline-block;
