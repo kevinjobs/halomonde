@@ -4,48 +4,53 @@ import dayjs from 'dayjs';
 import React from 'react';
 import Datepicker from 'react-datepicker';
 
-import { API_URL, } from '@/constants';
-import { store, } from '@/store';
-import { IPost, } from '@/types';
-import { getExifs, } from '@/utils/exif';
-import { AvatarUpload, Button, Input, Select, } from '@horen/core';
-import { useForm, } from '@horen/hooks';
-import { notifications, } from '@horen/notifications';
-import { useStore, } from '@horen/store';
+import { API_URL } from '@/constants';
+import { store } from '@/store';
+import { IPost } from '@/types';
+import { getExifs } from '@/utils/exif';
+import { AvatarUpload, Button, Input, Select, TextArea } from '@horen/core';
+import { useForm } from '@horen/hooks';
+import { notifications } from '@horen/notifications';
+import { useStore } from '@horen/store';
 
-import { EditPanelProps, } from './';
-import { default as _style, } from './ArticleEditPanel.module.less';
-import { default as _s, } from './PhotoEditPanel.module.less';
+import { EditPanelProps } from './';
+import { default as _style } from './ArticleEditPanel.module.less';
+import { default as _s } from './PhotoEditPanel.module.less';
 
-const style = {..._style, ..._s}
+const style = { ..._style, ..._s };
 
 export interface PhotoEditPanelProps extends EditPanelProps {}
 
-export function PhotoEditPanel({mode, post, onSubmit, onCancel}: PhotoEditPanelProps) {
-  const form = useForm({initial: post});
+export function PhotoEditPanel({
+  mode,
+  post,
+  onSubmit,
+  onCancel,
+}: PhotoEditPanelProps) {
+  const form = useForm({ initial: post });
   const state = useStore(store);
 
   const handleSubmit = (post: IPost) => {
     if (onSubmit) onSubmit(post);
-  }
+  };
 
   const handleCancel = () => {
     if (onCancel) onCancel();
-  }
+  };
 
   const handleUploadSuccess = (result: any, file: File) => {
-    getExifs(file).then(tags => {
+    getExifs(file).then((tags) => {
       form.setState('url', result.data.url);
       form.setState('exif', JSON.stringify(tags));
       form.setState('format', tags.fileType);
-      notifications.show({type: 'success', message: '上传封面成功'});
-    })
-  }
+      notifications.show({ type: 'success', message: '上传封面成功' });
+    });
+  };
 
   const handleUploadFailed = (msg: string) => {
-    notifications.show({type: 'error', message: msg});
-  }
-  
+    notifications.show({ type: 'error', message: msg });
+  };
+
   return (
     <div className={style.editPost}>
       <div className={style.left}>
@@ -57,7 +62,7 @@ export function PhotoEditPanel({mode, post, onSubmit, onCancel}: PhotoEditPanelP
         </div>
       </div>
       <div className={style.right}>
-        <EditItem label='封面'>
+        <EditItem label="封面">
           <AvatarUpload
             url={API_URL.upload}
             defaultValue={form.get('url').value}
@@ -81,7 +86,7 @@ export function PhotoEditPanel({mode, post, onSubmit, onCancel}: PhotoEditPanelP
           </Select>
         </EditItem>
         <EditItem label="Exif">
-          <Input name="exif" {...form.get('exif')} />
+          <TextArea name="exif" rows={8} {...form.get('exif')} />
         </EditItem>
         <EditItem label="分类">
           <Select {...form.get('category')}>
@@ -113,15 +118,23 @@ export function PhotoEditPanel({mode, post, onSubmit, onCancel}: PhotoEditPanelP
         </EditItem>
         <EditItem label="创建时间">
           <Datepicker
-            selected={form?.data.createAt && dayjs.unix(form?.data.createAt).toDate()}
-            onChange={d => form.get('createAt').onChange(null, dayjs(d).unix())}
+            selected={
+              form?.data.createAt && dayjs.unix(form?.data.createAt).toDate()
+            }
+            onChange={(d) =>
+              form.get('createAt').onChange(null, dayjs(d).unix())
+            }
             dateFormat={'yyyy-MM-dd'}
           />
         </EditItem>
         <EditItem label="更新时间">
           <Datepicker
-            selected={form?.data.updateAt && dayjs.unix(form?.data.updateAt).toDate()}
-            onChange={d => form.get('updateAt').onChange(null, dayjs(d).unix())}
+            selected={
+              form?.data.updateAt && dayjs.unix(form?.data.updateAt).toDate()
+            }
+            onChange={(d) =>
+              form.get('updateAt').onChange(null, dayjs(d).unix())
+            }
             dateFormat={'yyyy-MM-dd'}
           />
         </EditItem>
@@ -144,20 +157,28 @@ export function PhotoEditPanel({mode, post, onSubmit, onCancel}: PhotoEditPanelP
         </EditItem>
         <div className={style.submitArea}>
           <Button onClick={() => handleSubmit(form.data)}>
-            { mode === 'create' ? '新增' : '更新' }
+            {mode === 'create' ? '新增' : '更新'}
           </Button>
-          <Button type='error' onClick={handleCancel}>取消</Button>
+          <Button type="error" onClick={handleCancel}>
+            取消
+          </Button>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-function EditItem({label, children}: {label: string, children: React.ReactNode}) {
+function EditItem({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
   return (
     <div className={style.editItem}>
       <span className={style.itemLabel}>{label}</span>
       <span className={style.itemContent}>{children}</span>
     </div>
-  )
+  );
 }

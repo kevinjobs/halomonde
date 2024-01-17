@@ -1,0 +1,14 @@
+@import "../colors.less";
+@import "../style.less";
+
+.textarea {
+  padding: 8px;
+  border-radius: @normalRadius;
+  min-width: 100%;
+  max-width: 100%;
+  height: fit-content;
+  &:focus {
+    outline: none;
+    border-color: @primary;
+  }
+}

@@ -17,6 +17,8 @@ export { Slider, type SliderProps } from './slider';
 
 export { Tag, type TagProps } from './tag';
 
+export { TextArea, type TextAreaProps } from './textarea';
+
 export { Switch, type SwitchProps } from './switch';
 
 export {
@@ -24,5 +26,5 @@ export {
   ImageUpload,
   AvatarUpload,
   type UploadProps,
-  type ImageUploadProps
+  type ImageUploadProps,
 } from './upload';
