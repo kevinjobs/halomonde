@@ -1,12 +1,14 @@
-import React, { HtmlHTMLAttributes, } from 'react';
+import React, { HtmlHTMLAttributes } from 'react';
 
-import { Icon, } from '../icon';
+import { Icon } from '../icon';
 import css from './Notification.module.less';
+
+export type NotificationVariant = 'info' | 'success' | 'warning' | 'error';
 
 export interface NotificationProps extends HtmlHTMLAttributes<HTMLDivElement> {
   title?: string;
   message?: React.ReactNode;
-  type?: string;
+  type?: NotificationVariant;
 }
 
 export function Notification({
@@ -15,26 +17,26 @@ export function Notification({
   type = 'info',
   ...rest
 }: NotificationProps) {
-  const icons: Record<string, any> = {
-    info: <Icon name='info' fill='#fff' />,
-    success: <Icon name='success' fill='#fff' />,
-    warning: <Icon name='warning' fill='#fff' />,
-    error: <Icon name='error' fill='#fff' />,
-  }
+  const icons: Record<NotificationVariant, any> = {
+    info: <Icon name="info" fill="#fff" />,
+    success: <Icon name="success" fill="#fff" />,
+    warning: <Icon name="warning" fill="#fff" />,
+    error: <Icon name="error" fill="#fff" />,
+  };
 
-  const cls: Record<string, any> = {
+  const cls: Record<NotificationVariant, string> = {
     info: css.info,
     success: css.success,
     warning: css.warning,
     error: css.error,
-  }
+  };
 
-  const titles: Record<string, string> = {
+  const titles: Record<NotificationVariant, string> = {
     info: '消息',
     success: '成功',
     warning: '警告',
     error: '错误',
-  }
+  };
 
   return (
     <div className={css.notification + ' ' + cls[type]} {...rest}>
@@ -44,5 +46,5 @@ export function Notification({
         <div className={css.message}>{message}</div>
       </div>
     </div>
-  )
+  );
 }

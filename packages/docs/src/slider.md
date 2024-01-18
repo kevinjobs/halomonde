@@ -1,6 +1,10 @@
 # Slider
 
 ```tsx
+/**
+ * title: 基本使用
+ * description: 推荐使用受控组件
+ */
 import { useState } from 'react';
 import { Slider } from '@horen/core';
 
@@ -29,6 +33,7 @@ export default () => {
         {endV}px
       </p>
       <Slider
+        defaultValue={0.3}
         onChange={(p, v) => {
           setPer(p);
           setV(v);
@@ -38,6 +43,32 @@ export default () => {
           setEndV(v);
         }}
       />
+    </div>
+  );
+};
+```
+
+```tsx
+/**
+ * title: 不同样式
+ * description: 与主题色一致
+ */
+import { Slider } from '@horen/core';
+
+export default () => {
+  return (
+    <div>
+      <Slider defaultValue={0.44} />
+      <br />
+      <Slider variant="secondary" defaultValue={0.5} />
+      <br />
+      <Slider variant="success" defaultValue={1} />
+      <br />
+      <Slider variant="warning" defaultValue={0.3} />
+      <br />
+      <Slider variant="danger" defaultValue={0.7} />
+      <br />
+      <Slider variant="info" defaultValue={0.1} />
     </div>
   );
 };

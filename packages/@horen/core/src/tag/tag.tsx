@@ -3,10 +3,11 @@ import { BaseVariant } from '../_types';
 import { classnames } from '../_utils';
 
 import cls from './Tag.module.less';
+import themes from '../themes.module.less';
 
 export type TagVariant = BaseVariant;
 
-export interface TagProps extends React.AllHTMLAttributes<HTMLSpanElement> {
+export interface TagProps extends AllHTMLAttributes<HTMLSpanElement> {
   variant?: TagVariant;
   color?: string;
   children?: React.ReactNode;
@@ -24,15 +25,7 @@ export function Tag({
   style: styles,
   ...restProps
 }: TagProps) {
-  const variants: Record<TagVariant, string> = {
-    primary: cls.primary,
-    secondary: cls.secondary,
-    success: cls.success,
-    warning: cls.warning,
-    danger: cls.danger,
-    info: cls.info,
-  };
-  const className = classnames([cls.tag, variants[variant]]);
+  const className = classnames([cls.tag, themes[variant + 'BackgroundColor']]);
 
   const style: React.CSSProperties = {
     borderRadius: rounded ? 3 : 0,

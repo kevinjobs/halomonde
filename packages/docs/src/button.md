@@ -11,7 +11,7 @@ export default () => {
       <Button type="primary">Primary</Button>
       <Button type="success">Success</Button>
       <Button type="warning">Warning</Button>
-      <Button type="error">Error</Button>
+      <Button type="danger">danger</Button>
       <Button type="light">Light</Button>
       <Button type="line">Line</Button>
     </div>

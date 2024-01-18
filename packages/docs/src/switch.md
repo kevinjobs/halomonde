@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { Switch } from '@horen/core';
 
 export default () => {
-  const [on, setOn] = useState(false);
+  const [on, setOn] = useState(true);
 
   const handleChange = (_, v: boolean) => {
     setOn(v);
@@ -40,7 +40,7 @@ export default () => {
 
   return (
     <div>
-      <Switch defaultValue={true} value={on} onChange={handleChange} />
+      <Switch defaultValue={true} />
       <br />
       <Switch
         variant="secondary"

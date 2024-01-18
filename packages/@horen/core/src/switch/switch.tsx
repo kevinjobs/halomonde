@@ -1,6 +1,6 @@
 import React, { AllHTMLAttributes } from 'react';
 import { DataInputProps, OnChangeCallback } from '../_types';
-import { classnames, getVariants } from '../_utils';
+import { classnames } from '../_utils';
 import cls from './Switch.module.less';
 import themes from '../themes.module.less';
 
@@ -23,13 +23,13 @@ export function Switch({
   const [on, toggle] = useToggle([defaultValue, !defaultValue]);
   const switchClassName = classnames([
     cls.switch,
-    themes[variant + 'BorderColor'],
+    on ? themes[variant + 'BorderColor'] : themes['infoBorderColor'],
     disabled ? themes['disabledBorderColor'] : '',
   ]);
   const trackClassName = classnames([
     cls.track,
-    themes[variant + 'BackgroundColor'],
     disabled ? themes['disabledBackgroundColor'] : '',
+    on ? themes[variant + 'BackgroundColor'] : themes['infoBackgroundColor'],
   ]);
 
   const handleClick = (e: React.MouseEvent<HTMLSpanElement>) => {
@@ -38,7 +38,7 @@ export function Switch({
   };
 
   React.useEffect(() => {
-    toggle(value);
+    if (typeof value !== 'undefined') toggle(value);
   }, [value]);
 
   return (

@@ -1,5 +1,5 @@
 @import "../colors.less";
-@import "../style.less";
+@import "../size.less";
 @height: @normalHeight;
 
 .select {
@@ -16,8 +16,8 @@
   height: @height;
   line-height: @height;
   padding: 0 @largeGap;
-  border-radius: 5px;
-  background-color: #fff;
+  border-radius: @normalRadius;
+  background-color: @white;
   color: @black-shallow;
   text-align: left;
   display: flex;
@@ -39,10 +39,10 @@
   position: absolute;
   top: @height + 6px;
   z-index: 1;
-  background-color: #fff;
+  background-color: @white;
   width: 100%;
   border-radius: 5px;
-  padding: 4px;
+  padding: @normalGap;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
@@ -53,6 +53,6 @@
   border-radius: 5px;
   text-align: left;
   &:hover {
-    background-color: #f1f1f1;
+    background-color: @white-deep;
   }
 }

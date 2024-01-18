@@ -1,26 +1,25 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useRef, useState } from 'react';
+import cls from './Slider.module.less';
 
-import { MovePosition, useMove, } from '@horen/hooks';
+import { MovePosition, useMove, useDidUpdate } from '@horen/hooks';
+import { BaseVariant } from '../_types';
+import themes from '../themes.module.less';
+import { classnames } from '../_utils';
 
 export interface SliderProps {
   /**
-   * 滑动条的方向，水平或者垂直，默认值为 horization 水平
-   */
-  direction?: 'horization' | 'vertical';
-  /**
    * 滑动条值改变时的回调函数
-   * 
+   *
    * param: percent 范围为 0.01 ~ 1.00
-   * 
+   *
    * param: value 实际长度或宽度
    */
   onChange?(percent: number, value: number): void;
   /**
    * 滑动条停止滚动时的回调函数
-   * 
+   *
    * @param percent 范围为 0.01 ~ 1.00
-   * 
+   *
    * @param value 实际长度或宽度
    */
   onChangeEnd?(percent: number, value: number): void;
@@ -32,94 +31,83 @@ export interface SliderProps {
    * 默认高度或宽度百分比，范围为 0.01 ~ 1.00，默认为 0
    */
   defaultValue?: number;
+  /**
+   * 主题色
+   */
+  variant?: BaseVariant;
 }
-
-const S = styled.div`
-  background-color: #bacf65;
-  position: relative;
-`;
-
-const Track = styled.div`
-  background-color: #5bae23;
-  position: absolute;
-  height: 100%;
-`;
-
-const Thumb = styled.div`
-  position: absolute;
-  height: 100%;
-`;
 
 export function Slider(props: SliderProps) {
   const {
-    direction='horization',
     onChange,
     onChangeEnd,
-    size=8,
-    defaultValue=0
+    size = 8,
+    defaultValue = 0,
+    variant = 'primary',
   } = props;
 
-  const per = React.useRef<number>(0);
-  
+  const [fullWidth, setFullWidth] = useState(0);
+  const [percent, setPercent] = useState(defaultValue);
+
   const handleChange = (p: MovePosition) => {
-    per.current = direction === 'horization' ? p.x : (1 - p.y);
-    setWidth(w * p.x);
-    setHeight(h * (1 - p.y));
-    if (onChange) {
-      if (direction === 'horization') onChange(p.x, w * p.x);
-      else onChange((1 - p.y), h * (1 - p.y));
-    }
-  }
+    const per = Math.floor(p.x * 100) / 100;
+    setPercent(per);
+    if (onChange) onChange(per, Math.round(fullWidth * per));
+  };
 
   const { ref, active } = useMove<HTMLDivElement>(handleChange);
+  const width = Math.round(percent * fullWidth);
 
-  const w = Number(ref.current?.getBoundingClientRect()?.width);
-  const h = Number(ref.current?.getBoundingClientRect()?.height);
+  const sliderCls = classnames([cls.slider]);
+  const trackCls = classnames([cls.track, themes[variant + 'BackgroundColor']]);
+  const thumbCls = classnames([cls.thumb, themes[variant + 'BackgroundColor']]);
 
-  const [width, setWidth] = React.useState(0);
-  const [height, setHeight] = React.useState(0);
-
-  const handleChangeEnd = React.useCallback(() => {
+  const handleChangeEnd = () => {
     if (!active && onChangeEnd) {
-      onChangeEnd(per.current, direction === 'horization' ? w : h);
-    } 
-  }, [active]);
+      onChangeEnd(percent, width);
+    }
+  };
 
-  React.useEffect(() => {
+  useDidUpdate(() => {
     handleChangeEnd();
   }, [active]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (ref.current) {
-      setWidth(w * defaultValue);
-      setHeight(h * defaultValue);
+      setFullWidth(Number(ref.current?.getBoundingClientRect()?.width));
     }
   }, [ref.current]);
 
   return (
-    <S
+    <div
+      className={sliderCls}
       style={{
-        height: direction === 'horization' ? size : '100%',
-        width: direction === 'horization' ? '100%' : size,
-        transform: direction === 'horization' ? '' : 'rotate(180deg)',
+        height: size * 2,
+        width: '100%',
       }}
-      ref={ref}
-    >
-      <Track
+      ref={ref}>
+      <div
+        className={cls.backTrack}
         style={{
-          width: direction === 'horization' ? width : '100%',
-          height: direction === 'horization' ? '100%' : height,
+          borderRadius: size / 2,
         }}
       />
-      <Thumb
+      <div
+        className={trackCls}
         style={{
-          height: size,
-          width: size,
-          left: direction === 'horization' ? width - size/2 : 0,
-          top: direction === 'horization' ? 0 : height - size/2,
-          backgroundColor: active ? '#253d24' : '#20894d',
+          borderRadius: size / 2,
+          width: width,
         }}
       />
-    </S>
-  )
+      <div
+        className={thumbCls}
+        style={{
+          height: size * 2,
+          width: size * 2,
+          left: width - size / 2,
+          top: 0,
+        }}
+      />
+    </div>
+  );
 }

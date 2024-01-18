@@ -1,0 +1,27 @@
+@import "../colors.less";
+
+.slider {
+  position: relative;
+}
+
+.track {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.75;
+  height: 50%;
+}
+
+.backTrack {
+  background-color: @gray-3;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 50%;
+  width: 100%;
+}
+
+.thumb {
+  position: absolute;
+  border-radius: 50%;
+}

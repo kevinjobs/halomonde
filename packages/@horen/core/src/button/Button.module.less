@@ -1,11 +1,12 @@
 @import '../colors.less';
+@import "../size.less";
 
 .button {
   border: none;
-  border-radius: 5px;
-  padding: 6px 12px;
-  margin: 0 4px;
-  font-size: 0.9rem;
+  border-radius: @normalRadius;
+  padding: @normalGap @xLargeGap;
+  margin: 0 @smallGap;
+  font-size: @normalFontSize;
   color: @white;
   display: flex;
   align-items: center;
@@ -14,7 +15,7 @@
   &:active {
     position: relative;
     top: 2px;
-    transition: top 0.3s ease-in-out;
+    transition: top @normalDuration ease-in-out;
   }
   &:disabled {
     background-color: @white-deep;
@@ -56,4 +57,5 @@
   .button();
   border: 1px solid @grey;
   color: @black;
+  background-color: @white;
 }
