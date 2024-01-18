@@ -1,39 +1,36 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { AllHTMLAttributes } from 'react';
+import { DataInputProps, OnChangeCallback } from '../_types';
+import { classnames, getVariants } from '../_utils';
+import cls from './Switch.module.less';
+import themes from '../themes.module.less';
 
 import { useToggle } from '@horen/hooks';
 
-const SWITCH = styled.span`
-  display: inline-block;
-  position: relative;
-  height: 1rem;
-  width: 2rem;
-  background-color: #fff;
-  border-radius: 0.5rem;
-  border: 1px solid #229453;
-  user-select: none;
-`;
-const TRACK = styled.span`
-  display: inline-block;
-  position: absolute;
-  top: 5%;
-  left: 5%;
-  height: 90%;
-  width: 45%;
-  background-color: #229453;
-  border-radius: inherit;
-  transition: all 0.2s ease-in-out;
-`;
+export type SwitchProps = {
+  onChange: OnChangeCallback<React.MouseEvent<HTMLSpanElement>, boolean>;
+} & DataInputProps<boolean> &
+  Omit<AllHTMLAttributes<HTMLSpanElement>, 'value' | 'defaultValue'>;
 
-export interface SwitchProps
-  extends Omit<React.HtmlHTMLAttributes<HTMLSpanElement>, 'onChange'> {
-  onChange(e: React.MouseEvent<HTMLSpanElement>, value: boolean): void;
-  name?: string;
-  value?: boolean;
-}
-
-export function Switch({ onChange, name, value = false }: SwitchProps) {
-  const [on, toggle] = useToggle([value, !value]);
+export function Switch({
+  onChange,
+  name,
+  value,
+  variant = 'primary',
+  disabled = false,
+  defaultValue = false,
+  ...restProps
+}: SwitchProps) {
+  const [on, toggle] = useToggle([defaultValue, !defaultValue]);
+  const switchClassName = classnames([
+    cls.switch,
+    themes[variant + 'BorderColor'],
+    disabled ? themes['disabledBorderColor'] : '',
+  ]);
+  const trackClassName = classnames([
+    cls.track,
+    themes[variant + 'BackgroundColor'],
+    disabled ? themes['disabledBackgroundColor'] : '',
+  ]);
 
   const handleClick = (e: React.MouseEvent<HTMLSpanElement>) => {
     if (onChange) onChange(e, !on);
@@ -45,18 +42,19 @@ export function Switch({ onChange, name, value = false }: SwitchProps) {
   }, [value]);
 
   return (
-    <SWITCH
+    <span
+      className={switchClassName}
       onClick={handleClick}
-      style={{ borderColor: on ? '#229453' : '#333' }}
       data-name={name}
-      data-value={value}>
-      <TRACK
+      data-value={value}
+      {...restProps}>
+      <span
+        className={trackClassName}
         data-name={name}
         style={{
-          left: on ? '50%' : '5%',
-          backgroundColor: on ? '#229453' : '#333',
+          left: on && !disabled ? '50%' : '5%',
         }}
       />
-    </SWITCH>
+    </span>
   );
 }
