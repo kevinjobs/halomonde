@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { AllHTMLAttributes } from 'react';
+import { BaseVariant } from '../_types';
+import { classnames } from '../_utils';
 
-import css from './Tag.module.less';
+import cls from './Tag.module.less';
 
-export interface TagProps {
-  theme?: string;
+export type TagVariant = BaseVariant;
+
+export interface TagProps extends React.AllHTMLAttributes<HTMLSpanElement> {
+  variant?: TagVariant;
   color?: string;
   children?: React.ReactNode;
   /**
@@ -12,14 +16,33 @@ export interface TagProps {
   rounded?: boolean;
 }
 
-export function Tag({theme, color, children, rounded=false}: TagProps) {
-  const styles: React.CSSProperties = {
-    borderRadius: rounded ? 3 : 0,
-  }
+export function Tag({
+  variant = 'primary',
+  color,
+  children,
+  rounded = false,
+  style: styles,
+  ...restProps
+}: TagProps) {
+  const variants: Record<TagVariant, string> = {
+    primary: cls.primary,
+    secondary: cls.secondary,
+    success: cls.success,
+    warning: cls.warning,
+    danger: cls.danger,
+    info: cls.info,
+  };
+  const className = classnames([cls.tag, variants[variant]]);
 
-  if (color) styles.backgroundColor = color;
+  const style: React.CSSProperties = {
+    borderRadius: rounded ? 3 : 0,
+    backgroundColor: color,
+    ...styles,
+  };
 
   return (
-    <span className={css.tag} style={styles}>{children}</span>
-  )
+    <span className={className} {...restProps} style={style}>
+      {children}
+    </span>
+  );
 }

@@ -6,7 +6,7 @@ import { Notification } from '@horen/core';
 export default () => (
   <div>
     <div>
-      <Notification type="info" />
+      <Notification type="info" message={'This is an info message'} />
     </div>
     <div>
       <Notification type="success" />

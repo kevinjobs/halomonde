@@ -1,4 +1,6 @@
-## Button
+# Button
+
+## Base Button
 
 ```tsx
 import { Button } from '@horen/core';
