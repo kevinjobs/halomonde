@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { createStore, HorenStore, useStore, } from '@horen/store';
+import { createStore, HorenStore, useStore } from '@horen/store';
+import { NotificationVariant } from '@horen/core/dist/notification/Notification';
 
-export interface LetopItem<T = string | undefined> {
+export interface LetopItem<T = NotificationVariant | undefined> {
   /** 信息 id */
   id?: string;
 
@@ -10,7 +11,7 @@ export interface LetopItem<T = string | undefined> {
   title?: string;
 
   /** 通知类型 */
-  type?: T;
+  variant?: T;
 
   /** 信息主文 不可以为空 */
   message?: React.ReactNode;
@@ -24,7 +25,7 @@ export interface LetopItem<T = string | undefined> {
 
 export interface LpState {
   /** 信息池 */
-  lp: LetopItem[],
+  lp: LetopItem[];
 
   /** 等待队列 */
   queue: LetopItem[];
@@ -52,14 +53,14 @@ export function createLpStore(): Lpool {
 export const lpStore = createLpStore();
 
 // use
-export function useLp (store = lpStore) {
+export function useLp(store = lpStore) {
   return useStore(store);
 }
 
 // 更新
 export function updateLpState(
   store: Lpool,
-  update: (lp: LetopItem[]) => LetopItem[]
+  update: (lp: LetopItem[]) => LetopItem[],
 ) {
   const state = store.getState();
   const nofns = update([...state.lp, ...state.queue]);
@@ -68,15 +69,12 @@ export function updateLpState(
     lp: nofns.slice(0, state.limit),
     queue: nofns.slice(state.limit),
     limit: state.limit,
-  })
+  });
 }
 
 // 显示一条
-export function showLetop(
-  letop: LetopItem,
-  store: Lpool = lpStore
-) {
-  const id = letop.id || String((new Date()).valueOf());
+export function showLetop(letop: LetopItem, store: Lpool = lpStore) {
+  const id = letop.id || String(new Date().valueOf());
   updateLpState(store, (lp) => {
     if (letop.id && lp.some((n) => n.id === letop.id)) {
       return lp;
@@ -88,17 +86,18 @@ export function showLetop(
   return id;
 }
 
-
 // 隐藏，根据 id
 export function hideLetop(id: string, store: Lpool = lpStore) {
-  updateLpState(store, (lp) => lp.filter((letop) => {
-    if (letop.id === id) {
-      letop.onClose?.(letop);
-      return false;
-    }
+  updateLpState(store, (lp) =>
+    lp.filter((letop) => {
+      if (letop.id === id) {
+        letop.onClose?.(letop);
+        return false;
+      }
 
-    return true;
-  }))
+      return true;
+    }),
+  );
 
   return id;
 }
@@ -110,14 +109,14 @@ export function hideLetop(id: string, store: Lpool = lpStore) {
  * @returns 消息的 id
  */
 export function updateLetop(letop: LetopItem, store = lpStore) {
-  updateLpState(store, lp => 
-    lp.map(item => {
+  updateLpState(store, (lp) =>
+    lp.map((item) => {
       if (item.id === letop.id) {
         return { ...item, ...letop };
       }
 
       return item;
-    })
+    }),
   );
 
   return letop.id;
@@ -136,7 +135,7 @@ export function cleanLp(store = lpStore) {
  * @param store 消息池
  */
 export function cleanLpQueue(store = lpStore) {
-  updateLpState(store, lp => lp.slice(0, store.getState().limit));
+  updateLpState(store, (lp) => lp.slice(0, store.getState().limit));
 }
 
 export const notifications = {

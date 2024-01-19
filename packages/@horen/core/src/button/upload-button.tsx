@@ -1,7 +1,7 @@
-import React, { useRef, } from 'react';
+import React, { useRef } from 'react';
 
-import { Icon, } from '../icon';
-import { Button, ButtonProps, } from './button';
+import { Icon } from '../icon';
+import { Button, ButtonProps } from './button';
 
 export type UploadButtonProps = {
   onClick?(e: React.MouseEvent<HTMLButtonElement>): void;
@@ -23,9 +23,9 @@ function UploadButton(props: UploadButtonProps) {
     onClick,
     onChange,
     name,
-    multiple=false,
-    accept=[],
-    value=[],
+    multiple = false,
+    accept = [],
+    value = [],
     ...restProps
   } = props;
   const ref = useRef<HTMLInputElement>(null);
@@ -33,13 +33,13 @@ function UploadButton(props: UploadButtonProps) {
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     ref.current?.click();
     if (onClick) onClick(e);
-  }
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     const newFileList = [...value, ...extractFiles(files)];
     if (onChange) onChange(e, newFileList);
-  }
+  };
 
   const extractFiles = (fs: FileList | null) => {
     const arr = [];
@@ -50,11 +50,11 @@ function UploadButton(props: UploadButtonProps) {
           if (accept.length === 0 || accept?.includes(ext)) {
             arr.push(file);
           }
-        } 
+        }
       }
     }
     return arr;
-  }
+  };
 
   return (
     <Button
@@ -62,36 +62,36 @@ function UploadButton(props: UploadButtonProps) {
         height: 32,
         padding: '4px 16px',
       }}
-      type="line"
+      variant="line"
       onClick={handleClick}
-      {...restProps}
-    >
-      <div style={{display: 'flex', alignItems: 'center',}}>
+      {...restProps}>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
         <input
           title={name}
           placeholder=""
           type="file"
-          style={{width: 0, height: 0,}}
+          style={{ width: 0, height: 0 }}
           ref={ref}
           name={name}
           data-name={name}
           onChange={handleInputChange}
           multiple
-          accept={accept?.map(a => '.'+a).join(',')}
+          accept={accept?.map((a) => '.' + a).join(',')}
         />
         <Icon name="upload" size={22} />
-        <div 
+        <div
           style={{
             height: 22,
             width: 64,
             verticalAlign: 'top',
             lineHeight: '22px',
-            marginLeft: 4
-          }}
-        >点击上传</div>
+            marginLeft: 4,
+          }}>
+          点击上传
+        </div>
       </div>
     </Button>
-  )
+  );
 }
 
 export default React.memo(UploadButton);

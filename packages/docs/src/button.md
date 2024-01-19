@@ -8,20 +8,23 @@ import { Button } from '@horen/core';
 export default () => {
   return (
     <div>
-      <Button type="primary">Primary</Button>
-      <Button type="success">Success</Button>
-      <Button type="warning">Warning</Button>
-      <Button type="danger">danger</Button>
-      <Button type="light">Light</Button>
-      <Button type="line">Line</Button>
+      <Button variant="primary">Primary</Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="success">Success</Button>
+      <Button variant="warning">Warning</Button>
+      <Button variant="danger">Danger</Button>
+      <Button variant="info">Info</Button>
+      <Button variant="dark">Dark</Button>
+      <Button variant="light">Light</Button>
+      <Button variant="line">Line</Button>
     </div>
   );
 };
 ```
 
-| props | type   | values                                                              | default   |
-| ----- | ------ | ------------------------------------------------------------------- | --------- |
-| type  | string | "primary" \| "success" \| "warning" \| "error" \| "light" \| "line" | "primary" |
+| prop    | type   | values                                                                                     | default   |
+| ------- | ------ | ------------------------------------------------------------------------------------------ | --------- |
+| variant | string | "primary" \| "secondary" \| "warning" \| "danger" \| "info" \| "dark" \| "light" \| "line" | "primary" |
 
 ## UploadButton
 

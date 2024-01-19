@@ -263,6 +263,9 @@ importers:
       '@horen/core':
         specifier: workspace:*
         version: link:../@horen/core
+      '@horen/notifications':
+        specifier: workspace:*
+        version: link:../@horen/notifications
       '@types/react':
         specifier: ^18.0.0
         version: 18.2.37

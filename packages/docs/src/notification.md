@@ -6,17 +6,64 @@ import { Notification } from '@horen/core';
 export default () => (
   <div>
     <div>
-      <Notification type="info" message={'This is an info message'} />
+      <Notification variant="info" message={'This is an info message'} />
     </div>
     <div>
-      <Notification type="success" />
+      <Notification variant="success" />
     </div>
     <div>
-      <Notification type="warning" />
+      <Notification variant="warning" />
     </div>
     <div>
-      <Notification type="error" />
+      <Notification variant="danger" />
     </div>
+  </div>
+);
+```
+
+```tsx
+import { notifications, Notifications } from '@horen/notifications';
+import { Button } from '@horen/core';
+
+export default () => (
+  <div>
+    <Notifications />
+    <Button
+      variant="success"
+      onClick={() =>
+        notifications.show({ variant: 'success', message: 'success' })
+      }
+    >
+      success
+    </Button>
+    <br />
+    <br />
+    <Button
+      variant="warning"
+      onClick={() =>
+        notifications.show({ variant: 'warning', message: 'warning' })
+      }
+    >
+      warning
+    </Button>
+    <br />
+    <br />
+    <Button
+      variant="danger"
+      onClick={() =>
+        notifications.show({ variant: 'danger', message: 'danger' })
+      }
+    >
+      danger
+    </Button>
+    <br />
+    <br />
+    <Button
+      variant="info"
+      onClick={() => notifications.show({ variant: 'info', message: 'info' })}
+    >
+      info
+    </Button>
   </div>
 );
 ```
