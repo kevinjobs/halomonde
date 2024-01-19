@@ -50,7 +50,7 @@ const TABLE_HEADERS = [
   // { field: 'url', name: '预览', },
   // { field: 'exif', name: '图片信息', },
   // { field: 'description', name: '描述', },
-  { field: 'edit', name: '编辑', width: 120 },
+  { field: 'edit', name: '编辑', width: 160 },
 ];
 
 export const PostTable: React.FC<PostTableProps> = (props: PostTableProps) => {
@@ -160,7 +160,9 @@ const renderTags = (tags: string) => {
   return (
     <span>
       {tags.split('|').map((t, i) => (
-        <Tag key={i}>{t}</Tag>
+        <Tag variant="primary" key={i}>
+          {t}
+        </Tag>
       ))}
     </span>
   );
@@ -191,13 +193,13 @@ const renderEdit = (
   const state = useStore(store);
   const isLogin = state.user?.token ? true : false;
   return (
-    <span>
+    <div>
       <Button onClick={() => onEdit(a)} disabled={!isLogin}>
         编辑
       </Button>
-      <Button type="error" onClick={() => onDel(a)} disabled={!isLogin}>
+      <Button variant="danger" onClick={() => onDel(a)} disabled={!isLogin}>
         删除
       </Button>
-    </span>
+    </div>
   );
 };

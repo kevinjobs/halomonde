@@ -19,6 +19,8 @@ export default () => {
       <Tag variant="warning">warning</Tag>
       <Tag variant="danger">danger</Tag>
       <Tag variant="info">info</Tag>
+      <Tag variant="dark">dark</Tag>
+      <Tag variant="light">light</Tag>
     </div>
   );
 };

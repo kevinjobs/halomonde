@@ -5,7 +5,7 @@ import { classnames } from '../_utils';
 import cls from './Tag.module.less';
 import themes from '../themes.module.less';
 
-export type TagVariant = BaseVariant;
+export type TagVariant = 'dark' | 'light' | BaseVariant;
 
 export interface TagProps extends AllHTMLAttributes<HTMLSpanElement> {
   variant?: TagVariant;

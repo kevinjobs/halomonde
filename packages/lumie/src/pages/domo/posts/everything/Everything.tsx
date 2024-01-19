@@ -67,7 +67,7 @@ export default function PostAdmin(): React.ReactElement {
       (async () => {
         const data = await deletePost(uid);
         if (typeof data !== 'string') {
-          notifications.show({ type: 'success', message: '删除成功' });
+          notifications.show({ variant: 'success', message: '删除成功' });
           refreshPosts(pageState.offset, PAGE_LIMIT, pageState.postType);
         } else window.alert(data);
       })();
@@ -132,9 +132,9 @@ export default function PostAdmin(): React.ReactElement {
     if (mode === 'update') {
       updatePost(post.uid, post).then((resp) => {
         if (typeof resp === 'string') {
-          notifications.show({ type: 'error', message: resp });
+          notifications.show({ variant: 'danger', message: resp });
         } else {
-          notifications.show({ type: 'success', message: '更新成功' });
+          notifications.show({ variant: 'success', message: '更新成功' });
           setPickPost(null);
           reloadTable(post.type);
         }
@@ -144,9 +144,9 @@ export default function PostAdmin(): React.ReactElement {
     if (mode === 'create') {
       addPost(post).then((resp) => {
         if (typeof resp === 'string') {
-          notifications.show({ type: 'error', message: resp });
+          notifications.show({ variant: 'danger', message: resp });
         } else {
-          notifications.show({ type: 'success', message: '添加成功' });
+          notifications.show({ variant: 'success', message: '添加成功' });
           setPickPost(null);
           reloadTable(post.type);
         }
