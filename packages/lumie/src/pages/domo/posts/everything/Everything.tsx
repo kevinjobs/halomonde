@@ -158,7 +158,7 @@ export default function PostAdmin(): React.ReactElement {
     setPickPost(null);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const ps = localStorage.getItem(DOMO_POSTS_STATE);
     if (ps) {
       const { offset, postType, postList, hasNext, hasPrev } = JSON.parse(

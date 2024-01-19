@@ -4,11 +4,16 @@
 
 ```tsx
 import { Upload } from '@horen/core';
+import { useState } from 'react';
 
 export default () => {
+  const [filename, setFilename] = useState('');
   return (
     <div style={{ width: 500 }}>
-      <Upload />
+      <div>
+        <span>{filename}</span>
+      </div>
+      <Upload onChange={(e, v) => setFilename(v[0]?.name)} />
     </div>
   );
 };
