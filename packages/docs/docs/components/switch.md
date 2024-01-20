@@ -1,4 +1,9 @@
-# Switch
+---
+group: 数据输入
+order: 1
+---
+
+# 开关 Switch
 
 ```tsx
 /**

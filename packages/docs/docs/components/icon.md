@@ -1,4 +1,9 @@
-# Icon
+---
+group: 数据展示
+order: 2
+---
+
+# 图标 Icon
 
 ```tsx
 import { Icon } from '@horen/core';

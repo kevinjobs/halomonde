@@ -1,4 +1,9 @@
-# Slider
+---
+group: 数据输入
+order: 1
+---
+
+# 滑动条 Slider
 
 ```tsx
 /**

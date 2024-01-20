@@ -1,4 +1,8 @@
-# Tag
+---
+group: 数据展示
+---
+
+# 标签 Tag
 
 Tag 组件渲染的是一个普通的 `<span>Text</span>`，因此可以使用原生的属性
 
@@ -78,26 +82,4 @@ export default () => {
     </div>
   );
 };
-```
-
-## API
-
-```ts
-type TagVariant =
-  | 'primary'
-  | 'secondary'
-  | 'success'
-  | 'warning'
-  | 'danger'
-  | 'info';
-
-interface TagProps extends AllHTMLAttributes<HTMLSpanElement> {
-  // 类型，默认：primary
-  variant?: TagVariant;
-  // 颜色值，默认：undefined
-  color?: string;
-  children?: React.ReactNode;
-  // 是否圆角，默认: false
-  rounded?: boolean;
-}
 ```

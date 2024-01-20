@@ -1,25 +1,6 @@
-# Notification
+# 通知系统
 
-```tsx
-import { Notification } from '@horen/core';
-
-export default () => (
-  <div>
-    <div>
-      <Notification variant="info" message={'This is an info message'} />
-    </div>
-    <div>
-      <Notification variant="success" />
-    </div>
-    <div>
-      <Notification variant="warning" />
-    </div>
-    <div>
-      <Notification variant="danger" />
-    </div>
-  </div>
-);
-```
+通知系统
 
 ```tsx
 import { notifications, Notifications } from '@horen/notifications';

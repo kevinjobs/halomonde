@@ -1,6 +1,11 @@
-# Upload
+---
+group: 数据输入
+order: 1
+---
 
-## Button Upload
+# 上传 Upload
+
+## 上传按钮
 
 ```tsx
 import { Upload } from '@horen/core';
@@ -19,7 +24,7 @@ export default () => {
 };
 ```
 
-## Image Upload
+## 图片上传
 
 ```tsx
 import { ImageUpload } from '@horen/core';
@@ -33,7 +38,7 @@ export default () => {
 };
 ```
 
-## Avatar Upload
+## 头像上传
 
 ```tsx
 import { AvatarUpload } from '@horen/core';

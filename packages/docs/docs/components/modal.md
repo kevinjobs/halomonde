@@ -1,4 +1,9 @@
-# Modal
+---
+group: 数据展示
+order: 3
+---
+
+# 弹窗 Modal
 
 ```tsx
 import { useState } from 'react';

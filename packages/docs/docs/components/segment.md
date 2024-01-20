@@ -1,4 +1,9 @@
-# Segment
+---
+group: 数据输入
+order: 2
+---
+
+# 分割框 Segment
 
 ```tsx
 import { useState } from 'react';

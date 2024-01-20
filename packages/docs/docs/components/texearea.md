@@ -1,4 +1,9 @@
-# TextArea
+---
+group: 数据输入
+order: 1
+---
+
+# 文本框 TextArea
 
 ```tsx
 import { TextArea } from '@horen/core';

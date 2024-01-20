@@ -1,4 +1,9 @@
-# Button
+---
+group: 数据展示
+order: 1
+---
+
+# 按钮 Button
 
 ## Base Button
 
@@ -21,10 +26,6 @@ export default () => {
   );
 };
 ```
-
-| prop    | type   | values                                                                                     | default   |
-| ------- | ------ | ------------------------------------------------------------------------------------------ | --------- |
-| variant | string | "primary" \| "secondary" \| "warning" \| "danger" \| "info" \| "dark" \| "light" \| "line" | "primary" |
 
 ## UploadButton
 
