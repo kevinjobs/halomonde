@@ -11,6 +11,8 @@ export function getVariants(
     warning: cls.warning,
     danger: cls.danger,
     info: cls.info,
+    dark: cls.dark,
+    light: cls.light,
   };
   return vars[variant];
 }

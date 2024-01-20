@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "concurrently \"pnpm -F @horen/hooks run watch\" \"pnpm -F @horen/core run watch\" \"pnpm -F @horen/utils run watch\" \"pnpm -F @horen/store run watch\" \"pnpm -F @horen/notifications run watch\""
+    "dev": "zx ./scripts/index.mjs"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^7.2.1"
+    "concurrently": "^7.2.1",
+    "zx": "latest"
   }
 }
