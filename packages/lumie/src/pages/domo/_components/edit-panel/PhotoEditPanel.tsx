@@ -8,7 +8,14 @@ import { API_URL } from '@/constants';
 import { store } from '@/store';
 import { IPost } from '@/types';
 import { getExifs } from '@/utils/exif';
-import { AvatarUpload, Button, Input, Select, TextArea } from '@horen/core';
+import {
+  AvatarUpload,
+  Button,
+  Input,
+  Select,
+  TextArea,
+  TagInput,
+} from '@horen/core';
 import { useForm } from '@horen/hooks';
 import { notifications } from '@horen/notifications';
 import { useStore } from '@horen/store';
@@ -43,12 +50,12 @@ export function PhotoEditPanel({
       form.setState('url', result.data.url);
       form.setState('exif', JSON.stringify(tags));
       form.setState('format', tags.fileType);
-      notifications.show({ type: 'success', message: '上传封面成功' });
+      notifications.show({ variant: 'success', message: '上传封面成功' });
     });
   };
 
   const handleUploadFailed = (msg: string) => {
-    notifications.show({ type: 'error', message: msg });
+    notifications.show({ variant: 'danger', message: msg });
   };
 
   return (
@@ -146,7 +153,10 @@ export function PhotoEditPanel({
           />
         </EditItem>
         <EditItem label="标签">
-          <Input name="tags" {...form.get('tags')} />
+          <TagInput
+            value={form.get('tags').value.split('|')}
+            onChange={(tags) => form.setState('tags', tags.join('|'))}
+          />
         </EditItem>
         <EditItem label="备注">
           <Input
@@ -159,7 +169,7 @@ export function PhotoEditPanel({
           <Button onClick={() => handleSubmit(form.data)}>
             {mode === 'create' ? '新增' : '更新'}
           </Button>
-          <Button type="error" onClick={handleCancel}>
+          <Button variant="danger" onClick={handleCancel}>
             取消
           </Button>
         </div>

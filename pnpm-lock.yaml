@@ -263,6 +263,9 @@ importers:
       '@horen/core':
         specifier: workspace:*
         version: link:../@horen/core
+      '@horen/hooks':
+        specifier: workspace:*
+        version: link:../@horen/hooks
       '@horen/notifications':
         specifier: workspace:*
         version: link:../@horen/notifications

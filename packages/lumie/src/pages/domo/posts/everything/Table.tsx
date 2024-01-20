@@ -143,7 +143,7 @@ function toTableData(
         post.title,
       ),
       status: renderStatus(post.status),
-      tags: renderTags(post.tags),
+      tags: renderTags(post.tags, 'primary'),
       category: renderTags(post.category),
       format: <span>{post.format}</span>,
       // url: <span>{post.url}</span>,
@@ -155,12 +155,12 @@ function toTableData(
   return rows;
 }
 
-const renderTags = (tags: string) => {
+const renderTags = (tags: string, variant: any = 'secondary') => {
   if (!tags) return <span></span>;
   return (
     <span>
       {tags.split('|').map((t, i) => (
-        <Tag variant="primary" key={i}>
+        <Tag variant={variant} key={i}>
           {t}
         </Tag>
       ))}

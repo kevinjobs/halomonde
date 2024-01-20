@@ -3,6 +3,7 @@ export { useDidUpdate } from './useDidUpdate';
 export { useForm } from './use-form';
 export { useMove, type MovePosition } from './use-move';
 export { useHover } from './use-hover';
+export { usePagination } from './use-pagination';
 export { useSetState } from './use-set-state';
 export { useToggle } from './use-toggle';
 export { useUnmount } from './use-unmount';
