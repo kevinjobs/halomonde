@@ -4,7 +4,7 @@
  * @updateAt 2022-09-20
  * @email    me@kevinjobs.com
  */
-const path = require("path");
+const path = require('path');
 const Koa = require('koa');
 const cors = require('@koa/cors');
 const onerror = require('koa-onerror');
@@ -20,14 +20,14 @@ const app = new Koa();
 // 集中处理异常
 onerror(app);
 // 处理日志
-app.use(logger(path.join(process.cwd(), "logs")));
+app.use(logger(path.join(process.cwd(), 'logs')));
 // 处理跨域请求
 app.use(cors());
 // 引入路由
 app.use(router.routes());
 
 // 设置后端服务器端口
-const port = 9527;
+const port = 19527;
 // 设置后端服务器监听地址
 const host = '0.0.0.0';
 
@@ -35,6 +35,6 @@ const host = '0.0.0.0';
 const server = http.createServer(app.callback()).listen(port, host);
 
 console.log(`Backend server has been starting at ${host}:${port}`);
-console.log("Notion: the web page is not in this host and port.");
+console.log('Notion: the web page is not in this host and port.');
 
 module.exports = server;
