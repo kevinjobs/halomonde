@@ -1,0 +1,43 @@
+@import "../colors.less";
+@import "../size.less";
+
+.segment {
+  padding: @smallGap @normalGap;
+  display: inline-block;
+  background-color: @gray-3;
+  border-radius: @normalRadius;
+  position: relative;
+  height: @normalHeight;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.track {
+  display: block;
+  position: absolute;
+  top: @smallGap;
+  transition-property: left, width;
+  transition-duration: @xSmallDuration;
+  transition-timing-function: ease-in-out;
+  border-radius: @smallRadius;
+  z-index: 0;
+}
+
+.itemsContainer {
+  display: flex;
+  justify-content: space-around;
+}
+
+.segmentItem {
+  padding: 0 @middleGap;
+  display: inline-block;
+  user-select: none;
+  background-color: transparent;
+  position: relative;
+  height: calc(@normalHeight - @smallGap * 2);
+  line-height: calc(@normalHeight - @smallGap * 2);
+  z-index: 1;
+  color: @dark;
+  flex-grow: 1;
+  text-align: center;
+}

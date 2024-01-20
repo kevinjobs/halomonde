@@ -4,7 +4,9 @@ export type BaseVariant =
   | 'success'
   | 'warning'
   | 'danger'
-  | 'info';
+  | 'info'
+  | 'light'
+  | 'dark';
 
 export interface ComponentProps {
   variant?: BaseVariant;

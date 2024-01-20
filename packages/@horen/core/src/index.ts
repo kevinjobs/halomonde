@@ -19,6 +19,8 @@ export { Tag, type TagProps } from './tag';
 
 export { TextArea, type TextAreaProps } from './textarea';
 
+export { SegmentItem, Segment, type SegmentProps } from './Segment';
+
 export { Switch, type SwitchProps } from './switch';
 
 export {

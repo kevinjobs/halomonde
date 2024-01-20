@@ -81,6 +81,7 @@ export default function PostAdmin(): React.ReactElement {
         offset,
         limit,
         type: typ,
+        status: 'all',
       },
       (postList, hasPrev, hasNext) => {
         setPageState({ postList, hasPrev, hasNext });

@@ -6,15 +6,15 @@ import React from 'react';
 import Datepicker from 'react-datepicker';
 import WE from 'wangeditor';
 
-import { API_URL, } from '@/constants';
-import { store, } from '@/store';
-import { IPost, } from '@/types';
-import { AvatarUpload, Button, Input, Select, } from '@horen/core';
-import { useForm, } from '@horen/hooks';
-import { notifications, } from '@horen/notifications';
-import { useStore, } from '@horen/store';
+import { API_URL } from '@/constants';
+import { store } from '@/store';
+import { IPost } from '@/types';
+import { AvatarUpload, Button, Input, Select, Segment } from '@horen/core';
+import { useForm } from '@horen/hooks';
+import { notifications } from '@horen/notifications';
+import { useStore } from '@horen/store';
 
-import { EditPanelProps, } from './';
+import { EditPanelProps } from './';
 import style from './ArticleEditPanel.module.less';
 
 export interface ArticleEditPanelProps extends EditPanelProps {}
@@ -30,29 +30,34 @@ const renderer = {
   },
 };
 
-export function ArticleEditPanel({mode, post, onSubmit, onCancel}: ArticleEditPanelProps) {
+export function ArticleEditPanel({
+  mode,
+  post,
+  onSubmit,
+  onCancel,
+}: ArticleEditPanelProps) {
   marked.use({ renderer });
 
-  const form = useForm({initial: post});
+  const form = useForm({ initial: post });
   const weditor = React.useRef<WE>(null);
   const state = useStore(store);
 
   const handleSubmit = (post: IPost) => {
     if (onSubmit) onSubmit(post);
-  }
+  };
 
   const handleCancel = () => {
     if (onCancel) onCancel();
-  }
+  };
 
   const handleUploadSuccess = (result: any) => {
     form.setState('url', result.data.url);
-    notifications.show({type: 'success', message: '上传封面成功'});
-  }
+    notifications.show({ variant: 'success', message: '上传封面成功' });
+  };
 
   const handleUploadFailed = (msg: string) => {
-    notifications.show({type: 'error', message: msg});
-  }
+    notifications.show({ variant: 'danger', message: msg });
+  };
 
   React.useEffect(() => {
     if (document.querySelector('#article-editor')) {
@@ -65,16 +70,16 @@ export function ArticleEditPanel({mode, post, onSubmit, onCancel}: ArticleEditPa
     }
     return () => weditor.current?.destroy();
   }, []);
-  
+
   return (
     <div className={style.editPost}>
       <div className={style.left}>
         <div className={style.editorContainer}>
-          <div className="" id='article-editor'></div>
+          <div className="" id="article-editor"></div>
         </div>
       </div>
       <div className={style.right}>
-        <EditItem label='封面'>
+        <EditItem label="封面">
           <AvatarUpload
             url={API_URL.upload}
             defaultValue={form.get('url').value}
@@ -105,11 +110,14 @@ export function ArticleEditPanel({mode, post, onSubmit, onCancel}: ArticleEditPa
           </Select>
         </EditItem>
         <EditItem label="状态">
-          <Select {...form.get('status')}>
-            <Select.Item name="已发布" value="publish" />
-            <Select.Item name="草稿" value="draft" />
-            <Select.Item name="私密" value="private" />
-          </Select>
+          <Segment
+            variant="primary"
+            value={form.get('status').value}
+            onChange={(v) => form.setState('status', v)}>
+            <Segment.Item value="draft" label="草稿" />
+            <Segment.Item value="publish" label="已发布" />
+            <Segment.Item value="private" label="私密" />
+          </Segment>
         </EditItem>
         <EditItem label="格式">
           <Select {...form.get('format')}>
@@ -126,15 +134,23 @@ export function ArticleEditPanel({mode, post, onSubmit, onCancel}: ArticleEditPa
         </EditItem>
         <EditItem label="创建时间">
           <Datepicker
-            selected={form?.data.createAt && dayjs.unix(form?.data.createAt).toDate()}
-            onChange={d => form.get('createAt').onChange(null, dayjs(d).unix())}
+            selected={
+              form?.data.createAt && dayjs.unix(form?.data.createAt).toDate()
+            }
+            onChange={(d) =>
+              form.get('createAt').onChange(null, dayjs(d).unix())
+            }
             dateFormat={'yyyy-MM-dd'}
           />
         </EditItem>
         <EditItem label="更新时间">
           <Datepicker
-            selected={form?.data.updateAt && dayjs.unix(form?.data.updateAt).toDate()}
-            onChange={d => form.get('updateAt').onChange(null, dayjs(d).unix())}
+            selected={
+              form?.data.updateAt && dayjs.unix(form?.data.updateAt).toDate()
+            }
+            onChange={(d) =>
+              form.get('updateAt').onChange(null, dayjs(d).unix())
+            }
             dateFormat={'yyyy-MM-dd'}
           />
         </EditItem>
@@ -157,20 +173,28 @@ export function ArticleEditPanel({mode, post, onSubmit, onCancel}: ArticleEditPa
         </EditItem>
         <div className={style.submitArea}>
           <Button onClick={() => handleSubmit(form.data)}>
-            { mode === 'create' ? '新增' : '更新' }
+            {mode === 'create' ? '新增' : '更新'}
           </Button>
-          <Button type='error' onClick={handleCancel}>取消</Button>
+          <Button variant="danger" onClick={handleCancel}>
+            取消
+          </Button>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-function EditItem({label, children}: {label: string, children: React.ReactNode}) {
+function EditItem({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
   return (
     <div className={style.editItem}>
       <span className={style.itemLabel}>{label}</span>
       <span className={style.itemContent}>{children}</span>
     </div>
-  )
+  );
 }
