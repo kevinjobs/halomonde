@@ -1,11 +1,9 @@
-import { IPost } from '@/types';
 import { PostType } from './api';
+import { PostListRespData } from '@/utils/apis';
 
 export const DOMO_POSTS_STATE = 'domo-posts-state';
 export interface DomoPostsState {
-  offset: number;
+  pageLimit: number;
   postType: PostType;
-  postList: IPost[];
-  hasPrev: boolean;
-  hasNext: boolean;
+  data: PostListRespData;
 }

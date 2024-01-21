@@ -37,19 +37,19 @@ export default function App() {
   }, []);
 
   return (
-    // <React.StrictMode>
-    <HashRouter>
-      <Navbar menus={ITEMS} />
-      <Notifications />
-      <Routes>
-        <Route path="/" element={<Redirect to="gallery" />} />
-        <Route path="domo/*" element={<DomoPage />} />
-        <Route path="gallery" element={<GalleryPage />} />
-        <Route path="photo/:uid" element={<PhotoPage />} />
-        <Route path="articles" element={<ArticlesPage />} />
-        <Route path="article/:uid" element={<ArticlePage />} />
-      </Routes>
-    </HashRouter>
-    // </React.StrictMode>
+    <React.StrictMode>
+      <HashRouter>
+        <Navbar menus={ITEMS} />
+        <Notifications />
+        <Routes>
+          <Route path="/" element={<Redirect to="gallery" />} />
+          <Route path="domo/*" element={<DomoPage />} />
+          <Route path="gallery" element={<GalleryPage />} />
+          <Route path="photo/:uid" element={<PhotoPage />} />
+          <Route path="articles" element={<ArticlesPage />} />
+          <Route path="article/:uid" element={<ArticlePage />} />
+        </Routes>
+      </HashRouter>
+    </React.StrictMode>
   );
 }

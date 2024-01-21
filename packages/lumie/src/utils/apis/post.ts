@@ -30,6 +30,7 @@ type GetPostListSuccessCallback = (
   hasPrev?: boolean,
   /** 是否有下一页 */
   hasNext?: boolean,
+  data?: PostListRespData,
 ) => void;
 
 type FailedCallback = (errMsg: string) => void;
@@ -55,6 +56,7 @@ export function getPostListSync(
           respData.data.posts,
           respData.data.offset > 0,
           respData.data.offset + respData.data.limit < respData.data.totals,
+          respData.data,
         );
       } else {
         onFailed(resp.data.msg);

@@ -15,6 +15,7 @@ import {
   Select,
   TextArea,
   TagInput,
+  Segment,
 } from '@horen/core';
 import { useForm } from '@horen/hooks';
 import { notifications } from '@horen/notifications';
@@ -103,11 +104,14 @@ export function PhotoEditPanel({
           </Select>
         </EditItem>
         <EditItem label="状态">
-          <Select {...form.get('status')}>
-            <Select.Item name="已发布" value="publish" />
-            <Select.Item name="草稿" value="draft" />
-            <Select.Item name="私密" value="private" />
-          </Select>
+          <Segment
+            variant="primary"
+            value={form.get('status').value}
+            onChange={(v) => form.setState('status', v)}>
+            <Segment.Item value="draft" label="草稿" />
+            <Segment.Item value="publish" label="已发布" />
+            <Segment.Item value="private" label="私密" />
+          </Segment>
         </EditItem>
         <EditItem label="格式">
           <Select {...form.get('format')}>

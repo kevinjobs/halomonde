@@ -9,10 +9,10 @@ import { Button, Skeleton, Tag } from '@horen/core';
 import { useStore } from '@horen/store';
 
 export interface PostTableProps {
-  posts: IPost[];
-  onEdit?(p: IPost): void;
-  onDel?(p: IPost): void;
-  onView?(p: IPost): void;
+  posts?: IPost[];
+  onEdit(p: IPost): void;
+  onDel(p: IPost): void;
+  onView(p: IPost): void;
 }
 
 export interface TableRow {
@@ -33,6 +33,7 @@ export interface TableRow {
 }
 
 const TABLE_HEADERS = [
+  { field: 'index', name: '序号' },
   // { field: 'id', name: 'ID', },
   // { field: 'uid', name: 'UID', width: 60, },
   { field: 'createAt', name: '创建日期', width: 100 },
@@ -53,39 +54,31 @@ const TABLE_HEADERS = [
   { field: 'edit', name: '编辑', width: 160 },
 ];
 
-export const PostTable: React.FC<PostTableProps> = (props: PostTableProps) => {
-  const { posts, onEdit, onDel, onView } = props;
-
-  const clickEdit = (p: IPost) => {
-    if (onEdit) onEdit(p);
-  };
-
-  const clickDel = (p: IPost) => {
-    if (onDel) onDel(p);
-  };
-
-  const clickView = (p: IPost) => {
-    if (onView) onView(p);
-  };
+export function PostTable(props: PostTableProps) {
+  const { posts = null, onEdit, onDel, onView } = props;
+  const state = useStore(store);
+  const isLogin = state.user?.token ? true : false;
 
   return (
     <div className="post-table">
       <Table
-        data={toTableData(posts, clickEdit, clickDel, clickView)}
+        data={toTableData(posts, onEdit, onDel, onView, isLogin)}
         heads={TABLE_HEADERS}
       />
     </div>
   );
-};
+}
 
 function toTableData(
   posts: IPost[],
   onEdit: (p: IPost) => void,
   onDel: (p: IPost) => void,
-  onView?: (p: IPost) => void,
+  onView: (p: IPost) => void,
+  isLogin: boolean,
 ): TableRow[] {
-  if (!posts) {
+  if (posts?.length === 0 || !posts) {
     const sk = {
+      index: <Skeleton width={20} />,
       // id: <Skeleton width={20} />,
       // uid: <Skeleton />,
       createAt: <Skeleton />,
@@ -95,9 +88,9 @@ function toTableData(
       author: <Skeleton width={60} />,
       // content: <span>{post.content}</span>,
       // sumary: <Skeleton />,
-      preview: <Skeleton height={80} />,
+      preview: <Skeleton height={50} />,
       status: <Skeleton width={40} />,
-      tags: <Skeleton width={40} />,
+      tags: <Skeleton width={80} />,
       category: <Skeleton width={40} />,
       format: <Skeleton width={40} />,
       // url: <span>{post.url}</span>,
@@ -109,8 +102,9 @@ function toTableData(
     for (let i = 0; i < 6; i++) sks.push(sk);
     return sks;
   }
-  const rows: TableRow[] = posts.map((post) => {
+  const rows: TableRow[] = posts.map((post, index) => {
     return {
+      index: <span style={{ fontSize: 12 }}>{index + 1}</span>,
       // id: <span style={{fontSize: 14}}>{post.id}</span>,
       // uid: <span style={{fontSize: 12}}>{post.uid.slice(0, 10)+'...'}</span>,
       createAt: (
@@ -149,7 +143,7 @@ function toTableData(
       // url: <span>{post.url}</span>,
       // exif: <span>{post.exif}</span>,
       // description: <span>{post.description}</span>,
-      edit: renderEdit(post, onEdit, onDel),
+      edit: renderEdit(post, onEdit, onDel, isLogin),
     };
   });
   return rows;
@@ -173,7 +167,7 @@ const renderPreview = (cover: string, title: string) => {
     <img
       src={cover}
       alt={title}
-      style={{ width: 100, height: 80, objectFit: 'cover' }}
+      style={{ width: 50, height: 40, objectFit: 'cover' }}
     />
   );
 };
@@ -189,9 +183,8 @@ const renderEdit = (
   a: IPost,
   onEdit: (a: IPost) => void,
   onDel: (a: IPost) => void,
+  isLogin: boolean,
 ) => {
-  const state = useStore(store);
-  const isLogin = state.user?.token ? true : false;
   return (
     <div>
       <Button onClick={() => onEdit(a)} disabled={!isLogin}>
