@@ -137,8 +137,8 @@ function toTableData(
         post.title,
       ),
       status: renderStatus(post.status),
-      tags: renderTags(post.tags, 'primary'),
-      category: renderTags(post.category),
+      tags: renderTags(post.tags, 'primary', 12),
+      category: renderTags(post.category, 'dark'),
       format: <span>{post.format}</span>,
       // url: <span>{post.url}</span>,
       // exif: <span>{post.exif}</span>,
@@ -149,12 +149,12 @@ function toTableData(
   return rows;
 }
 
-const renderTags = (tags: string, variant: any = 'secondary') => {
+const renderTags = (tags: string, variant: any = 'secondary', radius = 0) => {
   if (!tags) return <span></span>;
   return (
     <span>
       {tags.split('|').map((t, i) => (
-        <Tag variant={variant} key={i}>
+        <Tag variant={variant} key={i} style={{ borderRadius: radius }}>
           {t}
         </Tag>
       ))}

@@ -38,9 +38,14 @@ export function ArticleEditPanel({
 }: ArticleEditPanelProps) {
   marked.use({ renderer });
 
-  const form = useForm({ initial: post });
-  const weditor = React.useRef<WE>(null);
   const state = useStore(store);
+  const form = useForm({
+    initial: {
+      ...post,
+      author: state?.user.username,
+    },
+  });
+  const weditor = React.useRef<WE>(null);
 
   const handleSubmit = (post: IPost) => {
     if (onSubmit) onSubmit(post);

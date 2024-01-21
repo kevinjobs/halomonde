@@ -35,8 +35,13 @@ export function PhotoEditPanel({
   onSubmit,
   onCancel,
 }: PhotoEditPanelProps) {
-  const form = useForm({ initial: post });
   const state = useStore(store);
+  const form = useForm({
+    initial: {
+      ...post,
+      author: state?.user.username,
+    },
+  });
 
   const handleSubmit = (post: IPost) => {
     if (onSubmit) onSubmit(post);
