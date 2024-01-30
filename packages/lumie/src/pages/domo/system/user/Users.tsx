@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { IUser, } from '@/types';
-import { fetchUserList, } from '@/utils/apis';
-import { AddButton, Modal, Skeleton, } from '@horen/core';
-import { notifications, } from '@horen/notifications';
+import { IUser } from '@/types';
+import { fetchUserList } from '@/utils/apis';
+import { AddButton, Modal, Skeleton } from '@horen/core';
+import { notifications } from '@horen/notifications';
 
-import { UserCard, } from './UserCard';
-import { UserEditPanel, } from './UserEditPanel';
+import { UserCard } from './UserCard';
+import { UserEditPanel } from './UserEditPanel';
 import style from './Users.module.less';
 
 const DEFAULT_USER: IUser = {
@@ -23,35 +23,35 @@ const DEFAULT_USER: IUser = {
   motto: '',
   role: '',
   group: '',
-}
+};
 
-export function UserAdmin() :React.ReactElement {
+export function UserAdmin(): React.ReactElement {
   const [users, setUsers] = React.useState<IUser[]>([]);
   const [pickUser, setPickUser] = React.useState<IUser>(null);
 
   const refreshUsers = () => {
-    (async() => {
+    (async () => {
       const data = await fetchUserList();
       if (typeof data !== 'string') {
         setUsers(data.data.users);
         setPickUser(null);
       } else {
-        notifications.show({type: 'error', message: data});
+        notifications.show({ variant: 'danger', message: data });
         setUsers([]);
       }
     })();
-  }
+  };
 
   React.useEffect(() => refreshUsers(), []);
 
   const handleClickUser = (u: IUser) => {
     setPickUser(null);
     setTimeout(() => setPickUser(u), 100);
-  }
+  };
 
   const handleClickAddUser = () => {
     setPickUser(DEFAULT_USER);
-  }
+  };
 
   return (
     <div className={style.users}>
@@ -59,39 +59,37 @@ export function UserAdmin() :React.ReactElement {
         <AddButton onClick={handleClickAddUser}>添加用户</AddButton>
       </div>
       <div className={style.container}>
-        <div className='preview'>
-          {
-            users.length
-              ?
-              users.map(u => (
-                <div
-                  key={u.uid}
-                  className={style.item}
-                >
-                  <UserCard user={u} onClick={handleClickUser} />
-                </div>
-              ))
-              :
-              <>
-                <div className={style.item}><UserSkeletion /></div>
-                <div className={style.item}><UserSkeletion /></div>
-                <div className={style.item}><UserSkeletion /></div>
-                <div className={style.item}><UserSkeletion /></div>
-              </>
-          }
+        <div className="preview">
+          {users.length ? (
+            users.map((u) => (
+              <div key={u.uid} className={style.item}>
+                <UserCard user={u} onClick={handleClickUser} />
+              </div>
+            ))
+          ) : (
+            <>
+              <div className={style.item}>
+                <UserSkeletion />
+              </div>
+              <div className={style.item}>
+                <UserSkeletion />
+              </div>
+              <div className={style.item}>
+                <UserSkeletion />
+              </div>
+              <div className={style.item}>
+                <UserSkeletion />
+              </div>
+            </>
+          )}
         </div>
-        <div className='edit-area'>
-          <Modal
-            visible={Boolean(pickUser)}
-            onClose={() => setPickUser(null)}
-          >
+        <div className="edit-area">
+          <Modal visible={Boolean(pickUser)} onClose={() => setPickUser(null)}>
             <Modal.Header>
               <h2>{pickUser?.uid ? '编辑' : '新增'}用户</h2>
             </Modal.Header>
             <Modal.Content>
-              {
-                pickUser
-                &&
+              {pickUser && (
                 <UserEditPanel
                   user={pickUser}
                   onSubmitSuccess={() => {
@@ -104,13 +102,13 @@ export function UserAdmin() :React.ReactElement {
                   }}
                   onBlur={() => setPickUser(null)}
                 />
-              }
+              )}
             </Modal.Content>
           </Modal>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 function UserSkeletion() {
