@@ -51,6 +51,7 @@ export function PhotoEditPanel({
     if (onCancel) onCancel();
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleUploadSuccess = (result: any, file: File) => {
     getExifs(file).then((tags) => {
       form.setState('url', result.data.url);

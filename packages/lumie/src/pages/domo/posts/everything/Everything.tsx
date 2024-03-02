@@ -100,6 +100,7 @@ export default function PostsEverything(): React.ReactElement {
   };
 
   /** 点击筛选按钮 */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFilter = (_: any, type: PostType) => {
     refreshPosts(0, pageLimit, type);
   };
@@ -110,6 +111,7 @@ export default function PostsEverything(): React.ReactElement {
   };
 
   /** 点击新增 */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleCreate = (_: any, type: PostType) => {
     const postTemplate: IPost = {
       title: '',
