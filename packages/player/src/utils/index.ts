@@ -1,0 +1,1 @@
+export {toMonthString} from './date';
