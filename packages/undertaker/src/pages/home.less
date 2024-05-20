@@ -1,0 +1,125 @@
+.top {
+  height: 50vh;
+  border-bottom: 1px solid #dbdbdb;
+  display: flex;
+}
+
+.top-left {
+  height: 100%;
+  width: 50%;
+  border-right: 1px solid #dbdbdb;
+}
+
+.top-right {
+  width: 50%;
+  height: 100%;
+}
+
+.bottom {
+  height: 50vh;
+  display: flex;
+  .bottom-left {
+    height: 100%;
+    width: 50%;
+    border-right: 1px solid #dbdbdb;
+  }
+  .bottom-right {
+    height: 100%;
+    width: 50%;
+  }
+}
+
+.todos-container {
+  width: 100%;
+  height: 100%;
+  padding: 16px 16px;
+  overflow: auto;
+  position: relative;
+  .todos-prompt {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    font-size: 100px;
+    font-weight: 700;
+    transform: translate(-50%, -50%);
+    color: #00000011;
+  }
+}
+
+.todo-item {
+  padding: 8px 16px;
+  margin: 0 0 8px 0;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  backdrop-filter: blur(32px);
+  &:hover {
+    background-color: #d7d7d7;
+  }
+  &.level-important {
+    background-color: #d35400a8;
+    color: #f1f1f1;
+  }
+  &.level-normal {
+    background-color: #eeeeeec3;
+    color: #1f1f1f;
+  }
+}
+
+.todo-icon {
+  display: inline-block;
+  margin-right: 12px;
+  user-select: none;
+}
+
+.todo-content {
+  .todo-text {
+    margin: 4px 0;
+  }
+  .todo-time {
+    font-size: 12px;
+    font-weight: 300;
+  }
+}
+
+.todo-item-input {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding-left: 16px;
+  border-radius: 9px;
+  .add-icon {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    margin-right: 4px;
+    .add-icon-v {
+      position: absolute;
+      width: 4px;
+      height: 22px;
+      background-color: #aaa;
+      left: 9px;
+    }
+    .add-icon-h {
+      position: absolute;
+      width: 22px;
+      height: 4px;
+      background-color: #aaa;
+      top: 9px;
+    }
+  }
+  input {
+    width: 100%;
+    display: inline-block;
+    border: none;
+    background-color: transparent;
+    padding: 16px 16px;
+    border-radius: 9px;
+    outline: none;
+    font-size: 16px;
+    backdrop-filter: blur(32px);
+    &:focus {
+      background-color: transparent;
+    }
+  }
+}

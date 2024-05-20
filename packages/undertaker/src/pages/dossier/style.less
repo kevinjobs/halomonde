@@ -1,0 +1,56 @@
+.dossier-page {
+  display: flex;
+  height: 100%;
+}
+
+.dossier-catalog {
+  margin-right: 8px;
+  width: 200px;
+  min-width: 200px;
+  .ant-tree {
+    background-color: transparent;
+  }
+}
+
+.dossier-preview {
+  flex-grow: 1;
+  background-color: #ffffff4c;
+  img {
+    max-width: 100%;
+  }
+}
+
+.preview-area {
+  position: relative;
+  height: 100%;
+}
+
+.preview-header {
+  padding: 8px 16px;
+  width: 100%;
+  background-color: #ffffffbc;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  h4 {
+    padding: 0;
+    margin: 0;
+    font-size: 0.8rem;
+    flex-grow: 1;
+  }
+  .preview-close {
+    display: flex;
+    align-items: center;
+    &:hover {
+      background-color: #96969657;
+    }
+  }
+}
+
+.preview-body {
+  padding: 36px 0px 0px;
+  height: 100%;
+}
