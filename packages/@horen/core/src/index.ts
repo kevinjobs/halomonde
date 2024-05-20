@@ -15,6 +15,8 @@ export { Skeleton, type SkeletonProps } from './skeleton';
 
 export { Slider, type SliderProps } from './slider';
 
+export { Table, type TableProps } from './Table';
+
 export { Tag, type TagProps } from './tag';
 
 export { TextArea, type TextAreaProps } from './textarea';
