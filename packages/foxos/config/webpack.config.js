@@ -72,7 +72,7 @@ const rules = () => {
       use: [isDev ? "style-loader" : MiniCssExtractPlugin.loader, "css-loader"],
     },
     {
-      test: /\.pdf$/,
+      test: /\.(pdf|jpg)$/,
       type: "asset/resource",
     },
   ];

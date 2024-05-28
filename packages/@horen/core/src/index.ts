@@ -1,5 +1,7 @@
 export { Button, UploadButton, AddButton, type ButtonProps } from './button';
 
+export { Draggable, type DraggableProps } from './Draggable';
+
 export { Icon, type IconProps } from './icon';
 
 export { Input, TagInput, type InputProps } from './input';

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IoRadioButtonOffSharp, IoRadioButtonOn } from "react-icons/io5";
 
-import "./home.less";
+import "./index.less";
 
 export default function HomePage() {
   const [items, setItems] = useState<TodoItemProps[]>(null);
