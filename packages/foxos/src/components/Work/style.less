@@ -45,6 +45,17 @@
   background-color: #f5f5f5;
   display: flex;
   align-items: center;
+  cursor: pointer;
+  &.overtime {
+    .work-card__item--progress {
+      background: #ffc20e;
+    }
+  }
+  &.today {
+    .work-card__item--progress {
+      background: #ff0a0a;
+    }
+  }
 }
 
 .work-card__item--progress {
@@ -102,5 +113,29 @@
     top: 1px;
     flex-grow: 1;
     text-align: left;
+  }
+}
+
+.work-card__modal {
+  width: 100%;
+}
+
+.work-card__modal--item {
+  div {
+    font-size: 1.1rem;
+    text-align: left;
+    color: #777;
+  }
+  > span {
+    display: block;
+    text-align: left;
+    margin: 2px 0;
+    padding: 16px 8px;
+    font-weight: 300;
+    color: #101010;
+    span {
+      display: inline-block;
+      margin: 2px 2px;
+    }
   }
 }
