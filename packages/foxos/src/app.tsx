@@ -25,11 +25,9 @@ function App() {
         />
       </div>
       <div className="foxos-container">
-        <div className="top"></div>
-        <div className="center">
+        <div className="foxos-container__todo">
           <Work />
         </div>
-        <div className="status-bar"></div>
       </div>
       <Modal visible={visible} onClose={() => setVisible(false)}>
         <Modal.Content>

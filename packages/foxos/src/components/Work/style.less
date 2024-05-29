@@ -1,7 +1,24 @@
+.component-mywork {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.component-mywork__myday {
+  height: 40%;
+}
+
+.component-mywork__lists {
+  margin-top: 16px;
+  height: 55%;
+}
+
 .work-card {
   background-color: #fff;
-  width: 360px;
-  padding: 16px 24px;
+  padding: 16px 16px 16px 24px;
+  margin: 8px;
+  height: 100%;
+  border-radius: 4px;
 }
 
 .work-card__header {
@@ -16,9 +33,14 @@
   margin: 8px 0 20px 0;
 }
 
+.work-card__body {
+  height: calc(100% - 56px);
+  overflow-y: auto;
+}
+
 .work-card__item {
   padding: 0;
-  margin: 0 0 16px 0;
+  margin: 0 16px 16px 0;
   position: relative;
   background-color: #f5f5f5;
   display: flex;

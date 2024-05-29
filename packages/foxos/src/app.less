@@ -1,3 +1,7 @@
+.foxos {
+  background-size: cover;
+}
+
 .foxos-header {
   height: 32px;
   width: 100%;
@@ -9,4 +13,15 @@
   background-repeat: no-repeat;
   background-size: cover;
   padding: 24px 16px;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr) 170px 170px;
+  grid-template-rows: repeat(12, 1fr);
+}
+
+.foxos-container__todo {
+  grid-column-start: 11;
+  grid-column-end: span 2;
+  grid-row-start: 1;
+  grid-row-end: span 12;
+  overflow: auto;
 }

@@ -21,7 +21,7 @@ export default function WorkCard({ title, works }: WorkCardProps) {
         <span>{title}</span>
         <div className="work-card__header--line"></div>
       </div>
-      <div className="work-card__body">
+      <div className="work-card__body perfect-scrollbar">
         {works.map((work) => (
           <WorkItem work={work} key={work.summary} />
         ))}

@@ -29,13 +29,63 @@ export default function MyWork() {
       start: new Date("2024-05-10"),
       end: new Date("2024-08-11"),
     },
+    {
+      summary: "文书上网",
+      details: "this is a test Task",
+      start: new Date("2024-05-10"),
+      end: new Date("2024-08-11"),
+    },
+    {
+      summary: "文书上网",
+      details: "this is a test Task",
+      start: new Date("2024-05-10"),
+      end: new Date("2024-08-11"),
+    },
+    {
+      summary: "文书上网",
+      details: "this is a test Task",
+      start: new Date("2024-05-10"),
+      end: new Date("2024-08-11"),
+    },
+    {
+      summary: "文书上网",
+      details: "this is a test Task",
+      start: new Date("2024-05-10"),
+      end: new Date("2024-08-11"),
+    },
+    {
+      summary: "文书上网",
+      details: "this is a test Task",
+      start: new Date("2024-05-10"),
+      end: new Date("2024-08-11"),
+    },
+    {
+      summary: "文书上网",
+      details: "this is a test Task",
+      start: new Date("2024-05-10"),
+      end: new Date("2024-08-11"),
+    },
+    {
+      summary: "文书上网",
+      details: "this is a test Task",
+      start: new Date("2024-05-10"),
+      end: new Date("2024-08-11"),
+    },
   ];
   return (
     <div className="component-mywork">
-      <WorkCard
-        title="My Day"
-        works={lodash.sortBy(works, (o: Work) => o.end)}
-      />
+      <div className="component-mywork__myday">
+        <WorkCard
+          title="Today"
+          works={lodash.sortBy(works, (o: Work) => o.end)}
+        />
+      </div>
+      <div className="component-mywork__lists">
+        <WorkCard
+          title="Todo List"
+          works={lodash.sortBy(works, (o: Work) => o.end)}
+        />
+      </div>
     </div>
   );
 }
