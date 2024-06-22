@@ -16,6 +16,8 @@ import {
 } from './_components';
 import Home from './home';
 import style from './index.module.less';
+
+import UploadImage from './upload-image';
 import Everything from './posts/everything';
 import Invitaition from './system/invitation';
 import User from './system/user';
@@ -51,6 +53,13 @@ const LEFT_ITEMS: PageProps[] = [
         element: <Everything />,
         to: 'content/posts',
         icon: <Icon name="files" />,
+      },
+      {
+        title: 'Upload Image',
+        description: '上传图片',
+        element: <UploadImage />,
+        to: 'content/upload-image',
+        icon: <Icon name="camera" />,
       },
     ],
   },
