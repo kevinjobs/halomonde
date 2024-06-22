@@ -23,6 +23,7 @@ export default () => {
         <Segment.Item label="图片" value="hello" />
         <Segment.Item label="封面" value="world" />
         <Segment.Item label="文章" value="break" />
+        <Segment.Item label="评论" value="comment" />
       </Segment>
     </div>
   );

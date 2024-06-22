@@ -11,6 +11,7 @@ export default function MyWork() {
       details: "this is a test Task",
       start: new Date("2024-05-10"),
       end: new Date("2024-05-20"),
+      creator: "张三",
       members: [
         "张三",
         "李四",

@@ -17,7 +17,7 @@ export default function Header({ onClickAvatar }: HeaderProps) {
         <span>My Workspace</span>
       </div>
       <div className="component-header__avatar">
-        <span onClick={handleClick}>Kevin Jobs</span>
+        <span onClick={handleClick}>张三</span>
       </div>
     </div>
   );

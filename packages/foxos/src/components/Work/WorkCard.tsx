@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
 import { FaRegCalendarTimes } from "react-icons/fa";
+import { LuMenu } from "react-icons/lu";
 import { Button, Modal, Tag } from "@horen/core";
 
 export interface Work {
@@ -8,6 +9,7 @@ export interface Work {
   details: string;
   start: Date;
   end: Date;
+  creator: string;
   members: string[];
 }
 
@@ -20,8 +22,13 @@ export default function WorkCard({ title, works }: WorkCardProps) {
   return (
     <div className="work-card">
       <div className="work-card__header">
-        <span>{title}</span>
-        <div className="work-card__header--line"></div>
+        <span>
+          <span>{title}</span>
+          <div className="work-card__header--line"></div>
+        </span>
+        <span>
+          <LuMenu size={28} />
+        </span>
       </div>
       <div className="work-card__body perfect-scrollbar">
         {works.map((work) => (
@@ -60,6 +67,10 @@ function WorkDetail({ work }: { work: Work }) {
             </Tag>
           ))}
         </span>
+      </div>
+      <div className="work-card__modal--creator work-card__modal--item">
+        <div>任务创建者</div>
+        <span>{work.creator}</span>
       </div>
     </div>
   );
