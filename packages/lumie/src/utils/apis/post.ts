@@ -129,7 +129,10 @@ export async function fetchPost(uid: string): ApiResponse<{ post: IPost }> {
   return resp.data.msg;
 }
 
-const fullUrl = (post: IPost) => (post.url = API_URL.base + post.url);
+const fullUrl = (post: IPost) => {
+  if (post.url?.startsWith('https')) return;
+  post.url = API_URL.base + post.url;
+};
 const shrinkUrl = (post: IPost) =>
   (post.url = post.url?.replace(API_URL.base, ''));
 const convertPosts = (posts: IPost[]) => {

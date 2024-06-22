@@ -100,7 +100,12 @@ export function PhotoEditPanel({
           </Select>
         </EditItem>
         <EditItem label="Exif">
-          <TextArea name="exif" rows={8} {...form.get('exif')} />
+          <TextArea
+            name="exif"
+            rows={8}
+            value={form.get('exif').value}
+            onChange={(e) => form.setState('exif', e.target.value)}
+          />
         </EditItem>
         <EditItem label="分类">
           <Select {...form.get('category')}>

@@ -1,4 +1,5 @@
 import { API_URL } from '@/constants';
+import COS from 'cos-js-sdk-v5';
 
 import api, { fileApi } from '../network';
 import { ApiResponse } from './';
@@ -67,4 +68,39 @@ export async function uploadFile(
   });
   if (resp.data.code === 0) return resp.data;
   return resp.data.msg;
+}
+
+export async function uploadCloudFile(
+  file: File,
+  onProgress?: (percent: number) => void,
+) {
+  const Bucket = 'gallery-1252473272';
+  const Region = 'ap-nanjing';
+
+  const cos = new COS({
+    // todo: get secret id & key from server
+    SecretId: '',
+    SecretKey: '',
+  });
+
+  return new Promise((resolve, reject) => {
+    cos.uploadFile(
+      {
+        Bucket,
+        Region,
+        Key: file.name,
+        Body: file,
+        SliceSize: 1024 * 1024 * 5,
+        onProgress: (progressData) => {
+          if (onProgress) {
+            onProgress((progressData.percent * 100) | 0);
+          }
+        },
+      },
+      (err, data) => {
+        if (err) reject(err.message);
+        else resolve(data);
+      },
+    );
+  });
 }

@@ -12,7 +12,7 @@ import Datepicker from 'react-datepicker';
 import { useForm } from '@horen/hooks';
 import { useStore } from '@horen/store';
 import { store } from '@/store';
-import { uploadFile } from '@/utils/apis/file';
+import { uploadCloudFile } from '@/utils/apis/file';
 import dayjs from 'dayjs';
 import css from './UploadImage.module.less';
 import { getExifs } from '@/utils/exif';
@@ -38,9 +38,13 @@ export default function UploadImage() {
   const [progress, setProgress] = useState(0);
 
   const handleChange = async (file: File) => {
-    const resp = await uploadFile(file, (percent) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const resp: any = await uploadCloudFile(file, (percent) => {
       setProgress(percent);
     });
+
+    if (!resp) return;
+
     if (typeof resp === 'string') {
       notifications.show({
         variant: 'warning',
@@ -54,10 +58,9 @@ export default function UploadImage() {
       });
       setStatus('success');
 
-      const data = resp.data;
-      if (data) {
+      if (resp.Location) {
         getExifs(file).then((tags) => {
-          form.setState('url', data.url);
+          form.setState('url', 'https://' + resp.Location);
           form.setState('exif', JSON.stringify(tags));
           form.setState('format', tags.fileType);
         });
