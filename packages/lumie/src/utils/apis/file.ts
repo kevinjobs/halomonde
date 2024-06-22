@@ -54,7 +54,7 @@ export async function deleteFileByFilename(filename: string): ApiResponse {
 export async function uploadFile(
   file: File,
   onProgress?: (percent: number) => void,
-): ApiResponse {
+): ApiResponse<UploadReturnType> {
   const formData = new FormData();
   formData.append('file', file);
   const resp = await fileApi.post(API_URL.upload, formData, {

@@ -55,8 +55,8 @@ const LEFT_ITEMS: PageProps[] = [
         icon: <Icon name="files" />,
       },
       {
-        title: 'Upload Image',
-        description: '上传图片',
+        title: '上传图片',
+        description: '将照片上传到图库',
         element: <UploadImage />,
         to: 'content/upload-image',
         icon: <Icon name="camera" />,

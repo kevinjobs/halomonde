@@ -1,27 +1,29 @@
-import React, { useReducer, } from 'react';
+import React, { useReducer } from 'react';
 
 export interface UseFormProps {
   initial: any;
+  required?: Record<string, string>;
 }
 
 export type GetReturn = {
   onChange(e?: any, value?: any): void;
   value: any;
-}
+};
 export type UseFormReturnType = {
   get(prop: string): GetReturn;
   reset(): void;
   clear(): void;
   setState(prop: string, value: any): void;
   data: any;
-}
+  required?: Record<string, string>;
+};
 
 interface Action {
   type?: string;
   payload?: any;
 }
 
-function clearState<T extends Record<string, any>>(state: T):T {
+function clearState<T extends Record<string, any>>(state: T): T {
   const tmp: any = {};
   for (const k of Object.keys(state)) {
     if (typeof state[k] === 'string') tmp[k] = '';
@@ -34,7 +36,10 @@ function clearState<T extends Record<string, any>>(state: T):T {
   return { ...state, ...tmp };
 }
 
-export function useForm({initial}: UseFormProps): UseFormReturnType {
+export function useForm({
+  initial,
+  required,
+}: UseFormProps): UseFormReturnType {
   const reducer = (state: any, action: Action) => {
     if (action.type === 'clear') return clearState<typeof initial>(state);
     if (action.type === 'reset') return initial;
@@ -43,29 +48,30 @@ export function useForm({initial}: UseFormProps): UseFormReturnType {
 
   const [state, dispatch] = useReducer(reducer, initial);
 
-  const reset = () => dispatch({type: 'reset'});
-  const clear = () => dispatch({type: 'clear'})
+  const reset = () => dispatch({ type: 'reset' });
+  const clear = () => dispatch({ type: 'clear' });
 
   const get = (prop: string): GetReturn => {
     const onChange = (e: any, value?: any) => {
-      dispatch({payload: {[prop]: value}});
-    }
+      dispatch({ payload: { [prop]: value } });
+    };
 
     return {
       value: state[prop],
       onChange,
-    }
-  }
+    };
+  };
 
   const setState = (prop: string, value: any) => {
-    dispatch({payload: {[prop]: value}});
-  }
+    dispatch({ payload: { [prop]: value } });
+  };
 
   return {
     get,
     reset,
     data: state,
+    required: required,
     clear,
     setState,
-  }
+  };
 }
