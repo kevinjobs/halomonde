@@ -1,5 +1,12 @@
 .uploadImage {
   display: flex;
+  
+}
+
+.main {
+  display: flex;
+  flex-wrap: wrap;
+  min-width: 800px;
 }
 
 .right {
@@ -11,8 +18,20 @@
 }
 
 .left {
-  min-width: 600px;
-  padding: 0 32px;
+  flex-grow: 1;
+  padding: 0 32px 0 0;
+}
+
+.bottom {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 32px;
+  button {
+    width: 160px;
+    height: 40px;
+  }
 }
 
 .editItem {
@@ -29,4 +48,42 @@
   display: inline-block;
   margin-left: 8px;
   color: #f5222d;
+}
+
+.exifInfo {
+  height: 240px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-bottom: 24px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 8px;
+  padding: 16px 24px;
+}
+
+.exifItem {
+  display: flex;
+  align-items: center;
+  margin: 4px 0;
+  max-width: 100%;
+  > label {
+    font-size: 0.8rem;
+    color: #888;
+    min-width: 52px;
+    text-align: center;
+  }
+  span {
+    flex-grow: 1;
+    padding: 0 4px 0 0;
+  }
+  input {
+    margin-left: 16px;
+    padding: 4px 8px;
+    border: 1px solid #9999995d;
+    width: 100%;
+    font-size: 0.8rem;
+    color: #545454;
+    &:focus {
+      outline: none;
+    }
+  }
 }

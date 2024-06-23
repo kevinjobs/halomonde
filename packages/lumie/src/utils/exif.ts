@@ -30,10 +30,10 @@ export type IExif = {
   gpsLatitudeRef: string;
   /**  */
   orientation: number;
-};
+} & Record<string, number | string>;
 
 const extractExifs = (exif: ExifTags): IExif => {
-  console.log(exif);
+  // console.log(exif);
 
   let createDate;
 
@@ -43,7 +43,7 @@ const extractExifs = (exif: ExifTags): IExif => {
       'YYYY:MM:DD HH:mm:ss',
       true,
     ).unix();
-  } else if (exif.CreateDate.description) {
+  } else if (exif.CreateDate?.description) {
     createDate = dayjs(exif['CreateDate']?.description).unix();
   }
 
@@ -98,4 +98,25 @@ const extractExifs = (exif: ExifTags): IExif => {
     gpsLatitudeRef,
     orientation,
   };
+};
+
+export const EXIF_NAME: Record<string, string | number> = {
+  createDate: '创建日期',
+  modifyDate: '修改日期',
+  fileType: '图片格式',
+  iso: 'ISO',
+  width: '宽度',
+  height: '高度',
+  lens: '镜头',
+  focalLength: '焦距',
+  focalNumber: '光圈',
+  exposure: '快门时间',
+  model: '相机型号',
+  gpsAltitude: '海拔',
+  gpsAltitudeRef: '海平面',
+  gpsLongitude: '经度',
+  gpsLongitudeRef: '东/西',
+  gpsLatitude: '纬度',
+  gpsLatitudeRef: '南/北',
+  orientation: '旋转方向',
 };
