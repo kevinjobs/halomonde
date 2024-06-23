@@ -7,6 +7,7 @@ import { randomInt } from '@horen/utils';
 
 import Background from './background';
 import Gallery from './gallery';
+import { photoCompressedUrl } from '@/utils/uri';
 
 export default function GalleryPage() {
   const [cover, setCover] = React.useState<string>();
@@ -16,7 +17,11 @@ export default function GalleryPage() {
     getPostListSync(
       { offset: 0, limit: 999, type: 'cover' },
       (postList) => {
-        setCover(postList[randomInt(0, postList.length - 1)].url);
+        const randomIndex = randomInt(0, postList.length - 1);
+
+        console.log(randomIndex);
+
+        setCover(photoCompressedUrl(postList[randomIndex].url));
       },
       (errMsg) => console.log(errMsg),
     );

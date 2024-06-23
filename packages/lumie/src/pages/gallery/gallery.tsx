@@ -8,6 +8,8 @@ import { IPost } from '@/types';
 import { getPostListSync } from '@/utils/apis';
 import { IExif } from '@/utils/exif';
 
+import { photoCompressedUrl } from '@/utils/uri';
+
 const Container = styled.div`
   width: 100%;
   height: 100%;
@@ -90,7 +92,7 @@ const covertImageList = (imageList: Array<IPost>): Array<PhotoItem> => {
       console.log(e);
     }
 
-    const src = img.url;
+    const src = photoCompressedUrl(img.url);
     return {
       src: src,
       width: exif?.width,

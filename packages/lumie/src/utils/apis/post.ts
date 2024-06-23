@@ -4,6 +4,7 @@ import { covertToUnixStamp10 } from '@/utils/datetime';
 import api from '@/utils/network';
 
 import { ApiResponseType, ApiResponse } from './';
+import { fullfillUrl } from '../uri';
 
 export type PostListRespData = {
   amount: number;
@@ -83,8 +84,6 @@ export async function deletePost(uid: string): ApiResponse {
  * @returns
  */
 export async function updatePost(uid: string, data: IPost): ApiResponse {
-  shrinkUrl(data);
-
   const resp = await api.put(API_URL.post, data, { params: { uid } });
   if (resp.data.code === 0) return resp.data;
   return resp.data.msg;
@@ -96,8 +95,6 @@ export async function updatePost(uid: string, data: IPost): ApiResponse {
  * @returns
  */
 export async function addPost(data: IPost): ApiResponse {
-  shrinkUrl(data);
-
   const resp = await api.post(API_URL.post, data);
   if (resp.data.code === 0) return resp.data;
   return resp.data.msg;
@@ -113,7 +110,7 @@ export async function fetchPost(uid: string): ApiResponse<{ post: IPost }> {
   if (resp.data.code === 0) {
     const data = resp.data;
 
-    fullUrl(data.data.post);
+    data.data.post.url = fullfillUrl(data.data.post.url);
 
     data.data.post['updateAt'] = covertToUnixStamp10(
       data.data.post['updateAt'],
@@ -129,15 +126,9 @@ export async function fetchPost(uid: string): ApiResponse<{ post: IPost }> {
   return resp.data.msg;
 }
 
-const fullUrl = (post: IPost) => {
-  if (post.url?.startsWith('https')) return;
-  post.url = API_URL.base + post.url;
-};
-const shrinkUrl = (post: IPost) =>
-  (post.url = post.url?.replace(API_URL.base, ''));
 const convertPosts = (posts: IPost[]) => {
   return posts.map((p) => {
-    fullUrl(p);
+    p.url = fullfillUrl(p.url);
 
     p.createAt = covertToUnixStamp10(p.createAt);
     p.updateAt = covertToUnixStamp10(p.updateAt);

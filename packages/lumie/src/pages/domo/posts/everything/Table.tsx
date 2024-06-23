@@ -5,8 +5,9 @@ import { Table } from '@/components/table';
 import { store } from '@/store';
 import COLOR_MAP from '@/styles/colors';
 import { IPost } from '@/types';
-import { Button, Skeleton, Tag } from '@horen/core';
+import { Button, Skeleton, Tag, TagProps } from '@horen/core';
 import { useStore } from '@horen/store';
+import { photoThumbUrl } from '@/utils/uri';
 
 export interface PostTableProps {
   posts?: IPost[];
@@ -132,10 +133,7 @@ function toTableData(
       author: <span>{post.author}</span>,
       // content: <span>{post.content}</span>,
       // sumary: <span>{post.excerpt || post.description}</span>,
-      preview: renderPreview(
-        post.url.replace('static/', 'static/thumb-'),
-        post.title,
-      ),
+      preview: renderPreview(photoThumbUrl(post.url), post.title),
       status: renderStatus(post.status),
       tags: renderTags(post.tags, 'primary', 12),
       category: renderTags(post.category, 'dark'),
@@ -149,7 +147,11 @@ function toTableData(
   return rows;
 }
 
-const renderTags = (tags: string, variant: any = 'secondary', radius = 0) => {
+const renderTags = (
+  tags: string,
+  variant: TagProps['variant'] = 'secondary',
+  radius = 0,
+) => {
   if (!tags) return <span></span>;
   return (
     <span>

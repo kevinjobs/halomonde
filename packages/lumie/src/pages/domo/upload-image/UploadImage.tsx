@@ -17,6 +17,7 @@ import dayjs from 'dayjs';
 import css from './UploadImage.module.less';
 import { getExifs } from '@/utils/exif';
 import { addPost } from '@/utils/apis';
+import { nowStamp, stampToDate } from '@/utils/datetime';
 
 export default function UploadImage() {
   const state = useStore(store);
@@ -41,6 +42,11 @@ export default function UploadImage() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const resp: any = await uploadCloudFile(file, (percent) => {
       setProgress(percent);
+    }).catch((err) => {
+      notifications.show({
+        variant: 'warning',
+        message: err,
+      });
     });
 
     if (!resp) return;
@@ -63,6 +69,9 @@ export default function UploadImage() {
           form.setState('url', 'https://' + resp.Location);
           form.setState('exif', JSON.stringify(tags));
           form.setState('format', tags.fileType);
+          // 从 exif 中读取图片时间，如果没有则设为当前时间
+          form.setState('createAt', tags.createDate || nowStamp());
+          form.setState('updateAt', tags.modifyDate || nowStamp());
         });
       }
     }
@@ -102,6 +111,7 @@ export default function UploadImage() {
           variant: 'success',
           message: '成功',
         });
+        form.reset();
       }
     });
   };
@@ -145,25 +155,21 @@ export default function UploadImage() {
 
         <EditItem label="创建时间">
           <Datepicker
-            selected={
-              form?.data.createAt && dayjs.unix(form?.data.createAt).toDate()
-            }
+            selected={stampToDate(form.get('createAt').value)}
             onChange={(d) =>
               form.get('createAt').onChange(null, dayjs(d).unix())
             }
-            dateFormat={'yyyy-MM-dd'}
+            dateFormat={'yyyy-MM-dd HH:mm:ss'}
           />
         </EditItem>
 
         <EditItem label="更新时间">
           <Datepicker
-            selected={
-              form?.data.updateAt && dayjs.unix(form?.data.updateAt).toDate()
-            }
+            selected={stampToDate(form.get('updateAt').value)}
             onChange={(d) =>
               form.get('updateAt').onChange(null, dayjs(d).unix())
             }
-            dateFormat={'yyyy-MM-dd'}
+            dateFormat={'yyyy-MM-dd HH:mm:ss'}
           />
         </EditItem>
 

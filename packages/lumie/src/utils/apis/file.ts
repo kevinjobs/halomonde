@@ -3,6 +3,26 @@ import COS from 'cos-js-sdk-v5';
 
 import api, { fileApi } from '../network';
 import { ApiResponse } from './';
+import { getLocalUser } from '../store';
+
+export const cos = new COS({
+  getAuthorization(_, callback) {
+    const url = API_URL.sts;
+    api.get(url, { params: {} }).then((resp) => {
+      if (resp.data.code === 0) {
+        const data = resp.data.data;
+        callback({
+          TmpSecretId: data.credentials.tmpSecretId,
+          TmpSecretKey: data.credentials.tmpSecretKey,
+          SecurityToken: data.credentials.sessionToken,
+          StartTime: data.startTime,
+          ExpiredTime: data.expiredTime,
+          ScopeLimit: true, // 细粒度控制权限需要设为 true，会限制密钥只在相同请求时重复使用
+        });
+      }
+    });
+  },
+});
 
 export type FileRespData = {
   filename: string;
@@ -77,18 +97,16 @@ export async function uploadCloudFile(
   const Bucket = 'gallery-1252473272';
   const Region = 'ap-nanjing';
 
-  const cos = new COS({
-    // todo: get secret id & key from server
-    SecretId: '',
-    SecretKey: '',
-  });
-
   return new Promise((resolve, reject) => {
+    if (!getLocalUser()?.username) {
+      reject('请先登录');
+    }
+
     cos.uploadFile(
       {
         Bucket,
         Region,
-        Key: file.name,
+        Key: `photos/${getLocalUser().username}/${file.name}`,
         Body: file,
         SliceSize: 1024 * 1024 * 5,
         onProgress: (progressData) => {
