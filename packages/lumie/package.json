@@ -28,6 +28,7 @@
     "@horen/utils": "workspace:*",
     "@icon-park/react": "^1.4.2",
     "axios": "^0.21.4",
+    "cos-js-sdk-v5": "latest",
     "dayjs": "^1.11.10",
     "echarts": "^5.4.3",
     "exifreader": "^4.16.0",

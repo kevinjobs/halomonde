@@ -6,7 +6,8 @@ import { ApiResponse } from './';
 import { getLocalUser } from '../store';
 
 export const cos = new COS({
-  getAuthorization(_, callback) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  getAuthorization(_: any, callback: any) {
     const url = API_URL.sts;
     api.get(url, { params: {} }).then((resp) => {
       if (resp.data.code === 0) {
@@ -109,13 +110,15 @@ export async function uploadCloudFile(
         Key: `photos/${getLocalUser().username}/${file.name}`,
         Body: file,
         SliceSize: 1024 * 1024 * 5,
-        onProgress: (progressData) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        onProgress: (progressData: any) => {
           if (onProgress) {
             onProgress((progressData.percent * 100) | 0);
           }
         },
       },
-      (err, data) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (err: any, data: any) => {
         if (err) reject(err.message);
         else resolve(data);
       },
