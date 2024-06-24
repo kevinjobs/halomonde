@@ -122,7 +122,7 @@ export function ArticlesPage(): React.ReactElement {
   };
 
   const handleClickArticle = (a: IPost) => {
-    navigate(`/article/${a.uid}`);
+    navigate(`/view/article/${a.uid}`);
   };
 
   const refreshArticleList = (offset: number, limit = pageLimit) => {

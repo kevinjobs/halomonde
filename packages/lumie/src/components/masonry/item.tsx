@@ -1,8 +1,8 @@
 import React from 'react';
-import { animated, useSpring, } from 'react-spring';
+import { animated, useSpring } from 'react-spring';
 
-import { PhotoInfoPanel, } from '@/pages/photo';
-import { IPost, } from '@/types';
+import { PhotoInfoPanel } from '@/pages/view/photo';
+import { IPost } from '@/types';
 
 import style from './Item.module.less';
 
@@ -38,11 +38,11 @@ export const MasonryItem = (props: ItemProps) => {
     children,
     post,
   } = props;
-  
+
   const [picked, setPicked] = React.useState(false);
   const [visible, setVisible] = React.useState(false);
 
-  const outRef = React.useRef<HTMLDivElement>(); 
+  const outRef = React.useRef<HTMLDivElement>();
 
   const [styles, api] = useSpring(
     () => ({
@@ -52,9 +52,9 @@ export const MasonryItem = (props: ItemProps) => {
       height,
       position: 'absolute',
       zIndex: 1,
-      visibility: 'hidden'
+      visibility: 'hidden',
     }),
-    []
+    [],
   );
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -64,7 +64,6 @@ export const MasonryItem = (props: ItemProps) => {
     const rect = outRef?.current?.getBoundingClientRect();
 
     if (!picked) {
-      
       api.start({
         from: {
           position: 'fixed',
@@ -73,7 +72,7 @@ export const MasonryItem = (props: ItemProps) => {
           left: rect.left,
           top: rect.top,
           zIndex: 999,
-          visibility: 'visible'
+          visibility: 'visible',
         },
         to: {
           position: 'fixed',
@@ -82,10 +81,10 @@ export const MasonryItem = (props: ItemProps) => {
           left: finalLeft,
           top: finalTop,
           zIndex: 999,
-          visibility: 'visible'
+          visibility: 'visible',
         },
         config: { mass: 0.5, tension: 270, friction: 16 },
-      })
+      });
       setPicked(true);
     } else {
       setPicked(false);
@@ -97,7 +96,7 @@ export const MasonryItem = (props: ItemProps) => {
           left: finalLeft,
           top: finalTop,
           zIndex: 999,
-          visibility: 'visible'
+          visibility: 'visible',
         },
         to: {
           position: 'fixed',
@@ -106,21 +105,21 @@ export const MasonryItem = (props: ItemProps) => {
           left: rect.left,
           top: rect.top,
           zIndex: 1,
-          visibility: 'visible'
+          visibility: 'visible',
         },
         config: { mass: 0.8, tension: 280, friction: 26 },
-      })
+      });
       setTimeout(() => {
         api.set({
           position: 'absolute',
           left: 0,
           top: 0,
           zIndex: 1,
-          visibility: 'hidden'
-        })
+          visibility: 'hidden',
+        });
       }, 250);
     }
-  }
+  };
 
   return (
     <div
@@ -128,15 +127,14 @@ export const MasonryItem = (props: ItemProps) => {
       ref={outRef}
       onClick={handleClick}
       className={style.masnoryItem}
-      style={{width, height, top, left}}
-    >
+      style={{ width, height, top, left }}>
       <div>
         <img src={props.src} alt={props.title} />
       </div>
-      <animated.div style={{...styles as any}}>
+      <animated.div style={{ ...(styles as any) }}>
         <img src={props.src} alt={props.title} />
       </animated.div>
-      <div className={style.info} style={{width, height}}>
+      <div className={style.info} style={{ width, height }}>
         <div className={style.title}>
           <span>{post?.title}</span>
         </div>
@@ -145,9 +143,7 @@ export const MasonryItem = (props: ItemProps) => {
         </div>
       </div>
       {children}
-      {
-        picked
-        && 
+      {picked && (
         <PhotoInfoPanel
           alwaysShow
           post={post}
@@ -155,15 +151,11 @@ export const MasonryItem = (props: ItemProps) => {
           onClickView={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            setVisible(!visible)
+            setVisible(!visible);
           }}
         />
-      }
-      {
-        picked
-        &&
-        <div className={style.mask}></div>
-      }
+      )}
+      {picked && <div className={style.mask}></div>}
     </div>
   );
 };

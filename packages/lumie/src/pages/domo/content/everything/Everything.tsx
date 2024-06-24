@@ -58,7 +58,7 @@ export default function PostsEverything(): React.ReactElement {
 
   /** 点击查看详情 */
   const handleViewPost = (p: IPost) => {
-    navigate(`/${p.type}/${p.uid}`);
+    navigate(`/view/${p.type}/${p.uid}`);
   };
 
   /** 点击删除 */
