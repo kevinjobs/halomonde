@@ -195,15 +195,23 @@ export default function PostsEverything(): React.ReactElement {
         </div>
         <div
           className={style.addOne}
-          style={{ display: state?.user ? 'block' : 'none' }}>
+          style={{ display: state?.user ? 'flex' : 'none' }}>
           <span className={style.addText}>新增</span>
           <span>
-            <Select value="article" onChange={handleCreate} arrow>
-              <Select.Item name="文章" value="article" />
-              <Select.Item name="照片" value="photo" />
-              <Select.Item name="封面" value="cover" />
-              <Select.Item name="诗文" value="verse" />
-            </Select>
+            <Button onClick={() => handleCreate(null, 'article')}>文章</Button>
+            <Button variant="dark" onClick={() => handleCreate(null, 'photo')}>
+              照片
+            </Button>
+            <Button
+              variant="success"
+              onClick={() => handleCreate(null, 'cover')}>
+              封面
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={() => handleCreate(null, 'verse')}>
+              诗文
+            </Button>
           </span>
         </div>
       </div>

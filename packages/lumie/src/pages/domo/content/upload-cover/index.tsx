@@ -1,3 +1,4 @@
-import { UploadCover } from './UploadCover';
+import { UploadCoverDomo, UploadCoverPanel } from './UploadCover';
 
-export default UploadCover;
+export default UploadCoverDomo;
+export { UploadCoverPanel };

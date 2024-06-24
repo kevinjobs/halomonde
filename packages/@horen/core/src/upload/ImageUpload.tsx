@@ -13,6 +13,7 @@ export interface ImageUploadProps
   progress?: number;
   uploadStatus: 'success' | 'failed' | '' | string;
   title?: string;
+  defaultPreviewURL?: string;
 }
 
 export function ImageUpload(props: ImageUploadProps) {
@@ -32,6 +33,7 @@ export function ImageUpload(props: ImageUploadProps) {
     progress = 0,
     uploadStatus = '',
     title = '',
+    defaultPreviewURL,
   } = props;
 
   const cls =
@@ -69,6 +71,9 @@ export function ImageUpload(props: ImageUploadProps) {
               </div>
             </span>
           </>
+        )}
+        {defaultPreviewURL && !previewFile && (
+          <img src={defaultPreviewURL} alt="default-preview" />
         )}
       </div>
     </div>

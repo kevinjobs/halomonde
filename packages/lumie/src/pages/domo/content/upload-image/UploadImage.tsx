@@ -3,22 +3,42 @@ import { Button, ImageUpload, Input, Segment, TagInput } from '@horen/core';
 import { notifications } from '@horen/notifications';
 import Datepicker from 'react-datepicker';
 import { useForm } from '@horen/hooks';
-import { useStore } from '@horen/store';
-import { store } from '@/store';
+import { getLocalUser } from '@/utils/store';
 import { uploadCloudFile } from '@/utils/apis/file';
 import dayjs from 'dayjs';
 import css from './UploadImage.module.less';
 import { EXIF_NAME, IExif, getExifs } from '@/utils/exif';
-import { addPost } from '@/utils/apis';
+import { addPost, updatePost } from '@/utils/apis';
 import { nowStamp, stampToDate } from '@/utils/datetime';
+import { IPost } from '@/types';
+import { photoThumbUrl } from '@/utils/uri';
 
-export default function UploadImage() {
-  const state = useStore(store);
+export default function UploadImageDomo() {
+  return (
+    <div className={css.uploadImage}>
+      <UploadImagePanel />
+    </div>
+  );
+}
+
+export interface UploadImagePanelProps {
+  photoPost?: IPost;
+  mode?: 'create' | 'update';
+  onSubmit?: (post: IPost) => void;
+  onCancel?: () => void;
+}
+
+export function UploadImagePanel({
+  photoPost = {},
+  mode = 'create',
+  onSubmit,
+  onCancel,
+}: UploadImagePanelProps) {
   const form = useForm({
     initial: {
       title: '',
       type: 'photo',
-      author: state?.user?.username,
+      author: getLocalUser()?.username,
       status: 'publish',
       exif: '',
       tags: '',
@@ -27,6 +47,7 @@ export default function UploadImage() {
       createAt: null,
       updateAt: null,
       url: '',
+      ...photoPost,
     },
     required: {
       title: '标题不能为空',
@@ -99,9 +120,33 @@ export default function UploadImage() {
     } else {
       toSubmit();
     }
+    if (onSubmit) onSubmit(form.data);
   };
 
   const toSubmit = () => {
+    if (mode === 'create') toAdd();
+    if (mode === 'update') toUpdate();
+  };
+
+  const toUpdate = () => {
+    updatePost(form.data.uid, form.data).then((resp) => {
+      if (typeof resp === 'string') {
+        notifications.show({
+          variant: 'warning',
+          message: resp,
+        });
+      } else {
+        notifications.show({
+          variant: 'success',
+          message: '成功',
+        });
+        form.clear();
+        form.reset();
+      }
+    });
+  };
+
+  const toAdd = () => {
     addPost(form.data).then((resp) => {
       if (typeof resp === 'string') {
         notifications.show({
@@ -117,6 +162,10 @@ export default function UploadImage() {
         form.reset();
       }
     });
+  };
+
+  const handleCancel = () => {
+    if (onCancel) onCancel();
   };
 
   return (
@@ -184,6 +233,7 @@ export default function UploadImage() {
 
         <div className={css.right}>
           <ImageUpload
+            defaultPreviewURL={photoThumbUrl(form.get('url').value)}
             progress={progress}
             onChange={handleChange}
             accept={[]}
@@ -198,7 +248,9 @@ export default function UploadImage() {
 
         <div className={css.bottom}>
           <div>
-            <Button variant="danger">清空</Button>
+            <Button variant="danger" onClick={handleCancel}>
+              取消
+            </Button>
             <Button onClick={handleSubmit}>提交</Button>
           </div>
         </div>

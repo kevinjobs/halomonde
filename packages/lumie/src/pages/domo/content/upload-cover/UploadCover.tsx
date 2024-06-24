@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import React, { useState } from 'react';
 
 import { PostType } from '@/constants';
-import { addPost } from '@/utils/apis';
+import { addPost, updatePost } from '@/utils/apis';
 import { uploadCloudFile } from '@/utils/apis/file';
 import { getLocalUser } from '@/utils/store';
 import { Button, ImageUpload } from '@horen/core';
@@ -12,12 +12,33 @@ import css from './UploadCover.module.less';
 import { IPost } from '@/types';
 import { photoCompressedUrl } from '@/utils/uri';
 
-export function UploadCover() {
-  const [uploadForm, setUploadForm] = useState<IPost>({
+export function UploadCoverDomo() {
+  return <UploadCoverPanel />;
+}
+
+export interface UploadCoverPanelProps {
+  coverPost?: IPost;
+  mode?: 'create' | 'update';
+  onSubmit?: (post: IPost) => void;
+  onCancel?: () => void;
+}
+
+export function UploadCoverPanel({
+  coverPost = {},
+  mode = 'create',
+  onSubmit,
+  onCancel,
+}: UploadCoverPanelProps) {
+  const defaultCover = {
     type: 'cover' as PostType,
     title: 'cover-' + dayjs().valueOf(),
     author: getLocalUser()?.username || '',
     status: 'publish',
+  };
+
+  const [uploadForm, setUploadForm] = useState<IPost>({
+    ...defaultCover,
+    ...coverPost,
   });
   const [status, setStatus] = useState('');
   const [progress, setProgress] = useState(0);
@@ -59,28 +80,74 @@ export function UploadCover() {
   };
 
   const handleSubmit = () => {
-    addPost(uploadForm)
-      .then(() => {
-        notifications.show({
-          variant: 'success',
-          message: '提交成功',
+    if (mode === 'create') {
+      addPost(uploadForm)
+        .then((resp) => {
+          if (typeof resp === 'string') {
+            notifications.show({
+              variant: 'warning',
+              message: resp,
+            });
+          }
+
+          notifications.show({
+            variant: 'success',
+            message: '提交成功',
+          });
+          setUploadForm((prev) => ({
+            ...prev,
+            title: 'cover-' + dayjs().valueOf(),
+            url: '',
+          }));
+        })
+        .catch((err) => {
+          notifications.show({
+            variant: 'danger',
+            message: err,
+          });
         });
-        setUploadForm((prev) => ({
-          ...prev,
-          title: 'cover-' + dayjs().valueOf(),
-          url: '',
-        }));
-      })
-      .catch((err) => {
-        notifications.show({
-          variant: 'danger',
-          message: err,
+    }
+
+    if (mode === 'update') {
+      updatePost(uploadForm.uid, uploadForm)
+        .then((resp) => {
+          if (typeof resp === 'string') {
+            notifications.show({
+              variant: 'warning',
+              message: resp,
+            });
+          }
+
+          notifications.show({
+            variant: 'success',
+            message: '提交成功',
+          });
+          setUploadForm((prev) => ({
+            ...prev,
+            title: 'cover-' + dayjs().valueOf(),
+            url: '',
+          }));
+        })
+        .catch((err) => {
+          notifications.show({
+            variant: 'danger',
+            message: err,
+          });
         });
-      });
+    }
+
+    if (onSubmit) onSubmit(uploadForm);
+  };
+
+  const handleCancel = () => {
+    if (onCancel) onCancel();
   };
 
   return (
     <div className={css.uploadCover}>
+      <div className={css.coverPreview}>
+        {uploadForm.url && <img src={photoCompressedUrl(uploadForm.url)} />}
+      </div>
       <div className={css.uploadArea}>
         <ImageUpload
           progress={progress}
@@ -90,11 +157,10 @@ export function UploadCover() {
         />
         <div>
           <Button onClick={handleSubmit}>提交</Button>
-          <Button variant="danger">取消</Button>
+          <Button variant="danger" onClick={handleCancel}>
+            取消
+          </Button>
         </div>
-      </div>
-      <div className={css.coverPreview}>
-        {uploadForm.url && <img src={photoCompressedUrl(uploadForm.url)} />}
       </div>
     </div>
   );
