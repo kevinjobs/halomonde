@@ -74,14 +74,21 @@ export function PhotoInfoPanel({
   return (
     <div
       className={cls}
-      style={{ top: visible ? 'calc(100vh - 500px)' : 'calc(100vh - 50px)' }}
+      style={{
+        top: visible ? 'calc(100vh - 460px)' : 'calc(100vh - 50px)',
+        width: width < 1080 ? '80%' : '500px',
+      }}
       onClick={(e) => e.stopPropagation()}>
       {(width < 1080 || alwaysShow) && (
         <div className={style.clickToView} onClick={onClickView}>
           <Arrow up={visible} />
         </div>
       )}
-      <div className={style.infoContainer}>
+      <div
+        className={style.infoContainer}
+        style={{
+          width: width < 1080 ? '100%' : '380px',
+        }}>
         <div className={style.title}>
           {post?.title ? (
             <span>{post?.title}</span>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { animated, useSpring } from 'react-spring';
 
@@ -34,7 +35,6 @@ export const MasonryItem = (props: ItemProps) => {
     finalHeight,
     finalWidth,
     finalTop,
-    index,
     children,
     post,
   } = props;
@@ -145,7 +145,7 @@ export const MasonryItem = (props: ItemProps) => {
       {children}
       {picked && (
         <PhotoInfoPanel
-          alwaysShow
+          alwaysShow={true}
           post={post}
           visible={visible}
           onClickView={(e) => {
