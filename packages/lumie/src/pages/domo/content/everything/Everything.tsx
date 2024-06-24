@@ -24,6 +24,7 @@ import { useStore } from '@horen/store';
 
 import style from './Everything.module.less';
 import { PostTable } from './Table';
+import { getLocalUser } from '@/utils/store';
 
 export default function PostsEverything(): React.ReactElement {
   const navigate = useNavigate();
@@ -115,7 +116,7 @@ export default function PostsEverything(): React.ReactElement {
   const handleCreate = (_: any, type: PostType) => {
     const postTemplate: IPost = {
       title: '',
-      author: '',
+      author: getLocalUser()?.username,
       updateAt: dayjs().unix(),
       createAt: dayjs().unix(),
       content: '',
@@ -123,11 +124,11 @@ export default function PostsEverything(): React.ReactElement {
       id: 0,
       excerpt: '',
       tags: '',
-      format: 'default',
+      format: '',
       status: 'draft',
       type,
       url: '',
-      category: 'default',
+      category: '',
     };
     setNewPost(postTemplate);
   };
