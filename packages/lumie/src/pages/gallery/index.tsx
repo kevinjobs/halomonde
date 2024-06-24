@@ -18,9 +18,6 @@ export default function GalleryPage() {
       { offset: 0, limit: 999, type: 'cover' },
       (postList) => {
         const randomIndex = randomInt(0, postList.length - 1);
-
-        console.log(randomIndex);
-
         setCover(photoCompressedUrl(postList[randomIndex].url));
       },
       (errMsg) => console.log(errMsg),
@@ -37,7 +34,10 @@ export default function GalleryPage() {
 
   return (
     <ViewportProvider>
-      <Background cover={cover} verse={verses[randomInt(0, verses.length)]} />
+      <Background
+        cover={cover}
+        verse={verses[randomInt(0, verses.length - 1)]}
+      />
       <Gallery />
     </ViewportProvider>
   );

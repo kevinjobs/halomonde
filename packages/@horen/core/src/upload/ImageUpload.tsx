@@ -12,6 +12,7 @@ export interface ImageUploadProps
   onChange?: (files: File) => void;
   progress?: number;
   uploadStatus: 'success' | 'failed' | '' | string;
+  title?: string;
 }
 
 export function ImageUpload(props: ImageUploadProps) {
@@ -30,6 +31,7 @@ export function ImageUpload(props: ImageUploadProps) {
     limitSize = 1024 * 1024 * 2,
     progress = 0,
     uploadStatus = '',
+    title = '',
   } = props;
 
   const cls =
@@ -37,9 +39,7 @@ export function ImageUpload(props: ImageUploadProps) {
 
   return (
     <div className={cls}>
-      <div className={css.header}>
-        <span>上传图片</span>
-      </div>
+      <div className={css.header}>{title && <span>{title}</span>}</div>
       <div className={css.prompt}>
         <div>
           <div className={css.uploadIcon}>

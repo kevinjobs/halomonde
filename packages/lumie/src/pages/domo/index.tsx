@@ -19,6 +19,7 @@ import style from './index.module.less';
 
 import UploadImage from './content/upload-image';
 import Everything from './content/everything';
+import UploadCover from './content/upload-cover';
 import Invitaition from './system/invitation';
 import User from './system/user';
 
@@ -60,6 +61,13 @@ const LEFT_ITEMS: PageProps[] = [
         element: <UploadImage />,
         to: 'content/upload-image',
         icon: <Icon name="camera" />,
+      },
+      {
+        title: '上传封面',
+        description: '将图片上传到封面库',
+        element: <UploadCover />,
+        to: 'content/upload-cover',
+        icon: <Icon name="picture" />,
       },
     ],
   },
