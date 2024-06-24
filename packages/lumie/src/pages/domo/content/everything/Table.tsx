@@ -155,11 +155,14 @@ const renderTags = (
   if (!tags) return <span></span>;
   return (
     <span>
-      {tags.split('|').map((t, i) => (
-        <Tag variant={variant} key={i} style={{ borderRadius: radius }}>
-          {t}
-        </Tag>
-      ))}
+      {tags
+        .split('|')
+        .filter(Boolean)
+        .map((t, i) => (
+          <Tag variant={variant} key={i} style={{ borderRadius: radius }}>
+            {t}
+          </Tag>
+        ))}
     </span>
   );
 };
