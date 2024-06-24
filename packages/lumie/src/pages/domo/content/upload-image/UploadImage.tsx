@@ -248,10 +248,10 @@ export function UploadImagePanel({
 
         <div className={css.bottom}>
           <div>
+            <Button onClick={handleSubmit}>提交</Button>
             <Button variant="danger" onClick={handleCancel}>
               取消
             </Button>
-            <Button onClick={handleSubmit}>提交</Button>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Plus, } from '@icon-park/react';
+import { Plus } from '@icon-park/react';
 
 const G = styled.div`
   height: 100vh;
@@ -55,7 +55,7 @@ const GOI = styled.span`
   .go-item__icon {
     height: 64px;
     width: 64px;
-    background-color: rgba(0,0,0,.1);
+    background-color: rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     a {
       display: block;
@@ -84,22 +84,22 @@ export interface GoItem {
 const DEFAULT_ITEMS: GoItem[] = [
   {
     title: '百度',
-    link: 'https://baidu.com'
+    link: 'https://baidu.com',
   },
   {
     title: '必应',
-    link: 'https://bing.com'
+    link: 'https://bing.com',
   },
   {
     title: '爱范',
-    link: 'https://ifanr.com'
+    link: 'https://ifanr.com',
   },
   {
     title: '摸摸鱼',
     link: 'https://momoyu.cc',
     icon: 'https://momoyu.cc/img/logo-1.4a8f7d71.png',
   },
-]
+];
 
 export default function GoPage() {
   const [items, setItems] = React.useState(DEFAULT_ITEMS);
@@ -114,16 +114,18 @@ export default function GoPage() {
       <div className="container">
         <Search />
         <div className="inner">
-          {items.map(i => <Item {...i} />)}
+          {items.map((i) => (
+            <Item key={i.title} {...i} />
+          ))}
           <Item
             title="增加"
             link="/#/go"
-            icon={<Plus theme="outline" size="24" fill="#333"/>}
+            icon={<Plus theme="outline" size="24" fill="#333" />}
           />
         </div>
       </div>
     </G>
-  )
+  );
 }
 
 function Search() {
@@ -135,17 +137,17 @@ function Search() {
     const url = bing + s;
     window.open(url);
     setS('');
-  }
+  };
 
   return (
     <div className="go-search">
-      <input value={s} onChange={e => setS(e.target.value)} />
+      <input value={s} onChange={(e) => setS(e.target.value)} />
       <button onClick={handleClick}>搜索</button>
     </div>
-  )
+  );
 }
 
-function Item({link, title, icon}: GoItem) {
+function Item({ link, title, icon }: GoItem) {
   let ico: React.ReactNode = <img src={link + '/favicon.ico'} alt={title} />;
 
   if (typeof icon === 'string') {
@@ -159,7 +161,7 @@ function Item({link, title, icon}: GoItem) {
       <div className="go-item__icon">
         <a href={link}>{ico}</a>
       </div>
-      <div className="go-item__title">{ title }</div>
+      <div className="go-item__title">{title}</div>
     </GOI>
-  )
+  );
 }
