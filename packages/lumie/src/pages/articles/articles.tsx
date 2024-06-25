@@ -19,8 +19,7 @@ const ArticleList = styled.div`
 `;
 
 const ArticleItem = styled.div`
-  width: 100%;
-  margin: 16px 0;
+  margin: 16px;
   border-radius: 5px;
   position: relative;
   transition: all 0.3s ease-in-out;
@@ -89,7 +88,7 @@ const LoadMore = styled.div`
 
 const Sk = styled.div`
   background-color: ${COLOR_MAP.white1};
-  margin: 8px 0;
+  margin: 16px;
   display: flex;
   .right {
     margin-left: 16px;

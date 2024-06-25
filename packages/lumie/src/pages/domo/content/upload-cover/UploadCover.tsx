@@ -39,6 +39,7 @@ export function UploadCoverPanel({
   const [uploadForm, setUploadForm] = useState<IPost>({
     ...defaultCover,
     ...coverPost,
+    status: 'publish',
   });
   const [status, setStatus] = useState('');
   const [progress, setProgress] = useState(0);
