@@ -1,17 +1,19 @@
-import React, { useRef, useState } from 'react';
-import { Button, ImageUpload, Input, Segment, TagInput } from '@horen/core';
-import { notifications } from '@horen/notifications';
-import Datepicker from 'react-datepicker';
-import { useForm } from '@horen/hooks';
-import { getLocalUser } from '@/utils/store';
-import { uploadCloudFile } from '@/utils/apis/file';
 import dayjs from 'dayjs';
-import css from './UploadImage.module.less';
-import { EXIF_NAME, IExif, getExifs } from '@/utils/exif';
-import { addPost, updatePost } from '@/utils/apis';
-import { nowStamp, stampToDate } from '@/utils/datetime';
+import React, { useRef, useState } from 'react';
+import Datepicker from 'react-datepicker';
+
 import { IPost } from '@/types';
+import { addPost, updatePost } from '@/utils/apis';
+import { uploadCloudFile } from '@/utils/apis/file';
+import { nowStamp, stampToDate } from '@/utils/datetime';
+import { EXIF_NAME, getExifs, IExif } from '@/utils/exif';
+import { getLocalUser } from '@/utils/store';
 import { photoThumbUrl } from '@/utils/uri';
+import { Button, ImageUpload, Input, Segment, TagInput } from '@horen/core';
+import { useForm } from '@horen/hooks';
+import { notifications } from '@horen/notifications';
+
+import css from './UploadPhoto.module.less';
 
 export default function UploadImageDomo() {
   return (

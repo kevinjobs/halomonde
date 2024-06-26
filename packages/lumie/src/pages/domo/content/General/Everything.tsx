@@ -8,7 +8,7 @@ import {
   POST_TYPES,
   PostType,
 } from '@/constants';
-import EditPanel from '@/pages/domo/_components/edit-panel';
+import EditPanel from '@/pages/domo/_components/EditPanel';
 import { store } from '@/store';
 import { IPost } from '@/types';
 import {

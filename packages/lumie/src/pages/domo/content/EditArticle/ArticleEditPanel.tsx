@@ -14,7 +14,7 @@ import { useForm } from '@horen/hooks';
 import { notifications } from '@horen/notifications';
 import { useStore } from '@horen/store';
 
-import { EditPanelProps } from './';
+import { EditPanelProps } from '../../_components/EditPanel';
 import style from './ArticleEditPanel.module.less';
 
 export interface ArticleEditPanelProps extends EditPanelProps {}
@@ -55,6 +55,7 @@ export function ArticleEditPanel({
     if (onCancel) onCancel();
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleUploadSuccess = (result: any) => {
     form.setState('url', result.data.url);
     notifications.show({ variant: 'success', message: '上传封面成功' });

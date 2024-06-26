@@ -3,10 +3,10 @@ import React from 'react';
 
 import { IPost } from '@/types';
 
-import { ArticleEditPanel } from './ArticleEditPanel';
-import { VerseEditPanel } from './VerseEditPanel';
-import { UploadCoverPanel } from '../../content/upload-cover';
-import { UploadImagePanel } from '../../content/upload-image/UploadImage';
+import { ArticleEditPanel } from '../content/EditArticle/ArticleEditPanel';
+import { VerseEditPanel } from '../content/EditVerse/VerseEditPanel';
+import { UploadCoverPanel } from '../content/UploadCover';
+import { UploadImagePanel } from '../content/UploadPhoto/UploadPhoto';
 
 export interface EditPanelProps {
   mode?: 'update' | 'create';

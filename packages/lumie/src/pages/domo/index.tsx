@@ -17,9 +17,9 @@ import {
 import Home from './home';
 import style from './index.module.less';
 
-import UploadImage from './content/upload-image';
-import Everything from './content/everything';
-import UploadCover from './content/upload-cover';
+import UploadImage from './content/UploadPhoto';
+import Everything from './content/General';
+import UploadCover from './content/UploadCover';
 import Invitaition from './system/invitation';
 import User from './system/user';
 
