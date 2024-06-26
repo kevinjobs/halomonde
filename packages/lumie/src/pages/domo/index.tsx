@@ -61,6 +61,7 @@ const LEFT_ITEMS: PageProps[] = [
         element: <UploadImage />,
         to: 'content/upload-image',
         icon: <Icon name="camera" />,
+        loginRequired: true,
       },
       {
         title: '上传封面',
@@ -68,6 +69,8 @@ const LEFT_ITEMS: PageProps[] = [
         element: <UploadCover />,
         to: 'content/upload-cover',
         icon: <Icon name="picture" />,
+        loginRequired: true,
+        allowLevels: ['admin', 'superuser'],
       },
     ],
   },
@@ -138,7 +141,12 @@ const renderPages = (pages: PageProps[]) => {
         if (item.to) {
           if (item.loginRequired) {
             if (isLogined) {
-              if (item.allowLevels.includes(state.user.role)) {
+              const allowLevels = item.allowLevels || [
+                'common',
+                'admin',
+                'superuser',
+              ];
+              if (allowLevels.includes(state.user.role)) {
                 arr.push(item);
               } else {
                 arr.push({
@@ -146,7 +154,7 @@ const renderPages = (pages: PageProps[]) => {
                   element: (
                     <BanPage
                       currentRole={state.user.role}
-                      allowRole={item.allowLevels.join(',')}
+                      allowRole={allowLevels.join(',')}
                     />
                   ),
                 });
