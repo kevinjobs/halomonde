@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { Button, Input } from '@horen/core';
 
-import { EditPanelProps } from './';
+import { EditPanelProps } from '../../_components/EditPanel';
 import style from './VerseEditPanel.module.less';
 
 export interface VerseEditPanelProps extends EditPanelProps {}
