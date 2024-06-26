@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
 import { clearLoginedUser, setLoginedUser, store } from '@/store';
 import { IUser } from '@/types';
@@ -29,12 +29,15 @@ export default function Login(props: LoginProps) {
           variant: 'danger',
           message: resp,
         });
+        if (onFalied) onFalied();
       } else {
-        setLoginedUser({ ...resp.data.users[0], token });
+        const user = { ...resp.data.users[0], token };
+        setLoginedUser(user);
         notifications.show({
           variant: 'success',
           message: '登录成功',
         });
+        if (onSuccess) onSuccess(user);
       }
     });
   };
@@ -61,6 +64,16 @@ export default function Login(props: LoginProps) {
     });
   };
 
+  const handleInputPassword = (e: ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSubmit();
+    }
+  };
+
   return (
     <div className={style.login}>
       {state.user ? (
@@ -85,7 +98,8 @@ export default function Login(props: LoginProps) {
             <Input
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handleInputPassword}
+              onKeyDown={handleKeyDown}
             />
           </div>
           <div className={style.submitArea}>
