@@ -1,12 +1,27 @@
 @import "../../../styles/colors.less";
 
 .banPage {
-  text-align: left;
+  height: calc(100vh - 240px);
+  text-align: center;
+  > div:nth-child(1) {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10%;
+  }
+  > div:nth-child(2) {
+    text-align: center;
+  }
+  h3 > span {
+    color: @warning;
+    text-decoration: underline;
+  }
 }
 
 .message {
   width: 100%;
-  color: @warning;
+  color: #919191;
 }
 
 .allowRole {

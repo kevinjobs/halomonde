@@ -2,6 +2,7 @@ import React from 'react';
 
 import Add from './icon-add.svg';
 import Aperture from './icon-aperture.svg';
+import Ban from './icon-ban.svg';
 import Camera from './icon-camera.svg';
 import Clock from './icon-clock.svg';
 import Close from './icon-close.svg';
@@ -31,6 +32,7 @@ import Warning from './icon-warning.svg';
 export type IconName =
   | 'add'
   | 'aperture'
+  | 'ban'
   | 'camera'
   | 'close'
   | 'clock'
@@ -63,41 +65,42 @@ export interface IconProps extends React.HtmlHTMLAttributes<HTMLSpanElement> {
   fill?: string;
 }
 
-export function Icon({name, size=24, fill, ...restProps}: IconProps) {
+export function Icon({ name, size = 24, fill, ...restProps }: IconProps) {
   let icon;
 
   const ICONS = {
-    'add': Add,
-    'aperture': Aperture,
-    'camera': Camera,
-    'close': Close,
-    'clock': Clock,
-    'date': Date,
-    'code': Code,
-    'correct': Correct,
-    'dimension': Dimension,
-    'error': Error,
-    'exposure': Exposure,
-    'files': Files,
-    'focal': Focal,
-    'home': Home,
-    'info': Info,
-    'iso': Iso,
-    'lens': Lens,
-    'logout': Logout,
-    'location': Location,
-    'menu': Menu,
-    'picture': Picture,
-    'success': Success,
-    'upload': Upload,
-    'user': User,
-    'verse': Verse,
-    'vip': Vip,
-    'warning': Warning,
-  }
+    add: Add,
+    aperture: Aperture,
+    ban: Ban,
+    camera: Camera,
+    close: Close,
+    clock: Clock,
+    date: Date,
+    code: Code,
+    correct: Correct,
+    dimension: Dimension,
+    error: Error,
+    exposure: Exposure,
+    files: Files,
+    focal: Focal,
+    home: Home,
+    info: Info,
+    iso: Iso,
+    lens: Lens,
+    logout: Logout,
+    location: Location,
+    menu: Menu,
+    picture: Picture,
+    success: Success,
+    upload: Upload,
+    user: User,
+    verse: Verse,
+    vip: Vip,
+    warning: Warning,
+  };
 
   const I = ICONS[name];
-  
+
   return (
     <span
       {...restProps}
@@ -111,10 +114,9 @@ export function Icon({name, size=24, fill, ...restProps}: IconProps) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        ...restProps.style
-      }}
-    >
+        ...restProps.style,
+      }}>
       <I height={size} width={size} fill={fill} />
     </span>
-  )
+  );
 }
