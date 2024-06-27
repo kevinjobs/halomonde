@@ -4,7 +4,7 @@ export { Draggable, type DraggableProps } from './Draggable';
 
 export { Icon, type IconProps } from './icon';
 
-export { Input, TagInput, type InputProps } from './input';
+export { Input, TagInput, TextInput, type InputProps } from './input';
 
 export { Modal, type ModalProps } from './modal';
 

@@ -2,20 +2,40 @@
 @import "../size.less";
 
 .horenInput {
-  padding: 0 @largeGap;
-  border: 1px solid @gray-5;
-  border-radius: @normalRadius;
-  height: @normalHeight;
-  width: 100%;
-  display: inline-block;
-  &:focus,&:hover {
-    outline: none;
-    border-color: @primary;
+  display: flex;
+  margin: 8px 0;
+  label {
+    margin-right: 8px;
+    position: relative;
+    top: 4px;
   }
-  &:disabled {
-    border-color: @white-deep;
-    &:hover {
-      cursor: no-drop;
+  input {
+    padding: 0 @largeGap;
+    border: 1px solid @gray-5;
+    border-radius: @normalRadius;
+    height: @normalHeight;
+    line-height: @normalHeight;
+    &:focus,&:hover {
+      outline: none;
+      border-color: @primary;
     }
+    &:disabled {
+      border-color: @white-deep;
+      &:hover {
+        cursor: no-drop;
+      }
+    }
+  }
+}
+
+.errorInput {
+  border-color: @danger !important;
+  color: @danger;
+}
+
+.error {
+  > span {
+    font-size: @xxxSmallHeight;
+    color: @danger;
   }
 }
