@@ -17,13 +17,21 @@ export function getVariants(
   return vars[variant];
 }
 
-export type ClassnamesArgs = string | string[];
+export type ClassnamesArgs = string | string[] | Record<string, boolean>;
 
 export function classnames(args: ClassnamesArgs): string {
   if (typeof args === 'string') {
     return args;
-  } else {
+  } else if (args instanceof Array) {
     return args.join(' ');
+  } else {
+    const cls = [];
+    for (const c in args) {
+      if (args[c]) {
+        cls.push(c);
+      }
+    }
+    return cls.join(' ');
   }
 }
 

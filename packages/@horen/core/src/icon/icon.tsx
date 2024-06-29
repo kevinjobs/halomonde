@@ -10,6 +10,7 @@ import Code from './icon-code.svg';
 import Correct from './icon-correct.svg';
 import Date from './icon-date.svg';
 import Dimension from './icon-dimension.svg';
+import Down from './icon-down.svg';
 import Error from './icon-error.svg';
 import Exposure from './icon-exposure.svg';
 import Files from './icon-files.svg';
@@ -24,6 +25,7 @@ import Menu from './icon-menu.svg';
 import Picture from './icon-picture.svg';
 import Success from './icon-success.svg';
 import Upload from './icon-upload.svg';
+import Up from './icon-up.svg';
 import User from './icon-user.svg';
 import Verse from './icon-verse.svg';
 import Vip from './icon-vip.svg';
@@ -40,6 +42,7 @@ export type IconName =
   | 'correct'
   | 'date'
   | 'dimension'
+  | 'down'
   | 'error'
   | 'exposure'
   | 'files'
@@ -54,6 +57,7 @@ export type IconName =
   | 'picture'
   | 'success'
   | 'upload'
+  | 'up'
   | 'user'
   | 'verse'
   | 'vip'
@@ -79,6 +83,7 @@ export function Icon({ name, size = 24, fill, ...restProps }: IconProps) {
     code: Code,
     correct: Correct,
     dimension: Dimension,
+    down: Down,
     error: Error,
     exposure: Exposure,
     files: Files,
@@ -93,6 +98,7 @@ export function Icon({ name, size = 24, fill, ...restProps }: IconProps) {
     picture: Picture,
     success: Success,
     upload: Upload,
+    up: Up,
     user: User,
     verse: Verse,
     vip: Vip,

@@ -2,38 +2,64 @@
 @import "../size.less";
 
 .horenInput {
-  display: flex;
+  display: inline-block;
   margin: 8px 0;
-  label {
-    margin-right: 8px;
-    position: relative;
-    top: 4px;
+}
+
+.leftLabel {
+  margin-right: 8px;
+  position: relative;
+  top: 4px;
+}
+
+.topLabel {
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.inputArea {
+  padding: 0 @largeGap;
+  border: 1px solid @gray-5;
+  border-radius: @normalRadius;
+  height: @normalHeight;
+  line-height: @normalHeight;
+  &:focus,&:hover {
+    outline: none;
+    border-color: @primary;
   }
-  input {
-    padding: 0 @largeGap;
-    border: 1px solid @gray-5;
-    border-radius: @normalRadius;
-    height: @normalHeight;
-    line-height: @normalHeight;
-    &:focus,&:hover {
-      outline: none;
-      border-color: @primary;
-    }
-    &:disabled {
-      border-color: @white-deep;
-      &:hover {
-        cursor: no-drop;
-      }
+  &:disabled {
+    border-color: @white-deep;
+    &:hover {
+      cursor: no-drop;
     }
   }
 }
 
-.errorInput {
+.inputAreaWrapper {
+  display: inline-block;
+}
+
+.inputAreaError {
   border-color: @danger !important;
   color: @danger;
 }
 
-.error {
+.requiredTop {
+  display: inline-block;
+  color: @danger;
+  font-size: 1.1rem;
+  line-height: 1;
+  position: relative;
+  top: 2px;
+  margin-right: 4px;
+}
+
+.requiredLeft {
+  .requiredTop();
+  padding-top: 6px;
+}
+
+.errorText {
   > span {
     font-size: @xxxSmallHeight;
     color: @danger;
