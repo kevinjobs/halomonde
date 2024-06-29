@@ -9,7 +9,7 @@ export function NumberInput(props: InputProps) {
   const [data, setData] = useState(value);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setData(e.target.value.replace(/[^\d]/g, ''));
+    setData(e.target.value.replace(/[^\d\.]/g, ''));
     if (onInput) {
       onInput(e);
     }

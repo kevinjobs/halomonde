@@ -29,6 +29,7 @@ export function Input(props: InputProps) {
 
   const cls = classnames({
     [style.horenInput]: true,
+    [style.leftMode]: labelPlacement === 'left',
     [className]: true,
   });
 
@@ -43,19 +44,11 @@ export function Input(props: InputProps) {
 
   return (
     <span className={cls}>
-      {label && labelPlacement === 'left' && (
-        <span>
-          {required && <span className={style.requiredLeft}>*</span>}
-          <label className={style.leftLabel}>{label}</label>
-        </span>
-      )}
+      <span className={style.labelWrapper}>
+        <label className={style.label}>{label}</label>
+        {required && <span className={style.requiredStar}>*</span>}
+      </span>
       <span className={style.inputAreaWrapper}>
-        {label && labelPlacement === 'top' && (
-          <span className={style.topLabelWrapper}>
-            {required && <span className={style.requiredTop}>*</span>}
-            <label className={style.topLabel}>{label}</label>
-          </span>
-        )}
         <input onChange={handleChange} {...restProps} className={inputCls} />
         <div className={style.errorText}>
           <span>{error}</span>

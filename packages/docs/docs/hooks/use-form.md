@@ -54,15 +54,23 @@ export default () => {
 
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
-      <TextInput {...form.getProps('name')} label="用户名" />
-      <TextInput {...form.getProps('password')} label="密码" required />
-      <TextInput
-        {...form.getProps('mark')}
-        label="备注"
-        labelPlacement="top"
-        required
-      />
-      <NumberInput {...form.getProps('age')} label="年龄" />
+      <div>
+        <TextInput {...form.getProps('name')} label="用户名" />
+      </div>
+      <div>
+        <TextInput {...form.getProps('password')} label="密码" required />
+      </div>
+      <div>
+        <TextInput
+          {...form.getProps('mark')}
+          label="备注"
+          labelPlacement="top"
+          required
+        />
+      </div>
+      <div>
+        <NumberInput {...form.getProps('age')} label="年龄" />
+      </div>
       <button type="submit">提交</button>
       <button onClick={onSetValues}>set values</button>
     </form>

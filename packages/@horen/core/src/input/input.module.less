@@ -4,34 +4,32 @@
 .horenInput {
   display: inline-block;
   margin: 8px 0;
-  width: 100%;
+  > span:nth-child(1) {
+    display: block;
+    margin-bottom: 4px;
+    color: #555;
+    font-size: 0.9rem;
+  }
 }
 
-.leftLabel {
-  display: inline-block;
-  margin-right: 8px;
-  position: relative;
-  top: 8px;
-  vertical-align: top;
+.leftMode {
+  > span:nth-child(1) {
+    display: inline-block;
+    position: relative;
+    top: 4px;
+    margin-right: 8px;
+  }
 }
 
-.topLabelWrapper {
-  width: 100%;
-  display: inline-block;
-}
-
-.topLabel {
-  display: inline-block;
-  margin-bottom: 8px;
-  color: #777;
-  font-size: 0.9rem;
-  font-weight: 300;
+.requiredStar {
+  color: @danger;
+  margin: 4px;
+  font-weight: 700;
 }
 
 .inputAreaWrapper {
   display: inline-block;
   vertical-align: top;
-  width: 100%;
 }
 
 .inputArea {
