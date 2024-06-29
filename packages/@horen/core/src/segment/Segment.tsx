@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import cls from './Segment.module.less';
 import themes from '../themes.module.less';
 import { BaseVariant } from '../_types';
@@ -42,7 +42,7 @@ function Segment(props: SegmentProps) {
     return 0;
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (ref.current) {
       const tmpSegs = [];
       for (const child of ref.current.children) {
@@ -64,12 +64,12 @@ function Segment(props: SegmentProps) {
     }
   }, [ref.current?.children]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const i = findIdx(segs, value);
     setIdx(i);
   }, [value, segs]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     for (const seg of segs) {
       if (segs.indexOf(seg) === idx) {
         if (variant === 'light') {

@@ -1,20 +1,23 @@
 @import "../colors.less";
 @import "../size.less";
 
+@height: @normalHeight;
+@gap: @xSmallGap;
+
 .segment {
-  padding: @smallGap @normalGap;
+  padding: @gap @gap;
   display: inline-block;
   background-color: @gray-3;
   border-radius: @normalRadius;
   position: relative;
-  height: @normalHeight;
+  height: @height;
   box-sizing: border-box;
 }
 
 .track {
   display: block;
   position: absolute;
-  top: @smallGap;
+  top: @xSmallGap;
   transition-property: left, width;
   transition-duration: @xSmallDuration;
   transition-timing-function: ease-in-out;
@@ -30,11 +33,12 @@
 .segmentItem {
   padding: 0 @middleGap;
   display: inline-block;
+  -webkit-user-select: none;
   user-select: none;
   background-color: transparent;
   position: relative;
-  height: calc(@normalHeight - @smallGap * 2);
-  line-height: calc(@normalHeight - @smallGap * 2);
+  height: calc(@height - @gap * 2);
+  line-height: calc(@height - @gap * 2);
   z-index: 1;
   color: @dark;
   text-align: center;
