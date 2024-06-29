@@ -3,7 +3,7 @@ import React, { ChangeEvent, useState } from 'react';
 import { clearLoginedUser, setLoginedUser, store } from '@/store';
 import { IUser } from '@/types';
 import { getToken, getUser } from '@/utils/apis';
-import { Button, Icon, Input, Modal } from '@horen/core';
+import { Button, Icon, TextInput, Modal } from '@horen/core';
 import { notifications } from '@horen/notifications';
 import { useStore } from '@horen/store';
 
@@ -64,8 +64,12 @@ export default function Login(props: LoginProps) {
     });
   };
 
-  const handleInputPassword = (e: ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
+  const handleInputPassword = (
+    value: string,
+    e: ChangeEvent<HTMLInputElement>,
+  ) => {
+    e.preventDefault();
+    setPassword(value);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -87,15 +91,18 @@ export default function Login(props: LoginProps) {
         </Modal.Header>
         <Modal.Content>
           <div className={style.item}>
-            <label>账号</label>
-            <Input
+            <TextInput
+              label="用户名"
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(value, e) => {
+                e.preventDefault();
+                setUsername(String(value));
+              }}
             />
           </div>
           <div className={style.item}>
-            <label>密码</label>
-            <Input
+            <TextInput
+              label="密码"
               type="password"
               value={password}
               onChange={handleInputPassword}

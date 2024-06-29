@@ -13,7 +13,7 @@ export type ButtonProps = {
     | 'dark'
     | 'light'
     | 'line';
-} & Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type'>;
+} & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export function Button(props: ButtonProps) {
   const { variant = 'primary', children, ...restProps } = props;

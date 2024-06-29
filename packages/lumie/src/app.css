@@ -20,3 +20,7 @@
 .react-datepicker__input-container {
   box-sizing: border-box;
 }
+
+.react-datepicker__triangle {
+  display: none !important;
+}

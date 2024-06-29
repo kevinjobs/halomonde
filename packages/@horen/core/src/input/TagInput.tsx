@@ -1,14 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Tag } from '../tag';
+
+import { classnames } from '../_utils';
+
 import cls from './TagInput.module.less';
 
 export type TagInputProps = {
+  label?: string;
+  labelPlacement?: string;
   value?: string[];
   onChange?: (tags: string[]) => void;
 };
 
 export function TagInput(props: TagInputProps) {
-  const { onChange, value } = props;
+  const { label, labelPlacement = 'left', onChange, value } = props;
   const [tags, setTags] = useState<string[]>(value || []);
 
   const ref = useRef<HTMLDivElement>(null);
@@ -54,27 +59,37 @@ export function TagInput(props: TagInputProps) {
     if (onChange) onChange(tags);
   }, [tags]);
 
+  const labelCls = classnames({
+    [cls.labelTop]: labelPlacement === 'top',
+    [cls.label]: true,
+  });
+
   return (
-    <div className={cls.tagInput}>
+    <div className={cls.wrapper}>
+      {label && <label className={labelCls}>{label}</label>}
       <span>
-        {tags.map((tag) => {
-          if (tag !== '') {
-            return (
-              <Tag key={tag} style={{ borderRadius: '10px' }}>
-                {tag}
-                <span
-                  className={cls.close}
-                  onClick={() =>
-                    setTags((prev) => prev.filter((t) => t !== tag))
-                  }>
-                  ×
-                </span>
-              </Tag>
-            );
-          }
-        })}
+        <div className={cls.tagInput}>
+          <span>
+            {tags.map((tag) => {
+              if (tag !== '') {
+                return (
+                  <Tag key={tag} style={{ borderRadius: '10px' }}>
+                    {tag}
+                    <span
+                      className={cls.close}
+                      onClick={() =>
+                        setTags((prev) => prev.filter((t) => t !== tag))
+                      }>
+                      ×
+                    </span>
+                  </Tag>
+                );
+              }
+            })}
+          </span>
+          <div contentEditable ref={ref} className={cls.input}></div>
+        </div>
       </span>
-      <div contentEditable ref={ref} className={cls.input}></div>
     </div>
   );
 }

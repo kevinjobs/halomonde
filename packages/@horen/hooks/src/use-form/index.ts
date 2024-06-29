@@ -1,9 +1,8 @@
-import React, { useReducer } from 'react';
+import React, { FormEvent, useReducer } from 'react';
 
 export type ValidationValue = (value: any) => string;
 
-export type Validation = Record<string, ValidationValue> &
-  Iterable<ValidationValue>;
+export type Validation = Record<string, ValidationValue>;
 
 export type FormValues = Validation;
 
@@ -27,7 +26,7 @@ type FormData = {
   validation: Validation;
 };
 
-type SubmitCallback = (data: FormData, evt: SubmitEvent) => void;
+type SubmitCallback = (data: FormData, evt: FormEvent<HTMLFormElement>) => void;
 
 export type UseFormReturnType = {
   getProps(prop: string): GetReturn;
@@ -44,7 +43,7 @@ export type UseFormReturnType = {
   /** get all input values */
   getValues(): any;
   /** handle submit */
-  onSubmit(cb: SubmitCallback): (evt: SubmitEvent) => void;
+  onSubmit(cb: SubmitCallback): (evt: FormEvent<HTMLFormElement>) => void;
   /** validate all fields */
   validate(): void;
 };
@@ -163,13 +162,14 @@ export function useForm({
     return state[prop];
   };
 
-  const getValues = () => state;
+  const getValues = () => state.data;
 
-  const onSubmit = (cb: SubmitCallback) => (evt: SubmitEvent) => {
-    evt.preventDefault();
-    const errors = validate();
-    cb({ ...state, errors }, evt);
-  };
+  const onSubmit =
+    (cb: SubmitCallback) => (evt: FormEvent<HTMLFormElement>) => {
+      evt.preventDefault();
+      const errors = validate();
+      cb({ ...state, errors }, evt);
+    };
 
   const validate = () => {
     const errors: Record<string, any> = {};

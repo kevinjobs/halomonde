@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import React, { useRef, useState } from 'react';
+import React, { FormEvent, useRef, useState } from 'react';
 import Datepicker from 'react-datepicker';
 
 import { IPost } from '@/types';
@@ -9,7 +9,7 @@ import { nowStamp, stampToDate } from '@/utils/datetime';
 import { EXIF_NAME, getExifs, IExif } from '@/utils/exif';
 import { getLocalUser } from '@/utils/store';
 import { photoThumbUrl } from '@/utils/uri';
-import { Button, ImageUpload, Input, Segment, TagInput } from '@horen/core';
+import { Button, ImageUpload, TextInput, Segment, TagInput } from '@horen/core';
 import { useForm } from '@horen/hooks';
 import { notifications } from '@horen/notifications';
 
@@ -37,7 +37,7 @@ export function UploadImagePanel({
   onCancel,
 }: UploadImagePanelProps) {
   const form = useForm({
-    initial: {
+    initialValues: {
       title: '',
       type: 'photo',
       author: getLocalUser()?.username,
@@ -51,11 +51,11 @@ export function UploadImagePanel({
       url: '',
       ...photoPost,
     },
-    required: {
-      title: '标题不能为空',
-      url: '图片不能为空',
-      tags: '标签不能为空',
-      author: '作者不能为空',
+    validation: {
+      title: (value) => (value ? null : '标题不能为空'),
+      url: (value) => (value ? null : '图片不能为空'),
+      tags: (value) => (value ? null : '标签不能为空'),
+      author: (value) => (value ? null : '作者不能为空'),
     },
   });
 
@@ -64,11 +64,11 @@ export function UploadImagePanel({
 
   const handleChange = async (file: File) => {
     getExifs(file).then((tags) => {
-      form.setState('exif', JSON.stringify(tags));
-      form.setState('format', tags.fileType);
+      form.setValue('exif', JSON.stringify(tags));
+      form.setValue('format', tags.fileType);
       // 从 exif 中读取图片时间，如果没有则设为当前时间
-      form.setState('createAt', tags.createDate || nowStamp());
-      form.setState('updateAt', tags.modifyDate || nowStamp());
+      form.setValue('createAt', tags.createDate || nowStamp());
+      form.setValue('updateAt', tags.modifyDate || nowStamp());
     });
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -97,32 +97,22 @@ export function UploadImagePanel({
       setStatus('success');
 
       if (resp.Location) {
-        form.setState('url', 'https://' + resp.Location);
+        form.setValue('url', 'https://' + resp.Location);
       }
     }
   };
 
-  const handleSubmit = () => {
-    if (form.required) {
-      const empties = [];
-      for (const key in form.required) {
-        if (!form.get(key).value) {
-          empties.push(form.required[key]);
-        }
-      }
-
-      if (empties.length > 0) {
-        notifications.show({
-          variant: 'warning',
-          message: empties.join(','),
-        });
-      } else {
-        toSubmit();
-      }
-    } else {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleSubmit = (values: any, evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    if (Object.keys(values.errors).length === 0) {
       toSubmit();
+    } else {
+      notifications.show({
+        variant: 'warning',
+        message: '请检查表单',
+      });
     }
-    if (onSubmit) onSubmit(form.data);
   };
 
   const toSubmit = () => {
@@ -131,7 +121,7 @@ export function UploadImagePanel({
   };
 
   const toUpdate = () => {
-    updatePost(form.data.uid, form.data).then((resp) => {
+    updatePost(form.getValues().uid, form.getValues()).then((resp) => {
       if (typeof resp === 'string') {
         notifications.show({
           variant: 'warning',
@@ -149,7 +139,7 @@ export function UploadImagePanel({
   };
 
   const toAdd = () => {
-    addPost(form.data).then((resp) => {
+    addPost(form.getValues()).then((resp) => {
       if (typeof resp === 'string') {
         notifications.show({
           variant: 'warning',
@@ -166,76 +156,108 @@ export function UploadImagePanel({
     });
   };
 
-  const handleCancel = () => {
+  const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     if (onCancel) onCancel();
   };
 
   return (
     <div className={css.uploadImage}>
       <div className={css.main}>
-        <div className={css.left}>
-          <EditItem label="标题" required>
-            <Input name="title" {...form.get('title')} />
+        <form className={css.left} onSubmit={form.onSubmit(handleSubmit)}>
+          <EditItem>
+            <TextInput
+              label="标题"
+              labelPlacement="top"
+              name="title"
+              required
+              {...form.getProps('title')}
+            />
           </EditItem>
 
-          <EditItem label="状态">
+          <EditItem>
+            <label>状态</label>
             <Segment
               variant="primary"
-              value={form.get('status').value}
-              onChange={(v) => form.setState('status', v)}>
+              value={form.getProps('status').value}
+              onChange={(v) => form.setValue('status', v)}>
               <Segment.Item value="draft" label="草稿" />
               <Segment.Item value="publish" label="已发布" />
               <Segment.Item value="private" label="私密" />
             </Segment>
           </EditItem>
 
-          <EditItem label="标签" required>
+          <EditItem>
             <TagInput
-              value={form.get('tags').value?.split('|') || []}
-              onChange={(tags) => form.setState('tags', tags.join('|'))}
+              label="标签"
+              labelPlacement="top"
+              value={form.getProps('tags').value?.split('|') || []}
+              onChange={(tags) => form.setValue('tags', tags.join('|'))}
             />
           </EditItem>
 
-          <EditItem label="简介">
-            <Input name="content" {...form.get('content')} />
+          <EditItem>
+            <TextInput
+              label="简介"
+              name="content"
+              labelPlacement="top"
+              {...form.getProps('content')}
+            />
           </EditItem>
 
-          <EditItem label="文件格式">
-            <Input name="format" {...form.get('format')} />
+          <EditItem>
+            <TextInput
+              label="文件格式"
+              name="format"
+              labelPlacement="top"
+              {...form.getProps('format')}
+            />
           </EditItem>
 
-          <EditItem label="创建时间">
+          <EditItem>
+            <label>创建日期</label>
             <Datepicker
-              selected={stampToDate(form.get('createAt').value)}
+              selected={stampToDate(form.getProps('createAt').value)}
               onChange={(d) =>
-                form.get('createAt').onChange(null, dayjs(d).unix())
+                form.getProps('createAt').onChange(null, dayjs(d).unix())
               }
               dateFormat={'yyyy-MM-dd HH:mm:ss'}
             />
           </EditItem>
 
-          <EditItem label="更新时间">
+          <EditItem>
+            <label>更新日期</label>
             <Datepicker
-              selected={stampToDate(form.get('updateAt').value)}
+              selected={stampToDate(form.getProps('updateAt').value)}
               onChange={(d) =>
-                form.get('updateAt').onChange(null, dayjs(d).unix())
+                form.getProps('updateAt').onChange(null, dayjs(d).unix())
               }
               dateFormat={'yyyy-MM-dd HH:mm:ss'}
             />
           </EditItem>
 
-          <EditItem label="作者" required>
-            <Input
+          <EditItem>
+            <TextInput
+              label="作者"
               name="author"
               placeholder="请输入作者姓名"
-              {...form.get('author')}
+              labelPlacement="top"
+              required
+              {...form.getProps('author')}
             />
           </EditItem>
-        </div>
+
+          <div className={css.bottom}>
+            <Button type="submit">提交</Button>
+            <Button variant="danger" onClick={handleCancel}>
+              取消
+            </Button>
+          </div>
+        </form>
 
         <div className={css.right}>
           <ImageUpload
-            defaultPreviewURL={photoThumbUrl(form.get('url').value)}
+            defaultPreviewURL={photoThumbUrl(form.getProps('url').value)}
             progress={progress}
             onChange={handleChange}
             accept={[]}
@@ -243,18 +265,13 @@ export function UploadImagePanel({
           />
 
           <ExifInfo
-            exifData={form.data.exif ? JSON.parse(form.get('exif').value) : {}}
-            onChange={(exif) => form.setState('exif', exif)}
+            exifData={
+              form.getValues().exif
+                ? JSON.parse(form.getProps('exif').value)
+                : {}
+            }
+            onChange={(exif) => form.setValue('exif', exif)}
           />
-        </div>
-
-        <div className={css.bottom}>
-          <div>
-            <Button onClick={handleSubmit}>提交</Button>
-            <Button variant="danger" onClick={handleCancel}>
-              取消
-            </Button>
-          </div>
         </div>
       </div>
     </div>
@@ -262,23 +279,13 @@ export function UploadImagePanel({
 }
 
 function EditItem({
-  label,
   children,
-  required = false,
 }: {
-  label: string;
+  label?: string;
   children: React.ReactNode;
   required?: boolean;
 }) {
-  return (
-    <div className={css.editItem}>
-      <label>
-        {label}
-        {required && <span className={css.required}>*</span>}
-      </label>
-      {children}
-    </div>
-  );
+  return <div className={css.editItem}>{children}</div>;
 }
 
 function ExifInfo({
@@ -303,6 +310,7 @@ function ExifInfo({
         <label>{EXIF_NAME[key]}</label>
         <span>
           <input
+            title="hello"
             name={key}
             defaultValue={exifData[key]}
             value={exifData[key]}
