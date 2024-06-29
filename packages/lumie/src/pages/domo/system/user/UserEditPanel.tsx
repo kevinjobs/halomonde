@@ -8,7 +8,7 @@ import { API_URL } from '@/constants';
 import { setLoginedUser, store } from '@/store';
 import { IUser } from '@/types';
 import { addUser, deleteUser, updateUser } from '@/utils/apis/user';
-import { AvatarUpload, Button, Input, Select } from '@horen/core';
+import { AvatarUpload, Button, TextInput, Select } from '@horen/core';
 import { useForm } from '@horen/hooks';
 import { notifications } from '@horen/notifications';
 import { useStore } from '@horen/store';
@@ -32,21 +32,24 @@ export function UserEditPanel({
   onDeleteFailed,
   onBlur,
 }: UserEditProps): React.ReactElement {
-  const form = useForm({ initial: { ...user, password: '' } });
+  const form = useForm({
+    initialValues: { ...user, password: '' },
+    validation: {},
+  });
   const state = useStore(store);
 
   const handleSubmit = () => {
-    if (form.data.uid) {
+    if (form.getValues().uid) {
       (async () => {
-        const data = await updateUser(form.data.uid, form.data);
+        const data = await updateUser(form.getValues().uid, form.getValues());
         if (typeof data !== 'string') {
           notifications.show({ variant: 'success', message: '更新成功' });
           // 如果修改的是当前用户则更新用户
-          if (form.data.uid === state.user.uid) {
+          if (form.getValues().uid === state.user.uid) {
             setLoginedUser({
               ...state.user,
-              ...form.data,
-              avatar: API_URL.base + form.data.avatar,
+              ...form.getValues(),
+              avatar: API_URL.base + form.getValues().avatar,
             });
           }
           if (onSubmitSuccess) onSubmitSuccess();
@@ -56,7 +59,7 @@ export function UserEditPanel({
       })();
     } else {
       (async () => {
-        const data = await addUser(form.data);
+        const data = await addUser(form.getValues());
         if (typeof data !== 'string') {
           notifications.show({ variant: 'success', message: '添加成功' });
           if (onSubmitSuccess) onSubmitSuccess();
@@ -69,7 +72,7 @@ export function UserEditPanel({
 
   const handleDeleteUser = () => {
     if (window.confirm('确定删除用户?')) {
-      deleteUser(form.data.uid).then((resp) => {
+      deleteUser(form.getValues().uid).then((resp) => {
         if (typeof resp === 'string') {
           notifications.show({ variant: 'danger', message: resp });
         } else {
@@ -81,7 +84,7 @@ export function UserEditPanel({
   };
 
   const handleUploadSuccess = (result: any) => {
-    form.setState('avatar', result.data.url);
+    form.setValue('avatar', result.data.url);
     notifications.show({ variant: 'success', message: '上传封面成功' });
   };
 
@@ -93,7 +96,7 @@ export function UserEditPanel({
             <label>头像</label>
             <span>
               <AvatarUpload
-                defaultValue={form.data.avatar}
+                defaultValue={form.getValues().avatar}
                 url={API_URL.upload}
                 onSuccess={handleUploadSuccess}
                 token={state.user?.token}
@@ -101,43 +104,43 @@ export function UserEditPanel({
             </span>
           </div>
           <div className={style.item}>
-            <label>用户编码</label>
             <span>
-              <Input disabled {...form.get('id')} />
+              <TextInput disabled {...form.getProps('id')} label="用户编码" />
             </span>
           </div>
           <div className={style.item}>
-            <label>邀请码</label>
             <span>
-              <Input
+              <TextInput
+                label="邀请码"
                 data-name="invitation"
-                disabled={Boolean(form.data.uid)}
-                {...form.get('invitation')}
+                disabled={Boolean(form.getValues().uid)}
+                {...form.getProps('invitation')}
               />
             </span>
           </div>
           <div className={style.item}>
-            <label>用户名</label>
             <span>
-              <Input {...form.get('username')} />
+              <TextInput label="用户名" {...form.getProps('username')} />
             </span>
           </div>
           <div className={style.item}>
-            <label>密码</label>
             <span>
-              <Input type="password" {...form.get('password')} />
+              <TextInput
+                label="密码"
+                type="password"
+                {...form.getProps('password')}
+              />
             </span>
           </div>
           <div className={style.item}>
-            <label>昵称</label>
             <span>
-              <Input {...form.get('nickname')} />
+              <TextInput label="昵称" {...form.getProps('nickname')} />
             </span>
           </div>
           <div className={style.item}>
             <label>性别</label>
             <span>
-              <Select {...form.get('gender')} arrow>
+              <Select {...form.getProps('gender')} arrow>
                 <Select.Item value="unkown" name="未知性别" />
                 <Select.Item value="male" name="男性" />
                 <Select.Item value="female" name="女性" />
@@ -149,39 +152,34 @@ export function UserEditPanel({
             <span>
               <DatePicker
                 dateFormat="yyyy/MM/dd"
-                selected={dayjs.unix(form.data.birthday).toDate()}
-                onChange={(d) => form.setState('birthday', dayjs(d).unix())}
+                selected={dayjs.unix(form.getValues().birthday).toDate()}
+                onChange={(d) => form.setValue('birthday', dayjs(d).unix())}
               />
             </span>
           </div>
           <div className={style.item}>
-            <label>所在地</label>
             <span>
-              <Input {...form.get('location')} />
+              <TextInput label="所在地" {...form.getProps('location')} />
             </span>
           </div>
           <div className={style.item}>
-            <label>用户描述</label>
             <span>
-              <Input {...form.get('description')} />
+              <TextInput label="用户描述" {...form.getProps('description')} />
             </span>
           </div>
           <div className={style.item}>
-            <label>格言</label>
             <span>
-              <Input {...form.get('motto')} />
+              <TextInput label="用户宣言" {...form.getProps('motto')} />
             </span>
           </div>
           <div className={style.item}>
-            <label>角色</label>
             <span>
-              <Input {...form.get('role')} />
+              <TextInput label="用户等级" {...form.getProps('role')} />
             </span>
           </div>
           <div className={style.item}>
-            <label>用户组</label>
             <span>
-              <Input {...form.get('group')} />
+              <TextInput label="用户组别" {...form.getProps('group')} />
             </span>
           </div>
         </div>
@@ -190,7 +188,7 @@ export function UserEditPanel({
             删除用户
           </Button>
           <Button variant="primary" onClick={handleSubmit}>
-            {form.data.uid ? '更新' : '注册'}
+            {form.getValues().uid ? '更新' : '注册'}
           </Button>
         </div>
       </div>

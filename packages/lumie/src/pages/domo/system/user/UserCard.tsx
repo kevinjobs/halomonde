@@ -1,16 +1,24 @@
 import dayjs from 'dayjs';
 import React from 'react';
 
-import { IUser, } from '@/types';
+import { IUser } from '@/types';
 import {
-    Avatar, BirthdayCake, CodeOne, Female, Local, Male, User,
+  Avatar,
+  BirthdayCake,
+  CodeOne,
+  Female,
+  Local,
+  Male,
+  User,
 } from '@icon-park/react';
+
+import { stampToDate } from '@/utils/datetime';
 
 import style from './UserCard.module.less';
 
 export interface UserCardProps {
   user: IUser;
-  onClick?(u: IUser): void;
+  onClick(u: IUser): void;
 }
 
 export function UserCard({ user, onClick }: UserCardProps): React.ReactElement {
@@ -29,10 +37,10 @@ export function UserCard({ user, onClick }: UserCardProps): React.ReactElement {
         <div className={style.nickname}>
           <span className={style.name}>{user.nickname}</span>
           <span className={style.gender}>
-            {user.gender === "male" && (
+            {user.gender === 'male' && (
               <Male theme="outline" size="14" fill="#4a90e2" />
             )}
-            {user.gender === "female" && (
+            {user.gender === 'female' && (
               <Female theme="outline" size="14" fill="#bd10e0" />
             )}
           </span>
@@ -55,10 +63,8 @@ export function UserCard({ user, onClick }: UserCardProps): React.ReactElement {
           </span>
           <span>
             {user.birthday
-              ? dayjs
-                .unix(Number(String(user.birthday).slice(0, 10)))
-                .format("YYYY-MM-DD")
-              : "未知生日"}
+              ? dayjs(stampToDate(user.birthday)).format('YYYY-MM-DD')
+              : '未知生日'}
           </span>
         </div>
         <div className={style.location}>

@@ -46,7 +46,7 @@ export function UserAdmin(): React.ReactElement {
 
   const handleClickUser = (u: IUser) => {
     setPickUser(null);
-    setTimeout(() => setPickUser(u), 100);
+    setTimeout(() => setPickUser(u), 200);
   };
 
   const handleClickAddUser = () => {

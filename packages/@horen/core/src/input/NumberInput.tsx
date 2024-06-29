@@ -9,6 +9,7 @@ export function NumberInput(props: InputProps) {
   const [data, setData] = useState(value);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // to-do: 浮点数精度存在需要修复
     setData(e.target.value.replace(/[^\d\.]/g, ''));
     if (onInput) {
       onInput(e);
