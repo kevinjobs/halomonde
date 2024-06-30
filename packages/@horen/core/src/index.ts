@@ -1,3 +1,6 @@
+import './normalize.css';
+import './vars.css';
+
 export { Button, UploadButton, AddButton, type ButtonProps } from './button';
 
 export { Draggable, type DraggableProps } from './Draggable';

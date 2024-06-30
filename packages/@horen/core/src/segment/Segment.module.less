@@ -1,27 +1,28 @@
-@import "../colors.less";
-@import "../size.less";
-
-@height: @normalHeight;
-@gap: @xSmallGap;
+@height: 32px;
+@gap: var(--horen-gap-xs);
+@bigGap: var(--horen-gap-md);
+@radius: var(--horen-radius-sm);
+@duration: var(--horen-duration-faster);
 
 .segment {
   padding: @gap @gap;
   display: inline-block;
-  background-color: @gray-3;
-  border-radius: @normalRadius;
+  background-color: var(--horen-color-gray-2);
+  border-radius: @radius;
   position: relative;
   height: @height;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .track {
   display: block;
   position: absolute;
-  top: @xSmallGap;
+  top: @gap;
   transition-property: left, width;
-  transition-duration: @xSmallDuration;
+  transition-duration: @duration;
   transition-timing-function: ease-in-out;
-  border-radius: @smallRadius;
+  border-radius: @radius;
   z-index: 0;
 }
 
@@ -31,7 +32,7 @@
 }
 
 .segmentItem {
-  padding: 0 @middleGap;
+  padding: 0 @bigGap;
   display: inline-block;
   -webkit-user-select: none;
   user-select: none;
@@ -40,6 +41,6 @@
   height: calc(@height - @gap * 2);
   line-height: calc(@height - @gap * 2);
   z-index: 1;
-  color: @dark;
+  color: var(--horen-color-dark);
   text-align: center;
 }

@@ -1,70 +1,73 @@
-@import '../colors.less';
-@import "../size.less";
-
 .button {
   border: none;
-  border-radius: @normalRadius;
-  padding: @normalGap @xLargeGap;
-  margin: 0 @smallGap;
-  font-size: @normalFontSize;
-  color: @white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  display: inline-block;
+  margin: 0 var(--horen-gap-sm);
+  color: var(--horen-color-white);
+  border-radius: var(--horen-radius-sm);
   &:active {
     position: relative;
     top: 2px;
-    transition: top @normalDuration ease-in-out;
+    transition: top var(--horen-duration-fast) ease-in-out;
   }
   &:disabled {
-    background-color: @white-deep;
+    background-color: var(--horen-color-gray-0);
     cursor: not-allowed;
-    color: @black;
+    color: var(--horen-color-dark);
     &:active {
       position: static;
     }
   }
 }
 
+.sm {
+  .button();
+  font-size: var(--horen-font-size-xs);
+  padding: var(--horen-gap-sm) var(--horen-gap-md);
+}
+
+.md {
+  .button();
+  padding: var(--horen-gap-sm) var(--horen-gap-md);
+  font-size: var(--horen-font-size-sm);
+}
+
+.lg {
+  .button();
+  padding: var(--horen-gap-md) var(--horen-gap-lg);
+  font-size: var(--horen-font-size-md);
+}
+
 .primary {
   .button();
-  background-color: @primary;
-  color: @white;
+  background-color: var(--horen-color-primary);
 }
 .secondary {
   .button();
-  background-color: @orange;
-  color: @white;
+  background-color: var(--horen-color-warning);
 }
 .success {
   .button();
-  background-color: @success;
+  background-color: var(--horen-color-success);
 }
 .warning {
   .button();
-  background-color: @warning;
+  background-color: var(--horen-color-warning);
 }
 .dark {
   .button();
-  background-color: @black;
+  background-color: var(--horen-color-dark);
 }
 .light {
   .button();
-  background-color: @white-deep;
-  color: @black;
+  background-color: var(--horen-color-gray-2);
+  color: var(--horen-color-dark);
 }
 .danger {
   .button();
-  background-color: @danger;
-}
-.info {
-  .button();
-  background-color: @info;
+  background-color: var(--horen-color-danger);
 }
 .line {
   .button();
-  border: 1px solid @grey;
-  color: @black;
-  background-color: @white;
+  border: 1px solid var(--horen-color-dark);
+  color: var(--horen-color-dark);
+  background-color: var(--horen-color-white);
 }

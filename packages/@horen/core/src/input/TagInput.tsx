@@ -73,7 +73,7 @@ export function TagInput(props: TagInputProps) {
             {tags.map((tag) => {
               if (tag !== '') {
                 return (
-                  <Tag key={tag} style={{ borderRadius: '10px' }}>
+                  <Tag key={tag}>
                     {tag}
                     <span
                       className={cls.close}

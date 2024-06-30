@@ -1,0 +1,65 @@
+:root {
+  /* base color */
+  --horen-color-primary: #9bdb34;
+  --horen-color-secondary: #2980b9;
+  --horen-color-success: #27ae60;
+  --horen-color-warning: #f39c12;
+  --horen-color-danger: #c0392b;
+  --horen-color-white: #fff;
+  --horen-color-dark: #000;
+  /* more color */
+  --horen-color-gray-0: #f8f9fa;
+  --horen-color-gray-1: #f1f3f5;
+  --horen-color-gray-2: #e9ecef;
+  --horen-color-gray-3: #dee2e6;
+  --horen-color-gray-4: #ced4da;
+  --horen-color-gray-5: #adb5bd;
+  --horen-color-gray-6: #868e96;
+  --horen-color-gray-7: #495057;
+  --horen-color-gray-8: #343a40;
+  --horen-color-gray-9: #212529;
+  /* border radius */
+  --horen-radius-xs: 0.125rem;
+  --horen-radius-sm: 0.25rem;
+  --horen-radius-md: 0.5rem;
+  --horen-radius-lg: 1rem;
+  --horen-radius-xl: 2rem;
+  /* shadow */
+  /* font size */
+  --horen-font-size-xs: 0.75rem;
+  --horen-font-size-sm: 0.875rem;
+  --horen-font-size-md: 1rem;
+  --horen-font-size-lg: 1.125rem;
+  --horen-font-size-xl: 1.25rem;
+  /* line height */
+  --horen-line-height-xs: 1.4;
+  --horen-line-height-sm: 1.45;
+  --horen-line-height-md: 1.55;
+  --horen-line-height: 1.55;
+  --horen-line-height-lg: 1.6;
+  --horen-line-height-xl: 1.65;
+  /* font weight */
+  --horen-font-weight-slimer: 200;
+  --horen-font-weight-slim: 300;
+  --horen-font-weight-normal: 400;
+  --horen-font-weight: 400;
+  --horen-font-weight-bold: 600;
+  --horen-font-weight-bolder: 700;
+  /* gap */
+  --horen-gap-xs: 0.125rem;
+  --horen-gap-sm: 0.25rem;
+  --horen-gap-md: 0.5rem;
+  --horen-gap-lg: 1rem;
+  --horen-gap-xl: 2rem;
+  /* duration */
+  --horen-duration-faster: 0.1s;
+  --horen-duration-fast: 0.2s;
+  --horen-duration-normal: 0.3s;
+  --horen-duration-slow: 0.5s;
+  --horen-duration-slower: 0.8s;
+}
+
+body {
+  font-size: 16px;
+  font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+}

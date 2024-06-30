@@ -8,6 +8,8 @@ export type BaseVariant =
   | 'light'
   | 'dark';
 
+export type BaseSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+
 export interface ComponentProps {
   variant?: BaseVariant;
 }
