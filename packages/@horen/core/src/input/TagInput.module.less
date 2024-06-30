@@ -11,12 +11,14 @@
 .tagInput {
   outline: none;
   border: 1px solid @gray-7;
-  height: @normalHeight;
-  line-height: @normalHeight;
   border-radius: @normalRadius;
   padding: 0 @normalGap;
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
+}
+
+.tagItem {
+  display: inline-block;
 }
 
 .label {
@@ -36,14 +38,21 @@
   margin-bottom: 8px;
 }
 
-.input {
-  flex-grow: 1;
+.inputArea {
   outline: none;
   text-align: left;
+  display: inline-block;
+  flex-grow: 1;
+  height: 30px;
+  line-height: 30px;
 }
 
 .close {
   -webkit-user-select: none;
   user-select: none;
   margin-left: 4px;
+  cursor: pointer;
+  &:hover {
+    color: var(--horen-color-dark);
+  }
 }

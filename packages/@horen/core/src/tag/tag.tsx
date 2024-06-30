@@ -2,14 +2,13 @@ import React, { AllHTMLAttributes } from 'react';
 import { BaseVariant } from '../_types';
 import { classnames } from '../_utils';
 
-import cls from './Tag.module.less';
-import themes from '../themes.module.less';
+import styl from './Tag.module.less';
 
 export type TagVariant = 'dark' | 'light' | BaseVariant;
 
 export interface TagProps extends AllHTMLAttributes<HTMLSpanElement> {
   variant?: TagVariant;
-  color?: string;
+  fill?: string;
   children?: React.ReactNode;
   /**
    * 是否圆角
@@ -19,22 +18,22 @@ export interface TagProps extends AllHTMLAttributes<HTMLSpanElement> {
 
 export function Tag({
   variant = 'primary',
-  color,
+  fill,
   children,
-  rounded = false,
-  style: styles,
+  style,
+  className = '',
   ...restProps
 }: TagProps) {
-  const className = classnames([cls.tag, themes[variant + 'BackgroundColor']]);
-
-  const style: React.CSSProperties = {
-    borderRadius: rounded ? 3 : 0,
-    backgroundColor: color,
-    ...styles,
-  };
+  const cls = classnames({
+    [styl.tag]: true,
+    [className]: Boolean(className),
+  });
 
   return (
-    <span className={className} {...restProps} style={style}>
+    <span
+      className={cls}
+      style={{ ...style, backgroundColor: fill }}
+      {...restProps}>
       {children}
     </span>
   );

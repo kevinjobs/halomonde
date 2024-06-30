@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { randomInt } from '@horen/utils';
+
 import { Tag } from '../tag';
 
 import { classnames } from '../_utils';
@@ -26,13 +28,8 @@ export function TagInput(props: TagInputProps) {
       const text = target.innerText;
       event.preventDefault();
       event.stopPropagation();
-      if (text !== '') {
-        tagRef.current = [...tagRef.current];
-        if (!includes(tagRef.current, text)) {
-          tagRef.current = [...tagRef.current, text];
-        }
-        setTags(tagRef.current);
-      }
+      if (includes(tagRef.current, text)) return;
+      addTag(text);
       target.innerText = '';
     }
 
@@ -41,10 +38,26 @@ export function TagInput(props: TagInputProps) {
       if (text === '') {
         event.preventDefault();
         event.stopPropagation();
-        tagRef.current = tagRef.current.slice(0, -1);
-        setTags(tagRef.current);
+        deleteTag();
       }
     }
+  };
+
+  const addTag = (tag: string) => {
+    if (tag !== '') {
+      tagRef.current = [...tagRef.current, tag];
+      setTags(tagRef.current);
+    }
+  };
+
+  const deleteTag = (tag?: string) => {
+    if (!tag) {
+      tagRef.current = tagRef.current.slice(0, -1);
+    } else {
+      tagRef.current = tagRef.current.filter((t) => t !== tag);
+    }
+
+    setTags(tagRef.current);
   };
 
   useEffect(() => {
@@ -64,30 +77,42 @@ export function TagInput(props: TagInputProps) {
     [cls.label]: true,
   });
 
+  const strToHexCharCode = (str: string) => {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    let color = '#';
+    for (let i = 0; i < 3; i++) {
+      const value = (hash >> (i * 8)) & 0xff;
+      color += ('00' + value.toString(16)).substr(-2);
+    }
+    return color;
+  };
+
   return (
     <div className={cls.wrapper}>
       {label && <label className={labelCls}>{label}</label>}
       <span>
         <div className={cls.tagInput}>
-          <span>
-            {tags.map((tag) => {
-              if (tag !== '') {
-                return (
-                  <Tag key={tag}>
+          {tags.map((tag) => {
+            if (tag !== '') {
+              return (
+                <span className={cls.tagItem}>
+                  <Tag
+                    key={tag}
+                    style={{ borderRadius: 4 }}
+                    fill={strToHexCharCode(tag)}>
                     {tag}
-                    <span
-                      className={cls.close}
-                      onClick={() =>
-                        setTags((prev) => prev.filter((t) => t !== tag))
-                      }>
+                    <span className={cls.close} onClick={() => deleteTag(tag)}>
                       ×
                     </span>
                   </Tag>
-                );
-              }
-            })}
-          </span>
-          <div contentEditable ref={ref} className={cls.input}></div>
+                </span>
+              );
+            }
+          })}
+          <div contentEditable ref={ref} className={cls.inputArea}></div>
         </div>
       </span>
     </div>
