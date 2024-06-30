@@ -1,41 +1,29 @@
 import dayjs from 'dayjs';
-import React, { FormEvent, useRef, useState } from 'react';
+import React, { FormEvent, useRef } from 'react';
 import Datepicker from 'react-datepicker';
 
-import { IPost } from '@/types';
-import { addPost, updatePost } from '@/utils/apis';
-import { uploadCloudFile } from '@/utils/apis/file';
-import { nowStamp, stampToDate } from '@/utils/datetime';
+import { stampToDate } from '@/utils/datetime';
 import { EXIF_NAME, getExifs, IExif } from '@/utils/exif';
 import { getLocalUser } from '@/utils/store';
-import { photoThumbUrl } from '@/utils/uri';
-import { Button, ImageUpload, TextInput, Segment, TagInput } from '@horen/core';
-import { useForm } from '@horen/hooks';
+
+import { Button, TextInput, Segment, TagInput } from '@horen/core';
+import { useForm, FormCallbackData } from '@horen/hooks';
 import { notifications } from '@horen/notifications';
 
-import css from './UploadPhoto.module.less';
+import { UploadCloud } from '../UploadCloud';
 
-export default function UploadImageDomo() {
-  return (
-    <div className={css.uploadImage}>
-      <UploadImagePanel />
-    </div>
-  );
-}
+import { EditPanelProps } from '.';
 
-export interface UploadImagePanelProps {
-  photoPost?: IPost;
-  mode?: 'create' | 'update';
-  onSubmit?: (post: IPost) => void;
-  onCancel?: () => void;
-}
+import css from './PhotoEditPanel.module.less';
 
-export function UploadImagePanel({
-  photoPost = {},
-  mode = 'create',
+export type PhotoEditPanelProps = EditPanelProps;
+
+export function PhotoEditPanel({
+  mode,
+  defaultPost = {},
   onSubmit,
   onCancel,
-}: UploadImagePanelProps) {
+}: PhotoEditPanelProps) {
   const form = useForm({
     initialValues: {
       title: '',
@@ -49,111 +37,40 @@ export function UploadImagePanel({
       createAt: null,
       updateAt: null,
       url: '',
-      ...photoPost,
+      ...defaultPost,
     },
     validation: {
       title: (value) => (value ? null : '标题不能为空'),
       url: (value) => (value ? null : '图片不能为空'),
-      tags: (value) => (value ? null : '标签不能为空'),
+      // tags: (value) => (value ? null : '标签不能为空'),
       author: (value) => (value ? null : '作者不能为空'),
     },
   });
 
-  const [status, setStatus] = useState('');
-  const [progress, setProgress] = useState(0);
+  const handleChange = (url: string, file: File) => {
+    form.setValue('url', url);
+    getExifs(file).then((exif) => {
+      form.setValue('format', exif.fileType);
+      form.setValue('createAt', exif.createDate);
+      form.setValue('updateAt', exif.modifyDate);
 
-  const handleChange = async (file: File) => {
-    getExifs(file).then((tags) => {
-      form.setValue('exif', JSON.stringify(tags));
-      form.setValue('format', tags.fileType);
-      // 从 exif 中读取图片时间，如果没有则设为当前时间
-      form.setValue('createAt', tags.createDate || nowStamp());
-      form.setValue('updateAt', tags.modifyDate || nowStamp());
+      form.setValue('exif', JSON.stringify(exif));
     });
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const resp: any = await uploadCloudFile(file, (percent) => {
-      setProgress(percent);
-    }).catch((err) => {
-      notifications.show({
-        variant: 'warning',
-        message: err,
-      });
-    });
-
-    if (!resp) return;
-
-    if (typeof resp === 'string') {
-      notifications.show({
-        variant: 'warning',
-        message: resp,
-      });
-      setStatus('failed');
-    } else {
-      notifications.show({
-        variant: 'success',
-        message: '上传成功',
-      });
-      setStatus('success');
-
-      if (resp.Location) {
-        form.setValue('url', 'https://' + resp.Location);
-      }
-    }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleSubmit = (values: any, evt: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (
+    data: FormCallbackData,
+    evt: FormEvent<HTMLFormElement>,
+  ) => {
     evt.preventDefault();
-    if (Object.keys(values.errors).length === 0) {
-      toSubmit();
+    if (Object.keys(data.errors).length === 0) {
+      if (onSubmit) onSubmit(data.values);
     } else {
       notifications.show({
         variant: 'warning',
         message: '请检查表单',
       });
     }
-  };
-
-  const toSubmit = () => {
-    if (mode === 'create') toAdd();
-    if (mode === 'update') toUpdate();
-  };
-
-  const toUpdate = () => {
-    updatePost(form.getValues().uid, form.getValues()).then((resp) => {
-      if (typeof resp === 'string') {
-        notifications.show({
-          variant: 'warning',
-          message: resp,
-        });
-      } else {
-        notifications.show({
-          variant: 'success',
-          message: '成功',
-        });
-        form.clear();
-        form.reset();
-      }
-    });
-  };
-
-  const toAdd = () => {
-    addPost(form.getValues()).then((resp) => {
-      if (typeof resp === 'string') {
-        notifications.show({
-          variant: 'warning',
-          message: resp,
-        });
-      } else {
-        notifications.show({
-          variant: 'success',
-          message: '成功',
-        });
-        form.clear();
-        form.reset();
-      }
-    });
   };
 
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -191,8 +108,7 @@ export function UploadImagePanel({
             <TagInput
               label="标签"
               labelPlacement="top"
-              value={form.getProps('tags').value?.split('|') || []}
-              onChange={(tags) => form.setValue('tags', tags.join('|'))}
+              {...form.getProps('tags')}
             />
           </EditItem>
 
@@ -248,7 +164,7 @@ export function UploadImagePanel({
           </EditItem>
 
           <div className={css.bottom}>
-            <Button type="submit">提交</Button>
+            <Button type="submit">{mode === 'create' ? '新增' : '更新'}</Button>
             <Button variant="danger" onClick={handleCancel}>
               取消
             </Button>
@@ -256,13 +172,7 @@ export function UploadImagePanel({
         </form>
 
         <div className={css.right}>
-          <ImageUpload
-            defaultPreviewURL={photoThumbUrl(form.getProps('url').value)}
-            progress={progress}
-            onChange={handleChange}
-            accept={[]}
-            uploadStatus={status}
-          />
+          <UploadCloud {...form.getProps('url')} onChange={handleChange} />
 
           <ExifInfo
             exifData={

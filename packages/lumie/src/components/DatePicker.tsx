@@ -1,5 +1,6 @@
 import React from 'react';
 import Datepicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import cls from './DatePicker.module.less';
 
 export interface DatePickerProps {

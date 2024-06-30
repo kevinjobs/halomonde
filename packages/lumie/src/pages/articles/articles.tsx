@@ -7,6 +7,9 @@ import COLOR_MAP from '@/styles/colors';
 import { IPost } from '@/types';
 import { getPostListSync } from '@/utils/apis/post';
 import { Skeleton } from '@horen/core';
+import { photoCompressedUrl } from '@/utils/uri';
+
+const width = '880px';
 
 const Container = styled.div`
   padding: 48px 0;
@@ -15,7 +18,7 @@ const Container = styled.div`
 
 const ArticleList = styled.div`
   margin: 0 auto;
-  max-width: 820px;
+  max-width: ${width};
 `;
 
 const ArticleItem = styled.div`
@@ -33,7 +36,7 @@ const ArticleItem = styled.div`
 const Cover = styled.div`
   width: 44%;
   min-height: 160px;
-  max-height: 300px;
+  max-height: 200px;
   transition: width 0.2s ease-in-out;
   img {
     width: 100%;
@@ -74,15 +77,18 @@ const Info = styled.div`
 `;
 
 const LoadMore = styled.div`
-  max-width: 820px;
+  max-width: ${width};
   margin: 0 auto;
-  padding: 16px 0;
+  padding: 0 16px;
   text-align: center;
-  border: 1px solid ${COLOR_MAP.white4};
   cursor: pointer;
-  border-radius: 4px;
   &:hover {
     border-color: ${COLOR_MAP.primary};
+  }
+  > div {
+    border: 1px solid ${COLOR_MAP.white4};
+    padding: 16px;
+    border-radius: 4px;
   }
 `;
 
@@ -140,7 +146,7 @@ export function ArticlesPage(): React.ReactElement {
     return (
       <ArticleItem key={a.uid}>
         <Cover onClick={() => handleClickArticle(a)} className="cover">
-          <img src={a.url} alt={a.title} />
+          <img src={photoCompressedUrl(a.url)} alt={a.title} />
         </Cover>
         <Info>
           <div style={{ margin: 16 }}>
@@ -174,7 +180,7 @@ export function ArticlesPage(): React.ReactElement {
       </ArticleList>
       {hasMore && (
         <LoadMore role="button" onClick={handleClickMore}>
-          点击加载更多
+          <div>点击加载更多</div>
         </LoadMore>
       )}
     </Container>

@@ -6,6 +6,8 @@ export type Validation = Record<string, ValidationValue>;
 
 export type FormValues = Validation;
 
+export type FormErrors = Validation;
+
 export interface UseFormProps {
   initialValues: Record<string, any>;
   validation: Validation;
@@ -21,13 +23,13 @@ export type GetReturn = {
   error?: string | null;
 };
 
-export type FormData = {
+export type FormCallbackData = {
   values: FormValues;
-  validation: Validation;
+  errors: FormErrors;
 };
 
 export type SubmitCallback = (
-  formData: FormData,
+  formData: FormCallbackData,
   evt?: FormEvent<HTMLFormElement>,
 ) => void;
 

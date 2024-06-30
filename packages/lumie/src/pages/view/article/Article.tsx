@@ -32,7 +32,8 @@ export default function ArticlePage(): React.ReactElement {
         </div>
       </div>
       {article ? renderContent(article) : renderLoading()}
-      <div style={{ marginTop: 64, maxWidth: 1000, padding: 16 }}>
+      <hr />
+      <div style={{ marginTop: 8, maxWidth: 1000, padding: 16 }}>
         <Comment />
       </div>
     </div>

@@ -17,9 +17,14 @@ import {
 import Home from './home';
 import style from './index.module.less';
 
-import UploadImage from './content/UploadPhoto';
-import Everything from './content/General';
-import UploadCover from './content/UploadCover';
+import {
+  AddArticlePage,
+  AddPhotoPage,
+  AddVersePage,
+  AddCoverPage,
+  ContentHomePage,
+} from '@/pages/domo/content';
+
 import Invitaition from './system/invitation';
 import User from './system/user';
 
@@ -51,24 +56,42 @@ const LEFT_ITEMS: PageProps[] = [
       {
         title: '所有内容浏览',
         description: '管理所有内容',
-        element: <Everything />,
+        element: <ContentHomePage />,
         to: 'content/posts',
         icon: <Icon name="files" />,
       },
       {
-        title: '上传图片',
+        title: '添加图片',
         description: '将照片上传到图库',
-        element: <UploadImage />,
-        to: 'content/upload-image',
+        element: <AddPhotoPage />,
+        to: 'content/add-image',
         icon: <Icon name="camera" />,
         loginRequired: true,
       },
       {
         title: '上传封面',
         description: '将图片上传到封面库',
-        element: <UploadCover />,
-        to: 'content/upload-cover',
+        element: <AddCoverPage />,
+        to: 'content/add-cover',
         icon: <Icon name="picture" />,
+        loginRequired: true,
+        allowLevels: ['admin', 'superuser'],
+      },
+      {
+        title: '新增文章',
+        description: '将文章上传到文章库',
+        element: <AddArticlePage />,
+        to: 'content/add-article',
+        icon: <Icon name="verse" />,
+        loginRequired: true,
+        allowLevels: ['admin', 'superuser'],
+      },
+      {
+        title: '添加诗文',
+        description: '将Verse上传',
+        element: <AddVersePage />,
+        to: 'content/add-verse',
+        icon: <Icon name="verse" />,
         loginRequired: true,
         allowLevels: ['admin', 'superuser'],
       },

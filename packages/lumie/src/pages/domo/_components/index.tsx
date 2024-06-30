@@ -6,4 +6,4 @@ export type { LeftMenuItem as SubMenuProps } from './Menu';
 export { default as Titlebar, type TitlebarProps } from './Titlebar';
 export { default as Layout, type LayoutProps } from './Layout';
 export { default as Login, type LoginProps } from './Login';
-export { default as EditPanel, type EditPanelProps } from './EditPanel';
+export { default as EditPanel, type EditPanelProps } from './Panels';
