@@ -1,11 +1,12 @@
 import dayjs from 'dayjs';
 import React from 'react';
+import { textToHexColor } from '@horen/utils';
 
 import { Table } from '@/components/table';
 import { store } from '@/store';
 import COLOR_MAP from '@/styles/colors';
 import { IPost } from '@/types';
-import { Button, Skeleton, Tag, TagProps } from '@horen/core';
+import { Button, Skeleton, Tag } from '@horen/core';
 import { useStore } from '@horen/store';
 import { photoThumbUrl } from '@/utils/uri';
 
@@ -135,8 +136,8 @@ function toTableData(
       // sumary: <span>{post.excerpt || post.description}</span>,
       preview: renderPreview(photoThumbUrl(post.url), post.title),
       status: renderStatus(post.status),
-      tags: renderTags(post.tags, 'primary', 12),
-      category: renderTags(post.category, 'dark'),
+      tags: renderTags(post.tags, 12),
+      category: renderTags(post.category, 0, '#000'),
       format: <span>{post.format}</span>,
       // url: <span>{post.url}</span>,
       // exif: <span>{post.exif}</span>,
@@ -147,11 +148,7 @@ function toTableData(
   return rows;
 }
 
-const renderTags = (
-  tags: string,
-  variant: TagProps['variant'] = 'secondary',
-  radius = 0,
-) => {
+const renderTags = (tags: string, radius = 0, fill = '') => {
   if (!tags) return <span></span>;
   return (
     <span>
@@ -159,7 +156,10 @@ const renderTags = (
         .split('|')
         .filter(Boolean)
         .map((t, i) => (
-          <Tag variant={variant} key={i} style={{ borderRadius: radius }}>
+          <Tag
+            fill={fill || textToHexColor(t)}
+            key={i}
+            style={{ borderRadius: radius }}>
             {t}
           </Tag>
         ))}
