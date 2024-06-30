@@ -21,12 +21,15 @@ export type GetReturn = {
   error?: string | null;
 };
 
-type FormData = {
+export type FormData = {
   values: FormValues;
   validation: Validation;
 };
 
-type SubmitCallback = (data: FormData, evt: FormEvent<HTMLFormElement>) => void;
+export type SubmitCallback = (
+  formData: FormData,
+  evt?: FormEvent<HTMLFormElement>,
+) => void;
 
 export type UseFormReturnType = {
   getProps(prop: string): GetReturn;
@@ -77,22 +80,22 @@ export function useForm({
     if (action.type === 'clear') {
       return {
         ...state,
-        data: { ...state.data, ...clearState<RealValuesType>(state) },
+        values: { ...state.values, ...clearState<RealValuesType>(state) },
       };
     }
 
     if (action.type === 'reset') {
       return {
         ...state,
-        data: { ...state.data, ...initialValues },
+        values: { ...state.values, ...initialValues },
       };
     }
 
-    if (action.type === 'setData') {
+    if (action.type === 'setValue') {
       return {
         ...state,
-        data: {
-          ...state.data,
+        values: {
+          ...state.values,
           ...action.payload,
         },
       };
@@ -109,13 +112,13 @@ export function useForm({
     }
 
     return {
-      data: { ...state.data, ...action.payload.data },
+      values: { ...state.values, ...action.payload.values },
       errors: { ...state.errors, ...action.payload.errors },
     };
   };
 
   const [state, dispatch] = useReducer(reducer, {
-    data: initialValues,
+    values: initialValues,
     errors: {},
   });
 
@@ -130,7 +133,7 @@ export function useForm({
       }
       dispatch({
         payload: {
-          data: { [prop]: value },
+          values: { [prop]: value },
           errors: { [prop]: error },
         },
       });
@@ -144,25 +147,25 @@ export function useForm({
       onChange,
       onBlur,
       onFocus,
-      value: state.data[prop] || '',
+      value: state.values[prop] || '',
       // defaultValue: initialValues[prop],
       error: state.errors[prop],
     };
   };
 
   const setValue = (key: string, value: any) => {
-    dispatch({ type: 'setData', payload: { [key]: value } });
+    dispatch({ type: 'setValue', payload: { [key]: value } });
   };
 
   const setValues = (callback: (prev: RealValuesType) => RealValuesType) => {
-    dispatch({ type: 'setData', payload: callback(state) });
+    dispatch({ type: 'setValue', payload: callback(state) });
   };
 
   const getValue = (prop: string) => {
     return state[prop];
   };
 
-  const getValues = () => state.data;
+  const getValues = () => state.values;
 
   const onSubmit =
     (cb: SubmitCallback) => (evt: FormEvent<HTMLFormElement>) => {
@@ -174,7 +177,7 @@ export function useForm({
   const validate = () => {
     const errors: Record<string, any> = {};
     for (const key of Object.keys(validation)) {
-      const err = validation[key](state.data[key]);
+      const err = validation[key](state.values[key]);
       err ? (errors[key] = err) : delete errors[key];
     }
     dispatch({ type: 'setError', payload: errors });

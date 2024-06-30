@@ -2,30 +2,36 @@
 @import "../size.less";
 
 .wrapper {
+  display: flex;
+  align-items: center;
   > span {
     display: inline-block;
-    width: 100%;
+    vertical-align: middle;
+  }
+  > span:nth-child(2) {
+    flex-grow: 1;
   }
 }
 
 .tagInput {
   outline: none;
-  border: 1px solid @gray-7;
+  border: 1px solid var(--horen-color-gray-4);
   border-radius: @normalRadius;
   padding: 0 @normalGap;
   display: flex;
   flex-wrap: wrap;
+  min-height: 28px;
 }
 
 .tagItem {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  margin: 2px 0;
 }
 
 .label {
   display: inline-block;
   vertical-align: top;
-  position: relative;
-  top: 8px;
   margin-right: 8px;
   color: #777;
   font-size: 0.9rem;
@@ -43,8 +49,8 @@
   text-align: left;
   display: inline-block;
   flex-grow: 1;
-  height: 30px;
-  line-height: 30px;
+  min-height: 24px;
+  line-height: 24px;
 }
 
 .close {

@@ -45,8 +45,10 @@ export function Input(props: InputProps) {
   return (
     <span className={cls}>
       <span className={style.labelWrapper}>
-        <label className={style.label}>{label}</label>
-        {required && <span className={style.requiredStar}>*</span>}
+        <label className={style.label}>
+          {label}
+          {required && <span className={style.requiredStar}>*</span>}
+        </label>
       </span>
       <span className={style.inputAreaWrapper}>
         <input onChange={handleChange} {...restProps} className={inputCls} />

@@ -10,16 +10,23 @@ import cls from './TagInput.module.less';
 export type TagInputProps = {
   label?: string;
   labelPlacement?: string;
-  value?: string[];
-  onChange?: (tags: string[]) => void;
+  value?: string;
+  seperator?: string;
+  onChange?: (tags: string) => void;
 };
 
 export function TagInput(props: TagInputProps) {
-  const { label, labelPlacement = 'left', onChange, value } = props;
-  const [tags, setTags] = useState<string[]>(value || []);
+  const {
+    label,
+    labelPlacement = 'left',
+    onChange,
+    value = '',
+    seperator = '|',
+  } = props;
+  const [tags, setTags] = useState<string[]>(value.split(seperator) || []);
 
   const ref = useRef<HTMLDivElement>(null);
-  const tagRef = useRef<string[]>(value || []);
+  const tagRef = useRef<string[]>(value.split(seperator) || []);
 
   const handle = (event: KeyboardEvent) => {
     const target = event.target as HTMLDivElement;
@@ -69,7 +76,7 @@ export function TagInput(props: TagInputProps) {
 
   useEffect(() => {
     // console.log(tags);
-    if (onChange) onChange(tags);
+    if (onChange) onChange(tags.join(seperator));
   }, [tags]);
 
   const labelCls = classnames({
@@ -79,14 +86,15 @@ export function TagInput(props: TagInputProps) {
 
   return (
     <div className={cls.wrapper}>
-      {label && <label className={labelCls}>{label}</label>}
-      <span>
+      <span className={labelCls}>{label && <label>{label}</label>}</span>
+      <span className="horen-tag-input__content">
         <div className={cls.tagInput}>
           {tags.map((tag) => {
             if (tag !== '') {
               return (
                 <span className={cls.tagItem}>
                   <Tag
+                    size="sm"
                     key={tag}
                     style={{ borderRadius: 4 }}
                     fill={textToHexColor(tag)}>

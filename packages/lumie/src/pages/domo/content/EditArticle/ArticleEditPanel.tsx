@@ -2,22 +2,31 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import dayjs from 'dayjs';
 import marked from 'marked';
-import React from 'react';
-import Datepicker from 'react-datepicker';
+import React, { FormEvent } from 'react';
 import WE from 'wangeditor';
 
 import { API_URL } from '@/constants';
 import { store } from '@/store';
-import { IPost } from '@/types';
-import { AvatarUpload, Button, Input, Select, Segment } from '@horen/core';
-import { useForm } from '@horen/hooks';
+import {
+  AvatarUpload,
+  Button,
+  TextInput,
+  Select,
+  Segment,
+  TagInput,
+} from '@horen/core';
+import { useForm, FormData } from '@horen/hooks';
 import { notifications } from '@horen/notifications';
 import { useStore } from '@horen/store';
 
 import { EditPanelProps } from '../../_components/EditPanel';
-import style from './ArticleEditPanel.module.less';
+import { DatePicker } from '@/components/DatePicker';
 
-export interface ArticleEditPanelProps extends EditPanelProps {}
+import './ArticleEditPanel.css';
+import style from './ArticleEditPanel.module.less';
+import { IPost } from '@/types';
+
+export type ArticleEditPanelProps = EditPanelProps;
 
 const renderer = {
   image(href: string, title: string, text: string): string {
@@ -40,15 +49,30 @@ export function ArticleEditPanel({
 
   const state = useStore(store);
   const form = useForm({
-    initial: {
+    initialValues: {
       ...post,
+      format: 'html',
       author: state?.user.username,
+    },
+    validation: {
+      title: (value) => {
+        if (!value) return '标题不能为空';
+        if (value.length > 50) return '标题不能超过50个字符';
+        return null;
+      },
+      author: (value) => {
+        if (!value) return '作者不能为空';
+        if (value.length > 10) return '作者不能超过10个字符';
+        return null;
+      },
     },
   });
   const weditor = React.useRef<WE>(null);
 
-  const handleSubmit = (post: IPost) => {
-    if (onSubmit) onSubmit(post);
+  const handleSubmit = (data: FormData, evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    console.log(data.values);
+    // if (onSubmit) onSubmit(data.values as IPost);
   };
 
   const handleCancel = () => {
@@ -57,7 +81,7 @@ export function ArticleEditPanel({
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleUploadSuccess = (result: any) => {
-    form.setState('url', result.data.url);
+    form.setValue('url', result.data.url);
     notifications.show({ variant: 'success', message: '上传封面成功' });
   };
 
@@ -67,10 +91,10 @@ export function ArticleEditPanel({
 
   React.useEffect(() => {
     if (document.querySelector('#article-editor')) {
-      const c = form.get('content');
+      const c = form.getProps('content');
       weditor.current = new WE('#article-editor');
       weditor.current.config.height = 600;
-      weditor.current.config.onchange = (t: string) => c.onChange(null, t);
+      weditor.current.config.onchange = (t: string) => c.onChange(t);
       weditor.current.create();
       weditor.current.txt.html(c.value);
     }
@@ -84,123 +108,134 @@ export function ArticleEditPanel({
           <div className="" id="article-editor"></div>
         </div>
       </div>
-      <div className={style.right}>
-        <EditItem label="封面">
-          <AvatarUpload
-            url={API_URL.upload}
-            defaultValue={form.get('url').value}
-            onSuccess={handleUploadSuccess}
-            onFailed={handleUploadFailed}
-            token={state.user?.token}
-          />
-        </EditItem>
-        <EditItem label="ID">
-          <Input name="id" {...form.get('id')} disabled />
-        </EditItem>
-        <EditItem label="UID">
-          <Input name="uid" {...form.get('uid')} disabled />
-        </EditItem>
-        <EditItem label="Type">
-          <Select {...form.get('type')}>
-            <Select.Item name="文章" value="article" />
-            <Select.Item name="照片" value="photo" />
-            <Select.Item name="封面" value="cover" />
-            <Select.Item name="诗句" value="verse" />
-          </Select>
-        </EditItem>
-        <EditItem label="分类">
-          <Select {...form.get('category')}>
-            <Select.Item name="科幻" value="fiction" />
-            <Select.Item name="小说" value="novel" />
-            <Select.Item name="生活" value="life" />
-          </Select>
-        </EditItem>
-        <EditItem label="状态">
-          <Segment
-            variant="primary"
-            value={form.get('status').value}
-            onChange={(v) => form.setState('status', v)}>
-            <Segment.Item value="draft" label="草稿" />
-            <Segment.Item value="publish" label="已发布" />
-            <Segment.Item value="private" label="私密" />
-          </Segment>
-        </EditItem>
-        <EditItem label="格式">
-          <Select {...form.get('format')}>
-            <Select.Item name="网页" value="html" />
-            <Select.Item name="Markdown" value="md" />
-            <Select.Item name="纯文本" value="text" />
-          </Select>
-        </EditItem>
-        <EditItem label="标题">
-          <Input name="title" {...form.get('title')} />
-        </EditItem>
-        <EditItem label="梗概">
-          <Input name="excerpt" {...form.get('excerpt')} />
-        </EditItem>
-        <EditItem label="创建时间">
-          <Datepicker
-            selected={
-              form?.data.createAt && dayjs.unix(form?.data.createAt).toDate()
-            }
-            onChange={(d) =>
-              form.get('createAt').onChange(null, dayjs(d).unix())
-            }
-            dateFormat={'yyyy-MM-dd'}
-          />
-        </EditItem>
-        <EditItem label="更新时间">
-          <Datepicker
-            selected={
-              form?.data.updateAt && dayjs.unix(form?.data.updateAt).toDate()
-            }
-            onChange={(d) =>
-              form.get('updateAt').onChange(null, dayjs(d).unix())
-            }
-            dateFormat={'yyyy-MM-dd'}
-          />
-        </EditItem>
-        <EditItem label="作者">
-          <Input
-            name="author"
-            placeholder="请输入作者姓名"
-            {...form.get('author')}
-          />
-        </EditItem>
-        <EditItem label="标签">
-          <Input name="tags" {...form.get('tags')} />
-        </EditItem>
-        <EditItem label="备注">
-          <Input
-            name="description"
-            placeholder="请输入其他情况"
-            {...form.get('description')}
-          />
-        </EditItem>
-        <div className={style.submitArea}>
-          <Button onClick={() => handleSubmit(form.data)}>
-            {mode === 'create' ? '新增' : '更新'}
-          </Button>
-          <Button variant="danger" onClick={handleCancel}>
-            取消
-          </Button>
+      <form onSubmit={form.onSubmit(handleSubmit)}>
+        <div className={style.right}>
+          <EditItem>
+            <AvatarUpload
+              url={API_URL.upload}
+              defaultValue={form.getProps('url').value}
+              onSuccess={handleUploadSuccess}
+              onFailed={handleUploadFailed}
+              token={state.user?.token}
+            />
+          </EditItem>
+
+          <EditItem>
+            <TextInput label="ID" name="id" {...form.getProps('id')} disabled />
+          </EditItem>
+
+          <EditItem>
+            <TextInput
+              label="UID"
+              name="uid"
+              {...form.getProps('uid')}
+              disabled
+            />
+          </EditItem>
+
+          <EditItem>
+            <Select {...form.getProps('category')} label="分类">
+              <Select.Item name="科幻" value="fiction" />
+              <Select.Item name="小说" value="novel" />
+              <Select.Item name="生活" value="life" />
+            </Select>
+          </EditItem>
+
+          <EditItem>
+            <label>Status</label>
+            <Segment
+              variant="primary"
+              value={form.getProps('status').value}
+              onChange={(v) => form.setValue('status', v)}>
+              <Segment.Item value="draft" label="草稿" />
+              <Segment.Item value="publish" label="已发布" />
+              <Segment.Item value="private" label="私密" />
+            </Segment>
+          </EditItem>
+
+          <EditItem>
+            <Select {...form.getProps('format')} label="文本格式">
+              <Select.Item name="网页" value="html" />
+              <Select.Item name="Markdown" value="md" />
+              <Select.Item name="纯文本" value="text" />
+            </Select>
+          </EditItem>
+
+          <EditItem>
+            <TextInput
+              name="title"
+              {...form.getProps('title')}
+              label="标题"
+              required
+            />
+          </EditItem>
+
+          <EditItem>
+            <TextInput
+              name="excerpt"
+              {...form.getProps('excerpt')}
+              label="文章概括"
+            />
+          </EditItem>
+
+          <EditItem>
+            <DatePicker
+              value={
+                form.getValues().createAt &&
+                dayjs.unix(form.getValues().createAt).toDate()
+              }
+              onChange={(d) =>
+                form.getProps('createAt').onChange(null, dayjs(d).unix())
+              }
+            />
+          </EditItem>
+
+          <EditItem>
+            <DatePicker
+              value={
+                form.getValues().updateAt &&
+                dayjs.unix(form.getValues().updateAt).toDate()
+              }
+              onChange={(d) =>
+                form.getProps('updateAt').onChange(null, dayjs(d).unix())
+              }
+            />
+          </EditItem>
+
+          <EditItem>
+            <TextInput
+              label="作者"
+              name="author"
+              placeholder="请输入作者姓名"
+              {...form.getProps('author')}
+              required
+            />
+          </EditItem>
+
+          <EditItem>
+            <TagInput {...form.getProps('tags')} label="标签" />
+          </EditItem>
+
+          <EditItem>
+            <TextInput
+              label="其他描述"
+              name="description"
+              placeholder="请输入其他需要描述的情况"
+              {...form.getProps('description')}
+            />
+          </EditItem>
+          <div className={style.submitArea}>
+            <Button type="submit">{mode === 'create' ? '新增' : '更新'}</Button>
+            <Button variant="danger" onClick={handleCancel}>
+              取消
+            </Button>
+          </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 }
 
-function EditItem({
-  label,
-  children,
-}: {
-  label: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className={style.editItem}>
-      <span className={style.itemLabel}>{label}</span>
-      <span className={style.itemContent}>{children}</span>
-    </div>
-  );
+function EditItem({ children }: { children: React.ReactNode }) {
+  return <div className={style.editItem}>{children}</div>;
 }

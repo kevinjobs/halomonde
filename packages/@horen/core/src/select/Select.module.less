@@ -2,9 +2,27 @@
 @import "../size.less";
 @height: @normalHeight;
 
+.selectFrame {
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+}
+
+.selectLabel {
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.selectWrapper {
+  display: inline-block;
+  width: 100%;
+}
+
 .select {
+  -webkit-user-select: none;
   user-select: none;
   position: relative;
+  width: 100%;
 }
 
 .select:focus .selectHeader {
@@ -15,6 +33,7 @@
   border: 1px solid @gray-5;
   height: @height;
   line-height: @height;
+  width: 100%;
   padding: 0 @largeGap;
   border-radius: @normalRadius;
   background-color: @white;

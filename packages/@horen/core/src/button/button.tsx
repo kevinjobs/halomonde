@@ -15,7 +15,7 @@ export type ButtonProps = {
     | 'dark'
     | 'light'
     | 'line';
-  size: BaseSize;
+  size?: BaseSize;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export function Button(props: ButtonProps) {

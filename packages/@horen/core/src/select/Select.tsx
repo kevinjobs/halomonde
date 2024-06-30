@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState, } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import { Arrow, } from './Arrow';
+import { Arrow } from './Arrow';
 import style from './Select.module.less';
 
 export interface SelectProps {
-  onChange?(e: React.MouseEvent<HTMLDivElement> | null, value: string): void;
+  onChange?(value: string, e: React.MouseEvent<HTMLDivElement> | null): void;
   value: string;
   border?: boolean;
   arrow?: boolean;
@@ -19,9 +19,9 @@ export interface SelectItemProps {
 function Select({
   onChange,
   children,
-  border=true,
-  arrow=false,
-  value
+  border = true,
+  arrow = true,
+  value,
 }: SelectProps) {
   const [kw, setKw] = useState<Record<string, any>>({});
   const [state, setValue] = useState(value);
@@ -32,15 +32,16 @@ function Select({
     setExpand(!expand);
     const target = e.target as HTMLDivElement;
     const v = target.dataset['value'];
+
     if (v) {
       setValue(v);
-      if (onChange) onChange(e, v);
+      if (onChange) onChange(v, e);
     }
   };
 
   const handleBlur = () => {
     setExpand(false);
-  }
+  };
 
   useEffect(() => {
     if (ref.current) {
@@ -61,39 +62,31 @@ function Select({
       className={style.select}
       onClick={handleClick}
       onBlur={handleBlur}
-      tabIndex={1}
-    >
+      tabIndex={1}>
       <div className={style.selectHeader}>
         <div>{kw[state]}</div>
-        {
-          arrow
-          &&
+        {arrow && (
           <div className={style.headerArrow}>
             <Arrow up={expand} />
           </div>
-        }
+        )}
       </div>
       <div
         className={style.selectItems}
-        style={{display: expand ? 'block' : 'none'}}
-        ref={ref}
-      >
+        style={{ display: expand ? 'block' : 'none' }}
+        ref={ref}>
         {children}
       </div>
     </div>
-  )
+  );
 }
 
-function Item({name, value}: SelectItemProps) {
+function Item({ name, value }: SelectItemProps) {
   return (
-    <div
-      className={style.selectItem}
-      data-name={name}
-      data-value={value}
-    >
+    <div className={style.selectItem} data-name={name} data-value={value}>
       {name}
     </div>
-  )
+  );
 }
 
 Select.Item = Item;
