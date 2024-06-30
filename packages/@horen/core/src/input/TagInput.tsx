@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { randomInt } from '@horen/utils';
+import { textToHexColor } from '@horen/utils';
 
 import { Tag } from '../tag';
 
@@ -77,19 +77,6 @@ export function TagInput(props: TagInputProps) {
     [cls.label]: true,
   });
 
-  const strToHexCharCode = (str: string) => {
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-      hash = str.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    let color = '#';
-    for (let i = 0; i < 3; i++) {
-      const value = (hash >> (i * 8)) & 0xff;
-      color += ('00' + value.toString(16)).substr(-2);
-    }
-    return color;
-  };
-
   return (
     <div className={cls.wrapper}>
       {label && <label className={labelCls}>{label}</label>}
@@ -102,7 +89,7 @@ export function TagInput(props: TagInputProps) {
                   <Tag
                     key={tag}
                     style={{ borderRadius: 4 }}
-                    fill={strToHexCharCode(tag)}>
+                    fill={textToHexColor(tag)}>
                     {tag}
                     <span className={cls.close} onClick={() => deleteTag(tag)}>
                       ×

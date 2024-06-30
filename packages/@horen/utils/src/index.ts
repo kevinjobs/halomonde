@@ -1,4 +1,5 @@
-export { last } from './last';
-export { isEqual } from './is-equal';
-export { clamp } from './clamp';
-export { randomInt } from './random';
+export * from './last';
+export * from './is-equal';
+export * from './clamp';
+export * from './random';
+export * from './text-to-color';
