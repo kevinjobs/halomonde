@@ -47,17 +47,21 @@ export function CoverEditPanel({
           />
         )}
       </div>
-      <div>
-        <UploadCloud
-          value={coverForm.url}
-          onChange={(url) => setCoverForm((prev) => ({ ...prev, url }))}
-        />
-        <Button onClick={handleSubmit}>
-          {mode === 'create' ? '新增' : '更新'}
-        </Button>
-        <Button variant="danger" onClick={handleCancel}>
-          Cancel
-        </Button>
+      <div className={css.uploadArea}>
+        <div>
+          <UploadCloud
+            value={coverForm.url}
+            onChange={(url) => setCoverForm((prev) => ({ ...prev, url }))}
+          />
+        </div>
+        <div>
+          <Button onClick={handleSubmit} size="lg">
+            {mode === 'create' ? '新增' : '更新'}
+          </Button>
+          <Button variant="danger" onClick={handleCancel} size="lg">
+            Cancel
+          </Button>
+        </div>
       </div>
     </div>
   );

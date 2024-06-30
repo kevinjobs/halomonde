@@ -71,10 +71,10 @@ export function VerseEditPanel({
         />
       </div>
       <div className={style.submitVerse}>
-        <Button onClick={handleSubmit}>
+        <Button onClick={handleSubmit} size="lg">
           {mode === 'create' ? '新增' : '更新'}
         </Button>
-        <Button onClick={handleCancel} variant="danger">
+        <Button onClick={handleCancel} variant="danger" size="lg">
           取消
         </Button>
       </div>

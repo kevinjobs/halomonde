@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import React, { FormEvent } from 'react';
 
 import { store } from '@/store';
@@ -13,7 +12,6 @@ import { RichTextEditor } from '@/components/RichTextEditor';
 
 import './ArticleEditPanel.css';
 import style from './ArticleEditPanel.module.less';
-import { IPost } from '@/types';
 
 export type ArticleEditPanelProps = EditPanelProps;
 
@@ -49,7 +47,9 @@ export function ArticleEditPanel({
     evt: FormEvent<HTMLFormElement>,
   ) => {
     evt.preventDefault();
-    if (onSubmit) onSubmit(data.values as IPost);
+    if (Object.keys(data.errors).length === 0) {
+      if (onSubmit) onSubmit(data.values);
+    }
   };
 
   const handleCancel = () => {
@@ -59,25 +59,32 @@ export function ArticleEditPanel({
   return (
     <div className={style.editPost}>
       <div className={style.left}>
+        <EditItem>
+          <UploadCloud {...form.getProps('url')} />
+        </EditItem>
+      </div>
+      <div className={style.center}>
         <div className={style.editorContainer}>
           <RichTextEditor {...form.getProps('content')} />
         </div>
       </div>
-      <form onSubmit={form.onSubmit(handleSubmit)}>
-        <div className={style.right}>
-          <Segment
-            variant="primary"
-            value={form.getProps('status').value}
-            onChange={(v) => form.setValue('status', v)}>
-            <Segment.Item value="draft" label="草稿" />
-            <Segment.Item value="publish" label="已发布" />
-            <Segment.Item value="private" label="私密" />
-          </Segment>
-          <br />
-          <br />
 
+      <div className={style.right}>
+        <form onSubmit={form.onSubmit(handleSubmit)}>
           <EditItem>
-            <UploadCloud {...form.getProps('url')} />
+            <span>
+              <label>状态</label>
+            </span>
+            <span>
+              <Segment
+                variant="primary"
+                value={form.getProps('status').value}
+                onChange={(v) => form.setValue('status', v)}>
+                <Segment.Item value="draft" label="草稿" />
+                <Segment.Item value="publish" label="已发布" />
+                <Segment.Item value="private" label="私密" />
+              </Segment>
+            </span>
           </EditItem>
 
           <EditItem>
@@ -127,27 +134,11 @@ export function ArticleEditPanel({
           </EditItem>
 
           <EditItem>
-            <DatePicker
-              value={
-                form.getValues().createAt &&
-                dayjs.unix(form.getValues().createAt).toDate()
-              }
-              onChange={(d) =>
-                form.getProps('createAt').onChange(null, dayjs(d).unix())
-              }
-            />
+            <DatePicker {...form.getProps('createAt')} label="创建日期" />
           </EditItem>
 
           <EditItem>
-            <DatePicker
-              value={
-                form.getValues().updateAt &&
-                dayjs.unix(form.getValues().updateAt).toDate()
-              }
-              onChange={(d) =>
-                form.getProps('updateAt').onChange(null, dayjs(d).unix())
-              }
-            />
+            <DatePicker {...form.getProps('updateAt')} label="修改日期" />
           </EditItem>
 
           <EditItem>
@@ -173,15 +164,15 @@ export function ArticleEditPanel({
             />
           </EditItem>
           <div className={style.submitArea}>
-            <Button variant="danger" size="lg" onClick={handleCancel}>
-              取消
-            </Button>
             <Button type="submit" size="lg">
               {mode === 'create' ? '新增' : '更新'}
             </Button>
+            <Button variant="danger" size="lg" onClick={handleCancel}>
+              取消
+            </Button>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 }

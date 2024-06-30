@@ -15,7 +15,7 @@ export interface UseFormProps {
 }
 
 export type GetReturn = {
-  onChange(e?: any, value?: any): void;
+  onChange(value: any, evt?: any): void;
   onFocus(): void;
   onBlur(): void;
   value: any;

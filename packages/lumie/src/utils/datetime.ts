@@ -8,10 +8,14 @@ export const nowStamp = () => {
   return covertToUnixStamp10(Date.now());
 };
 
-export const stampToDate = (stamp: number) => {
+export const stampToDate = (stamp: number | string) => {
   if (String(stamp).length === 10) {
-    return dayjs.unix(stamp).toDate();
+    return dayjs.unix(Number(stamp)).toDate();
   } else if (String(stamp).length === 13) {
     return dayjs(stamp).toDate();
   }
+};
+
+export const dateToStamp = (date: Date) => {
+  return dayjs(date).unix();
 };

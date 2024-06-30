@@ -38,6 +38,12 @@ export function Input(props: InputProps) {
     [style.inputAreaError]: Boolean(error),
   });
 
+  const errorTextCls = classnames({
+    [style.innerText]: true,
+    [style.expand]: Boolean(error),
+    [style.shrink]: !Boolean(error),
+  });
+
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) onChange(evt.target.value, evt);
   };
@@ -53,7 +59,7 @@ export function Input(props: InputProps) {
       <span className={style.inputAreaWrapper}>
         <input onChange={handleChange} {...restProps} className={inputCls} />
         <div className={style.errorText}>
-          <span>{error}</span>
+          <div className={errorTextCls}>{error}</div>
         </div>
       </span>
     </span>

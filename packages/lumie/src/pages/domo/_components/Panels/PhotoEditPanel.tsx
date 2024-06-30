@@ -1,19 +1,13 @@
-import dayjs from 'dayjs';
 import React, { FormEvent, useRef } from 'react';
-import Datepicker from 'react-datepicker';
 
-import { stampToDate } from '@/utils/datetime';
+import { DatePicker } from '@/components/DatePicker';
 import { EXIF_NAME, getExifs, IExif } from '@/utils/exif';
 import { getLocalUser } from '@/utils/store';
-
-import { Button, TextInput, Segment, TagInput } from '@horen/core';
-import { useForm, FormCallbackData } from '@horen/hooks';
-import { notifications } from '@horen/notifications';
+import { Button, Segment, TagInput, TextInput } from '@horen/core';
+import { FormCallbackData, useForm } from '@horen/hooks';
 
 import { UploadCloud } from '../UploadCloud';
-
-import { EditPanelProps } from '.';
-
+import { EditPanelProps } from './';
 import css from './PhotoEditPanel.module.less';
 
 export type PhotoEditPanelProps = EditPanelProps;
@@ -65,11 +59,6 @@ export function PhotoEditPanel({
     evt.preventDefault();
     if (Object.keys(data.errors).length === 0) {
       if (onSubmit) onSubmit(data.values);
-    } else {
-      notifications.show({
-        variant: 'warning',
-        message: '请检查表单',
-      });
     }
   };
 
@@ -83,9 +72,25 @@ export function PhotoEditPanel({
       <div className={css.main}>
         <form className={css.left} onSubmit={form.onSubmit(handleSubmit)}>
           <EditItem>
+            <span>
+              <label>状态</label>
+            </span>
+            <span>
+              <Segment
+                variant="primary"
+                value={form.getProps('status').value}
+                onChange={(v) => form.setValue('status', v)}>
+                <Segment.Item value="draft" label="草稿" />
+                <Segment.Item value="publish" label="已发布" />
+                <Segment.Item value="private" label="私密" />
+              </Segment>
+            </span>
+          </EditItem>
+
+          <EditItem>
             <TextInput
               label="标题"
-              labelPlacement="top"
+              labelPlacement="left"
               name="title"
               required
               {...form.getProps('title')}
@@ -93,21 +98,9 @@ export function PhotoEditPanel({
           </EditItem>
 
           <EditItem>
-            <label>状态</label>
-            <Segment
-              variant="primary"
-              value={form.getProps('status').value}
-              onChange={(v) => form.setValue('status', v)}>
-              <Segment.Item value="draft" label="草稿" />
-              <Segment.Item value="publish" label="已发布" />
-              <Segment.Item value="private" label="私密" />
-            </Segment>
-          </EditItem>
-
-          <EditItem>
             <TagInput
               label="标签"
-              labelPlacement="top"
+              labelPlacement="left"
               {...form.getProps('tags')}
             />
           </EditItem>
@@ -116,7 +109,7 @@ export function PhotoEditPanel({
             <TextInput
               label="简介"
               name="content"
-              labelPlacement="top"
+              labelPlacement="left"
               {...form.getProps('content')}
             />
           </EditItem>
@@ -125,31 +118,17 @@ export function PhotoEditPanel({
             <TextInput
               label="文件格式"
               name="format"
-              labelPlacement="top"
+              labelPlacement="left"
               {...form.getProps('format')}
             />
           </EditItem>
 
           <EditItem>
-            <label>创建日期</label>
-            <Datepicker
-              selected={stampToDate(form.getProps('createAt').value)}
-              onChange={(d) =>
-                form.getProps('createAt').onChange(null, dayjs(d).unix())
-              }
-              dateFormat={'yyyy-MM-dd HH:mm:ss'}
-            />
+            <DatePicker {...form.getProps('createAt')} label="创建日期" />
           </EditItem>
 
           <EditItem>
-            <label>更新日期</label>
-            <Datepicker
-              selected={stampToDate(form.getProps('updateAt').value)}
-              onChange={(d) =>
-                form.getProps('updateAt').onChange(null, dayjs(d).unix())
-              }
-              dateFormat={'yyyy-MM-dd HH:mm:ss'}
-            />
+            <DatePicker {...form.getProps('updateAt')} label="更新日期" />
           </EditItem>
 
           <EditItem>
@@ -157,15 +136,17 @@ export function PhotoEditPanel({
               label="作者"
               name="author"
               placeholder="请输入作者姓名"
-              labelPlacement="top"
+              labelPlacement="left"
               required
               {...form.getProps('author')}
             />
           </EditItem>
 
           <div className={css.bottom}>
-            <Button type="submit">{mode === 'create' ? '新增' : '更新'}</Button>
-            <Button variant="danger" onClick={handleCancel}>
+            <Button type="submit" size="lg">
+              {mode === 'create' ? '新增' : '更新'}
+            </Button>
+            <Button variant="danger" onClick={handleCancel} size="lg">
               取消
             </Button>
           </div>
