@@ -1,4 +1,10 @@
 :root {
+  --horen-size-xs: 0.75rem;
+  --horen-size-sm: 0.875rem;
+  --horen-size-md: 1rem;
+  --horen-size-lg: 1.25rem;
+  --horen-size-xl: 1.5rem;
+  --horen-size-xxl: 2rem;
   /* base color */
   --horen-color-primary: #9bdb34;
   --horen-color-secondary: #2980b9;

@@ -43,3 +43,5 @@ export {
   type UploadProps,
   type ImageUploadProps,
 } from './upload';
+
+export * from './Calendar';

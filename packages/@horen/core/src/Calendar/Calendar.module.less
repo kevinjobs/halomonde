@@ -1,0 +1,107 @@
+.calendar {
+  border: 1px solid var(--horen-color-gray-4);
+  display: inline-block;
+  border-radius: var(--horen-radius-xl);
+  padding: var(--horen-gap-lg) var(--horen-gap-md) var(--horen-gap-md);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--horen-gap-md) 0 var(--horen-gap-lg);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.headerLeft {
+  flex-grow: 1;
+  > span {
+    display: inline-block;
+    height: 24px;
+    line-height: 24px;
+    margin-right: var(--horen-gap-md);
+    font-weight: var(--horen-font-weight-bold);
+  }
+}
+
+.headerCenter {
+  height: var(--horen-size-xxl);
+  width: var(--horen-size-xxl);
+  line-height: var(--horen-size-xxl);
+  text-align: center;
+  border-radius: 50%;
+  color: var(--horen-color-gray-4);
+  margin-right: var(--horen-gap-md);
+  cursor: pointer;
+  transition: all var(--horen-duration-fast) ease-in-out;
+  &:hover {
+    color: var(--horen-color-gray-7);
+    background-color: var(--horen-color-gray-2);
+  }
+}
+
+.headerRight {
+  display: flex;
+  > span {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--horen-size-xxl);
+    width: var(--horen-size-xxl);
+    line-height: var(--horen-size-xxl);
+    transition: background-color var(--horen-duration-fast) ease-in-out;
+    border-radius: 50%;
+    &:hover {
+      background-color: var(--horen-color-gray-2);
+    }
+  }
+}
+
+.date {
+  -webkit-user-select: none;
+  user-select: none;
+  th {
+    padding: var(--horen-gap-lg) 0 var(--horen-gap-lg) 0;
+  }
+  td {
+    > span {
+      display: inline-block;
+      min-width: 40px;
+      min-height: 40px;
+      text-align: center;
+      line-height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      &:hover {
+        background-color: var(--horen-color-primary);
+        color: var(--horen-color-white);
+      }
+    }
+  }
+}
+
+.this {
+  color: var(--horen-color-gray-8);
+}
+
+.last {
+  color: var(--horen-color-gray-4);
+}
+
+.next {
+  color: var(--horen-color-gray-4);
+}
+
+.today {
+  > span {
+    background-color: var(--horen-color-gray-2);
+  }
+}
+
+.selectedDay {
+  > span {
+    background-color: var(--horen-color-primary);
+    color: var(--horen-color-white);
+  }
+}
