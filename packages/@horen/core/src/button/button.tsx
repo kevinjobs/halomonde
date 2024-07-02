@@ -30,6 +30,7 @@ export function Button(props: ButtonProps) {
   const cls = classnames({
     [_css[variant]]: true,
     [_css[size]]: true,
+    [_css[type]]: true,
   });
 
   return (

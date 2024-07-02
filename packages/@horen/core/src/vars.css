@@ -5,9 +5,10 @@
   --horen-size-lg: 1.25rem;
   --horen-size-xl: 1.5rem;
   --horen-size-xxl: 2rem;
+  --horen-size-xxxl: 2.5rem;
   /* base color */
-  --horen-color-primary: #9bdb34;
-  --horen-color-secondary: #2980b9;
+  --horen-color-primary: #091128;
+  --horen-color-secondary: #1c4094;
   --horen-color-success: #27ae60;
   --horen-color-warning: #f39c12;
   --horen-color-danger: #c0392b;
@@ -28,8 +29,9 @@
   --horen-radius-xs: 0.125rem;
   --horen-radius-sm: 0.25rem;
   --horen-radius-md: 0.5rem;
-  --horen-radius-lg: 1rem;
-  --horen-radius-xl: 2rem;
+  --horen-radius-lg: 0.70rem;
+  --horen-radius-xl: 1rem;
+  --horen-radius-xxl: 1.5rem;
   /* shadow */
   /* font size */
   --horen-font-size-xs: 0.75rem;
@@ -55,8 +57,9 @@
   --horen-gap-xs: 0.125rem;
   --horen-gap-sm: 0.25rem;
   --horen-gap-md: 0.5rem;
-  --horen-gap-lg: 1rem;
-  --horen-gap-xl: 2rem;
+  --horen-gap-lg: 0.75rem;
+  --horen-gap-xl: 1rem;
+  --horen-gap-xxl: 1.5rem;
   /* duration */
   --horen-duration-faster: 0.1s;
   --horen-duration-fast: 0.2s;

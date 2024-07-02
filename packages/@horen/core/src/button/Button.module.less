@@ -1,8 +1,11 @@
 .button {
+  display: inline-block;
   border: none;
   margin: 0 var(--horen-gap-sm);
+  height: var(--horen-size-xxl);
+  line-height: var(--horen-size-xxl);
   color: var(--horen-color-white);
-  border-radius: var(--horen-radius-sm);
+  border-radius: var(--horen-radius-lg);
   &:active {
     position: relative;
     top: 2px;
@@ -19,54 +22,45 @@
 }
 
 .sm {
-  .button();
   font-size: var(--horen-font-size-xs);
-  padding: var(--horen-gap-sm) var(--horen-gap-md);
+  padding: 0 var(--horen-gap-lg);
 }
 
 .md {
-  .button();
-  padding: var(--horen-gap-sm) var(--horen-gap-md);
+  padding: 0 var(--horen-gap-xl);
   font-size: var(--horen-font-size-sm);
 }
 
 .lg {
-  .button();
-  padding: var(--horen-gap-md) var(--horen-gap-lg);
+  padding: 0 var(--horen-gap-xxl);
+  height: var(--horen-size-xxxl);
+  line-height: var(--horen-size-xxxl);
   font-size: var(--horen-font-size-md);
 }
 
 .primary {
-  .button();
   background-color: var(--horen-color-primary);
 }
 .secondary {
-  .button();
-  background-color: var(--horen-color-warning);
+  background-color: var(--horen-color-secondary);
 }
 .success {
-  .button();
   background-color: var(--horen-color-success);
 }
 .warning {
-  .button();
   background-color: var(--horen-color-warning);
 }
 .dark {
-  .button();
   background-color: var(--horen-color-dark);
 }
 .light {
-  .button();
   background-color: var(--horen-color-gray-2);
   color: var(--horen-color-dark);
 }
 .danger {
-  .button();
   background-color: var(--horen-color-danger);
 }
 .line {
-  .button();
   border: 1px solid var(--horen-color-dark);
   color: var(--horen-color-dark);
   background-color: var(--horen-color-white);
