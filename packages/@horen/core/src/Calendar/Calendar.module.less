@@ -17,13 +17,53 @@
 
 .headerLeft {
   flex-grow: 1;
-  > span {
-    display: inline-block;
-    height: 24px;
-    line-height: 24px;
-    margin-right: var(--horen-gap-md);
-    font-weight: var(--horen-font-weight-bold);
+}
+
+.monthText {
+  display: flex;
+  align-items: center;
+  height: 24px;
+  line-height: 24px;
+  margin-right: var(--horen-gap-xs);
+  font-weight: var(--horen-font-weight-bold);
+  -webkit-user-select: none;
+  user-select: none;
+  padding: var(--horen-gap-xs) var(--horen-gap-md);
+  border-radius: var(--horen-radius-xl);
+  cursor: pointer;
+  &:hover {
+    background-color: var(--horen-color-background-secondary);
   }
+  > span:nth-child(2) {
+    height: 14px;
+  }
+}
+
+.monthList {
+  padding: 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.monthListItem {
+  padding: var(--horen-gap-md) var(--horen-gap-lg);
+  font-size: var(--horen-font-size-sm);
+  cursor: pointer;
+  &:hover {
+    background-color: var(--horen-color-background-secondary);
+  }
+}
+
+.yearText {
+  .monthText();
+}
+
+.yearList {
+  .monthList();
+}
+
+.yearListItem {
+  .monthListItem();
 }
 
 .headerCenter {
@@ -88,11 +128,11 @@
 }
 
 .last {
-  color: var(--horen-color-text-secondary);
+  color: var(--horen-color-text-tertiary);
 }
 
 .next {
-  color: var(--horen-color-text-secondary);
+  color: var(--horen-color-text-tertiary);
 }
 
 .today {

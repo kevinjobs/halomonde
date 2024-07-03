@@ -15,8 +15,10 @@
   --horen-color-background-tertiary: #a7acb1;
   /* text color */
   --horen-color-text: #111;
-  --horen-color-text-secondary: #343131;
-  --horen-color-text-tertiary: #6e6868;
+  --horen-color-text-secondary: #444141;
+  --horen-color-text-tertiary: #aba4a4;
+  /* box shaow */
+  --horen-box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
   /* base color */
   --horen-color-primary: #091128;
   --horen-color-secondary: #1c4094;
@@ -89,9 +91,28 @@
   --horen-color-text: #d6d0d0;
   --horen-color-text-secondary: #777;
   --horen-color-text-tertiary: #5b5454;
+  --horen-box-shadow: rgba(71, 68, 68, 0.3) 0px 19px 38px, rgba(72, 70, 70, 0.22) 0px 15px 12px;
 }
 
 body {
   font-size: 16px;
   font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+}
+
+.perfect-scrollbar::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.perfect-scrollbar::-webkit-scrollbar {
+  width: 3px;
+  background-color: transparent;
+}
+
+.perfect-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #a5a5a569;
+  border-radius: 2px;
+}
+
+.perfect-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #454545;
 }

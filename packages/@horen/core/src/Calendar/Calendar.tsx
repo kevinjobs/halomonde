@@ -1,11 +1,16 @@
 import React, { useMemo, useState } from 'react';
 import { Icon } from '../icon';
+import { Popover } from '../Popover';
 import { isSameDay } from '@horen/utils';
 
 import cls from './Calendar.module.less';
 import { classnames } from '../_utils';
 
-export function Calendar() {
+export interface CalendarProps {
+  onChange?: (date: Date) => void;
+}
+
+export function Calendar({ onChange }: CalendarProps) {
   const [year, setYear] = useState(2024);
   const [month, setMonth] = useState(12);
   const [selected, setSelected] = useState<Date>();
@@ -34,6 +39,19 @@ export function Calendar() {
     setMonth(now.getMonth() + 1);
   };
 
+  const handleMonth = (month: number) => {
+    setMonth(month);
+  };
+
+  const handleYear = (year: number) => {
+    setYear(year);
+  };
+
+  const handleSelected = (date: Date) => {
+    setSelected(date);
+    if (onChange) onChange(date);
+  };
+
   return (
     <div className={cls.calendar}>
       <div className={cls.calendarTop}>
@@ -43,13 +61,15 @@ export function Calendar() {
           onPrev={handlePrev}
           onNext={handleNext}
           onToday={handleToday}
+          onMonth={handleMonth}
+          onYear={handleYear}
         />
       </div>
       <div className={cls.calendarMain}>
         <CalendarDate
           year={year}
           month={month}
-          onSelected={setSelected}
+          onSelected={handleSelected}
           selected={selected}
         />
       </div>
@@ -63,6 +83,8 @@ export interface CalendarHeaderProps {
   onPrev?: () => void;
   onNext?: () => void;
   onToday?: () => void;
+  onMonth?: (month: number) => void;
+  onYear?: (year: number) => void;
 }
 
 export function CalendarHeader({
@@ -71,6 +93,8 @@ export function CalendarHeader({
   onPrev,
   onNext,
   onToday,
+  onMonth,
+  onYear,
 }: CalendarHeaderProps) {
   const months = [
     'Janunary',
@@ -87,20 +111,13 @@ export function CalendarHeader({
     'December',
   ];
 
-  const cnMonths = [
-    '一月',
-    '二月',
-    '三月',
-    '四月',
-    '五月',
-    '六月',
-    '七月',
-    '八月',
-    '九月',
-    '十月',
-    '十一月',
-    '十二月',
-  ];
+  const YEARS = (() => {
+    const ys: number[] = [];
+    for (const y of years(year)) {
+      ys.push(y);
+    }
+    return ys;
+  })();
 
   const handlePrev = () => {
     if (onPrev) onPrev();
@@ -114,11 +131,59 @@ export function CalendarHeader({
     if (onToday) onToday();
   };
 
+  const handleClick = (month: number) => {
+    if (onMonth) onMonth(month);
+  };
+
+  const handleYear = (year: number) => {
+    if (onYear) onYear(year);
+  };
+
   return (
     <div className={cls.header}>
       <div className={cls.headerLeft}>
-        <span>{months[month - 1]}</span>
-        <span>{year}</span>
+        <span>
+          <Popover>
+            <Popover.Target>
+              <span className={cls.monthText}>
+                <span>{months[month - 1]}</span>
+              </span>
+            </Popover.Target>
+            <Popover.Content>
+              <div className={cls.monthList + ' ' + 'perfect-scrollbar'}>
+                {months.map((m, index) => (
+                  <div
+                    key={m}
+                    className={cls.monthListItem}
+                    onClick={(e) => handleClick(index + 1)}>
+                    {m}
+                  </div>
+                ))}
+              </div>
+            </Popover.Content>
+          </Popover>
+        </span>
+        <span>
+          <Popover>
+            <Popover.Target>
+              <span className={cls.yearText}>
+                <span>{year}</span>
+              </span>
+            </Popover.Target>
+            <Popover.Content>
+              <div className={cls.yearList + ' ' + 'perfect-scrollbar'}>
+                {YEARS.map((m) => (
+                  <div
+                    key={m}
+                    className={cls.yearListItem}
+                    onClick={(e) => handleYear(m)}>
+                    {m}
+                  </div>
+                ))}
+              </div>
+            </Popover.Content>
+          </Popover>
+        </span>
       </div>
       <div className={cls.headerCenter}>
         <span onClick={handleToday}>今</span>
@@ -285,3 +350,9 @@ const getMonthDays = (year: number, month: number) => {
   }
   return days[month - 1];
 };
+
+function* years(year: number) {
+  for (let i = year - 10; i < year + 10; i++) {
+    yield i;
+  }
+}

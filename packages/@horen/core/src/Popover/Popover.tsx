@@ -15,9 +15,12 @@ const PopoverContext = React.createContext<{
 function Popover({ children }: PopoverProps) {
   const [open, setOpen] = React.useState(false);
 
-  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    const target = e.target as HTMLDivElement;
+  const handleClick = () => {
     setOpen(!open);
+  };
+
+  const handleBlur = () => {
+    setOpen(false);
   };
 
   const findTopTarget = (el: HTMLElement) => {
@@ -34,7 +37,12 @@ function Popover({ children }: PopoverProps) {
 
   return (
     <PopoverContext.Provider value={{ open }}>
-      <div className={cls.popover} onClick={handleClick} data-key="popover">
+      <div
+        className={cls.popover}
+        onClick={handleClick}
+        data-key="popover"
+        tabIndex={1}
+        onBlur={handleBlur}>
         <div>{children}</div>
       </div>
     </PopoverContext.Provider>

@@ -15,20 +15,23 @@ export default () => {
 
   return (
     <div>
-      <button
-        onClick={() => {
-          if (theme === 'light') {
-            setTheme('dark');
-            document.documentElement.dataset.theme = 'dark';
-          } else {
-            setTheme('light');
-            document.documentElement.dataset.theme = 'light';
-          }
-        }}
-      >
-        theme
-      </button>
-      <Calendar />
+      <div>
+        <button
+          onClick={() => {
+            if (theme === 'light') {
+              setTheme('dark');
+              document.documentElement.dataset.theme = 'dark';
+            } else {
+              setTheme('light');
+              document.documentElement.dataset.theme = 'light';
+            }
+          }}
+        >
+          theme
+        </button>
+      </div>
+      <br />
+      <Calendar onChange={console.log} />
     </div>
   );
 };
