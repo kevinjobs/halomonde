@@ -6,6 +6,14 @@
   --horen-size-xl: 1.5rem;
   --horen-size-xxl: 2rem;
   --horen-size-xxxl: 2.5rem;
+  /* background color */
+  --horen-color-background: #fff;
+  --horen-color-background-secondary: #d4d8dc;
+  --horen-color-background-tertiary: #a7acb1;
+  /* text color */
+  --horen-color-text: #111;
+  --horen-color-text-secondary: #343131;
+  --horen-color-text-tertiary: #6e6868;
   /* base color */
   --horen-color-primary: #091128;
   --horen-color-secondary: #1c4094;
@@ -66,6 +74,16 @@
   --horen-duration-normal: 0.3s;
   --horen-duration-slow: 0.5s;
   --horen-duration-slower: 0.8s;
+}
+
+:root[data-theme="dark"] {
+  --horen-color-background: #141517;
+  --horen-color-background-secondary: #2b2c2d;
+  --horen-color-background-tertiary: #54565b;
+  /* text color */
+  --horen-color-text: #d6d0d0;
+  --horen-color-text-secondary: #777;
+  --horen-color-text-tertiary: #5b5454;
 }
 
 body {

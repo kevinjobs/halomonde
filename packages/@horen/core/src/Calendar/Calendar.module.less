@@ -3,6 +3,8 @@
   display: inline-block;
   border-radius: var(--horen-radius-xl);
   padding: var(--horen-gap-lg) var(--horen-gap-md) var(--horen-gap-md);
+  background-color: var(--horen-color-background);
+  color: var(--horen-color-text);
 }
 
 .header {
@@ -35,8 +37,8 @@
   cursor: pointer;
   transition: all var(--horen-duration-fast) ease-in-out;
   &:hover {
-    color: var(--horen-color-gray-7);
-    background-color: var(--horen-color-gray-2);
+    color: var(--horen-color-text);
+    background-color: var(--horen-color-background-secondary);;
   }
 }
 
@@ -53,7 +55,7 @@
     transition: background-color var(--horen-duration-fast) ease-in-out;
     border-radius: 50%;
     &:hover {
-      background-color: var(--horen-color-gray-2);
+      background-color: var(--horen-color-background-secondary);
     }
   }
 }
@@ -74,34 +76,34 @@
       border-radius: 50%;
       cursor: pointer;
       &:hover {
-        background-color: var(--horen-color-primary);
-        color: var(--horen-color-white);
+        background-color: var(--horen-color-background-secondary);
+        color: var(--horen-color-text);
       }
     }
   }
 }
 
 .this {
-  color: var(--horen-color-gray-8);
+  color: var(--horen-color-text);
 }
 
 .last {
-  color: var(--horen-color-gray-4);
+  color: var(--horen-color-text-secondary);
 }
 
 .next {
-  color: var(--horen-color-gray-4);
+  color: var(--horen-color-text-secondary);
 }
 
 .today {
   > span {
-    background-color: var(--horen-color-gray-2);
+    background-color: var(--horen-color-background-secondary);
   }
 }
 
 .selectedDay {
   > span {
-    background-color: var(--horen-color-primary);
-    color: var(--horen-color-white);
+    background-color: var(--horen-color-background-tertiary);
+    color: var(--horen-color-text);
   }
 }

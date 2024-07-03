@@ -1,4 +1,6 @@
 import React from 'react';
+import { classnames } from '../_utils';
+import cls from './Icon.module.less';
 
 import Add from './icon-add.svg';
 import Aperture from './icon-aperture.svg';
@@ -69,7 +71,13 @@ export interface IconProps extends React.HtmlHTMLAttributes<HTMLSpanElement> {
   fill?: string;
 }
 
-export function Icon({ name, size = 24, fill, ...restProps }: IconProps) {
+export function Icon({
+  className,
+  name,
+  size = 24,
+  fill,
+  ...restProps
+}: IconProps) {
   let icon;
 
   const ICONS = {
@@ -107,8 +115,14 @@ export function Icon({ name, size = 24, fill, ...restProps }: IconProps) {
 
   const I = ICONS[name];
 
+  const classname = classnames({
+    [className || '']: Boolean(className),
+    [cls.icon]: true,
+  });
+
   return (
     <span
+      className={classname}
       {...restProps}
       style={{
         fontSize: size,
