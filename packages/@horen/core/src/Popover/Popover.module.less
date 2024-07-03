@@ -1,0 +1,29 @@
+.popover {
+  display: inline-block;
+  > div {
+    position: relative;
+  }
+}
+
+.popoverTarget {
+  text-align: center;
+}
+
+.popoverContent {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: var(--horen-gap-lg) var(--horen-gap-xl);
+  margin-top: var(--horen-gap-md);
+  background-color: var(--horen-color-background);
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  z-index: var(--horen-z-index-popover);
+}
+
+.open {
+  visibility: visible;
+}
+
+.close {
+  visibility: hidden;
+}

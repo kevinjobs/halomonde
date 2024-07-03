@@ -1,4 +1,7 @@
 :root {
+  /* zindex */
+  --horen-z-index-popover: 100;
+  /* */
   --horen-size-xs: 0.75rem;
   --horen-size-sm: 0.875rem;
   --horen-size-md: 1rem;
@@ -74,6 +77,8 @@
   --horen-duration-normal: 0.3s;
   --horen-duration-slow: 0.5s;
   --horen-duration-slower: 0.8s;
+  /** shadow */
+  --horen-shadow-1: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
 }
 
 :root[data-theme="dark"] {

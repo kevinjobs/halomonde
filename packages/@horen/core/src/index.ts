@@ -45,3 +45,4 @@ export {
 } from './upload';
 
 export * from './Calendar';
+export * from './Popover';
