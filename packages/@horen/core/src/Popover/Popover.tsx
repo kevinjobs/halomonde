@@ -1,48 +1,55 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import cls from './Popover.module.less';
+import { useClickOutside } from '@horen/hooks';
 import { classnames } from '../_utils';
 
 export interface PopoverProps {
   children: React.ReactNode;
+  open?: boolean;
+  onClickTarget?: () => void;
+  onClickContent?: () => void;
+  onClickOutside?: () => void;
 }
 
 const PopoverContext = React.createContext<{
   open: boolean;
+  handleClickContent: () => void;
+  handleClickTarget: () => void;
 }>({
   open: false,
+  handleClickContent: () => {},
+  handleClickTarget: () => {},
 });
 
-function Popover({ children }: PopoverProps) {
-  const [open, setOpen] = React.useState(false);
+function Popover({
+  children,
+  onClickContent,
+  onClickOutside,
+  onClickTarget,
+  open = false,
+}: PopoverProps) {
+  const ref = useClickOutside(() => {
+    if (onClickOutside) {
+      onClickOutside();
+    }
+  });
 
-  const handleClick = () => {
-    setOpen(!open);
+  const handleClickContent = () => {
+    if (onClickContent) {
+      onClickContent();
+    }
   };
 
-  const handleBlur = () => {
-    setOpen(false);
-  };
-
-  const findTopTarget = (el: HTMLElement) => {
-    const key = el.dataset?.key;
-
-    if (key === 'target') {
-      return el;
-    } else {
-      if (el.parentNode) {
-        findTopTarget(el.parentNode as HTMLElement);
-      }
+  const handleClickTarget = () => {
+    if (onClickTarget) {
+      onClickTarget();
     }
   };
 
   return (
-    <PopoverContext.Provider value={{ open }}>
-      <div
-        className={cls.popover}
-        onClick={handleClick}
-        data-key="popover"
-        tabIndex={1}
-        onBlur={handleBlur}>
+    <PopoverContext.Provider
+      value={{ open, handleClickContent, handleClickTarget }}>
+      <div className={cls.popover} data-key="popover" tabIndex={1} ref={ref}>
         <div>{children}</div>
       </div>
     </PopoverContext.Provider>
@@ -50,15 +57,17 @@ function Popover({ children }: PopoverProps) {
 }
 
 function Target({ children }: { children: React.ReactNode }) {
+  const { handleClickTarget } = React.useContext(PopoverContext);
+
   return (
-    <div className={cls.popoverTarget} data-key={'target'}>
+    <div className={cls.popoverTarget} onClick={() => handleClickTarget()}>
       {children}
     </div>
   );
 }
 
 function Content({ children }: { children: React.ReactNode }) {
-  const { open } = React.useContext(PopoverContext);
+  const { open, handleClickContent } = React.useContext(PopoverContext);
 
   const clsname = classnames({
     [cls.popoverContent]: true,
@@ -66,7 +75,11 @@ function Content({ children }: { children: React.ReactNode }) {
     [cls.close]: !open,
   });
 
-  return <div className={clsname}>{children}</div>;
+  return (
+    <div className={clsname} onClick={() => handleClickContent()}>
+      {children}
+    </div>
+  );
 }
 
 Popover.Target = Target;

@@ -96,6 +96,9 @@ export function CalendarHeader({
   onMonth,
   onYear,
 }: CalendarHeaderProps) {
+  const [isYearOpened, setIsYearOpened] = useState(false);
+  const [isMonthOpened, setIsMonthOpened] = useState(false);
+
   const months = [
     'Janunary',
     'Febuary',
@@ -132,10 +135,12 @@ export function CalendarHeader({
   };
 
   const handleClick = (month: number) => {
+    setIsYearOpened(false);
     if (onMonth) onMonth(month);
   };
 
   const handleYear = (year: number) => {
+    setIsYearOpened(false);
     if (onYear) onYear(year);
   };
 
@@ -143,7 +148,11 @@ export function CalendarHeader({
     <div className={cls.header}>
       <div className={cls.headerLeft}>
         <span>
-          <Popover>
+          <Popover
+            open={isMonthOpened}
+            onClickContent={() => setIsMonthOpened(false)}
+            onClickTarget={() => setIsMonthOpened(!isMonthOpened)}
+            onClickOutside={() => setIsMonthOpened(false)}>
             <Popover.Target>
               <span className={cls.monthText}>
                 <span>{months[month - 1]}</span>
@@ -164,7 +173,11 @@ export function CalendarHeader({
           </Popover>
         </span>
         <span>
-          <Popover>
+          <Popover
+            open={isYearOpened}
+            onClickContent={() => setIsYearOpened(false)}
+            onClickTarget={() => setIsYearOpened(!isYearOpened)}
+            onClickOutside={() => setIsYearOpened(false)}>
             <Popover.Target>
               <span className={cls.yearText}>
                 <span>{year}</span>
