@@ -333,15 +333,17 @@ export function CalendarDate({
           </tr>
         </thead>
         <tbody>
-          {finalArr.map((week) => {
+          {finalArr.map((week, i) => {
+            const key = `${week[0]?.date.valueOf()}-${i}`;
             return (
-              <tr key={week[0]?.day || 'empty'}>
-                {week.map((d) => {
+              <tr key={key} data-key={key}>
+                {week.map((d, j) => {
+                  const key = `${d.date.valueOf()}-${i}-${j}`;
                   return (
                     <td
-                      key={d.date.toDateString()}
+                      key={key}
                       className={dayCls(d.month, d.date)}
-                      data-day={d.date.toDateString()}>
+                      data-day={key}>
                       <span onClick={(e) => handleSelected(e, d.date)}>
                         <span>{d.day}</span>
                       </span>
