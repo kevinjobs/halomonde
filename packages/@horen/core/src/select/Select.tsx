@@ -1,90 +1,112 @@
-import React, { useEffect, useRef, useState } from 'react';
-
-import { Arrow } from './Arrow';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { Popover } from '../Popover';
+import { Icon } from '../icon';
 import style from './Select.module.less';
 
+export type SelectValueType = string | number | boolean | null;
+
 export interface SelectProps {
-  onChange?(value: string, e: React.MouseEvent<HTMLDivElement> | null): void;
+  onChange?(
+    value: SelectValueType,
+    e: React.MouseEvent<HTMLElement> | null,
+  ): void;
   value: string;
-  border?: boolean;
-  arrow?: boolean;
   children: React.ReactNode;
 }
 
-export interface SelectItemProps {
+export interface SelectValue {
   name: string;
-  value: string;
+  label: string;
+  value: SelectValueType;
 }
 
-function Select({
-  onChange,
-  children,
-  border = true,
-  arrow = true,
-  value,
-}: SelectProps) {
-  const [kw, setKw] = useState<Record<string, any>>({});
-  const [state, setValue] = useState(value);
-  const [expand, setExpand] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+export type SelectItemProps = SelectValue;
 
-  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    setExpand(!expand);
-    const target = e.target as HTMLDivElement;
-    const v = target.dataset['value'];
+const SelectContext = createContext<{
+  setValues: (value: SelectValue) => void;
+}>({
+  setValues: () => {},
+});
 
-    if (v) {
-      setValue(v);
-      if (onChange) onChange(v, e);
+function Select({ onChange, children, value }: SelectProps) {
+  const [open, setOpen] = useState(false);
+
+  const [kw, setKw] = useState<SelectValue[]>([]);
+  const [selected, setSelected] = useState<SelectValue | null>(null);
+
+  const handleClickContent = (e: React.MouseEvent<HTMLElement>) => {
+    const target = e.target as HTMLElement;
+
+    const label = target.dataset['label'];
+    const name = target.dataset['name'];
+    const value = target.dataset['value'] || null;
+
+    if (label && name) {
+      setSelected({ label, name, value });
+      if (onChange) onChange(value, e);
     }
+
+    setOpen(false);
   };
 
-  const handleBlur = () => {
-    setExpand(false);
+  const handleClickOutside = () => {
+    setOpen(false);
   };
 
   useEffect(() => {
-    if (ref.current) {
-      const tmpKw: Record<string, any> = {};
-      for (const child of ref.current.children) {
-        const name = (child as HTMLDivElement).dataset['name'];
-        const value = (child as HTMLDivElement).dataset['value'];
-        if (typeof value === 'string') tmpKw[value] = name;
+    for (const item of kw) {
+      if (item.value === value) {
+        setSelected(item);
       }
-      setKw(tmpKw);
     }
-  }, [ref.current?.children]);
-
-  useEffect(() => setValue(value), [value]);
+  }, [kw]);
 
   return (
-    <div
-      className={style.select}
-      onClick={handleClick}
-      onBlur={handleBlur}
-      tabIndex={1}>
-      <div className={style.selectHeader}>
-        <div>{kw[state]}</div>
-        {arrow && (
-          <div className={style.headerArrow}>
-            <Arrow up={expand} />
-          </div>
-        )}
+    <SelectContext.Provider
+      value={{
+        setValues: (value: SelectValue) => {
+          setKw((prev) => [...prev, value]);
+        },
+      }}>
+      <div className={style.select}>
+        <Popover
+          open={open}
+          onClickTarget={() => setOpen(!open)}
+          onClickContent={handleClickContent}
+          onClickOutside={handleClickOutside}>
+          <Popover.Target>
+            <div className={style.target}>
+              <div>
+                <div>{selected?.label}</div>
+                <div>
+                  <Icon name="down" size={16} />
+                </div>
+              </div>
+            </div>
+          </Popover.Target>
+          <Popover.Content>
+            <div className={style.content}>{children}</div>
+          </Popover.Content>
+        </Popover>
       </div>
-      <div
-        className={style.selectItems}
-        style={{ display: expand ? 'block' : 'none' }}
-        ref={ref}>
-        {children}
-      </div>
-    </div>
+    </SelectContext.Provider>
   );
 }
 
-function Item({ name, value }: SelectItemProps) {
+function Item({ name, value, label }: SelectItemProps) {
+  const { setValues } = useContext(SelectContext);
+
+  useEffect(() => {
+    setValues({ name, value, label: label || name });
+  }, []);
+
   return (
-    <div className={style.selectItem} data-name={name} data-value={value}>
-      {name}
+    <div
+      className={style.selectItem}
+      data-name={name}
+      data-value={value}
+      data-label={label || name}>
+      {label || name}
     </div>
   );
 }
