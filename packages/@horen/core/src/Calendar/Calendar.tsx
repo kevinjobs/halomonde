@@ -12,8 +12,12 @@ export interface CalendarProps {
 }
 
 export function Calendar({ value, onChange }: CalendarProps) {
-  const [year, setYear] = useState(2024);
-  const [month, setMonth] = useState(12);
+  const [year, setYear] = useState(
+    value?.getFullYear() ?? new Date().getFullYear(),
+  );
+  const [month, setMonth] = useState(
+    value ? value.getMonth() + 1 : new Date().getMonth() + 1,
+  );
   const [selected, setSelected] = useState<Date>(value!!);
 
   const handlePrev = () => {
