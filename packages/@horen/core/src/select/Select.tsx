@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { DataInputWrapper, DataInputWrapperProps } from '../_common';
 import { Popover } from '../Popover';
 import { Icon } from '../icon';
 import style from './Select.module.less';
 
 export type SelectValueType = string | number | boolean | null;
 
-export interface SelectProps {
+export interface SelectProps extends DataInputWrapperProps {
   onChange?(
     value: SelectValueType,
     e: React.MouseEvent<HTMLElement> | null,
@@ -16,7 +17,7 @@ export interface SelectProps {
 
 export interface SelectValue {
   name: string;
-  label: string;
+  label?: string;
   value: SelectValueType;
 }
 
@@ -28,7 +29,10 @@ const SelectContext = createContext<{
   setValues: () => {},
 });
 
-function Select({ onChange, children, value }: SelectProps) {
+function Select(props: SelectProps) {
+  const { label, required, error, onChange, value, children, labelPlacement } =
+    props;
+
   const [open, setOpen] = useState(false);
 
   const [kw, setKw] = useState<SelectValue[]>([]);
@@ -62,34 +66,40 @@ function Select({ onChange, children, value }: SelectProps) {
   }, [kw]);
 
   return (
-    <SelectContext.Provider
-      value={{
-        setValues: (value: SelectValue) => {
-          setKw((prev) => [...prev, value]);
-        },
-      }}>
-      <div className={style.select}>
-        <Popover
-          open={open}
-          onClickTarget={() => setOpen(!open)}
-          onClickContent={handleClickContent}
-          onClickOutside={handleClickOutside}>
-          <Popover.Target>
-            <div className={style.target}>
-              <div>
-                <div>{selected?.label}</div>
+    <DataInputWrapper
+      error={error}
+      label={label}
+      labelPlacement={labelPlacement}
+      required={required}>
+      <SelectContext.Provider
+        value={{
+          setValues: (value: SelectValue) => {
+            setKw((prev) => [...prev, value]);
+          },
+        }}>
+        <div className={style.select}>
+          <Popover
+            open={open}
+            onClickTarget={() => setOpen(!open)}
+            onClickContent={handleClickContent}
+            onClickOutside={handleClickOutside}>
+            <Popover.Target>
+              <div className={style.target}>
                 <div>
-                  <Icon name="down" size={16} />
+                  <div>{selected?.label}</div>
+                  <div>
+                    <Icon name="down" size={16} />
+                  </div>
                 </div>
               </div>
-            </div>
-          </Popover.Target>
-          <Popover.Content>
-            <div className={style.content}>{children}</div>
-          </Popover.Content>
-        </Popover>
-      </div>
-    </SelectContext.Provider>
+            </Popover.Target>
+            <Popover.Content>
+              <div className={style.content}>{children}</div>
+            </Popover.Content>
+          </Popover>
+        </div>
+      </SelectContext.Provider>
+    </DataInputWrapper>
   );
 }
 

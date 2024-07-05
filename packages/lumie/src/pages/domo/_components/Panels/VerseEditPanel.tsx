@@ -43,29 +43,29 @@ export function VerseEditPanel({
   return (
     <div className={style.verseEdit}>
       <div className={style.verseEditItem}>
-        <span className={style.itemLabel}>标题</span>
         <TextInput
+          label="标题"
           value={title}
           onChange={(value) => setTitle(String(value))}
         />
       </div>
       <div className={style.verseEditItem}>
-        <span className={style.itemLabel}>第一句</span>
         <TextInput
+          label="第一段"
           value={verse1}
           onChange={(value) => setVerse1(String(value))}
         />
       </div>
       <div className={style.verseEditItem}>
-        <span className={style.itemLabel}>第二句</span>
         <TextInput
+          label="第二段"
           value={verse2}
           onChange={(value) => setVerse2(String(value))}
         />
       </div>
       <div className={style.verseEditItem}>
-        <span className={style.itemLabel}>作者</span>
         <TextInput
+          label="作者"
           value={author}
           onChange={(value) => setAuthor(String(value))}
         />

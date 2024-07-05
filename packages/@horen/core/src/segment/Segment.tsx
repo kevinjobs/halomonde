@@ -1,4 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { DataInputWrapper, DataInputWrapperProps } from '../_common';
 import cls from './Segment.module.less';
 import themes from '../themes.module.less';
 import { BaseVariant } from '../_types';
@@ -9,7 +10,7 @@ type SegmentProps = {
   children: React.ReactNode;
   value?: string;
   variant?: BaseVariant;
-};
+} & DataInputWrapperProps;
 
 type SegmentItemProps = {
   value: string;
@@ -24,7 +25,16 @@ type Seg = {
 } & SegmentItemProps;
 
 function Segment(props: SegmentProps) {
-  const { onChange, children, value, variant = 'light' } = props;
+  const {
+    onChange,
+    children,
+    value,
+    variant = 'light',
+    error,
+    label,
+    labelPlacement,
+    required,
+  } = props;
   const [segs, setSegs] = useState<Seg[]>([]);
   const [idx, setIdx] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
@@ -89,18 +99,24 @@ function Segment(props: SegmentProps) {
   ]);
 
   return (
-    <div className={cls.segment} onClick={handleClick}>
-      <span
-        className={className}
-        style={{
-          left: segs[idx]?.toLeft,
-          width: segs[idx]?.width,
-          height: segs[idx]?.height,
-        }}></span>
-      <div ref={ref} className={cls.itemsContainer}>
-        {children}
+    <DataInputWrapper
+      error={error}
+      label={label}
+      required={required}
+      labelPlacement={labelPlacement}>
+      <div className={cls.segment} onClick={handleClick}>
+        <span
+          className={className}
+          style={{
+            left: segs[idx]?.toLeft,
+            width: segs[idx]?.width,
+            height: segs[idx]?.height,
+          }}></span>
+        <div ref={ref} className={cls.itemsContainer}>
+          {children}
+        </div>
       </div>
-    </div>
+    </DataInputWrapper>
   );
 }
 

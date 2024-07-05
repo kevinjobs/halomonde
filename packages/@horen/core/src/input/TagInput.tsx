@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
+
 import { textToHexColor } from '@horen/utils';
 
-import { Tag } from '../tag';
-
+import { DataInputWrapper, DataInputWrapperProps } from '../_common';
 import { classnames } from '../_utils';
-
+import { Tag } from '../tag';
 import cls from './TagInput.module.less';
 
 export type TagInputProps = {
@@ -13,12 +13,14 @@ export type TagInputProps = {
   value?: string;
   seperator?: string;
   onChange?: (tags: string) => void;
-};
+} & DataInputWrapperProps;
 
 export function TagInput(props: TagInputProps) {
   const {
     label,
     labelPlacement = 'left',
+    required = false,
+    error,
     onChange,
     value = '',
     seperator = '|',
@@ -79,20 +81,18 @@ export function TagInput(props: TagInputProps) {
     if (onChange) onChange(tags.join(seperator));
   }, [tags]);
 
-  const labelCls = classnames({
-    [cls.labelTop]: labelPlacement === 'top',
-    [cls.label]: true,
-  });
-
   return (
-    <div className={cls.wrapper}>
-      <span className={labelCls}>{label && <label>{label}</label>}</span>
-      <span className="horen-tag-input__content">
-        <div className={cls.tagInput}>
-          {tags.map((tag) => {
-            if (tag !== '') {
-              return (
-                <span className={cls.tagItem}>
+    <DataInputWrapper
+      error={error}
+      label={label}
+      labelPlacement={labelPlacement}
+      required={required}>
+      <div className={cls.tagInput}>
+        {tags.map((tag) => {
+          if (tag !== '') {
+            return (
+              <span className={cls.tagItem} key={tag}>
+                <span>
                   <Tag
                     size="sm"
                     key={tag}
@@ -104,13 +104,17 @@ export function TagInput(props: TagInputProps) {
                     </span>
                   </Tag>
                 </span>
-              );
-            }
-          })}
-          <div contentEditable ref={ref} className={cls.inputArea}></div>
-        </div>
-      </span>
-    </div>
+              </span>
+            );
+          }
+        })}
+        <span className={cls.tagItem}>
+          <span>
+            <div contentEditable ref={ref} className={cls.inputArea}></div>
+          </span>
+        </span>
+      </div>
+    </DataInputWrapper>
   );
 }
 

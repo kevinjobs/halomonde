@@ -35,9 +35,22 @@ export default () => {
       <Calendar onChange={console.log} />
       <br />
       <br />
+      <DatePicker
+        label="Date Picker"
+        value={date}
+        onChange={setDate}
+        error="must be a date"
+      />
       <br />
       <br />
-      <DatePicker value={date} onChange={setDate} />
+      <DatePicker
+        label="Date Picker"
+        labelPlacement="top"
+        value={date}
+        onChange={setDate}
+        required
+        error="must be a date"
+      />
     </div>
   );
 };

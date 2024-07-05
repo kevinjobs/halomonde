@@ -1,58 +1,24 @@
-@import "../colors.less";
-@import "../size.less";
-
-.wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  flex-wrap: wrap;
-  > span {
-    display: inline-block;
-    vertical-align: middle;
-  }
-  > span:nth-child(2) {
-    flex-grow: 1;
-  }
-}
-
 .tagInput {
-  outline: none;
-  border: 1px solid var(--horen-color-gray-4);
-  border-radius: @normalRadius;
-  padding: 0 @normalGap;
-  display: flex;
-  flex-wrap: wrap;
-  min-height: 28px;
-}
-
-.tagItem {
-  display: flex;
-  align-items: center;
-  margin: 2px 0;
-}
-
-.label {
   display: inline-block;
-  vertical-align: top;
-  margin-right: 8px;
-  color: #777;
-  font-size: 0.9rem;
-  font-weight: 300;
-}
-
-.labelTop {
+  border: 1px solid var(--horen-color-text-tertiary);
+  border-radius: var(--horen-radius-xl);
+  min-height: var(--horen-size-lg);
   width: 100%;
-  position: static;
-  margin-bottom: 8px;
+  line-height: var(--horen-size-xl);
+  padding: var(--horen-gap-sm) var(--horen-gap-lg);
 }
 
 .inputArea {
-  outline: none;
-  text-align: left;
   display: inline-block;
-  flex-grow: 1;
-  min-height: 24px;
-  line-height: 24px;
+  min-width: 100px;
+  &:focus {
+    outline: none;
+    border-color: var(--horen-color-primary);
+  }
+}
+
+.tagItem {
+  display: inline-block;
 }
 
 .close {

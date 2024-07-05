@@ -7,11 +7,12 @@ import { useStore } from '@horen/store';
 
 import { EditPanelProps } from '..';
 import { UploadCloud } from '../UploadCloud';
-import { DatePicker } from '@/components/DatePicker';
+import { DatePicker } from '@horen/core';
 import { RichTextEditor } from '@/components/RichTextEditor';
 
 import './ArticleEditPanel.css';
 import style from './ArticleEditPanel.module.less';
+import { dateToStamp, stampToDate } from '@/utils/datetime';
 
 export type ArticleEditPanelProps = EditPanelProps;
 
@@ -73,10 +74,8 @@ export function ArticleEditPanel({
         <form onSubmit={form.onSubmit(handleSubmit)}>
           <EditItem>
             <span>
-              <label>状态</label>
-            </span>
-            <span>
               <Segment
+                label="状态"
                 variant="primary"
                 value={form.getProps('status').value}
                 onChange={(v) => form.setValue('status', v)}>
@@ -122,6 +121,7 @@ export function ArticleEditPanel({
               {...form.getProps('title')}
               label="标题"
               required
+              placeholder="请输入文章标题"
             />
           </EditItem>
 
@@ -130,15 +130,32 @@ export function ArticleEditPanel({
               name="excerpt"
               {...form.getProps('excerpt')}
               label="文章概括"
+              placeholder="文章简介，最多50个字符"
             />
           </EditItem>
 
           <EditItem>
-            <DatePicker {...form.getProps('createAt')} label="创建日期" />
+            <DatePicker
+              label="创建时间"
+              value={
+                form.getProps('createAt').value
+                  ? stampToDate(form.getProps('createAt').value)
+                  : new Date()
+              }
+              onChange={(v) => form.setValue('createAt', dateToStamp(v))}
+            />
           </EditItem>
 
           <EditItem>
-            <DatePicker {...form.getProps('updateAt')} label="修改日期" />
+            <DatePicker
+              label="更新时间"
+              value={
+                form.getProps('updateAt').value
+                  ? stampToDate(form.getProps('updateAt').value)
+                  : new Date()
+              }
+              onChange={(v) => form.setValue('updateAt', dateToStamp(v))}
+            />
           </EditItem>
 
           <EditItem>

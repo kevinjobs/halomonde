@@ -12,7 +12,7 @@ import { Select } from '@horen/core';
 
 export default () => (
   <div style={{ width: 300 }}>
-    <Select value="5">
+    <Select value="5" label="Test">
       <Select.Item name="value1" label="小说" value="1" />
       <Select.Item name="value2" label="动画" value="2" />
       <Select.Item name="value3" label="电影" value="3" />

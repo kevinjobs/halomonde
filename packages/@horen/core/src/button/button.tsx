@@ -28,9 +28,9 @@ export function Button(props: ButtonProps) {
   } = props;
 
   const cls = classnames({
+    [_css.button]: true,
     [_css[variant]]: true,
     [_css[size]]: true,
-    [_css[type]]: true,
   });
 
   return (

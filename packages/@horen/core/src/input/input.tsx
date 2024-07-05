@@ -1,20 +1,15 @@
 import React, { InputHTMLAttributes } from 'react';
+import { DataInputWrapper, DataInputWrapperProps } from '../_common';
 
-import { classnames } from '../_utils';
+import cls from './Input.module.less';
 
-import style from './Input.module.less';
-
-export interface InputProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
+export type InputProps = {
   onChange?(
     value: string | number,
     evt?: React.ChangeEvent<HTMLInputElement>,
   ): void;
-  label?: string;
-  labelPlacement?: 'left' | 'top';
-  error?: string;
-  required?: boolean;
-}
+} & Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> &
+  DataInputWrapperProps;
 
 export function Input(props: InputProps) {
   const {
@@ -27,41 +22,17 @@ export function Input(props: InputProps) {
     ...restProps
   } = props;
 
-  const cls = classnames({
-    [style.horenInput]: true,
-    [style.leftMode]: labelPlacement === 'left',
-    [className]: true,
-  });
-
-  const inputCls = classnames({
-    [style.inputArea]: true,
-    [style.inputAreaError]: Boolean(error),
-  });
-
-  const errorTextCls = classnames({
-    [style.innerText]: true,
-    [style.expand]: Boolean(error),
-    [style.shrink]: !Boolean(error),
-  });
-
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) onChange(evt.target.value, evt);
   };
 
   return (
-    <span className={cls}>
-      <span className={style.labelWrapper}>
-        <label className={style.label}>
-          {label}
-          {required && <span className={style.requiredStar}>*</span>}
-        </label>
-      </span>
-      <span className={style.inputAreaWrapper}>
-        <input onChange={handleChange} {...restProps} className={inputCls} />
-        <div className={style.errorText}>
-          <div className={errorTextCls}>{error}</div>
-        </div>
-      </span>
-    </span>
+    <DataInputWrapper
+      error={error}
+      label={label}
+      labelPlacement={labelPlacement}
+      required={required}>
+      <input onChange={handleChange} {...restProps} className={cls.input} />
+    </DataInputWrapper>
   );
 }

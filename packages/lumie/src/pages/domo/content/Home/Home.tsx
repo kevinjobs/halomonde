@@ -59,12 +59,11 @@ export default function Home({
     <div className={''}>
       <div className={style.options}>
         <div className={style.filter}>
-          <span className={style.filterText}>类型筛选</span>
           <span>
             <Select
+              label="类型筛选"
               value={posts?.[0].type || 'article'}
-              onChange={handleFilter}
-              arrow>
+              onChange={handleFilter}>
               <Select.Item name="文章" value="article" />
               <Select.Item name="照片" value="photo" />
               <Select.Item name="封面" value="cover" />

@@ -75,10 +75,8 @@ export function PhotoEditPanel({
         <form className={css.left} onSubmit={form.onSubmit(handleSubmit)}>
           <EditItem>
             <span>
-              <label>状态</label>
-            </span>
-            <span>
               <Segment
+                label="状态"
                 variant="primary"
                 value={form.getProps('status').value}
                 onChange={(v) => form.setValue('status', v)}>
@@ -127,6 +125,7 @@ export function PhotoEditPanel({
 
           <EditItem>
             <DatePicker
+              label="创建时间"
               value={
                 form.getProps('createAt').value
                   ? stampToDate(form.getProps('createAt').value)
@@ -138,6 +137,7 @@ export function PhotoEditPanel({
 
           <EditItem>
             <DatePicker
+              label="更新时间"
               value={
                 form.getProps('updateAt').value
                   ? stampToDate(form.getProps('updateAt').value)

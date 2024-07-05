@@ -1,99 +1,13 @@
-@import "../colors.less";
-@import "../size.less";
-
-.horenInput {
+.input {
   display: inline-block;
-  margin: 8px 0 0 0;
-  > span:nth-child(1) {
-    display: block;
-    margin-bottom: 4px;
-    color: #555;
-    font-size: 0.9rem;
-  }
-}
-
-.leftMode {
-  > span:nth-child(1) {
-    display: inline-block;
-    position: relative;
-    top: 2px;
-    margin-right: 8px;
-  }
-}
-
-.requiredStar {
-  color: @danger;
-  margin-left: 4px;
-  font-weight: 700;
-}
-
-.inputAreaWrapper {
-  display: inline-block;
-  vertical-align: top;
-}
-
-.inputArea {
-  display: inline-block;
-  padding: 0 var(--horen-gap-lg);
-  border: 1px solid @gray-5;
+  border: 1px solid var(--horen-color-text-tertiary);
   border-radius: var(--horen-radius-xl);
-  height: @normalHeight;
+  min-height: var(--horen-size-lg);
   width: 100%;
-  line-height: @normalHeight;
-  &:focus,&:hover {
+  line-height: var(--horen-size-xl);
+  padding: var(--horen-gap-sm) var(--horen-gap-lg);
+  &:focus {
     outline: none;
     border-color: var(--horen-color-primary);
   }
-  &:disabled {
-    border-color: @white-deep;
-    &:hover {
-      cursor: no-drop;
-    }
-  }
-}
-
-.inputAreaError {
-  border-color: @danger !important;
-  color: @danger;
-}
-
-.requiredTop {
-  display: inline-block;
-  color: @danger;
-  font-size: 1.1rem;
-  line-height: 1;
-  position: relative;
-  top: 2px;
-  margin-right: 4px;
-}
-
-.requiredLeft {
-  .requiredTop();
-  padding-top: 6px;
-}
-
-.errorText {
-  text-align: left;
-  height: 12px;
-  overflow: hidden;
-  position: relative;
-  > div {
-    font-size: @xxxSmallHeight;
-    color: @danger;
-  }
-}
-
-.innerText {
-  font-size: 12px;
-  line-height: 12px;
-  position: absolute;
-  transition: var(--horen-duration-faster) all ease-in-out;
-}
-
-.shrink {
-  top: -12px;
-}
-
-.expand {
-  top: 0px;
 }
