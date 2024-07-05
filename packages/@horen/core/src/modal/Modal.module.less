@@ -20,6 +20,13 @@
 .fullScreen {
   inset: 0;
   transform: none;
+  > div:nth-child(2) {
+    height: calc(100% - 28px);
+    display: block;
+    > div:nth-child(2) {
+      margin-top: var(--horen-gap-xxl);
+    }
+  }
 }
 
 .closeModal {
