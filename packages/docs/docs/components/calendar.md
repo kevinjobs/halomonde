@@ -8,10 +8,11 @@ order: 2
  * description: 回车以输入新的标签
  */
 import { useState } from 'react';
-import { Calendar, Switch } from '@horen/core';
+import { Calendar, DatePicker } from '@horen/core';
 
 export default () => {
   const [theme, setTheme] = useState('light');
+  const [date, setDate] = useState(new Date());
 
   return (
     <div>
@@ -32,6 +33,11 @@ export default () => {
       </div>
       <br />
       <Calendar onChange={console.log} />
+      <br />
+      <br />
+      <br />
+      <br />
+      <DatePicker value={date} onChange={setDate} />
     </div>
   );
 };

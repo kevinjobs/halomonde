@@ -1,0 +1,23 @@
+.target {
+  border: 1px solid var(--horen-color-text-tertiary);
+  border-radius: var(--horen-radius-xl);
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  &:hover {
+    border-color: var(--horen-color-secondary);
+  }
+  > div {
+    min-height: var(--horen-size-xl);
+    min-width: 160px;
+    line-height: var(--horen-size-xl);
+    padding: var(--horen-gap-sm) var(--horen-gap-lg);
+    display: flex;
+    align-items: center;
+  }
+}
+
+.content {
+  background-color: transparent;
+  border-radius: var(--horen-radius-xl);
+}

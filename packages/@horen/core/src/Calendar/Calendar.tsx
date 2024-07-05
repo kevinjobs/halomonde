@@ -7,13 +7,14 @@ import cls from './Calendar.module.less';
 import { classnames } from '../_utils';
 
 export interface CalendarProps {
+  value?: Date;
   onChange?: (date: Date) => void;
 }
 
-export function Calendar({ onChange }: CalendarProps) {
+export function Calendar({ value, onChange }: CalendarProps) {
   const [year, setYear] = useState(2024);
   const [month, setMonth] = useState(12);
-  const [selected, setSelected] = useState<Date>();
+  const [selected, setSelected] = useState<Date>(value!!);
 
   const handlePrev = () => {
     if (month < 2) {

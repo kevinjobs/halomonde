@@ -46,3 +46,4 @@ export {
 
 export * from './Calendar';
 export * from './Popover';
+export * from './DatePicker';
