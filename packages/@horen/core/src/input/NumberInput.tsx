@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
 import { Icon } from '../icon';
-import { Input, InputProps } from './Input';
+import { DataInputWrapper } from '../_common';
+import { InputProps } from './Input';
 
 import style from './NumberInput.module.less';
 
 export function NumberInput(props: InputProps) {
-  const { value, onChange, ...restProps } = props;
+  const {
+    value,
+    onChange,
+    error,
+    label,
+    labelPlacement,
+    required,
+    ...restProps
+  } = props;
   const [data, setData] = useState<number>(Number(value));
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,16 +41,24 @@ export function NumberInput(props: InputProps) {
   };
 
   return (
-    <span className={style.numberInput}>
-      <Input value={data} onInput={handleInput} {...restProps} />
-      <span className={style.inputArrow}>
-        <div onClick={handleUp}>
-          <Icon name="up" size={12} />
-        </div>
-        <div onClick={handleDown}>
-          <Icon name="down" size={12} />
-        </div>
+    <DataInputWrapper
+      error={error}
+      label={label}
+      labelPlacement={labelPlacement}
+      required={required}>
+      <span className={style.numberInput}>
+        <span>
+          <input value={data} onInput={handleInput} {...restProps} />
+        </span>
+        <span className={style.inputArrow}>
+          <div onClick={handleUp}>
+            <Icon name="up" size={12} />
+          </div>
+          <div onClick={handleDown}>
+            <Icon name="down" size={12} />
+          </div>
+        </span>
       </span>
-    </span>
+    </DataInputWrapper>
   );
 }

@@ -72,10 +72,7 @@ export default () => {
     <div>
       <div>{tags}</div>
       <br />
-      <TagInput
-        value={tags.split('|')}
-        onChange={(tags) => setTags(tags.join('|'))}
-      />
+      <TagInput value={tags} onChange={setTags} />
     </div>
   );
 };

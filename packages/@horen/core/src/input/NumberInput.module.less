@@ -1,13 +1,38 @@
+@import "./Input.module.less";
+
 .numberInput {
-  position: relative;
+  display: inline-block;
+  border: 1px solid var(--horen-color-text-tertiary);
+  border-radius: var(--horen-radius-xl);
+  padding: 0;
+  &:focus {
+    outline: none;
+    border-color: var(--horen-color-primary);
+  }
+  > span {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  > span:nth-child(1) {
+    height: 100%;
+    min-height: var(--horen-size-lg);
+    line-height: var(--horen-size-xl);
+  }
+  input {
+    border: none;
+    display: inline-block;
+    height: 100%;
+    padding: 0;
+    padding-left: var(--horen-gap-md);
+    margin: 0;
+    margin-left: var(--horen-gap-md);
+    line-height: 100%;
+    outline: none;
+  }
 }
 
 .inputArrow {
   display: inline-block;
-  position: absolute;
-  right: -25px;
-  height: var(--horen-size-md);
-  top: -5px;
   div {
     display: flex;
     height: calc(var(--horen-size-md) - 1px);
