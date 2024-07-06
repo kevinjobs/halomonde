@@ -1,19 +1,21 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { isSameDay } from '@horen/utils';
+import { useInputState } from '@horen/hooks';
 import { Icon } from '../icon';
 import { Popover } from '../Popover';
-import { isSameDay } from '@horen/utils';
 
 import cls from './Calendar.module.less';
 import { classnames } from '../_utils';
 
 export interface CalendarProps {
   value?: Date | null;
-  onChange?: (date: Date) => void;
+  onChange?: (date: Date | null) => void;
 }
 
 export function Calendar({ value = null, onChange }: CalendarProps) {
+  const [_value, setValue] = useInputState<Date | null>({ value, onChange });
+
   const now = new Date();
-  const selectedRef = useRef<Date | null>(value);
 
   const [year, setYear] = useState(
     value ? value.getFullYear() : now.getFullYear(),
@@ -21,7 +23,6 @@ export function Calendar({ value = null, onChange }: CalendarProps) {
   const [month, setMonth] = useState(
     value ? value.getMonth() + 1 : now.getMonth() + 1,
   );
-  const [selected, setSelected] = useState<Date | null>(value);
 
   const handlePrev = () => {
     if (month < 2) {
@@ -56,16 +57,9 @@ export function Calendar({ value = null, onChange }: CalendarProps) {
   };
 
   const handleSelected = (date: Date) => {
-    setSelected(date);
+    setValue(date);
     if (onChange) onChange(date);
   };
-
-  useEffect(() => {
-    if (selectedRef.current !== undefined && selectedRef.current !== value) {
-      selectedRef.current = selected;
-      setSelected(value);
-    }
-  }, [value]);
 
   return (
     <div className={cls.calendar}>
@@ -85,7 +79,7 @@ export function Calendar({ value = null, onChange }: CalendarProps) {
           year={year}
           month={month}
           onSelected={handleSelected}
-          selected={selected}
+          selected={_value}
         />
       </div>
     </div>

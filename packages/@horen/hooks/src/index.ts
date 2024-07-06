@@ -10,3 +10,4 @@ export { useUnmount } from './use-unmount';
 export { useViewport } from './use-viewport';
 export { useWindowEvent } from './use-window-event';
 export * from './use-click-outside';
+export * from './use-input-state';

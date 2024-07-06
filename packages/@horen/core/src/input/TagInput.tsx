@@ -77,8 +77,7 @@ export function TagInput(props: TagInputProps) {
   }, []);
 
   useEffect(() => {
-    // console.log(tags);
-    if (onChange) onChange(tags.join(seperator));
+    if (onChange) onChange(tags.filter((t) => t !== '').join(seperator));
   }, [tags]);
 
   return (

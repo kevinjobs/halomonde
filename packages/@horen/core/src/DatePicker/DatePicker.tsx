@@ -1,5 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { strftime } from '@horen/utils';
+import { useInputState } from '@horen/hooks';
+
 import { Popover } from '../Popover';
 import { Calendar } from '../Calendar';
 import { DataInputWrapper, DataInputWrapperProps } from '../_common';
@@ -7,8 +9,8 @@ import cls from './DatePicker.module.less';
 import { Icon } from '../icon';
 
 export interface DatePickerProps extends DataInputWrapperProps {
-  value?: Date;
-  onChange: (date: Date) => void;
+  value?: Date | null;
+  onChange: (date: Date | null) => void;
 }
 
 export function DatePicker(props: DatePickerProps) {
@@ -22,25 +24,18 @@ export function DatePicker(props: DatePickerProps) {
   } = props;
 
   const [open, setOpen] = React.useState(false);
-  const [innerValue, setInnerValue] = useState<Date | null>(value);
+
+  const [_value, setValue] = useInputState({ value, onChange });
 
   const ref = useRef<HTMLSpanElement>(null);
-  const innerValueRef = useRef<Date | null>(value);
 
   const handleClose = (e: React.MouseEvent<HTMLSpanElement>) => {
     if (ref.current && ref.current.contains(e.target as HTMLSpanElement)) {
-      setInnerValue(null);
+      setValue(null);
     } else {
       setOpen(!open);
     }
   };
-
-  React.useEffect(() => {
-    if (value !== innerValueRef.current) {
-      innerValueRef.current = value;
-      setInnerValue(value!);
-    }
-  }, [value]);
 
   return (
     <DataInputWrapper
@@ -56,7 +51,7 @@ export function DatePicker(props: DatePickerProps) {
         <Popover.Target>
           <div className={cls.target}>
             <div>
-              <span>{innerValue && strftime(innerValue, 'yyyy-MM-dd')}</span>
+              <span>{_value && strftime(_value, 'yyyy-MM-dd')}</span>
               <span className={cls.close} ref={ref}>
                 <Icon name="close" />
               </span>
@@ -65,7 +60,7 @@ export function DatePicker(props: DatePickerProps) {
         </Popover.Target>
         <Popover.Content>
           <div className={cls.content}>
-            <Calendar value={innerValue} onChange={onChange} />
+            <Calendar value={_value} onChange={onChange} />
           </div>
         </Popover.Content>
       </Popover>

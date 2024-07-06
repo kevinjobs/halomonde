@@ -34,7 +34,7 @@ export default () => {
     e.preventDefault();
     const errors = values['errors'];
     if (Object.keys(errors).length === 0) {
-      console.log(values);
+      console.log(values.values);
     }
   };
 

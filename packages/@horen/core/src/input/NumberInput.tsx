@@ -5,22 +5,29 @@ import { Input, InputProps } from './Input';
 import style from './NumberInput.module.less';
 
 export function NumberInput(props: InputProps) {
-  const { value, onInput, ...restProps } = props;
-  const [data, setData] = useState(value);
+  const { value, onChange, ...restProps } = props;
+  const [data, setData] = useState<number>(Number(value));
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     // to-do: 浮点数精度存在需要修复
-    setData(e.target.value.replace(/[^\d\.]/g, ''));
-    if (onInput) {
-      onInput(e);
+    const number = Number(e.target.value.replace(/[^\d\.]/g, ''));
+    setData(number);
+    if (onChange) {
+      onChange(number);
     }
   };
 
   const handleUp = () => {
+    if (onChange) {
+      onChange(data + 1);
+    }
     setData((prev) => Number(prev) + 1);
   };
 
   const handleDown = () => {
+    if (onChange) {
+      onChange(data - 1);
+    }
     setData((prev) => Number(prev) - 1);
   };
 
