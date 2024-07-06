@@ -6,7 +6,7 @@ import { classnames } from '../_utils';
 export interface PopoverProps {
   children: React.ReactNode;
   open?: boolean;
-  onClickTarget?: () => void;
+  onClickTarget?: (e: React.MouseEvent<HTMLElement>) => void;
   onClickContent?: (e: React.MouseEvent<HTMLElement>) => void;
   onClickOutside?: () => void;
 }
@@ -14,7 +14,7 @@ export interface PopoverProps {
 const PopoverContext = React.createContext<{
   open: boolean;
   handleClickContent: (e: React.MouseEvent<HTMLElement>) => void;
-  handleClickTarget: () => void;
+  handleClickTarget: (e: React.MouseEvent<HTMLElement>) => void;
 }>({
   open: false,
   handleClickContent: () => {},
@@ -40,9 +40,9 @@ function Popover({
     }
   };
 
-  const handleClickTarget = () => {
+  const handleClickTarget = (e: React.MouseEvent<HTMLElement>) => {
     if (onClickTarget) {
-      onClickTarget();
+      onClickTarget(e);
     }
   };
 
@@ -60,7 +60,7 @@ function Target({ children }: { children: React.ReactNode }) {
   const { handleClickTarget } = React.useContext(PopoverContext);
 
   return (
-    <div className={cls.popoverTarget} onClick={() => handleClickTarget()}>
+    <div className={cls.popoverTarget} onClick={handleClickTarget}>
       {children}
     </div>
   );

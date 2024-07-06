@@ -4,14 +4,20 @@
   cursor: pointer;
   -webkit-user-select: none;
   user-select: none;
-  width: 100%;
   &:hover {
     border-color: var(--horen-color-secondary);
   }
   > div {
     min-height: var(--horen-size-xl);
+    min-width: var(--horen-width-md);
+    display: flex;
+    align-items: center;
     line-height: var(--horen-size-xl);
     padding: var(--horen-gap-sm) var(--horen-gap-lg);
+    padding-right: var(--horen-gap-md);
+    > span:nth-child(1) {
+      flex-grow: 1;
+    }
   }
 }
 

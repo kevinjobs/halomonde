@@ -3,7 +3,7 @@
 ```tsx
 import { useState } from 'react';
 import { useForm } from '@horen/hooks';
-import { TextInput, NumberInput } from '@horen/core';
+import { TextInput, NumberInput, DatePicker, TagInput } from '@horen/core';
 
 export default () => {
   const form = useForm({
@@ -11,7 +11,7 @@ export default () => {
       name: 'horen',
       password: '123456',
     },
-    validateOnChange: false,
+    validateOnChange: true,
     validation: {
       name: (value) => {
         if (!value) return 'name is required';
@@ -26,6 +26,7 @@ export default () => {
         if (value.length < 5) return 'mark must be more than 5';
         if (value.length > 10) return 'mark must be less than 10';
       },
+      date: (value) => (value ? null : 'date is required'),
     },
   });
 
@@ -66,6 +67,11 @@ export default () => {
       <div>
         <NumberInput {...form.getProps('age')} label="年龄" />
       </div>
+      <br />
+      <TagInput {...form.getProps('tags')} label="Tags" />
+      <br />
+      <DatePicker {...form.getProps('date')} label="Date" required />
+      <br />
       <button type="submit">提交</button>
       <button onClick={onSetValues}>set values</button>
     </form>

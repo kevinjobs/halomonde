@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Icon } from '../icon';
 import { Popover } from '../Popover';
 import { isSameDay } from '@horen/utils';
@@ -7,18 +7,21 @@ import cls from './Calendar.module.less';
 import { classnames } from '../_utils';
 
 export interface CalendarProps {
-  value?: Date;
+  value?: Date | null;
   onChange?: (date: Date) => void;
 }
 
-export function Calendar({ value, onChange }: CalendarProps) {
+export function Calendar({ value = null, onChange }: CalendarProps) {
+  const now = new Date();
+  const selectedRef = useRef<Date | null>(value);
+
   const [year, setYear] = useState(
-    value?.getFullYear() ?? new Date().getFullYear(),
+    value ? value.getFullYear() : now.getFullYear(),
   );
   const [month, setMonth] = useState(
-    value ? value.getMonth() + 1 : new Date().getMonth() + 1,
+    value ? value.getMonth() + 1 : now.getMonth() + 1,
   );
-  const [selected, setSelected] = useState<Date>(value!!);
+  const [selected, setSelected] = useState<Date | null>(value);
 
   const handlePrev = () => {
     if (month < 2) {
@@ -56,6 +59,13 @@ export function Calendar({ value, onChange }: CalendarProps) {
     setSelected(date);
     if (onChange) onChange(date);
   };
+
+  useEffect(() => {
+    if (selectedRef.current !== undefined && selectedRef.current !== value) {
+      selectedRef.current = selected;
+      setSelected(value);
+    }
+  }, [value]);
 
   return (
     <div className={cls.calendar}>
@@ -221,16 +231,13 @@ export function CalendarHeader({
 export interface CalendarDateProps {
   year: number;
   month: number;
-  selected?: Date;
+  selected?: Date | null;
   onSelected?: (date: Date) => void;
 }
 
-export function CalendarDate({
-  year,
-  month,
-  selected,
-  onSelected,
-}: CalendarDateProps) {
+export function CalendarDate(props: CalendarDateProps) {
+  const { year, month, selected = null, onSelected } = props;
+
   const date = useMemo(() => {
     return new Date(year, month - 1, 1);
   }, [year, month]);
