@@ -27,10 +27,7 @@ export interface UserEditProps {
 export function UserEditPanel({
   user,
   onSubmitSuccess,
-  onSubmitFailed,
   onDeleteSuccess,
-  onDeleteFailed,
-  onBlur,
 }: UserEditProps): React.ReactElement {
   const form = useForm({
     initialValues: { ...user, password: '' },
@@ -83,6 +80,7 @@ export function UserEditPanel({
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleUploadSuccess = (result: any) => {
     form.setValue('avatar', result.data.url);
     notifications.show({ variant: 'success', message: '上传封面成功' });
@@ -140,7 +138,7 @@ export function UserEditPanel({
           <div className={style.item}>
             <label>性别</label>
             <span>
-              <Select {...form.getProps('gender')} arrow>
+              <Select {...form.getProps('gender')}>
                 <Select.Item value="unkown" name="未知性别" />
                 <Select.Item value="male" name="男性" />
                 <Select.Item value="female" name="女性" />
