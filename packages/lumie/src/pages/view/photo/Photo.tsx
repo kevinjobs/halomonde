@@ -48,7 +48,7 @@ export default function Photo() {
       </div>
       <PhotoInfoPanel
         post={post}
-        visible={visible}
+        infoVisible={visible}
         onClickView={handleClickView}
       />
     </div>
@@ -57,13 +57,13 @@ export default function Photo() {
 
 export function PhotoInfoPanel({
   post,
-  visible,
+  infoVisible,
   onClickView,
   alwaysShow = false,
 }: {
   post: IPost;
-  visible: boolean;
-  onClickView: (e: React.MouseEvent<HTMLDivElement>) => void;
+  infoVisible: boolean;
+  onClickView?: (e?: React.MouseEvent<HTMLDivElement>) => void;
   alwaysShow?: boolean;
 }) {
   const exif: IExif = post?.exif ? JSON.parse(post?.exif) : null;
@@ -75,19 +75,22 @@ export function PhotoInfoPanel({
     <div
       className={cls}
       style={{
-        top: visible ? 'calc(100vh - 460px)' : 'calc(100vh - 50px)',
-        width: width < 1080 ? '80%' : '500px',
+        top: infoVisible ? 'calc(100vh - 460px)' : 'calc(100vh - 50px)',
+        width: width < 1080 ? '80%' : '200px',
       }}
       onClick={(e) => e.stopPropagation()}>
       {(width < 1080 || alwaysShow) && (
-        <div className={style.clickToView} onClick={onClickView}>
-          <Arrow up={visible} />
+        <div
+          className={style.clickToView}
+          onClick={onClickView}
+          onTouchEnd={() => onClickView()}>
+          <Arrow up={infoVisible} />
         </div>
       )}
       <div
         className={style.infoContainer}
         style={{
-          width: width < 1080 ? '100%' : '380px',
+          width: width < 1080 ? '100%' : '200px',
         }}>
         <div className={style.title}>
           {post?.title ? (
@@ -131,7 +134,12 @@ export function PhotoInfoPanel({
             <Icon name="info" fill="#f1f1f1" size={22} />
           </span>
           {post ? (
-            <span>{post?.content || post?.excerpt || '没有描述'}</span>
+            <span>
+              {post?.content ||
+                post?.excerpt ||
+                post?.description ||
+                '没有描述'}
+            </span>
           ) : (
             <span>
               <Skeleton height={16} width={180} />

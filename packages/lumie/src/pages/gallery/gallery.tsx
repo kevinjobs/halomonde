@@ -83,7 +83,7 @@ function GalleryPage(): React.ReactElement {
 }
 
 // covert the raw image list to the masonry required.
-const covertImageList = (imageList: Array<IPost>): Array<PhotoItem> => {
+export const covertImageList = (imageList: Array<IPost>): Array<PhotoItem> => {
   return imageList.map((img: IPost) => {
     let exif: IExif;
     try {

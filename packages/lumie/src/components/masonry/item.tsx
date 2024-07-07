@@ -147,7 +147,7 @@ export const MasonryItem = (props: ItemProps) => {
         <PhotoInfoPanel
           alwaysShow={true}
           post={post}
-          visible={visible}
+          infoVisible={visible}
           onClickView={(e) => {
             e.preventDefault();
             e.stopPropagation();

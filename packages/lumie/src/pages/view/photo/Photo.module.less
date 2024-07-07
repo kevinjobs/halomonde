@@ -9,6 +9,7 @@
 .preview {
   height: 80vh;
   min-width: 20vw;
+  -webkit-user-select: none;
   user-select: none;
   display: flex;
   align-items: center;
@@ -30,6 +31,7 @@
   span:nth-child(1) {
     display: flex;
     width: 30px;
+    min-width: 30px;
     justify-content: center;
   }
   span:nth-child(2) {
@@ -76,6 +78,7 @@
 }
 
 .infoContainer {
+  width: -moz-fit-content;
   width: fit-content;
 }
 

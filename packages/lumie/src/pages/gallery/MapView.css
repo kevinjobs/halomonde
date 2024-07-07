@@ -1,0 +1,36 @@
+.img-container {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+
+.map-photo-view {
+  position: fixed;
+  inset: 0;
+  background-color: #121212;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f1f1f1 !important;
+}
+
+.map-photo-view svg {
+  fill: #f1f1f1 !important;
+}
+
+.map-photo-view > div:nth-child(1) {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.map-photo-view > div:nth-child(1) > div:nth-child(1) {
+  width: 1200px;
+  height: 95vh;
+}
+
+.map-photo-view > div > div:nth-child(1) > img {
+  object-fit: scale-down;
+  width: 100%;
+  height: 100%;
+}

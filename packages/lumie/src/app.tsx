@@ -11,6 +11,7 @@ import { Redirect } from '@/pages/domo/_components';
 import GalleryPage from '@/pages/gallery';
 import ArticlePage from '@/pages/view/article';
 import PhotoPage from '@/pages/view/photo';
+import { MapView } from './pages/gallery/MapView';
 
 import { store } from './store';
 import { getLocalUser } from './utils/store';
@@ -45,6 +46,7 @@ export default function App() {
           <Route path="/" element={<Redirect to="gallery" />} />
           <Route path="domo/*" element={<DomoPage />} />
           <Route path="gallery" element={<GalleryPage />} />
+          <Route path="map" element={<MapView />} />
           <Route path="articles" element={<ArticlesPage />} />
           <Route path="view/photo/:uid" element={<PhotoPage />} />
           <Route path="view/article/:uid" element={<ArticlePage />} />
