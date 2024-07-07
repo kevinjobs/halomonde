@@ -1,6 +1,7 @@
 .popover {
   display: inline-block;
   width: 100%;
+  box-sizing: border-box;
   > div {
     position: relative;
   }
@@ -9,6 +10,7 @@
 .popoverTarget {
   text-align: left;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .popoverContent {
@@ -21,6 +23,12 @@
   box-shadow: var(--horen-box-shadow);
   z-index: var(--horen-z-index-popover);
   border-radius: var(--horen-radius-lg);
+  box-sizing: border-box;
+}
+
+.above {
+  left: 50%;
+  transform: translateX(-50%) translateY(-120%);
 }
 
 .open {

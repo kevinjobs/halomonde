@@ -35,6 +35,14 @@ export default () => {
       <Calendar onChange={console.log} />
       <br />
       <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
       <DatePicker
         label="Date Picker"
         value={date}

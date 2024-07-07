@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import cls from './Popover.module.less';
 import { useClickOutside } from '@horen/hooks';
 import { classnames } from '../_utils';
@@ -13,10 +13,12 @@ export interface PopoverProps {
 
 const PopoverContext = React.createContext<{
   open: boolean;
+  above: boolean;
   handleClickContent: (e: React.MouseEvent<HTMLElement>) => void;
   handleClickTarget: (e: React.MouseEvent<HTMLElement>) => void;
 }>({
   open: false,
+  above: false,
   handleClickContent: () => {},
   handleClickTarget: () => {},
 });
@@ -28,6 +30,10 @@ function Popover({
   onClickTarget,
   open = false,
 }: PopoverProps) {
+  const [above, setAbove] = useState(false);
+
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const ref = useClickOutside(() => {
     if (onClickOutside) {
       onClickOutside();
@@ -41,6 +47,11 @@ function Popover({
   };
 
   const handleClickTarget = (e: React.MouseEvent<HTMLElement>) => {
+    const target = containerRef.current?.children[1];
+    const toBottom = target?.getBoundingClientRect().bottom || 0;
+    const height = document.body.offsetHeight;
+    setAbove(toBottom > height);
+
     if (onClickTarget) {
       onClickTarget(e);
     }
@@ -48,9 +59,9 @@ function Popover({
 
   return (
     <PopoverContext.Provider
-      value={{ open, handleClickContent, handleClickTarget }}>
+      value={{ open, above, handleClickContent, handleClickTarget }}>
       <div className={cls.popover} data-key="popover" tabIndex={1} ref={ref}>
-        <div>{children}</div>
+        <div ref={containerRef}>{children}</div>
       </div>
     </PopoverContext.Provider>
   );
@@ -67,10 +78,11 @@ function Target({ children }: { children: React.ReactNode }) {
 }
 
 function Content({ children }: { children: React.ReactNode }) {
-  const { open, handleClickContent } = React.useContext(PopoverContext);
+  const { open, above, handleClickContent } = React.useContext(PopoverContext);
 
   const clsname = classnames({
     [cls.popoverContent]: true,
+    [cls.above]: above,
     [cls.open]: open,
     [cls.close]: !open,
   });
