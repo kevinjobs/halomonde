@@ -10,7 +10,7 @@ import { Icon } from '../icon';
 
 export interface DatePickerProps extends DataInputWrapperProps {
   value?: Date | null;
-  onChange: (date: Date | null) => void;
+  onChange?: (date: Date | null) => void;
 }
 
 export function DatePicker(props: DatePickerProps) {
@@ -25,7 +25,7 @@ export function DatePicker(props: DatePickerProps) {
 
   const [open, setOpen] = React.useState(false);
 
-  const [_value, setValue] = useInputState({ value, onChange });
+  const [_value, setValue] = useInputState(value);
 
   const ref = useRef<HTMLSpanElement>(null);
 
@@ -35,6 +35,11 @@ export function DatePicker(props: DatePickerProps) {
     } else {
       setOpen(!open);
     }
+  };
+
+  const handleChange = (date: Date | null) => {
+    setValue(date);
+    if (onChange) onChange(date);
   };
 
   return (
@@ -60,7 +65,7 @@ export function DatePicker(props: DatePickerProps) {
         </Popover.Target>
         <Popover.Content>
           <div className={cls.content}>
-            <Calendar value={_value} onChange={onChange} />
+            <Calendar value={_value} onChange={handleChange} />
           </div>
         </Popover.Content>
       </Popover>

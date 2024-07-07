@@ -1,16 +1,14 @@
 import React, { FormEvent, useRef } from 'react';
 
-import { DatePicker } from '@horen/core';
+import { dateToStamp, stampToDate } from '@/utils/datetime';
 import { EXIF_NAME, getExifs, IExif } from '@/utils/exif';
 import { getLocalUser } from '@/utils/store';
-import { Button, Segment, TagInput, TextInput } from '@horen/core';
+import { Button, DatePicker, Segment, TagInput, TextInput } from '@horen/core';
 import { FormCallbackData, useForm } from '@horen/hooks';
-import { stampToDate, dateToStamp } from '@/utils/datetime';
 
 import { UploadCloud } from '../UploadCloud';
 import { EditPanelProps } from './';
 import css from './PhotoEditPanel.module.less';
-import dayjs from 'dayjs';
 
 export type PhotoEditPanelProps = EditPanelProps;
 
@@ -59,6 +57,7 @@ export function PhotoEditPanel({
     evt: FormEvent<HTMLFormElement>,
   ) => {
     evt.preventDefault();
+    console.log(data);
     if (Object.keys(data.errors).length === 0) {
       if (onSubmit) onSubmit(data.values);
     }
@@ -126,11 +125,7 @@ export function PhotoEditPanel({
           <EditItem>
             <DatePicker
               label="创建时间"
-              value={
-                form.getProps('createAt').value
-                  ? stampToDate(form.getProps('createAt').value)
-                  : new Date()
-              }
+              value={stampToDate(form.getValue('createAt'))}
               onChange={(v) => form.setValue('createAt', dateToStamp(v))}
             />
           </EditItem>
@@ -138,11 +133,7 @@ export function PhotoEditPanel({
           <EditItem>
             <DatePicker
               label="更新时间"
-              value={
-                form.getProps('updateAt').value
-                  ? stampToDate(form.getProps('updateAt').value)
-                  : new Date()
-              }
+              value={stampToDate(form.getValue('updateAt'))}
               onChange={(v) => form.setValue('updateAt', dateToStamp(v))}
             />
           </EditItem>

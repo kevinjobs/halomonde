@@ -1,4 +1,4 @@
-export function strftime(date: Date, format: string) {
+export function strftime(date: Date, format = 'yyyy-MM-dd hh:mm:ss') {
   const o: Record<string, any> = {
     'M+': date.getMonth() + 1, // 月份
     'd+': date.getDate(), // 日

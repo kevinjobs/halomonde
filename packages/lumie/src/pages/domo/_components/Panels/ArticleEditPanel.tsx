@@ -57,6 +57,8 @@ export function ArticleEditPanel({
     if (onCancel) onCancel();
   };
 
+  console.log(form.getValues());
+
   return (
     <div className={style.editPost}>
       <div className={style.left}>
@@ -138,8 +140,8 @@ export function ArticleEditPanel({
             <DatePicker
               label="创建时间"
               value={
-                form.getProps('createAt').value
-                  ? stampToDate(form.getProps('createAt').value)
+                form.getValue('createAt')
+                  ? stampToDate(form.getValue('createAt'))
                   : new Date()
               }
               onChange={(v) => form.setValue('createAt', dateToStamp(v))}

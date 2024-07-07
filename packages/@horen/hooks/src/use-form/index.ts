@@ -60,15 +60,15 @@ interface Action {
 
 function clearState<T extends Record<string, any>>(state: T): T {
   const tmp: any = {};
-  for (const k of Object.keys(state)) {
-    if (typeof state[k] === 'string') tmp[k] = '';
-    if (typeof state[k] === 'number') tmp[k] = 0;
-    if (typeof state[k] === 'boolean') tmp[k] = undefined;
-    if (typeof state[k] === 'function') tmp[k] = undefined;
-    if (typeof state[k] === 'symbol') tmp[k] = undefined;
-    if (state[k] instanceof Array) tmp[k] = [];
+  for (const k of Object.keys(state.values)) {
+    if (typeof state.values[k] === 'string') tmp[k] = '';
+    if (typeof state.values[k] === 'number') tmp[k] = 0;
+    if (typeof state.values[k] === 'boolean') tmp[k] = undefined;
+    if (typeof state.values[k] === 'function') tmp[k] = undefined;
+    if (typeof state.values[k] === 'symbol') tmp[k] = undefined;
+    if (state.values[k] instanceof Array) tmp[k] = [];
   }
-  return { ...state, ...tmp };
+  return { ...state.values, ...tmp };
 }
 
 export function useForm({
@@ -89,7 +89,7 @@ export function useForm({
     if (action.type === 'reset') {
       return {
         ...state,
-        values: { ...state.values, ...initialValues },
+        values: initialValues,
       };
     }
 
@@ -160,11 +160,11 @@ export function useForm({
   };
 
   const setValues = (callback: (prev: RealValuesType) => RealValuesType) => {
-    dispatch({ type: 'setValue', payload: callback(state) });
+    dispatch({ type: 'setValue', payload: callback(state.values) });
   };
 
   const getValue = (prop: string) => {
-    return state[prop];
+    return state.values[prop];
   };
 
   const getValues = () => state.values;
