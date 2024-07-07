@@ -2,15 +2,20 @@ import React, { useState } from 'react';
 
 import { uploadCloudFile } from '@/utils/apis/file';
 import { notifications } from '@horen/notifications';
-import { ImageUpload } from '@horen/core';
+import { ImageUpload, ImageUploadProps } from '@horen/core';
 import { photoThumbUrl } from '@/utils/uri';
 
-export interface UploadCloudProps {
+export interface UploadCloudProps
+  extends Omit<ImageUploadProps, 'value' | 'onChange' | 'uploadStatus'> {
   value: string;
   onChange: (url: string, file?: File) => void;
 }
 
-export function UploadCloud({ value = '', onChange }: UploadCloudProps) {
+export function UploadCloud({
+  value = '',
+  onChange,
+  ...restProps
+}: UploadCloudProps) {
   const [status, setStatus] = useState('');
   const [progress, setProgress] = useState(0);
 
@@ -54,11 +59,15 @@ export function UploadCloud({ value = '', onChange }: UploadCloudProps) {
     <div>
       <div>
         <ImageUpload
+          {...restProps}
+          label="上传图片"
           progress={progress}
           onChange={handleChange}
           accept={[]}
           uploadStatus={status}
           defaultPreviewURL={photoThumbUrl(value)}
+          style={{ width: 300 }}
+          required
         />
       </div>
     </div>

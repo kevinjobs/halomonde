@@ -10,7 +10,6 @@ import { UploadCloud } from '../UploadCloud';
 import { DatePicker } from '@horen/core';
 import { RichTextEditor } from '@/components/RichTextEditor';
 
-import './ArticleEditPanel.css';
 import style from './ArticleEditPanel.module.less';
 import { dateToStamp, stampToDate } from '@/utils/datetime';
 

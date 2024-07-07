@@ -70,106 +70,100 @@ export function PhotoEditPanel({
 
   return (
     <div className={css.uploadImage}>
-      <div className={css.main}>
-        <form className={css.left} onSubmit={form.onSubmit(handleSubmit)}>
-          <EditItem>
-            <span>
-              <Segment
-                label="状态"
-                variant="primary"
-                value={form.getProps('status').value}
-                onChange={(v) => form.setValue('status', v)}>
-                <Segment.Item value="draft" label="草稿" />
-                <Segment.Item value="publish" label="已发布" />
-                <Segment.Item value="private" label="私密" />
-              </Segment>
-            </span>
-          </EditItem>
+      <div>
+        <div className={css.main}>
+          <div className={css.right}>
+            <UploadCloud {...form.getProps('url')} onChange={handleChange} />
 
-          <EditItem>
-            <TextInput
-              label="标题"
-              labelPlacement="left"
-              name="title"
-              required
-              {...form.getProps('title')}
+            <ExifInfo
+              exifData={
+                form.getValues().exif
+                  ? JSON.parse(form.getProps('exif').value)
+                  : {}
+              }
+              onChange={(exif) => form.setValue('exif', exif)}
             />
-          </EditItem>
-
-          <EditItem>
-            <TagInput
-              label="标签"
-              labelPlacement="left"
-              {...form.getProps('tags')}
-            />
-          </EditItem>
-
-          <EditItem>
-            <TextInput
-              label="简介"
-              name="content"
-              labelPlacement="left"
-              {...form.getProps('content')}
-            />
-          </EditItem>
-
-          <EditItem>
-            <TextInput
-              label="文件格式"
-              name="format"
-              labelPlacement="left"
-              {...form.getProps('format')}
-            />
-          </EditItem>
-
-          <EditItem>
-            <DatePicker
-              label="创建时间"
-              value={stampToDate(form.getValue('createAt'))}
-              onChange={(v) => form.setValue('createAt', dateToStamp(v))}
-            />
-          </EditItem>
-
-          <EditItem>
-            <DatePicker
-              label="更新时间"
-              value={stampToDate(form.getValue('updateAt'))}
-              onChange={(v) => form.setValue('updateAt', dateToStamp(v))}
-            />
-          </EditItem>
-
-          <EditItem>
-            <TextInput
-              label="作者"
-              name="author"
-              placeholder="请输入作者姓名"
-              labelPlacement="left"
-              required
-              {...form.getProps('author')}
-            />
-          </EditItem>
-
-          <div className={css.bottom}>
-            <Button type="submit" size="lg">
-              {mode === 'create' ? '新增' : '更新'}
-            </Button>
-            <Button variant="danger" onClick={handleCancel} size="lg">
-              取消
-            </Button>
           </div>
-        </form>
 
-        <div className={css.right}>
-          <UploadCloud {...form.getProps('url')} onChange={handleChange} />
+          <form className={css.left} onSubmit={form.onSubmit(handleSubmit)}>
+            <EditItem>
+              <span>
+                <Segment
+                  label="状态"
+                  variant="primary"
+                  value={form.getProps('status').value}
+                  onChange={(v) => form.setValue('status', v)}>
+                  <Segment.Item value="draft" label="草稿" />
+                  <Segment.Item value="publish" label="已发布" />
+                  <Segment.Item value="private" label="私密" />
+                </Segment>
+              </span>
+            </EditItem>
 
-          <ExifInfo
-            exifData={
-              form.getValues().exif
-                ? JSON.parse(form.getProps('exif').value)
-                : {}
-            }
-            onChange={(exif) => form.setValue('exif', exif)}
-          />
+            <EditItem>
+              <TextInput
+                label="标题"
+                name="title"
+                required
+                {...form.getProps('title')}
+              />
+            </EditItem>
+
+            <EditItem>
+              <TagInput label="标签" {...form.getProps('tags')} />
+            </EditItem>
+
+            <EditItem>
+              <TextInput
+                label="简介"
+                name="content"
+                {...form.getProps('content')}
+              />
+            </EditItem>
+
+            <EditItem>
+              <TextInput
+                label="文件格式"
+                name="format"
+                {...form.getProps('format')}
+              />
+            </EditItem>
+
+            <EditItem>
+              <DatePicker
+                label="创建时间"
+                value={stampToDate(form.getValue('createAt'))}
+                onChange={(v) => form.setValue('createAt', dateToStamp(v))}
+              />
+            </EditItem>
+
+            <EditItem>
+              <DatePicker
+                label="更新时间"
+                value={stampToDate(form.getValue('updateAt'))}
+                onChange={(v) => form.setValue('updateAt', dateToStamp(v))}
+              />
+            </EditItem>
+
+            <EditItem>
+              <TextInput
+                label="作者"
+                name="author"
+                placeholder="请输入作者姓名"
+                required
+                {...form.getProps('author')}
+              />
+            </EditItem>
+
+            <div className={css.bottom}>
+              <Button type="submit" size="lg">
+                {mode === 'create' ? '新增' : '更新'}
+              </Button>
+              <Button variant="danger" onClick={handleCancel} size="lg">
+                取消
+              </Button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

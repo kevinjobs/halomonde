@@ -38,15 +38,6 @@ export function CoverEditPanel({
 
   return (
     <div className={css.uploadCover}>
-      <div className={css.coverPreview}>
-        {coverForm.url && (
-          <img
-            title="cover"
-            alt="cover"
-            src={photoCompressedUrl(coverForm.url)}
-          />
-        )}
-      </div>
       <div className={css.uploadArea}>
         <div>
           <UploadCloud
@@ -59,9 +50,18 @@ export function CoverEditPanel({
             {mode === 'create' ? '新增' : '更新'}
           </Button>
           <Button variant="danger" onClick={handleCancel} size="lg">
-            Cancel
+            取消
           </Button>
         </div>
+      </div>
+      <div className={css.coverPreview}>
+        {coverForm.url && (
+          <img
+            title="cover"
+            alt="cover"
+            src={photoCompressedUrl(coverForm.url)}
+          />
+        )}
       </div>
     </div>
   );

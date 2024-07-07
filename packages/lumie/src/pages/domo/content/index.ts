@@ -1,3 +1,5 @@
+import './index.css';
+
 export * from './AddArticle';
 export * from './AddPhoto';
 export * from './AddVerse';

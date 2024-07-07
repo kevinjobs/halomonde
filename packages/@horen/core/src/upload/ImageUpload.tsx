@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { UploadButton, UploadButtonProps } from '../button';
+import React, { useState } from 'react';
+import { DataInputWrapper, DataInputWrapperProps } from '../_common';
+import { UploadButtonProps } from '../button';
 import { Icon } from '../icon';
 import { niceBytes } from '../_utils';
 
 import css from './ImageUpload.module.less';
 
-export interface ImageUploadProps
-  extends Omit<UploadButtonProps, 'onChange' | 'name'> {
+export type ImageUploadProps = {
   description?: React.ReactNode;
   limitSize?: number;
   onChange?: (files: File) => void;
@@ -14,7 +14,8 @@ export interface ImageUploadProps
   uploadStatus: 'success' | 'failed' | '' | string;
   title?: string;
   defaultPreviewURL?: string;
-}
+} & Omit<UploadButtonProps, 'onChange' | 'name'> &
+  DataInputWrapperProps;
 
 export function ImageUpload(props: ImageUploadProps) {
   const [previewFile, setPreviewFile] = useState<File | null>(null);
@@ -34,52 +35,68 @@ export function ImageUpload(props: ImageUploadProps) {
     uploadStatus = '',
     title = '',
     defaultPreviewURL,
+    error,
+    label,
+    labelPlacement = 'top',
+    required,
+    style,
   } = props;
 
   const cls =
     css.imageUpload + (uploadStatus === 'failed' ? ' ' + css.uploadFailed : '');
 
   return (
-    <div className={cls}>
-      <div className={css.header}>{title && <span>{title}</span>}</div>
-      <div className={css.prompt}>
-        <div>
-          <div className={css.uploadIcon}>
-            <Icon name="upload" size={40} fill="#707070" />
-          </div>
-          <div className={css.desc}>{description}</div>
-          <div className={css.limitSize}>
-            <span>图片大小不超过: </span>
-            {niceBytes(limitSize)}
+    <DataInputWrapper
+      error={error}
+      label={label}
+      labelPlacement={labelPlacement}
+      required={required}>
+      <div className={cls} style={style}>
+        <div className={css.header}>{title && <span>{title}</span>}</div>
+        <div className={css.prompt}>
+          <div>
+            <div className={css.uploadIcon}>
+              <Icon name="upload" size={40} fill="#707070" />
+            </div>
+            <div className={css.desc}>{description}</div>
+            <div className={css.limitSize}>
+              <span>图片大小不超过: </span>
+              {niceBytes(limitSize)}
+            </div>
           </div>
         </div>
+        <div className={css.preview}>
+          {previewFile && (
+            <>
+              <img src={URL.createObjectURL(previewFile)} alt="preview" />
+              <span>
+                <div>{previewFile.name}</div>
+                <div>类型: {previewFile.type}</div>
+                <div>大小: {niceBytes(previewFile.size)}</div>
+                <div>
+                  <div className={css.progressUnfinished}></div>
+                  <div
+                    className={css.progress}
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
+              </span>
+            </>
+          )}
+          {defaultPreviewURL && !previewFile && (
+            <img src={defaultPreviewURL} alt="default-preview" />
+          )}
+        </div>
       </div>
-      <div className={css.preview}>
-        {previewFile && (
-          <>
-            <img src={URL.createObjectURL(previewFile)} alt="preview" />
-            <span>
-              <div>{previewFile.name}</div>
-              <div>类型: {previewFile.type}</div>
-              <div>大小: {niceBytes(previewFile.size)}</div>
-              <div>
-                <div className={css.progressUnfinished}></div>
-                <div
-                  className={css.progress}
-                  style={{ width: `${progress}%` }}
-                />
-              </div>
-            </span>
-          </>
-        )}
-        {defaultPreviewURL && !previewFile && (
-          <img src={defaultPreviewURL} alt="default-preview" />
-        )}
-      </div>
-    </div>
+    </DataInputWrapper>
   );
 }
 
+/**
+ * 上传图片中间的描述
+ * @param param0 options
+ * @returns React.ReactElement
+ */
 function Desc({
   onClick,
   onChange,
