@@ -19,10 +19,12 @@ export function useInputState<T>(
     setState(value);
   };
 
-  if (!isEqual(oldState.current, value)) {
-    oldState.current = value;
-    setState(value);
-  }
+  useEffect(() => {
+    if (!isEqual(oldState.current, value)) {
+      oldState.current = value;
+      setState(value);
+    }
+  }, [value]);
 
   return [state as StateType<T>, handleChange];
 }
