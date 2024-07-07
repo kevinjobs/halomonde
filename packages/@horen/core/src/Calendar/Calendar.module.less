@@ -16,11 +16,10 @@
 
 .headerLeft {
   flex-grow: 1;
+  display: flex;
 }
 
 .monthText {
-  display: flex;
-  align-items: center;
   height: 24px;
   line-height: 24px;
   width: -moz-fit-content;
@@ -36,12 +35,14 @@
     background-color: var(--horen-color-background-secondary);
   }
   > span:nth-child(2) {
+    display: flex;
+    align-items: center;
     height: 14px;
   }
 }
 
 .monthList {
-  padding: 0;
+  margin: var(--horen-gap-md) 0;
   max-height: 300px;
   overflow-y: auto;
 }
