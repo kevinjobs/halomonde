@@ -4,13 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "zx ./scripts/index.mjs"
+    "dev": "zx ./scripts/develop.mjs",
+    "deploy:kevinjobs": "node ./scripts/index.mjs deploy -s kevinjobs"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^7.2.1",
-    "zx": "latest"
+    "zx": "latest",
+    "commander": "12.1.0",
+    "gh-pages": "4.0.0",
+    "fs-extra": "11.2.0"
   }
 }

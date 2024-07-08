@@ -1,0 +1,32 @@
+{
+  "name": "kevinjobs",
+  "version": "0.0.1",
+  "description": "Kevin Jobs Github Pages",
+  "main": "index.js",
+  "scripts": {
+    "build": "",
+    "deploy": "node scripts/deploy.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevinjobs/kevinjobs.github.io.git"
+  },
+  "keywords": [
+    "ghpage",
+    "nextjs",
+    "static"
+  ],
+  "author": "Kevin Jobs (me@kevinjobs.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kevinjobs/kevinjobs.github.io/issues"
+  },
+  "homepage": "https://github.com/kevinjobs/kevinjobs.github.io#readme",
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.13",
+    "gh-pages": "^4.0.0"
+  },
+  "dependencies": {
+    "fs-extra": "^10.1.0"
+  }
+}

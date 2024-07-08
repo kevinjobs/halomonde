@@ -1,7 +1,9 @@
 import { defineConfig } from 'dumi';
 
 export default defineConfig({
-  outputPath: 'docs-dist',
+  outputPath: '../../dist/docs',
+  base: '/docs',
+  publicPath: '/docs/',
   themeConfig: {
     name: 'Horen',
     socialLinks: {
